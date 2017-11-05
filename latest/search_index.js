@@ -1029,7 +1029,7 @@ var documenterSearchIndex = {"docs": [
     "page": "About",
     "title": "About",
     "category": "section",
-    "text": "Pages = [\"about.md\"]This page contains some general information about this project, and recommendations about contributing."
+    "text": "This page contains some general information about this project, and recommendations about contributing.Pages = [\"about.md\"]"
 },
 
 {
