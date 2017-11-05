@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Manual Outline",
     "category": "section",
-    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/support_vectors.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\"\n]\nDepth = 2"
 },
 
 {
@@ -73,50 +73,34 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "man/getting_started.html#Preliminaries-1",
+    "location": "man/getting_started.html#Installation-1",
     "page": "Getting Started",
-    "title": "Preliminaries",
-    "category": "section",
-    "text": "Let us introduce some notation. Let mathbbI_n be the identity matrix of dimension ntimes n. For p geq 1, the p-norm of an n-dimensional vector x in mathbbR^n is denoted  Vert x Vert_p."
-},
-
-{
-    "location": "man/getting_started.html#Support-Function-1",
-    "page": "Getting Started",
-    "title": "Support Function",
-    "category": "section",
-    "text": "The support function is a basic notion for approximating convex sets. Let mathcalX subset mathbbR^n be a compact convex set. The support function of mathcalX is the function rho_mathcalX  mathbbR^nto mathbbR, defined asrho_mathcalX(ell) = maxlimits_x in mathcalX ell^mathrmT xWe recall the following elementary properties of the support function.Proposition. For all compact convex sets mathcalX, mathcalY in mathbbR^n, for all ntimes n real matrices M, all scalars lambda, and all vectors ell in mathbbR^n, we have:(1.1) rho_lambdamathcalX (ell) = rho_mathcalX (lambda ell), and         rho_lambdamathcalX (ell) = lambda rho_mathcalX (ell) if lambda  0.(1.2) rho_MmathcalX (ell) = rho_mathcalX (M^mathrmT ell)(1.3) rho_mathcalX oplus mathcalY (ell) = rho_mathcalX (ell) + rho_mathcalY (ell)(1.4) rho_mathcalX times mathcalY (ell) = ell^mathrmT sigma_mathcalX times mathcalY(ell)(1.5) rho_mathrmCH(mathcalXcupmathcalY) (ell) = max (rho_mathcalX (ell) rho_mathcalY (ell))"
-},
-
-{
-    "location": "man/getting_started.html#Support-Vector-1",
-    "page": "Getting Started",
-    "title": "Support Vector",
-    "category": "section",
-    "text": "The farthest points of mathcalX in the direction ell  are the support vectors denoted sigma_mathcalX(ell). These points correspond to the optimal points for the support function, i.e.,sigma_mathcalX(ell) =  x in mathcalX  ell^mathrmT x  = rho_mathcalX(ell)  Since all support vectors in a given direction evaluate to the same value of the support function, we often speak of the support vector, where the choice of any support vector is implied.(Image: Illustration of the support function and the support vector)Proposition 2. Under the same conditions as in Proposition 1, the following hold:(2.1) sigma_lambdamathcalX (ell) = lambda sigma_mathcalX (lambda ell)(2.2) sigma_MmathcalX (ell) = Msigma_mathcalX (M^mathrmT ell)(2.3) sigma_mathcalX oplus mathcalY (ell) = sigma_mathcalX (ell) oplus sigma_mathcalY (ell)(2.4) sigma_mathcalX times mathcalY (ell) = (sigma_mathcalX(ell_1) sigma_mathcalY(ell_2)) ell = (ell_1 ell_2)(2.5) sigma_mathrmCH(mathcalXcupmathcalY) (ell) = textargmax_x y (ell^mathrmT x ell^mathrmT y),       where x in sigma_mathcalX(ell) y in sigma_mathcalY(ell)"
-},
-
-{
-    "location": "man/getting_started.html#Polyhedral-Approximation-of-a-Convex-Set-1",
-    "page": "Getting Started",
-    "title": "Polyhedral Approximation of a Convex Set",
+    "title": "Installation",
     "category": "section",
     "text": ""
 },
 
 {
-    "location": "man/getting_started.html#Example:-decomposing-an-affine-map-1",
+    "location": "man/getting_started.html#Running-the-Unit-Tests-1",
     "page": "Getting Started",
-    "title": "Example: decomposing an affine map",
+    "title": "Running the Unit Tests",
+    "category": "section",
+    "text": "To run the unit tests run the following command in the terminal:$ julia --color=yes test/runtests.jlAlternatively, you can test the package in Julia's REPL with the command:julia> Pkg.test(\"LazySets\")"
+},
+
+{
+    "location": "man/getting_started.html#First-steps-1",
+    "page": "Getting Started",
+    "title": "First steps",
     "category": "section",
     "text": ""
 },
 
 {
-    "location": "man/support_vectors.html#",
-    "page": "Support Vectors",
-    "title": "Support Vectors",
-    "category": "page",
+    "location": "man/getting_started.html#Workflow-Tips-1",
+    "page": "Getting Started",
+    "title": "Workflow Tips",
+    "category": "section",
     "text": ""
 },
 
@@ -125,6 +109,54 @@ var documenterSearchIndex = {"docs": [
     "page": "Polyhedral Approximations",
     "title": "Polyhedral Approximations",
     "category": "page",
+    "text": ""
+},
+
+{
+    "location": "man/polyhedral_approximations.html#Polyhedral-Approximations-1",
+    "page": "Polyhedral Approximations",
+    "title": "Polyhedral Approximations",
+    "category": "section",
+    "text": "Polyhedral Approximation of a Convex Set"
+},
+
+{
+    "location": "man/polyhedral_approximations.html#Preliminaries-1",
+    "page": "Polyhedral Approximations",
+    "title": "Preliminaries",
+    "category": "section",
+    "text": "Let us introduce some notation. Let mathbbI_n be the identity matrix of dimension ntimes n. For p geq 1, the p-norm of an n-dimensional vector x in mathbbR^n is denoted  Vert x Vert_p."
+},
+
+{
+    "location": "man/polyhedral_approximations.html#Support-Function-1",
+    "page": "Polyhedral Approximations",
+    "title": "Support Function",
+    "category": "section",
+    "text": "The support function is a basic notion for approximating convex sets. Let mathcalX subset mathbbR^n be a compact convex set. The support function of mathcalX is the function rho_mathcalX  mathbbR^nto mathbbR, defined asrho_mathcalX(ell) = maxlimits_x in mathcalX ell^mathrmT xWe recall the following elementary properties of the support function.Proposition. For all compact convex sets mathcalX, mathcalY in mathbbR^n, for all ntimes n real matrices M, all scalars lambda, and all vectors ell in mathbbR^n, we have:(1.1) rho_lambdamathcalX (ell) = rho_mathcalX (lambda ell), and         rho_lambdamathcalX (ell) = lambda rho_mathcalX (ell) if lambda  0.(1.2) rho_MmathcalX (ell) = rho_mathcalX (M^mathrmT ell)(1.3) rho_mathcalX oplus mathcalY (ell) = rho_mathcalX (ell) + rho_mathcalY (ell)(1.4) rho_mathcalX times mathcalY (ell) = ell^mathrmT sigma_mathcalX times mathcalY(ell)(1.5) rho_mathrmCH(mathcalXcupmathcalY) (ell) = max (rho_mathcalX (ell) rho_mathcalY (ell))"
+},
+
+{
+    "location": "man/polyhedral_approximations.html#Support-Vector-1",
+    "page": "Polyhedral Approximations",
+    "title": "Support Vector",
+    "category": "section",
+    "text": "The farthest points of mathcalX in the direction ell  are the support vectors denoted sigma_mathcalX(ell). These points correspond to the optimal points for the support function, i.e.,sigma_mathcalX(ell) =  x in mathcalX  ell^mathrmT x  = rho_mathcalX(ell)  Since all support vectors in a given direction evaluate to the same value of the support function, we often speak of the support vector, where the choice of any support vector is implied.(Image: Illustration of the support function and the support vector)Proposition 2. Under the same conditions as in Proposition 1, the following hold:(2.1) sigma_lambdamathcalX (ell) = lambda sigma_mathcalX (lambda ell)(2.2) sigma_MmathcalX (ell) = Msigma_mathcalX (M^mathrmT ell)(2.3) sigma_mathcalX oplus mathcalY (ell) = sigma_mathcalX (ell) oplus sigma_mathcalY (ell)(2.4) sigma_mathcalX times mathcalY (ell) = (sigma_mathcalX(ell_1) sigma_mathcalY(ell_2)) ell = (ell_1 ell_2)(2.5) sigma_mathrmCH(mathcalXcupmathcalY) (ell) = textargmax_x y (ell^mathrmT x ell^mathrmT y),       where x in sigma_mathcalX(ell) y in sigma_mathcalY(ell)"
+},
+
+{
+    "location": "man/decompose_example.html#",
+    "page": "Decomposing an Affine Map",
+    "title": "Decomposing an Affine Map",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "man/decompose_example.html#Decomposing-an-Affine-Map-1",
+    "page": "Decomposing an Affine Map",
+    "title": "Decomposing an Affine Map",
+    "category": "section",
     "text": ""
 },
 
@@ -141,7 +173,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Fast 2D LPs",
     "title": "Fast 2D LPs",
     "category": "section",
+    "text": "In this section we explain the implementation of the support vector for the case of convex polygons."
+},
+
+{
+    "location": "man/fast_2d_LPs.html#Introduction-1",
+    "page": "Fast 2D LPs",
+    "title": "Introduction",
+    "category": "section",
     "text": "Since vectors in the plane can be ordered by the angle with respect to the positive real axis, we can efficiently evaluate the support vector of a polygon in constraint representation by comparing normal directions, provided that its edges are ordered. We use the symbol preceq to compare directions, where the increasing direction is counter-clockwise.(Image: ../assets/intuition2dlp.png)"
+},
+
+{
+    "location": "man/fast_2d_LPs.html#Algorithm-1",
+    "page": "Fast 2D LPs",
+    "title": "Algorithm",
+    "category": "section",
+    "text": ""
 },
 
 {
@@ -961,19 +1009,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "about.html#About-1",
+    "page": "About",
+    "title": "About",
+    "category": "section",
+    "text": "Pages = [\"about.md\"]This page contains some general information about this project, and recommendations about contributing."
+},
+
+{
     "location": "about.html#Contributing-1",
     "page": "About",
     "title": "Contributing",
     "category": "section",
-    "text": "Pages = [\"about/CONTRIBUTING.md\"]This page details the some of the guidelines that should be followed when contributing to this package."
-},
-
-{
-    "location": "about.html#Running-the-Unit-Tests-1",
-    "page": "About",
-    "title": "Running the Unit Tests",
-    "category": "section",
-    "text": "$ julia --color=yes test/runtests.jl"
+    "text": "If you like this package, consider contributing! You can send bug reports (or fix them and send your code), add examples to the documentation or propose new features.Below we detail some of the guidelines that should be followed when contributing to this package."
 },
 
 {
@@ -981,15 +1029,31 @@ var documenterSearchIndex = {"docs": [
     "page": "About",
     "title": "Branches",
     "category": "section",
-    "text": ""
+    "text": "Each pull request (PR) should be pushed in a new branch with the name of the author followed by a descriptive name, e.g. t/mforets/my_feature. If the branch is associated to a previous discussion in one issue, we use the name of the issue for easier lookup, e.g. t/mforets/7."
 },
 
 {
-    "location": "about.html#Contributing-to-the-Documentation-1",
+    "location": "about.html#Travis-CI-integration-1",
     "page": "About",
-    "title": "Contributing to the Documentation",
+    "title": "Travis CI integration",
     "category": "section",
-    "text": "The documentation source is written with Markdown, and we use Documenter.jl to produce the HTML documentation. To build the docs, run make.jl:$ julia --color=yes docs/make.jl"
+    "text": "This project is synchronized with Travis CI, such that each PR gets tested before merging (and the build is automatically triggered after each new commit). For the maintainability of this project, it is important to understand and fix the failing doctests if they exist. We develop in Julia v0.6.0, but for experimentation we also build on the nightly branch."
+},
+
+{
+    "location": "about.html#Contributing-to-the-documentation-1",
+    "page": "About",
+    "title": "Contributing to the documentation",
+    "category": "section",
+    "text": "This documentation is written in Markdown, and it relies on Documenter.jl to produce the HTML layout. To build the docs, run make.jl:$ julia --color=yes docs/make.jl"
+},
+
+{
+    "location": "about.html#Related-Projects-1",
+    "page": "About",
+    "title": "Related Projects",
+    "category": "section",
+    "text": "The project 3PLIB is a Java Library developed by Frédéric Viry, and it is one of the previous works that led to the creation of LazySets.jl. 3PLIB is specialized to planar projections of convex polyhedra. It was initially created to embed this feature in Java applications, and also provides a backend for visualization of high-dimensional reach set approximations computed with SpaceEx."
 },
 
 {
@@ -997,7 +1061,7 @@ var documenterSearchIndex = {"docs": [
     "page": "About",
     "title": "Credits",
     "category": "section",
-    "text": "These persons have contributed to LazySets.jl (in alphabetic order):Marcelo Forets\nChristian Schilling\nFrederic ViryWe are also grateful to Goran Frehse for enlightening discussions."
+    "text": "These persons have contributed to LazySets.jl (in alphabetic order):Marcelo Forets\nChristian Schilling\nFrédéric ViryWe are also grateful to Goran Frehse for enlightening discussions."
 },
 
 ]}
