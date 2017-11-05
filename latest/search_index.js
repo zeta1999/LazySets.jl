@@ -29,7 +29,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Example",
     "category": "section",
-    "text": "Let mathcalX_0 subset mathbbR^1000 be the Euclidean ball of center (1 ldots 1) and radius 01 in dimension n=1000. Suppose that given a real matrix A in mathbbR^1000 times 1000 we are interested in the equation:mathcalY = CH(e^A  mathcalX_0   BmathcalU mathcalX_0)where CH is the convex hull operator,  denotes Minkowski sum, mathcalU is a ball in the infinity norm centered at zero and radius 12, and B is a linear map of the appropriate dimensions.For concreteness, let's take A to be a random matrix with probability 1 of any entry being nonzero. Let's suppose that the input set mathcalU is two-dimensional, and that the linear map B is random. Using LazySets we can define this problem as follows:using LazySets\nA = sprandn(1000, 1000, 0.01)\nδ = 0.1\nX0 = Ball2(ones(1000), 0.1)\nB = randn(1000, 2)\nU = BallInf(zeros(2), 1.2)The @time macro reveals that building mathcalY with LazySets is instantaneous:@time Y = CH(SparseMatrixExp(A * δ) * X0 + δ * B * U, X0);\n0.000022 seconds (13 allocations: 16.094 KiB)By asking the concrete type of Y, we see that this object is a convex hull type, parameterized by the types of its arguments, corresponding to the mathematical formulation:julia> typeof(Y)\nLazySets.ConvexHull{LazySets.MinkowskiSum{LazySets.ExponentialMap{LazySets.Ball2},\nLazySets.LinearMap{LazySets.BallInf}},LazySets.Ball2}Now suppose that we are interested in observing the projection of mathcalY onto the variables number 1 and 500. First we define the 21000 projection matrix and apply it to mathcalY as a linear map (i.e. from the left). Second, we use the overapproximate method:proj_mat = [[1. zeros(1, 999)]; [zeros(1, 499) 1. zeros(1, 500)]]\n@time res = Approximations.overapproximate(proj_mat * Y);\n0.064034 seconds (1.12 k allocations: 7.691 MiB)We have calculated a box overapproximation of the exact projection onto the (x_1 x_500) plane. Notice that it takes about 0.064 seconds for the whole operation, allocating less than 10MB or RAM. Let us note that if the set operations where done explicitly, this would be much (!) slower. For instance, already the explicit computation of the matrix exponential would have costed 10x more, and allocated around 300MB. For even higher n, you'll probably run out of RAM! But this is doable with LazySets because the action of the matrix exponential over the set is being computed, evaluated only along the directions of interest. Similar comments apply to the Minkowski sums above.We can visualize the result using plot, as shown below (left-most plot).(Image: assets/example_ch.png)In the second and third plots, we have used a refined method that allows to specify a prescribed accuracy for the projection (in terms of Hausdorff distance). It can be passed as a second argument to overapproximate. Error tol. time (s) memory (MB)\n∞ (no refinement) 0.022 5.27\n1e-1 0.051 7.91\n1e-3 0.17 30.3This table shows the runtime and memory consumption for different error tolerances, and the results are shown in three plots of above, from left to right. When passing to a smaller tolerance, the corners connecting edges are more \"rounded\", at the expense of computational resources, since more support vectors have to be evaluated."
+    "text": "Let mathcalX_0 subset mathbbR^1000 be the Euclidean ball of center (1 ldots 1) and radius 01 in dimension n=1000. Suppose that given a real matrix A in mathbbR^1000 times 1000 we are interested in the equation:mathcalY = CH(e^A  mathcalX_0   BmathcalU mathcalX_0)where CH is the convex hull operator,  denotes Minkowski sum, mathcalU is a ball in the infinity norm centered at zero and radius 12, and B is a linear map of the appropriate dimensions.For concreteness, let's take A to be a random matrix with probability 1 of any entry being nonzero. Let's suppose that the input set mathcalU is two-dimensional, and that the linear map B is random. Using LazySets we can define this problem as follows:using LazySets\nA = sprandn(1000, 1000, 0.01)\nδ = 0.1\nX0 = Ball2(ones(1000), 0.1)\nB = randn(1000, 2)\nU = BallInf(zeros(2), 1.2)The @time macro reveals that building mathcalY with LazySets is instantaneous:@time Y = CH(SparseMatrixExp(A * δ) * X0 + δ * B * U, X0);\n0.000022 seconds (13 allocations: 16.094 KiB)By asking the concrete type of Y, we see that this object is a convex hull type, parameterized by the types of its arguments, corresponding to the mathematical formulation:julia> typeof(Y)\nLazySets.ConvexHull{LazySets.MinkowskiSum{LazySets.ExponentialMap{LazySets.Ball2},\nLazySets.LinearMap{LazySets.BallInf}},LazySets.Ball2}Now suppose that we are interested in observing the projection of mathcalY onto the variables number 1 and 500. First we define the 21000 projection matrix and apply it to mathcalY as a linear map (i.e. from the left). Second, we use the overapproximate method:proj_mat = [[1. zeros(1, 999)]; [zeros(1, 499) 1. zeros(1, 500)]]\n@time res = Approximations.overapproximate(proj_mat * Y);\n0.064034 seconds (1.12 k allocations: 7.691 MiB)We have calculated a box overapproximation of the exact projection onto the (x_1 x_500) plane. Notice that it takes about 0.064 seconds for the whole operation, allocating less than 10MB or RAM. Let us note that if the set operations were done explicitly, this would be much (!) slower. For instance, already the explicit computation of the matrix exponential would have costed 10x more, and allocated around 300MB. For even higher n, you'll probably run out of RAM! But this is doable with LazySets because the action of the matrix exponential over the set is being computed, evaluated only along the directions of interest. Similar comments apply to the Minkowski sums above.We can visualize the result using plot, as shown below (left-most plot).(Image: assets/example_ch.png)In the second and third plots, we have used a refined method that allows to specify a prescribed accuracy for the projection (in terms of Hausdorff distance). It can be passed as a second argument to overapproximate. Error tol. time (s) memory (MB)\n∞ (no refinement) 0.022 5.27\n1e-1 0.051 7.91\n1e-3 0.17 30.3This table shows the runtime and memory consumption for different error tolerances, and the results are shown in three plots of above, from left to right. When passing to a smaller tolerance, the corners connecting edges are more \"rounded\", at the expense of computational resources, since more support vectors have to be evaluated."
 },
 
 {
@@ -69,7 +69,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Getting Started",
     "title": "Getting Started",
     "category": "section",
-    "text": "In this section we set the mathematical notation and review the theoretical background from convex geometry that is used throughout LazySets. Then, we present an illustrative example of the decomposed image of a linear map.Pages = [\"getting_started.md\"]"
+    "text": "In this section we review the recommended setup to start working with this package.Pages = [\"getting_started.md\"]"
+},
+
+{
+    "location": "man/getting_started.html#Setup-1",
+    "page": "Getting Started",
+    "title": "Setup",
+    "category": "section",
+    "text": "This package requires Julia v0.6 or later. Refer to the official documentation on how to install it for your system. Below we explains the steps for setting up LazySets in your system and checking that it builds correctly."
 },
 
 {
@@ -77,31 +85,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Getting Started",
     "title": "Installation",
     "category": "section",
-    "text": ""
+    "text": "To install LazySets and its dependencies, use the following commands inside Julia's REPL:Pkg.clone(\"https://github.com/acroy/Expokit.jl\")\nPkg.clone(\"https://github.com/JuliaReach/LazySets.jl\")The first command installs the dependency Expokit, that provides lazy matrix exponentiation routines."
 },
 
 {
-    "location": "man/getting_started.html#Running-the-Unit-Tests-1",
+    "location": "man/getting_started.html#Testing-1",
     "page": "Getting Started",
-    "title": "Running the Unit Tests",
+    "title": "Testing",
     "category": "section",
-    "text": "To run the unit tests run the following command in the terminal:$ julia --color=yes test/runtests.jlAlternatively, you can test the package in Julia's REPL with the command:julia> Pkg.test(\"LazySets\")"
+    "text": "Unit tests execute specific portions of the library code, checking that the result produced is the expected one. To run the unit tests run the following command in the terminal:$ julia --color=yes test/runtests.jlAlternatively, you can test the package in Julia's REPL with the command:julia> Pkg.test(\"LazySets\")"
 },
 
 {
-    "location": "man/getting_started.html#First-steps-1",
+    "location": "man/getting_started.html#Workflow-tips-1",
     "page": "Getting Started",
-    "title": "First steps",
+    "title": "Workflow tips",
     "category": "section",
-    "text": ""
+    "text": "There are different ways to use Julia: from the terminal (so called REPL), from IJulia (i.e. Jupyter notebook), from Juno, ... If you don't have a preferred choice, we recommend using LazySets through IJulia; one reason is that the visualization is conveniently embedded into the notebook, and it can be exported into different formats, among other benefits. On the other hand, for development purposes you'll probably prefer using the REPL or the Juno environment."
 },
 
 {
-    "location": "man/getting_started.html#Workflow-Tips-1",
+    "location": "man/getting_started.html#Updating-1",
     "page": "Getting Started",
-    "title": "Workflow Tips",
+    "title": "Updating",
     "category": "section",
-    "text": ""
+    "text": "After working with LazySets for some time, you may want to get the newest version. For this you can use this command:Pkg.checkout(\"LazySets\")That will checkout the latest version master branch, and precompile it the next time you enter a session and do using LazySets."
 },
 
 {
@@ -117,7 +125,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Polyhedral Approximations",
     "title": "Polyhedral Approximations",
     "category": "section",
-    "text": "Polyhedral Approximation of a Convex Set"
+    "text": "In this section we review the mathematical notation and results from convex geometry that are used throughout LazySets."
 },
 
 {
@@ -125,7 +133,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Polyhedral Approximations",
     "title": "Preliminaries",
     "category": "section",
-    "text": "Let us introduce some notation. Let mathbbI_n be the identity matrix of dimension ntimes n. For p geq 1, the p-norm of an n-dimensional vector x in mathbbR^n is denoted  Vert x Vert_p."
+    "text": "Let us introduce some notation. Let mathbbI_n be the identity matrix of dimension ntimes n. For p geq 1, the p-norm of an n-dimensional vector x in mathbbR^n is denoted Vert x Vert_p."
 },
 
 {
@@ -145,6 +153,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "man/polyhedral_approximations.html#Polyhedral-approximation-of-a-convex-set-1",
+    "page": "Polyhedral Approximations",
+    "title": "Polyhedral approximation of a convex set",
+    "category": "section",
+    "text": ""
+},
+
+{
     "location": "man/decompose_example.html#",
     "page": "Decomposing an Affine Map",
     "title": "Decomposing an Affine Map",
@@ -157,7 +173,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Decomposing an Affine Map",
     "title": "Decomposing an Affine Map",
     "category": "section",
-    "text": ""
+    "text": "In this section we present an illustrative example of the decomposed image of a linear map."
 },
 
 {
