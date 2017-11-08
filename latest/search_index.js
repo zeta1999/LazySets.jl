@@ -441,11 +441,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.andrew_monotone_chain",
+    "page": "Common Set Representations",
+    "title": "LazySets.andrew_monotone_chain",
+    "category": "Function",
+    "text": "andrew_monotone_chain(points)\n\nInput\n\npoints – array of vectors containing the 2D coordinates of the points\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm, that constructs the convex hull of a set of n 2D points in O(n log n) time. For further details see: Monotone chain\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Vertex-representation-1",
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon"
+    "text": "VPolygon\nandrew_monotone_chain"
 },
 
 {
