@@ -221,7 +221,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Common Set Representations",
     "category": "section",
-    "text": "This section of the manual describes the basic set representation types.Pages = [\"representations.md\"]CurrentModule = LazySets"
+    "text": "This section of the manual describes the basic set representation types.Pages = [\"representations.md\"]\nDepth = 3CurrentModule = LazySets"
 },
 
 {
@@ -249,19 +249,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ",
-    "page": "Common Set Representations",
-    "title": "LazySets.σ",
-    "category": "Function",
-    "text": "σ(d, B)\n\nReturn the support vector of a Ball2 in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction.\n\nNotes\n\nIf the given direction has norm zero, the origin is returned.\n\n\n\nσ(d, B)\n\nReturn the support vector of an infinity-norm ball in a given direction.\n\nInput\n\nd – direction\nB – unit ball in the infinity norm\n\nAlgorithm\n\nThis code is a vectorized version of\n\n[(d[i] >= 0) ? B.center[i] + B.radius : B.center[i] - B.radius for i in 1:length(d)]\n\nNotice that we cannot use B.center + sign.(d) * B.radius, since the built-in sign function is such that sign(0) = 0, instead of 1. For this reason, we use the custom unit_step function, that allows to do: B.center + unit_step.(d) * B.radius (the dot operator performs broadcasting, to accept vector-valued entries).\n\n\n\nσ(d, H)\n\nReturn the support vector of a Hyperrectangle in a given direction.\n\n\n\nσ(d, P)\n\nReturn the support vector of a polygon in a given direction. Return the zero vector if there are no constraints (i.e., the universal polytope).\n\nInput\n\nd – direction\np – polyhedron in H-representation\n\n\n\nσ(d, P)\n\nReturn the support vector of the optimized polygon in a given direction.\n\nInput\n\nd – direction\nP – polyhedron in H-representation\n\n\n\nσ(d, P)\n\nReturn the support vector of a convex hull in a given direction.\n\nInput\n\nd  – direction\nch – the convex hull of two sets\n\n\n\nσ(d, cp)\n\nSupport vector of a Cartesian product.\n\nInput\n\nd – direction\ncp – cartesian product\n\n\n\nσ(d, cp)\n\nSupport vector of the Cartesian product of a finite number of sets.\n\nInput\n\nd – direction\ncp – cartesian product array\n\n\n\nσ(d, eprojmap)\n\nSupport vector of an ExponentialProjectionMap.\n\nInput\n\nd         – a direction\neprojmap  – the projection of an exponential map\n\nIf S = (LMR)B, where L and R are dense matrices, M is a matrix exponential, and B is a set, it follows that: σ(d, S) = LMR σ(R^T M^T L^T d, B) for any direction d.\n\n\n\nσ(d, lm)\n\nSupport vector of the linear map of a set.\n\nIf S = MB, where M is sa matrix and B is a set, it follows that σ(d, S) = Mσ(M^T d, B) for any direction d.\n\nInput\n\nd  – a direction\nlm – a linear map\n\n\n\nσ(d::AbstractVector{Float64}, ms::MinkowskiSum)\n\nSupport vector of a Minkowski sum.\n\nInput\n\nd  – vector\nms – Minkowski sum\n\n\n\nσ(d::Vector{Float64}, ms::MinkowskiSumArray)\n\nSupport vector of the Minkowski sum of a finite number of sets.\n\nInput\n\nd – direction\nms – Minkowski sum array\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#Abstract-support-function-and-support-vector-1",
     "page": "Common Set Representations",
     "title": "Abstract support function and support vector",
     "category": "section",
-    "text": "LazySets\nLazySets.LazySet\nρ\nσ"
+    "text": "LazySets\nLazySets.LazySet\nρ"
 },
 
 {
@@ -333,15 +325,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolygon",
     "category": "Type",
-    "text": "HPolygon <: LazySet\n\nType that represents a convex polygon (in H-representation).\n\nFields\n\nconstraints –  an array of linear constraints\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.tovrep-Tuple{LazySets.HPolygon}",
-    "page": "Common Set Representations",
-    "title": "LazySets.tovrep",
-    "category": "Method",
-    "text": "tovrep(s)\n\nBuild a vertex representation of the given polygon.\n\nInput\n\ns – a polygon in H-representation, HPolygon. The linear constraints are        assumed sorted by their normal directions.\n\nOutput\n\nThe same polygon in a vertex representation, VPolygon.\n\n\n\n"
+    "text": "HPolygon <: LazySet\n\nType that represents a convex polygon in constraint representation, whose edges are sorted in counter-clockwise fashion with respect to their normal directions.\n\nFields\n\nconstraints_list –  an array of linear constraints\n\nNote\n\nThe HPolygon constructor does not perform sorting of the given list of edges. Use addconstraint! to iteratively add and sort the edges.\n\n\n\n"
 },
 
 {
@@ -349,7 +333,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.addconstraint!",
     "category": "Method",
-    "text": "addconstraint!(p, c)\n\nAdd a linear constraint to a polygon keeping the constraints sorted by their normal directions.\n\nInput\n\np – a polygon\nc – the linear constraint to add\n\n\n\n"
+    "text": "addconstraint!(P, constraint)\n\nAdd a linear constraint to a polygon in constraint representation keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – a polygon\nconstraint – the linear constraint to add, see LinearConstraint\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.HPolygon}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(P)\n\nReturn the ambient dimension of the polygon.\n\nInput\n\nP – polygon in constraint representation\n\n\n\n"
 },
 
 {
@@ -357,23 +349,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, P)\n\nReturn the support vector of a polygon in a given direction. Return the zero vector if there are no constraints (i.e., the universal polytope).\n\nInput\n\nd – direction\np – polyhedron in H-representation\n\n\n\n"
+    "text": "σ(d, P)\n\nReturn the support vector of a polygon in a given direction. Return the zero vector if there are no constraints (i.e., the universal polytope).\n\nInput\n\nd – direction\nP – polygon in constraint representation\n\nAlgorithm\n\nComparison of directions is performed using polar angles, see the overload of <= for two-dimensional vectors.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{Union{LazySets.HPolygon, LazySets.HPolygonOpt}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.vertices_list",
-    "category": "Method",
-    "text": "vertices_list(po)\n\nReturn the list of vertices of a convex polygon.\n\nInput\n\npo – a polygon, which can be either of type HPolygon or the refined type HPolygonOpt\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{Float64}}.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.is_contained-Tuple{Array{Float64,1},LazySets.HPolygon}",
+    "location": "lib/representations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.HPolygon}",
     "page": "Common Set Representations",
     "title": "LazySets.is_contained",
     "category": "Method",
-    "text": "is_contained(x, P)\n\nReturn whether a given vector is contained in the polygon.\n\nInput\n\nx – vector\nP – polygon\n\nOutput\n\nReturn rue iff x ∈ P.\n\n\n\n"
+    "text": "is_contained(x, P)\n\nReturn whether a given vector is contained in the polygon.\n\nInput\n\nx – two-dimensional vector\nP – polygon in constraint representation\n\nOutput\n\nReturn true iff x ∈ P.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.tovrep-Tuple{LazySets.HPolygon}",
+    "page": "Common Set Representations",
+    "title": "LazySets.tovrep",
+    "category": "Method",
+    "text": "tovrep(P)\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe same polygon but in vertex representation, VPolygon.\n\nNote\n\nThe linear constraints of the input HPolygon are assumed to be sorted by their normal directions in counter-clockwise fashion.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.HPolygon}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "Method",
+    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{Float64}}.\n\n\n\n"
 },
 
 {
@@ -381,7 +381,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "HPolygon\ntovrep(s::HPolygon)\naddconstraint!(p::HPolygon, c::LinearConstraint)\nσ(d::AbstractVector{Float64}, p::HPolygon)\nvertices_list(po::Union{HPolygon, HPolygonOpt})\nis_contained(x::Vector{Float64}, P::HPolygon)"
+    "text": "HPolygon\naddconstraint!(P::HPolygon, c::LinearConstraint)\ndim(P::HPolygon)\nσ(d::AbstractVector{Float64}, P::HPolygon)\n\nis_contained(x::AbstractVector{Float64}, P::HPolygon)\ntovrep(P::HPolygon)\nvertices_list(P::HPolygon)"
 },
 
 {
@@ -389,15 +389,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolygonOpt",
     "category": "Type",
-    "text": "HPolygonOpt <: LazySet\n\nType that represents a convex polygon (in H-representation).\n\nFields\n\nP   – polygon\nind – an index in the list of constraints to begin the search to          evaluate the support functions.\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions, which are one to one close.\n\n\n\n"
+    "text": "HPolygonOpt <: LazySet\n\nType that represents a convex polygon in constraint representation, whose edges are sorted in counter-clockwise fashion with respect to their normal directions. This is a refined version of HPolygon.\n\nFields\n\nP   – polygon\nind – an index in the list of constraints to begin the search to          evaluate the support functions.\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions, which are one to one close. The strategy is to have an index that can be used to warm-start the search for optimal values in the support vector computation.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt}",
+    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygonOpt,LazySets.LinearConstraint}",
     "page": "Common Set Representations",
-    "title": "LazySets.σ",
+    "title": "LazySets.addconstraint!",
     "category": "Method",
-    "text": "σ(d, P)\n\nReturn the support vector of the optimized polygon in a given direction.\n\nInput\n\nd – direction\nP – polyhedron in H-representation\n\n\n\n"
+    "text": "addconstraint!(P, constraint)\n\nAdd a linear constraint to an optimized polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – optimized polygon\nconstraint – the linear constraint to add, see LinearConstraint\n\n\n\n"
 },
 
 {
@@ -405,7 +405,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(P)\n\nReturn the ambient dimension of the optimized polygon.\n\nInput\n\nP – optimized polyhedron in H-representation\n\n\n\n"
+    "text": "dim(P)\n\nReturn the ambient dimension of the optimized polygon.\n\nInput\n\nP – optimized polygon\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d, P)\n\nReturn the support vector of the optimized polygon in a given direction.\n\nInput\n\nd – direction\nP – optimized polygon in constraint representation\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt}",
+    "page": "Common Set Representations",
+    "title": "LazySets.is_contained",
+    "category": "Method",
+    "text": "is_contained(x, P)\n\nReturn whether a given vector is contained in an optimized polygon in constraint representation.\n\nInput\n\nx – two-dimensional vector\nP – optimized polygon in constraint representation\n\nOutput\n\nReturn true iff x ∈ P.\n\n\n\n"
 },
 
 {
@@ -413,15 +429,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tovrep",
     "category": "Method",
-    "text": "tovrep(po)\n\nBuild a vertex representation of the given polygon.\n\nInput\n\npo – a polygon in H-representation. The linear constraints are         assumed sorted by their normal directions.\n\nOutput\n\nThe same polygon in a vertex representation.\n\n\n\n"
+    "text": "tovrep(P)\n\nBuild a vertex representation of the given optimized polygon.\n\nInput\n\nP – optimized polygon in constraint representation\n\nOutput\n\nThe same polygon in vertex representation, VPolygon.\n\nNote\n\nThe linear constraints of the input HPolygonOpt are assumed to be sorted by their normal directions in counter-clockwise fashion.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.is_contained-Tuple{Array{Float64,1},LazySets.HPolygonOpt}",
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.HPolygonOpt}",
     "page": "Common Set Representations",
-    "title": "LazySets.is_contained",
+    "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "is_contained(x, P)\n\nReturn whether a given vector is contained in the optimized polygon.\n\nInput\n\nx – vector\nP – polygon\n\nOutput\n\nReturn true iff x ∈ P.\n\n\n\n"
+    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in constraint representation.\n\nInput\n\nP – an optimized polygon in constraint representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{Float64}}.\n\n\n\n"
 },
 
 {
@@ -429,7 +445,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\nσ(d::AbstractVector{Float64}, p::HPolygonOpt)\ndim(P::HPolygonOpt)\ntovrep(po::HPolygonOpt)\nis_contained(x::Vector{Float64}, P::HPolygonOpt)"
+    "text": "HPolygonOpt\naddconstraint!(P::HPolygonOpt, c::LinearConstraint)\ndim(P::HPolygonOpt)\nσ(d::AbstractVector{Float64}, P::HPolygonOpt)\n\nis_contained(x::AbstractVector{Float64}, P::HPolygonOpt)\ntovrep(P::HPolygonOpt)\nvertices_list(P::HPolygonOpt)"
 },
 
 {
@@ -437,15 +453,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.VPolygon",
     "category": "Type",
-    "text": "VPolygon <: LazySet\n\nType that represents a polygon by its vertices.\n\nFields\n\nvl – the list of vertices\n\n\n\n"
+    "text": "VPolygon <: LazySet\n\nType that represents a polygon by its vertices.\n\nFields\n\nvertices_list – the list of vertices\n\nNotes\n\nThe constructor of VPolygon runs a convex hull algorithm, and the given vertices are sorted in counter-clockwise fashion. If you don't want to take the convex hull, set the apply_convex_hull=false flag when instantiating the constructor.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.andrew_monotone_chain",
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.VPolygon}",
     "page": "Common Set Representations",
-    "title": "LazySets.andrew_monotone_chain",
-    "category": "Function",
-    "text": "andrew_monotone_chain(points)\n\nInput\n\npoints – array of vectors containing the 2D coordinates of the points\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm, that constructs the convex hull of a set of n 2D points in O(n log n) time. For further details see: Monotone chain\n\n\n\n"
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(P)\n\nReturn the ambient dimension of the polygon.\n\nInput\n\nP – polygon in vertex representation\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.VPolygon}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "Method",
+    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in vertex representation.\n\nInput\n\nP – a polygon given in vertex representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{Float64}}.\n\n\n\n"
 },
 
 {
@@ -453,7 +477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\nandrew_monotone_chain"
+    "text": "VPolygon\ndim(P::VPolygon)\nvertices_list(P::VPolygon)"
 },
 
 {
@@ -549,7 +573,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.VoidSet",
     "category": "Type",
-    "text": "VoidSet <: LazySet\n\nType that represents a void (neutral) set with respect to Minkowski sum.\n\nFields\n\ndim – ambient dimension of the VoidSet \n\n\n\n"
+    "text": "VoidSet <: LazySet\n\nType that represents a void (neutral) set with respect to Minkowski sum.\n\nFields\n\ndim – ambient dimension of the VoidSet\n\n\n\n"
 },
 
 {
@@ -589,7 +613,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Common Set Operations",
     "category": "section",
-    "text": "This section of the manual describes the basic symbolic types describing operations between sets.Pages = [\"operations.md\"]CurrentModule = LazySets"
+    "text": "This section of the manual describes the basic symbolic types describing operations between sets.Pages = [\"operations.md\"]\nDepth = 3CurrentModule = LazySets"
 },
 
 {
@@ -702,6 +726,46 @@ var documenterSearchIndex = {"docs": [
     "title": "Convex Hull",
     "category": "section",
     "text": "ConvexHull\ndim(ch::ConvexHull)\nσ(d::AbstractVector{Float64}, ch::ConvexHull)"
+},
+
+{
+    "location": "lib/operations.html#LazySets.convex_hull",
+    "page": "Common Set Operations",
+    "title": "LazySets.convex_hull",
+    "category": "Function",
+    "text": "convex_hull(points; algorithm)\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – array of vectors containing the 2D coordinates of the points\nalgorithm – (optional, default: \"andrew_monotone_chain\") choose the convex                hull algorithm, valid options are:\n\"andrew_monotone_chain\"\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.convex_hull!",
+    "page": "Common Set Operations",
+    "title": "LazySets.convex_hull!",
+    "category": "Function",
+    "text": "convex_hull!(points; algorithm)\n\nCompute the convex hull of points in the plane, in-place. See also: convex_hull.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.right_turn",
+    "page": "Common Set Operations",
+    "title": "LazySets.right_turn",
+    "category": "Function",
+    "text": "right_turn(O, A, B)\n\nDetermine if the acute angle defined by the three points O, A, B in the plane is a right turn (counter-clockwise) with respect to the center O.\n\nInput\n\nO – center point\nA – one point\nB – another point\n\nAlgorithm\n\nThe cross product is used to determine the sense of rotation. If the result is 0, the points are collinear; if it is positive, the three points constitute a positive angle of rotation around O from A to B; otherwise a negative angle.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.andrew_monotone_chain!",
+    "page": "Common Set Operations",
+    "title": "LazySets.andrew_monotone_chain!",
+    "category": "Function",
+    "text": "andrew_monotone_chain!(points)\n\nCompute the convex hull of points in the plane using Andrew's monotone chain method.\n\nInput\n\npoints – array of vectors containing the 2D coordinates of the points\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see the wikipedia page: Monotone chain\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Convex-Hull-Algorithms-1",
+    "page": "Common Set Operations",
+    "title": "Convex Hull Algorithms",
+    "category": "section",
+    "text": "convex_hull\nconvex_hull!\nright_turn\nandrew_monotone_chain!"
 },
 
 {
