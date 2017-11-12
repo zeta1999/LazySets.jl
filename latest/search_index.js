@@ -517,7 +517,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Hyperrectangle",
     "category": "Type",
-    "text": "Hyperrectangle <: LazySet\n\nType that represents a Hyperrectangle.\n\nA hyperrectangle is the Cartesian product of one-dimensional intervals.\n\nFields\n\ncenter – center of the hyperrectangle as a real vector\nradius – radius of the ball as a real vector, i.e. its width along             each coordinate direction\n\n\n\n"
+    "text": "Hyperrectangle <: LazySet\n\nType that represents a Hyperrectangle.\n\nA hyperrectangle is the Cartesian product of one-dimensional intervals.\n\nFields\n\ncenter – center of the hyperrectangle as a real vector\nradius – radius of the ball as a real vector, i.e., half of its width along             each coordinate direction\n\n\n\n"
 },
 
 {
@@ -525,7 +525,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Method",
-    "text": "radius(H::Hyperrectangle)\n\nReturn the radius of a Hyperrectangle. It is the radius of the enclosing hypercube of minimal volume.\n\nInput\n\nH – a hyperrectangle\n\nOutput\n\nA real number representing its radius.\n\n\n\n"
+    "text": "radius(H::Hyperrectangle, [p])\n\nReturn the radius of a Hyperrectangle. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
 },
 
 {
@@ -557,7 +557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Method",
-    "text": "diameter(H::Hyperrectangle)\n\nReturn the diameter of a hyperrectangle. It the maximum norm (measured the infinity norm) of any element of the set.\n\nInput\n\nH – a hyperrectangle\n\nOutput\n\nThe diameter of the hyperrectangle.\n\n\n\n"
+    "text": "diameter(H::Hyperrectangle, [p])\n\nReturn the diameter of a hyperrectangle. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nH – a hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
 },
 
 {
