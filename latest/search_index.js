@@ -473,11 +473,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.VPolygon}",
+    "page": "Common Set Representations",
+    "title": "LazySets.singleton_list",
+    "category": "Method",
+    "text": "singleton_list(P)\n\nReturn the vertices of a convex polygon in vertex representation as a list of singletons.\n\nInput\n\nP – a polygon given in vertex representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Singleton{Float64}}.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Vertex-representation-1",
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\ndim(P::VPolygon)\nvertices_list(P::VPolygon)"
+    "text": "VPolygon\ndim(P::VPolygon)\nvertices_list(P::VPolygon)\nsingleton_list(P::VPolygon)"
 },
 
 {
@@ -521,14 +529,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.radius-Tuple{LazySets.Hyperrectangle}",
-    "page": "Common Set Representations",
-    "title": "LazySets.radius",
-    "category": "Method",
-    "text": "radius(H::Hyperrectangle, [p])\n\nReturn the radius of a Hyperrectangle. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Hyperrectangle}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
@@ -553,6 +553,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.LinAlg.norm-Tuple{LazySets.Hyperrectangle}",
+    "page": "Common Set Representations",
+    "title": "Base.LinAlg.norm",
+    "category": "Method",
+    "text": "norm(H::Hyperrectangle, [p])\n\nReturn the norm of a Hyperrectangle. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.radius-Tuple{LazySets.Hyperrectangle}",
+    "page": "Common Set Representations",
+    "title": "LazySets.radius",
+    "category": "Method",
+    "text": "radius(H::Hyperrectangle, [p])\n\nReturn the radius of a Hyperrectangle. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.diameter-Tuple{LazySets.Hyperrectangle}",
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
@@ -565,7 +581,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangles",
     "category": "section",
-    "text": "Hyperrectangle\nradius(H::Hyperrectangle)\ndim(H::Hyperrectangle)\nσ(d::AbstractVector{Float64}, H::Hyperrectangle)\nvertices_list(H::Hyperrectangle)\ndiameter(H::Hyperrectangle)"
+    "text": "Hyperrectangle\ndim(H::Hyperrectangle)\nσ(d::AbstractVector{Float64}, H::Hyperrectangle)\nvertices_list(H::Hyperrectangle)\nnorm(H::Hyperrectangle)\nradius(H::Hyperrectangle)\ndiameter(H::Hyperrectangle)"
 },
 
 {
