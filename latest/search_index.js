@@ -965,7 +965,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Approximations",
     "category": "section",
-    "text": "This section of the manual describes the Cartesian decomposition algorithms and the approximation of high-dimensional convex sets using projections.Pages = [\"approximations.md\"]CurrentModule = LazySets.Approximations"
+    "text": "This section of the manual describes the Cartesian decomposition algorithms and the approximation of high-dimensional convex sets using projections.Pages = [\"approximations.md\"]\nDepth = 3CurrentModule = LazySets.Approximations"
 },
 
 {
@@ -973,7 +973,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.decompose",
     "category": "Function",
-    "text": "decompose(X)\n\nCompute an overapproximation of the projections of the given set over each two-dimensional subspace using box directions.\n\nInput\n\nX  – set represented by support functions\n\nOutput\n\nA CartesianProductArray corresponding to the cartesian product of 2x2 polygons.\n\n\n\ndecompose(X, ɛi)\n\nCompute an overapproximation of the projections of the given set over each two-dimensional subspace with a certified error bound.\n\nInput\n\nX  – set represented by support functions\nɛi – array, error bound for each projection (different error bounds         can be passed to different blocks)\n\nOutput\n\nA CartesianProductArray corresponding to the cartesian product of 2x2 polygons.\n\nAlgorithm\n\nThis algorithm assumes a decomposition into two-dimensional subspaces only, i.e. partitions of the form 2 2  2. In particular if X is a CartesianProductArray no check is performed to verify that assumption.\n\nIt proceeds as follows:\n\nProject the set X into each partition, with MX, where M is the identity matrix in the block coordinates and zero otherwise.\nOverapproximate the set with a given error bound, ɛi[i], for i = 1  b,\nReturn the result as an array of support functions.\n\n\n\ndecompose(X, ɛ)\n\nCompute an overapproximation of the projections of the given set over each two-dimensional subspace with a certified error bound.\n\nThis function is a particular case of decompose(X, ɛi), where the same error bound for each block is assumed. \n\nInput\n\nX  – set represented by support functions\nɛ –  error bound\n\nOutput\n\nA CartesianProductArray corresponding to the cartesian product of 2x2 polygons.\n\n\n\n"
+    "text": "decompose(X)\n\nCompute an overapproximation of the projections of the given set over each two-dimensional subspace using box directions.\n\nInput\n\nX  – lazy set\n\nOutput\n\nA CartesianProductArray corresponding to the cartesian product of 2x2 polygons.\n\n\n\ndecompose(X, ɛi)\n\nCompute an overapproximation of the projections of the given set over each two-dimensional subspace with a certified error bound.\n\nInput\n\nX  – lazy set\nɛi – array with the error bound for each projection (different error bounds         can be passed to different blocks)\n\nOutput\n\nA CartesianProductArray corresponding to the cartesian product of 2x2 polygons.\n\nAlgorithm\n\nThis algorithm assumes a decomposition into two-dimensional subspaces only, i.e. partitions of the form 2 2  2. In particular if X is a CartesianProductArray, no check is performed to verify that assumption.\n\nIt proceeds as follows:\n\nProject the set X into each partition, with MX, where M is the identity matrix in the block coordinates and zero otherwise.\nOverapproximate the set with a given error bound, ɛi[i], for i = 1  b,\nReturn the result as an array of support functions.\n\n\n\ndecompose(X, ɛ)\n\nCompute an overapproximation of the projections of the given set over each two-dimensional subspace with a certified error bound.\n\nThis function is a particular case of decompose(X, ɛi), where the same error bound for each block is assumed.\n\nInput\n\nX  – lazy set\nɛ –  error bound\n\nOutput\n\nA CartesianProductArray corresponding to the cartesian product of 2x2 polygons.\n\n\n\n"
 },
 
 {
@@ -981,7 +981,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.overapproximate",
     "category": "Function",
-    "text": "overapproximate(S)\n\nReturn an approximation of the given 2D set as a polygon, using box directions.\n\nInput\n\nS – a 2D set defined by its support function\n\nOutput\n\nA polygon in constraint representation.\n\n\n\noverapproximate(S, ɛ)\n\nReturn an ɛ-close approximation of the given 2D set (in terms of Hausdorff distance) as a polygon.\n\nInput\n\nS – a 2D set defined by its support function\nɛ – the error bound\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n"
+    "text": "overapproximate(X)\n\nReturn an approximation of the given 2D set as a box-shaped polygon.\n\nInput\n\nX – lazy set, assumed to be two-dimensional\n\nOutput\n\nA polygon in constraint representation.\n\n\n\noverapproximate(X, ɛ)\n\nReturn an ɛ-close approximation of the given 2D set (in terms of Hausdorff distance) as a polygon.\n\nInput\n\nX – lazy set, assumed to be two-dimensional\nɛ – the error bound\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n"
 },
 
 {
@@ -997,7 +997,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.ballinf_approximation",
     "category": "Function",
-    "text": "ballinf_approximation(S)\n\nOverapproximation of a set by a ball in the infinity norm.\n\nInput\n\nX – a lazy set\n\nOutput\n\nH – a ball in the infinity norm which tightly contains the given set\n\nAlgorithm\n\nThe center and radius of the box are obtained by evaluating the support function of the given set along the canonical directions.\n\n\n\n"
+    "text": "ballinf_approximation(X)\n\nOverapproximation of a set by a ball in the infinity norm.\n\nInput\n\nX – a lazy set\n\nOutput\n\nH – a ball in the infinity norm which tightly contains the given set\n\nAlgorithm\n\nThe center and radius of the box are obtained by evaluating the support function of the given set along the canonical directions.\n\n\n\n"
 },
 
 {
@@ -1005,7 +1005,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation",
     "category": "Function",
-    "text": "box_approximation(X)\n\nOverapproximate a set by a box (hyperrectangle). \n\nInput\n\nX – a lazy set\n\nOutput\n\nH – a (tight) hyperrectangle\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaring the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n"
+    "text": "box_approximation(X)\n\nOverapproximate a set by a box (hyperrectangle).\n\nInput\n\nX – a lazy set\n\nOutput\n\nH – a (tight) hyperrectangle\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaring the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n"
 },
 
 {
@@ -1037,7 +1037,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.radius_approximation",
     "category": "Function",
-    "text": "radius_approximation(X)\n\nApproximate radius of a given set.\n\nInput\n\nX – a lazy set\n\nAlgorithm\n\nThis is an approximation in the infinity norm. The radius of a BallInf of center c and radius r can be approximated by ‖c‖ + r√n, where n is the dimension of the  vectorspace.\n\n\n\n"
+    "text": "radius_approximation(X)\n\nApproximate radius of a given set.\n\nInput\n\nX – a lazy set\n\nAlgorithm\n\nThis is an approximation in the infinity norm. The radius of a BallInf of center c and radius r can be approximated by ‖c‖ + r√n, where n is the dimension of the vectorspace.\n\n\n\n"
 },
 
 {
@@ -1053,7 +1053,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.approximate",
     "category": "Function",
-    "text": "approximate(S, ɛ)\n\nReturn an ɛ-close approximation of the given 2D set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nS – a 2D set defined by its support function\nɛ – the error bound\n\n\n\n"
+    "text": "approximate(X, ɛ)\n\nReturn an ɛ-close approximation of the given 2D set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nX – a 2D set defined by its support function\nɛ – the error bound\n\n\n\n"
 },
 
 {
