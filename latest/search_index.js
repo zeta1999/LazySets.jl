@@ -1201,11 +1201,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "about.html#Travis-CI-integration-1",
+    "location": "about.html#Unit-testing-and-continuous-integration-(CI)-1",
     "page": "About",
-    "title": "Travis CI integration",
+    "title": "Unit testing and continuous integration (CI)",
     "category": "section",
-    "text": "This project is synchronized with Travis CI, such that each PR gets tested before merging (and the build is automatically triggered after each new commit). For the maintainability of this project, it is important to understand and fix the failing doctests if they exist. We develop in Julia v0.6.0, but for experimentation we also build on the nightly branch."
+    "text": "This project is synchronized with Travis CI, such that each PR gets tested before merging (and the build is automatically triggered after each new commit). For the maintainability of this project, it is important to understand and fix the failing doctests if they exist. We develop in Julia v0.6.0, but for experimentation we also build on the nightly branch.To run the unit tests locally, you should do:$ julia --color=yes test/runtests.jl"
 },
 
 {
