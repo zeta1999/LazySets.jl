@@ -257,27 +257,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.BallInf",
+    "location": "lib/representations.html#Balls-1",
     "page": "Common Set Representations",
-    "title": "LazySets.BallInf",
-    "category": "Type",
-    "text": "BallInf <: LazySet\n\nType that represents a ball in the infinity norm.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nWe create the two-dimensional unit ball, and compute its support function along the direction (1 1):\n\njulia> B = BallInf(zeros(2), 0.1)\nLazySets.BallInf([0.0, 0.0], 0.1)\n\njulia> dim(B)\n2\n\njulia> ρ([1., 1.], B)\n0.2\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.BallInf}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "Method",
-    "text": "dim(B)\n\nReturn the dimension of a BallInf.\n\nInput\n\nB – a ball in the infinity norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.BallInf}",
-    "page": "Common Set Representations",
-    "title": "LazySets.σ",
-    "category": "Method",
-    "text": "σ(d, B)\n\nReturn the support vector of an infinity-norm ball in a given direction.\n\nInput\n\nd – direction\nB – unit ball in the infinity norm\n\nAlgorithm\n\nThis code is a vectorized version of\n\n[(d[i] >= 0) ? B.center[i] + B.radius : B.center[i] - B.radius for i in 1:length(d)]\n\nNotice that we cannot use B.center + sign.(d) * B.radius, since the built-in sign function is such that sign(0) = 0, instead of 1. For this reason, we use the custom unit_step function, that allows to do: B.center + unit_step.(d) * B.radius (the dot operator performs broadcasting, to accept vector-valued entries).\n\n\n\n"
+    "title": "Balls",
+    "category": "section",
+    "text": "Unit balls are defined by int center (vector) and radius (scalar), such as infinity-norm balls,B_infty(c r) =  x  mathbbR^n  Vert x - cVert_infty leq r and Euclidean (2-norm) balls,B_2(c r) =  x  mathbbR^n  Vert x - cVert_2 leq r "
 },
 
 {
@@ -305,11 +289,75 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Balls-1",
+    "location": "lib/representations.html#Euclidean-norm-ball-1",
     "page": "Common Set Representations",
-    "title": "Balls",
+    "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Unit balls are defined by int center (vector) and radius (scalar), such as infinity-norm balls,B_infty(c r) =  x  mathbbR^n  Vert x - cVert_infty leq r and Euclidean (2-norm) balls,B_2(c r) =  x  mathbbR^n  Vert x - cVert_2 leq r BallInf\ndim(B::BallInf)\nσ(d::AbstractVector{Float64}, B::BallInf)\nBall2\ndim(B::Ball2)\nσ(d::AbstractVector{Float64}, B::Ball2)"
+    "text": "Ball2\ndim(B::Ball2)\nσ(d::AbstractVector{Float64}, B::Ball2)"
+},
+
+{
+    "location": "lib/representations.html#LazySets.BallInf",
+    "page": "Common Set Representations",
+    "title": "LazySets.BallInf",
+    "category": "Type",
+    "text": "BallInf <: LazySet\n\nType that represents a ball in the infinity norm.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nWe create the two-dimensional unit ball, and compute its support function along the direction (1 1):\n\njulia> B = BallInf(zeros(2), 0.1)\nLazySets.BallInf([0.0, 0.0], 0.1)\n\njulia> dim(B)\n2\n\njulia> ρ([1., 1.], B)\n0.2\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.BallInf}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(B)\n\nReturn the dimension of a BallInf.\n\nInput\n\nB – a ball in the infinity norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.BallInf}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d, B)\n\nReturn the support vector of an infinity-norm ball in a given direction.\n\nInput\n\nd – direction\nB – unit ball in the infinity norm\n\nAlgorithm\n\nThis code is a vectorized version of\n\n[(d[i] >= 0) ? B.center[i] + B.radius : B.center[i] - B.radius for i in 1:length(d)]\n\nNotice that we cannot use B.center + sign.(d) * B.radius, since the built-in sign function is such that sign(0) = 0, instead of 1. For this reason, we use the custom unit_step function, that allows to do: B.center + unit_step.(d) * B.radius (the dot operator performs broadcasting, to accept vector-valued entries).\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.BallInf}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "Method",
+    "text": "vertices_list(B::BallInf)\n\nReturn the list of vertices of a ball in the infinity norm.\n\nInput\n\nB – a ball in the infinity norm\n\nOutput\n\nThe list of vertices as an array of floating-point vectors.\n\nNotes\n\nFor high-dimensions, it is preferable to develop a vertex_iterator approach.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.LinAlg.norm",
+    "page": "Common Set Representations",
+    "title": "Base.LinAlg.norm",
+    "category": "Function",
+    "text": "norm(B::BallInf, [p])\n\nReturn the norm of a BallInf. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.radius",
+    "page": "Common Set Representations",
+    "title": "LazySets.radius",
+    "category": "Function",
+    "text": "radius(B::BallInf, [p])\n\nReturn the radius of a ball in the infinity norm. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nB – a ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.diameter",
+    "page": "Common Set Representations",
+    "title": "LazySets.diameter",
+    "category": "Function",
+    "text": "diameter(B::BallInf, [p])\n\nReturn the diameter of a ball in the infinity norm. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nB – a ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Infinity-norm-ball-1",
+    "page": "Common Set Representations",
+    "title": "Infinity norm ball",
+    "category": "section",
+    "text": "BallInf\ndim(B::BallInf)\nσ(d::AbstractVector{Float64}, B::BallInf)\nvertices_list(B::BallInf)\nnorm(B::BallInf, p::Real=Inf)\nradius(B::BallInf, p::Real=Inf)\ndiameter(B::BallInf, p::Real=Inf)"
 },
 
 {
@@ -525,7 +573,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Hyperrectangle",
     "category": "Type",
-    "text": "Hyperrectangle <: LazySet\n\nType that represents a Hyperrectangle.\n\nA hyperrectangle is the Cartesian product of one-dimensional intervals.\n\nFields\n\ncenter – center of the hyperrectangle as a real vector\nradius – radius of the ball as a real vector, i.e., half of its width along             each coordinate direction\n\n\n\n"
+    "text": "Hyperrectangle <: LazySet\n\nType that represents a hyperrectangle.\n\nA hyperrectangle is the Cartesian product of one-dimensional intervals.\n\nFields\n\ncenter – center of the hyperrectangle as a real vector\nradius – radius of the ball as a real vector, i.e., half of its width along             each coordinate direction\n\n\n\n"
 },
 
 {
@@ -553,26 +601,26 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.LinAlg.norm-Tuple{LazySets.Hyperrectangle}",
+    "location": "lib/representations.html#Base.LinAlg.norm",
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
-    "category": "Method",
+    "category": "Function",
     "text": "norm(H::Hyperrectangle, [p])\n\nReturn the norm of a Hyperrectangle. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.radius-Tuple{LazySets.Hyperrectangle}",
+    "location": "lib/representations.html#LazySets.radius",
     "page": "Common Set Representations",
     "title": "LazySets.radius",
-    "category": "Method",
-    "text": "radius(H::Hyperrectangle, [p])\n\nReturn the radius of a Hyperrectangle. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+    "category": "Function",
+    "text": "radius(H::Hyperrectangle, [p])\n\nReturn the radius of a hyperrectangle. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.diameter-Tuple{LazySets.Hyperrectangle}",
+    "location": "lib/representations.html#LazySets.diameter",
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
-    "category": "Method",
+    "category": "Function",
     "text": "diameter(H::Hyperrectangle, [p])\n\nReturn the diameter of a hyperrectangle. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nH – a hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
 },
 
@@ -581,7 +629,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangles",
     "category": "section",
-    "text": "Hyperrectangle\ndim(H::Hyperrectangle)\nσ(d::AbstractVector{Float64}, H::Hyperrectangle)\nvertices_list(H::Hyperrectangle)\nnorm(H::Hyperrectangle)\nradius(H::Hyperrectangle)\ndiameter(H::Hyperrectangle)"
+    "text": "Hyperrectangle\ndim(H::Hyperrectangle)\nσ(d::AbstractVector{Float64}, H::Hyperrectangle)\nvertices_list(H::Hyperrectangle)\nnorm(H::Hyperrectangle, p::Real=Inf)\nradius(H::Hyperrectangle, p::Real=Inf)\ndiameter(H::Hyperrectangle, p::Real=Inf)"
 },
 
 {
@@ -1025,27 +1073,43 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/approximations.html#LazySets.Approximations.diameter_approximation",
-    "page": "Approximations",
-    "title": "LazySets.Approximations.diameter_approximation",
-    "category": "Function",
-    "text": "diameter_approximation(X)\n\nApproximate diameter of a given set.\n\nInput\n\nX – a lazy set\n\nAlgorithm\n\nThe diameter is bounded by twice the radius. This function relies on radius_approximation.\n\n\n\n"
-},
-
-{
-    "location": "lib/approximations.html#LazySets.Approximations.radius_approximation",
-    "page": "Approximations",
-    "title": "LazySets.Approximations.radius_approximation",
-    "category": "Function",
-    "text": "radius_approximation(X)\n\nApproximate radius of a given set.\n\nInput\n\nX – a lazy set\n\nAlgorithm\n\nThis is an approximation in the infinity norm. The radius of a BallInf of center c and radius r can be approximated by ‖c‖ + r√n, where n is the dimension of the vectorspace.\n\n\n\n"
-},
-
-{
     "location": "lib/approximations.html#Box-Approximations-1",
     "page": "Approximations",
     "title": "Box Approximations",
     "category": "section",
-    "text": "ballinf_approximation\nbox_approximation\nbox_approximation_symmetric\nbox_approximation_helper\ndiameter_approximation\nradius_approximation"
+    "text": "ballinf_approximation\nbox_approximation\nbox_approximation_symmetric\nbox_approximation_helper"
+},
+
+{
+    "location": "lib/approximations.html#Base.LinAlg.norm",
+    "page": "Approximations",
+    "title": "Base.LinAlg.norm",
+    "category": "Function",
+    "text": "norm(X::LazySet, [p])\n\nReturn the norm of a LazySet. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nX – a lazy set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.radius",
+    "page": "Approximations",
+    "title": "LazySets.radius",
+    "category": "Function",
+    "text": "radius(X::LazySet, [p])\n\nReturn the radius of a LazySet. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nX – lazy set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.diameter",
+    "page": "Approximations",
+    "title": "LazySets.diameter",
+    "category": "Function",
+    "text": "diameter(X::LazySet, [p])\n\nReturn the diameter of a LazySet. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nX – lazy set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#Metric-properties-of-sets-1",
+    "page": "Approximations",
+    "title": "Metric properties of sets",
+    "category": "section",
+    "text": "norm(X::LazySet, p::Real=Inf)\nradius(X::LazySet, p::Real=Inf)\ndiameter(X::LazySet, p::Real=Inf)"
 },
 
 {
