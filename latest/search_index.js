@@ -821,7 +821,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.monotone_chain!",
     "category": "Function",
-    "text": "monotone_chain!(points)\n\nCompute the convex hull of points in the plane using Andrew's monotone chain method.\n\nInput\n\npoints – array of vectors containing the 2D coordinates of the points;             is sorted in-place inside this function\n\nOutput\n\nArray of vectors containing the 2D coordinates of the corner points of the convex hull.\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see the wikipedia page: Monotone chain\n\n\n\n"
+    "text": "monotone_chain!(points)\n\nCompute the convex hull of points in the plane using Andrew's monotone chain method.\n\nInput\n\npoints – array of vectors containing the 2D coordinates of the points;             is sorted in-place inside this function\n\nOutput\n\nArray of vectors containing the 2D coordinates of the corner points of the convex hull.\n\nNotes\n\nFor large sets of points, it is convenient to use static vectors to get maximum performance. For information on how to convert usual vectors into static vectors, see the type SVector provided by the StaticArrays package.\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see the wikipedia page: Monotone chain\n\n\n\n"
 },
 
 {
