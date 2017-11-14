@@ -797,7 +797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull",
     "category": "Function",
-    "text": "convex_hull(points; algorithm)\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – array of vectors containing the 2D coordinates of the points\nalgorithm – (optional, default: \"andrew_monotone_chain\") choose the convex                hull algorithm, valid options are:\n\"andrew_monotone_chain\"\n\n\n\n"
+    "text": "convex_hull(points; algorithm)\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – array of vectors containing the 2D coordinates of the points\nalgorithm – (optional, default: \"monotone_chain\") choose the convex                hull algorithm, valid options are:\n\"monotone_chain\"\n\n\n\n"
 },
 
 {
@@ -817,11 +817,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.andrew_monotone_chain!",
+    "location": "lib/operations.html#LazySets.monotone_chain!",
     "page": "Common Set Operations",
-    "title": "LazySets.andrew_monotone_chain!",
+    "title": "LazySets.monotone_chain!",
     "category": "Function",
-    "text": "andrew_monotone_chain!(points)\n\nCompute the convex hull of points in the plane using Andrew's monotone chain method.\n\nInput\n\npoints – array of vectors containing the 2D coordinates of the points\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see the wikipedia page: Monotone chain\n\n\n\n"
+    "text": "monotone_chain!(points)\n\nCompute the convex hull of points in the plane using Andrew's monotone chain method.\n\nInput\n\npoints – array of vectors containing the 2D coordinates of the points;             is sorted in-place inside this function\n\nOutput\n\nArray of vectors containing the 2D coordinates of the corner points of the convex hull.\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see the wikipedia page: Monotone chain\n\n\n\n"
 },
 
 {
@@ -829,7 +829,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Convex Hull Algorithms",
     "category": "section",
-    "text": "convex_hull\nconvex_hull!\nright_turn\nandrew_monotone_chain!"
+    "text": "convex_hull\nconvex_hull!\nright_turn\nmonotone_chain!"
 },
 
 {
