@@ -797,7 +797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull",
     "category": "Function",
-    "text": "convex_hull(points; algorithm)\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – array of vectors containing the 2D coordinates of the points\nalgorithm – (optional, default: \"monotone_chain\") choose the convex                hull algorithm, valid options are:\n\"monotone_chain\"\n\n\n\n"
+    "text": "convex_hull(points; algorithm)\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – array of vectors containing the 2D coordinates of the points\nalgorithm – (optional, default: \"monotone_chain\") choose the convex                hull algorithm, valid options are:\n\"monotone_chain\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\njulia> hull = convex_hull(points);\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nWe can plot the random points, and the polygon whose vertices are the computed convex hull, using Plots:\n\njulia> using Plots\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter)\njulia> plot!(VPolygon(hull), alpha=0.2)\n\n\n\n"
 },
 
 {
