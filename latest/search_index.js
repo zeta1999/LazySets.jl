@@ -397,7 +397,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, P)\n\nReturn the support vector of a polygon in a given direction. Return the zero vector if there are no constraints (i.e., the universal polytope).\n\nInput\n\nd – direction\nP – polygon in constraint representation\n\nAlgorithm\n\nComparison of directions is performed using polar angles, see the overload of <= for two-dimensional vectors.\n\n\n\n"
+    "text": "σ(d, P)\n\nReturn the support vector of a polygon in a given direction.\n\nInput\n\nd – direction\nP – polygon in constraint representation\n\nAlgorithm\n\nComparison of directions is performed using polar angles, see the overload of <= for two-dimensional vectors.\n\n\n\n"
 },
 
 {
