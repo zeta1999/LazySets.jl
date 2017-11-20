@@ -85,7 +85,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Getting Started",
     "title": "Installation",
     "category": "section",
-    "text": "To install LazySets and its dependencies, use the following commands inside Julia's REPL:Pkg.clone(\"https://github.com/acroy/Expokit.jl\")\nPkg.clone(\"https://github.com/JuliaReach/LazySets.jl\")The first command installs the dependency Expokit, that provides lazy matrix exponentiation routines."
+    "text": "To install LazySets use the following command inside Julia's REPL:Pkg.clone(\"https://github.com/JuliaReach/LazySets.jl\")The dependencies of LazySets, such as Expokit – which provides lazy matrix exponentiation routines – are automatically installed through Julia's package manager. The full list of dependencies is specified in the REQUIRE file. The minimal Julia version required is v0.6.0. "
 },
 
 {
