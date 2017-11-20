@@ -625,11 +625,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.high-Tuple{LazySets.Hyperrectangle}",
+    "page": "Common Set Representations",
+    "title": "LazySets.high",
+    "category": "Method",
+    "text": "high(H::Hyperrectangle)\n\nReturn the higher coordinates of a hyperrectangle.\n\nInput\n\nH – a hyperrectangle\n\nOutput\n\nA vector with the higher coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.low-Tuple{LazySets.Hyperrectangle}",
+    "page": "Common Set Representations",
+    "title": "LazySets.low",
+    "category": "Method",
+    "text": "low(H::Hyperrectangle)\n\nReturn the lower coordinates of a hyperrectangle.\n\nInput\n\nH – a hyperrectangle\n\nOutput\n\nA vector with the lower coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Hyperrectangles-1",
     "page": "Common Set Representations",
     "title": "Hyperrectangles",
     "category": "section",
-    "text": "Hyperrectangle\ndim(H::Hyperrectangle)\nσ(d::AbstractVector{Float64}, H::Hyperrectangle)\nvertices_list(H::Hyperrectangle)\nnorm(H::Hyperrectangle, p::Real=Inf)\nradius(H::Hyperrectangle, p::Real=Inf)\ndiameter(H::Hyperrectangle, p::Real=Inf)"
+    "text": "Hyperrectangle\ndim(H::Hyperrectangle)\nσ(d::AbstractVector{Float64}, H::Hyperrectangle)\nvertices_list(H::Hyperrectangle)\nnorm(H::Hyperrectangle, p::Real=Inf)\nradius(H::Hyperrectangle, p::Real=Inf)\ndiameter(H::Hyperrectangle, p::Real=Inf)\nhigh(H::Hyperrectangle)\nlow(H::Hyperrectangle)"
 },
 
 {
