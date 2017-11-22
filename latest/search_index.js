@@ -285,7 +285,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, B)\n\nReturn the support vector of a Ball2 in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction.\n\nNotes\n\nIf the given direction has norm zero, the origin is returned.\n\n\n\n"
+    "text": "σ(d, B)\n\nReturn the support vector of a Ball2 in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction. If the given direction has norm zero, the origin is returned.\n\nNotes\n\nThis function requires computing the 2-norm of the input direction, and this is performed in the given precision of the direction. Exact inputs are not handled.\n\n\n\n"
 },
 
 {
@@ -421,7 +421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{Float64}}.\n\n\n\n"
+    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{<:Real}}.\n\n\n\n"
 },
 
 {
@@ -517,7 +517,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in vertex representation.\n\nInput\n\nP – a polygon given in vertex representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{Float64}}.\n\n\n\n"
+    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in vertex representation.\n\nInput\n\nP – a polygon given in vertex representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{N}}.\n\n\n\n"
 },
 
 {
@@ -525,7 +525,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.singleton_list",
     "category": "Method",
-    "text": "singleton_list(P)\n\nReturn the vertices of a convex polygon in vertex representation as a list of singletons.\n\nInput\n\nP – a polygon given in vertex representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Singleton{Float64}}.\n\n\n\n"
+    "text": "singleton_list(P)\n\nReturn the vertices of a convex polygon in vertex representation as a list of singletons.\n\nInput\n\nP – a polygon given in vertex representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Singleton{N}}.\n\n\n\n"
 },
 
 {
@@ -717,7 +717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d::AbstractVector{Float64}, ms::MinkowskiSum)\n\nSupport vector of a Minkowski sum.\n\nInput\n\nd  – vector\nms – Minkowski sum\n\n\n\n"
+    "text": "σ(d, ms)\n\nSupport vector of a Minkowski sum.\n\nInput\n\nd  – vector\nms – Minkowski sum\n\n\n\n"
 },
 
 {
@@ -741,7 +741,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d::Vector{Float64}, ms::MinkowskiSumArray)\n\nSupport vector of the Minkowski sum of a finite number of sets.\n\nInput\n\nd – direction\nms – Minkowski sum array\n\n\n\n"
+    "text": "σ(d, ms)\n\nSupport vector of the Minkowski sum of a finite number of sets.\n\nInput\n\nd – direction\nms – Minkowski sum array\n\n\n\n"
 },
 
 {
@@ -853,7 +853,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.CartesianProduct",
     "category": "Type",
-    "text": "CartesianProduct <: LazySet\n\nType that represents the cartesian product.\n\nFields\n\nX – convex set\nY – another convex set\n\nFor the cartesian product a several sets, there exists a special type CartesianProductArray. \n\n\n\n"
+    "text": "CartesianProduct <: LazySet\n\nType that represents the cartesian product.\n\nFields\n\nX – convex set\nY – another convex set\n\nNotes\n\nThe Cartesian product of three elements is done recursively. See also CartesianProductArray for implementation of a cartesian product of many sets without recursion, using instead an array.\n\n\n\n"
 },
 
 {
@@ -869,7 +869,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, cp)\n\nSupport vector of a Cartesian product.\n\nInput\n\nd – direction\ncp – cartesian product\n\n\n\n"
+    "text": "σ(d, cp)\n\nSupport vector of a Cartesian product.\n\nInput\n\nd  – direction\ncp – cartesian product\n\n\n\n"
 },
 
 {
@@ -901,7 +901,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, cp)\n\nSupport vector of the Cartesian product of a finite number of sets.\n\nInput\n\nd – direction\ncp – cartesian product array\n\n\n\n"
+    "text": "σ(d, cp)\n\nSupport vector of the Cartesian product of a finite number of sets.\n\nInput\n\nd  – direction\ncp – cartesian product array\n\n\n\n"
 },
 
 {
@@ -909,7 +909,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.is_contained",
     "category": "Method",
-    "text": "is_contained(d, cp)\n\nReturn whether a given vector is contained in the cartesian product of a finite number of sets.\n\nInput\n\nd – vector\ncp – cartesian product array\n\n\n\n"
+    "text": "is_contained(d, cp)\n\nReturn whether a given vector is contained in the cartesian product of a finite number of sets.\n\nInput\n\nd  – vector\ncp – cartesian product array\n\n\n\n"
 },
 
 {
@@ -957,7 +957,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.ExponentialMap",
     "category": "Type",
-    "text": "ExponentialMap <: LazySet\n\nType that represents the action of an exponential map on a set.\n\nFields\n\nspmexp  – a matrix exponential\nX      – a convex set represented by its support function\n\n\n\n"
+    "text": "ExponentialMap <: LazySet\n\nType that represents the action of an exponential map on a set.\n\nFields\n\nspmexp – a matrix exponential\nX      – a convex set represented by its support function\n\n\n\n"
 },
 
 {
@@ -1005,7 +1005,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.SparseMatrixExp",
     "category": "Type",
-    "text": "SparseMatrixExp\n\nType that represents the matrix exponential of a sparse matrix, and provides evaluation of its action on vectors.\n\nFields\n\nM – sparse matrix\n\nNotes\n\nThis class is provided for use with very large and very sparse matrices. The evaluation of the exponential matrix action over vectores relies on the Expokit package. \n\n\n\n"
+    "text": "SparseMatrixExp\n\nType that represents the matrix exponential of a sparse matrix, and provides evaluation of its action on vectors.\n\nFields\n\nM – sparse matrix\n\nNotes\n\nThis class is provided for use with very large and very sparse matrices. The evaluation of the exponential matrix action over vectores relies on the Expokit package.\n\n\n\n"
 },
 
 {
@@ -1157,7 +1157,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.unit_step",
     "category": "Method",
-    "text": "unit_step(x)\n\nThe unit step function, which returns 1 if and only if x is greater or equal than zero.\n\nInput\n\nx – a floating point number\n\nNotes\n\nThis function can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> unit_step([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n 1.0\n 1.0\n\n\n\n"
+    "text": "unit_step(x)\n\nThe unit step function, which returns 1 if and only if x is greater or equal than zero.\n\nInput\n\nx – a floating point number\n\nNotes\n\nThis function can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> unit_step.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n"
 },
 
 {
@@ -1165,7 +1165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.jump2pi",
     "category": "Function",
-    "text": "jump2pi(x)\n\nReturn x + 2 and only if x is negative.\n\nInput\n\nx – a floating point number\n\nExamples\n\njulia> jump2pi(0.0)\n0.0\njulia> jump2pi(-0.5)\n5.783185307179586\njulia> jump2pi(0.5)\n0.5\n\n\n\n"
+    "text": "jump2pi(x)\n\nReturn x + 2 if x is negative, otherwise return x.\n\nInput\n\nx – a floating point number\n\nExamples\n\njulia> jump2pi(0.0)\n0.0\njulia> jump2pi(-0.5)\n5.783185307179586\njulia> jump2pi(0.5)\n0.5\n\n\n\n"
 },
 
 {
