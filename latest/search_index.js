@@ -269,7 +269,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ball2",
     "category": "Type",
-    "text": "Ball2 <: LazySet\n\nType that represents a ball in the 2-norm.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nA five-dimensional ball in the 2-norm centered at the origin of radius 0.5:\n\njulia> using LazySets\njulia> B = Ball2(zeros(5), 0.5)\nLazySets.Ball2([0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nWe evaluate the support vector in a given direction:\n\njulia> σ(ones(5), B)\n5-element Array{Float64,1}:\n0.06742\n0.13484\n0.20226\n0.26968\n0.3371\n\n\n\n"
+    "text": "Ball2 <: LazySet\n\nType that represents a ball in the 2-norm.\n\nIt is defined as the set\n\nmathcalB_2^n(c r) =  x  mathbbR^n   x - c _2  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _2 denotes the Euclidean norm (also known as 2-norm), defined as  x _2 = left( sumlimits_i=1^n x_i^2 right)^12 for any x  mathbbR^n.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nA five-dimensional ball in the 2-norm centered at the origin of radius 0.5:\n\njulia> using LazySets\njulia> B = Ball2(zeros(5), 0.5)\nLazySets.Ball2([0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nEvaluate its support vector in the 125 direction:\n\njulia> σ([1.,2,3,4,5], B)\n5-element Array{Float64,1}:\n 0.06742\n 0.13484\n 0.20226\n 0.26968\n 0.3371\n\n\n\n"
 },
 
 {
@@ -277,7 +277,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(B)\n\nReturn the dimension of a Ball2.\n\nInput\n\nB – a ball in the 2-norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
+    "text": "dim(B::Ball2)\n\nReturn the dimension of a ball in the 2-norm.\n\nInput\n\nB – a ball in the 2-norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
 },
 
 {
@@ -285,7 +285,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, B)\n\nReturn the support vector of a Ball2 in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction. If the given direction has norm zero, the origin is returned.\n\nNotes\n\nThis function requires computing the 2-norm of the input direction, and this is performed in the given precision of the direction. Exact inputs are not handled.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, B::Ball2)::AbstractVector{N} where{N<:AbstractFloat}\n\nReturn the support vector of a ball in the 2-norm in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction. If the given direction has norm zero, the origin is returned.\n\nNotes\n\nThis function requires computing the 2-norm of the input direction, and this is performed in the given precision of the direction's datatype. Exact inputs are not handled.\n\n\n\n"
 },
 
 {
@@ -301,7 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.BallInf",
     "category": "Type",
-    "text": "BallInf <: LazySet\n\nType that represents a ball in the infinity norm.\n\nIt is defined as the set\n\nmathcalB_^n(c r) =  x  mathbbR^n   x - c _  r \n\nwhere c  mathbbR^n is its center and r  mathbbR its radius. Here   _ denotes the infinity norm, defined as  x _ = maxlimits_i=1n vert x_i vert for any x  mathbbR^n.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nWe create the two-dimensional unit ball, and compute its support function along the positive x=y direction:\n\njulia> B = BallInf(zeros(2), 0.1)\nLazySets.BallInf([0.0, 0.0], 0.1)\njulia> dim(B)\n2\njulia> ρ([1., 1.], B)\n0.2\n\n\n\n"
+    "text": "BallInf <: LazySet\n\nType that represents a ball in the infinity norm.\n\nIt is defined as the set\n\nmathcalB_^n(c r) =  x  mathbbR^n   x - c _  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _ denotes the infinity norm, defined as  x _ = maxlimits_i=1n vert x_i vert for any x  mathbbR^n.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nWe create the two-dimensional unit ball, and compute its support function along the positive x=y direction:\n\njulia> B = BallInf(zeros(2), 0.1)\nLazySets.BallInf([0.0, 0.0], 0.1)\njulia> dim(B)\n2\njulia> ρ([1., 1.], B)\n0.2\n\n\n\n"
 },
 
 {
@@ -309,7 +309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(B::BallInf)\n\nReturn the dimension of a BallInf.\n\nInput\n\nB – a ball in the infinity norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
+    "text": "dim(B::BallInf)\n\nReturn the dimension of a ball in the infinity norm.\n\nInput\n\nB – a ball in the infinity norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
 },
 
 {
@@ -325,7 +325,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(B::BallInf)\n\nReturn the list of vertices of a ball in the infinity norm.\n\nInput\n\nB – a ball in the infinity norm\n\nOutput\n\nThe list of vertices as an array of floating-point vectors.\n\nNotes\n\nFor high-dimensions, it is preferable to develop a vertex_iterator approach.\n\n\n\n"
+    "text": "vertices_list(B::BallInf)\n\nReturn the list of vertices of a ball in the infinity norm.\n\nInput\n\nB – a ball in the infinity norm\n\nOutput\n\nThe list of vertices as an array of floating-point vectors.\n\nNotes\n\nFor high-dimensions, it is preferable to develop a vertex_iterator approach.\n\nExamples\n\njulia> B = BallInf(zeros(2), 0.1)\nLazySets.BallInf{Float64}([0.0, 0.0], 0.1)\njulia> vertices_list(B)\n4-element Array{Array{Float64,1},1}:\n [0.1, 0.1]\n [-0.1, 0.1]\n [0.1, -0.1]\n [-0.1, -0.1]\n\n\n\n"
 },
 
 {
@@ -333,7 +333,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(B::BallInf, [p])\n\nReturn the norm of a BallInf. It is the norm of the enclosing ball (of the given p-norm) of minimal volume.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(B::BallInf, [p])\n\nReturn the norm of a ball in the infinity norm.\n\nIt is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
 },
 
 {
@@ -341,7 +341,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Function",
-    "text": "radius(B::BallInf, [p])\n\nReturn the radius of a ball in the infinity norm. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nB – a ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+    "text": "radius(B::BallInf, [p])\n\nReturn the radius of a ball in the infinity norm.\n\nIt is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\nInput\n\nB – a ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
 },
 
 {
@@ -349,7 +349,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(B::BallInf, [p])\n\nReturn the diameter of a ball in the infinity norm. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nB – a ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(B::BallInf, [p])\n\nReturn the diameter of a ball in the infinity norm.\n\nIt corresponds to the maximum distance between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\nInput\n\nB – a ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
 },
 
 {
