@@ -681,6 +681,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Zonotopes-1",
+    "page": "Common Set Representations",
+    "title": "Zonotopes",
+    "category": "section",
+    "text": "Zonotope\nZonotope(center::AbstractVector, generators::AbstractVector{Float64})\ndim(Z::Zonotope)\nvertices_list(Z::Zonotope{Float64})\nσ(d::AbstractVector, Z::Zonotope)\norder(Z::Zonotope)"
+},
+
+{
     "location": "lib/operations.html#",
     "page": "Common Set Operations",
     "title": "Common Set Operations",
