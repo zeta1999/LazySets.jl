@@ -37,7 +37,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Features",
     "category": "section",
-    "text": "The core functionality of LazySets is:Lazy (i.e. symbolic) types for several classes of convex sets such as balls in different norms, polygons in constraint or vertex representation, special types such as lines and linear constraints, hyperrectangles, and high-dimensional polyhedra.\nMost commonly used set operations, e.g. Minkowski sum, Cartesian product, convex hull and interval hull approximations. Moreover, lazy linear maps and lazy exponential maps are also provided.On top of the previous basic type representations and operations, LazySets can be used to:Efficiently evaluate the support vector of nested lazy sets using parametrized LazySet arrays.\nCartesian decomposition of lazy sets using two-dimensional projections.\nFast overapproximation of an exact set using a polyhedral approximation, to the desired accuracy.\nExtensive visualization capabilities through Julia's Plots.jl framework."
+    "text": "The core functionality of LazySets is:Lazy (i.e. symbolic) types for several classes of convex sets such as balls in different norms, polygons in constraint or vertex representation, zonotopes, special types such as lines and linear constraints, hyperrectangles, and high-dimensional polyhedra.\nMost commonly used set operations, e.g. Minkowski sum, Cartesian product, convex hull and interval hull approximations. Moreover, lazy linear maps and lazy exponential maps are also provided.On top of the previous basic type representations and operations, LazySets can be used to:Efficiently evaluate the support vector of nested lazy sets using parametrized LazySet arrays.\nCartesian decomposition of lazy sets using two-dimensional projections.\nFast overapproximation of an exact set using a polyhedral approximation, to the desired accuracy.\nExtensive visualization capabilities through Julia's Plots.jl framework."
 },
 
 {
@@ -681,11 +681,59 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.Zonotope",
+    "page": "Common Set Representations",
+    "title": "LazySets.Zonotope",
+    "category": "Type",
+    "text": "Zonotope <: LazySet\n\nType that represents a zonotope.\n\nIt is defined as the set\n\nZ = left c + sum_i=1^p _i g_i _i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line elements. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – two dimensional matrix where each column is a generator of the zonotope\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> using LazySets\njulia> X = Zonotope([1.0, 0.0], 0.1*eye(2))\nLazySets.Zonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(X)\n2\n\nWe can ask for its vertices with the vertices_list function:\n\njulia> vertices_list(X)\n4-element Array{Array{Float64,1},1}:\n[0.9, -0.1]\n[1.1, -0.1]\n[1.1, 0.1]\n[0.9, 0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], X)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.Zonotope-Union{Tuple{AbstractArray{T,1} where T,AbstractArray{T,1}}, Tuple{T}} where T<:(AbstractArray{T,1} where T)",
+    "page": "Common Set Representations",
+    "title": "LazySets.Zonotope",
+    "category": "Method",
+    "text": "Zonotope(center::AbstractVector, generators::AbstractVector{T}) where{T<:AbstractVector}\n\nConstruct a zonotope given its center and the set of generators.\n\nInput\n\ncenter     – center of the zonotope\ngenerators – list of generators of the zonotope\n\nOutput\n\nA zonotope with the given center and set of generators.\n\nExamples\n\nA zonotope in two dimensions with three generators:\n\njulia> X = Zonotope(ones(2), [[1., 0], [0., 1], [1, 1]])\nLazySets.Zonotope{Float64}([1.0, 1.0], [1.0 0.0; 0.0 1.0; 1.0 1.0])\njulia> X.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Zonotope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(Z)\n\nReturn the ambient dimension of a zonotope.\n\nInput\n\nZ – a zonotope\n\nOutput\n\nThe ambient dimension of the zonotope.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Zonotope{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "Method",
+    "text": "vertices_list(Z::Zonotope)\n\nReturn the vertices of a zonotope.\n\nInput\n\nZ – a zonotope\n\nOutput\n\nThe list of vertices as a linear array of n-dimensional vectors, where n is the dimension of the zonotope.\n\nNotes\n\nFor high dimensions, it would be preferable to develop a vertex_iterator approach.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{T,1} where T,LazySets.Zonotope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d, Z)\n\nReturn the support vector of a zonotope in a given direction.\n\nInput\n\nd – direction\nZ – zonotope\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.order-Tuple{LazySets.Zonotope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.order",
+    "category": "Method",
+    "text": "order(Z::Zonotope)\n\nReturn the order of a zonotope.\n\nThe order of the zonotope is defined as the quotient between the number of generators and its dimension.\n\nInput\n\nZ – a zonotope\n\nOutput\n\nA rational number representing its order.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Zonotopes-1",
     "page": "Common Set Representations",
     "title": "Zonotopes",
     "category": "section",
-    "text": "Zonotope\nZonotope(center::AbstractVector, generators::AbstractVector{Float64})\ndim(Z::Zonotope)\nvertices_list(Z::Zonotope{Float64})\nσ(d::AbstractVector, Z::Zonotope)\norder(Z::Zonotope)"
+    "text": "Zonotope\nZonotope(center::AbstractVector, generators::AbstractVector{T}) where{T<:AbstractVector}\ndim(Z::Zonotope)\nvertices_list(Z::Zonotope{Float64})\nσ(d::AbstractVector, Z::Zonotope)\norder(Z::Zonotope)"
 },
 
 {
