@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Introduction",
     "category": "section",
-    "text": "The strategy consists of defining lazy (i.e. symbolic) representations that are used to write set-based formulas. This provides an exact but abstract formulation and may involve any common convex set class or operation between sets. Then, concrete information is obtained through querying specific directions. More precisely, each concrete subtype mathcalX of the abstract type LazySet, exports a method to calculate its support vector sigma(d mathcalX) in a given (arbitrary) direction d in mathbbR^n. Representing sets exactly but lazily has the advantage of being able to perform only the required operations on-demand.For very long computations (e.g. set-based recurrences with tens of thousands of elements), it is useful to combine both lazy and concrete representations such as polyhedral approximations. All this is easy to do with LazySets. Moreover, there is a specialized module for handling arrays of two-dimensional projections using Cartesian decomposition techniques. The projection can be taken to the desired precision using an iterative refinement method."
+    "text": "In this package we describe convex sets lazily (i.e., symbolically). This way we provide an exact but abstract representation, in principle for any common convex set class or operation between sets. Concrete information is obtained through evaluating the set in specific directions. More precisely, each concrete subtype mathcalX of the abstract type LazySet exports a method to calculate its support vector sigma(d mathcalX) in a given (arbitrary) direction d in mathbbR^n. Representing sets exactly but lazily has the advantage of being able to perform only the required operations on-demand.For very long sequences of computations (e.g., set-based recurrences with tens of thousands of elements), it is useful to combine both lazy and concrete representations such as polyhedral approximations. All this is easy to do with LazySets. Moreover, we provide a specialized module for handling Cartesian decomposition of two-dimensional projections. The projection can be taken to the desired precision using an iterative refinement method."
 },
 
 {
@@ -29,7 +29,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Example",
     "category": "section",
-    "text": "Let mathcalX_0 subset mathbbR^1000 be the Euclidean ball of center (1 ldots 1) and radius 01 in dimension n=1000. Suppose that given a real matrix A in mathbbR^1000 times 1000 we are interested in the equation:mathcalY = CH(e^A  mathcalX_0   BmathcalU mathcalX_0)where CH is the convex hull operator,  denotes Minkowski sum, mathcalU is a ball in the infinity norm centered at zero and radius 12, and B is a linear map of the appropriate dimensions. This equation typically arises in the study of discrete approximation models for reachability of continuous systems, see for example frehse2011spaceex.For concreteness, let's take A to be a random matrix with probability 1 of any entry being nonzero. Let's suppose that the input set mathcalU is two-dimensional, and that the linear map B is random. Using LazySets we can define this problem as follows:using LazySets\nA = sprandn(1000, 1000, 0.01)\nδ = 0.1\nX0 = Ball2(ones(1000), 0.1)\nB = randn(1000, 2)\nU = BallInf(zeros(2), 1.2)The @time macro reveals that building mathcalY with LazySets is instantaneous:@time Y = CH(SparseMatrixExp(A * δ) * X0 + δ * B * U, X0);\n0.000022 seconds (13 allocations: 16.094 KiB)By asking the concrete type of Y, we see that this object is a convex hull type, parameterized by the types of its arguments, corresponding to the mathematical formulation:julia> typeof(Y)\nLazySets.ConvexHull{LazySets.MinkowskiSum{LazySets.ExponentialMap{LazySets.Ball2},\nLazySets.LinearMap{LazySets.BallInf}},LazySets.Ball2}Now suppose that we are interested in observing the projection of mathcalY onto the variables number 1 and 500. First we define the 21000 projection matrix and apply it to mathcalY as a linear map (i.e. from the left). Second, we use the overapproximate method:proj_mat = [[1. zeros(1, 999)]; [zeros(1, 499) 1. zeros(1, 500)]]\n@time res = Approximations.overapproximate(proj_mat * Y);\n0.064034 seconds (1.12 k allocations: 7.691 MiB)We have calculated a box overapproximation of the exact projection onto the (x_1 x_500) plane. Notice that it takes about 0.064 seconds for the whole operation, allocating less than 10MB or RAM. Let us note that if the set operations were done explicitly, this would be much (!) slower. For instance, already the explicit computation of the matrix exponential would have costed 10x more, and allocated around 300MB. For even higher n, you'll probably run out of RAM! But this is doable with LazySets because the action of the matrix exponential over the set is being computed, evaluated only along the directions of interest. Similar comments apply to the Minkowski sums above.We can visualize the result using plot, as shown below (left-most plot).(Image: assets/example_ch.png)In the second and third plots, we have used a refined method that allows to specify a prescribed accuracy for the projection (in terms of Hausdorff distance). It can be passed as a second argument to overapproximate.Error tol. time (s) memory (MB)\n∞ (no refinement) 0.022 5.27\n1e-1 0.051 7.91\n1e-3 0.17 30.3This table shows the runtime and memory consumption for different error tolerances, and the results are shown in three plots of above, from left to right. When passing to a smaller tolerance, the corners connecting edges are more \"rounded\", at the expense of computational resources, since more support vectors have to be evaluated."
+    "text": "Let mathcalX_0 subset mathbbR^1000 be the Euclidean ball of center (1 ldots 1) and radius 01 in dimension n=1000. Given a real matrix A in mathbbR^1000 times 1000, suppose that we are interested in the equationmathcalY = CH(e^A  mathcalX_0   BmathcalU mathcalX_0)where CH is the convex hull operator,  denotes Minkowski sum, mathcalU is a ball in the infinity norm centered at zero and radius 12, and B is a linear map of the appropriate dimensions. This equation typically arises in the study of discrete approximation models for reachability of continuous systems, see for example SpaceEx: Scalable verification of hybrid systems.For concreteness, we take A to be a random matrix with probability 1 of any entry being nonzero. Suppose that the input set mathcalU is two-dimensional, and that the linear map B is random. Finally, let δ = 0.1. Using LazySets, we can define this problem as follows:using LazySets\nA = sprandn(1000, 1000, 0.01)\nδ = 0.1\nX0 = Ball2(ones(1000), 0.1)\nB = randn(1000, 2)\nU = BallInf(zeros(2), 1.2)The @time macro reveals that building mathcalY with LazySets is instantaneous:@time Y = CH(SparseMatrixExp(A * δ) * X0 + δ * B * U, X0);\n0.000022 seconds (13 allocations: 16.094 KiB)By asking for the concrete type of Y, we see that it has a convex hull type, parameterized by the types of its arguments, corresponding to the mathematical formulation:julia> typeof(Y)\nLazySets.ConvexHull{LazySets.MinkowskiSum{LazySets.ExponentialMap{LazySets.Ball2},\nLazySets.LinearMap{LazySets.BallInf}},LazySets.Ball2}Now suppose that we are interested in observing the projection of mathcalY onto the variables number 1 and 500. First we define the 21000 projection matrix and apply it to mathcalY as a linear map (i.e., from the left). Second, we use the overapproximate method:proj_mat = [[1. zeros(1, 999)]; [zeros(1, 499) 1. zeros(1, 500)]]\n@time res = Approximations.overapproximate(proj_mat * Y);\n0.064034 seconds (1.12 k allocations: 7.691 MiB)We have calculated a box overapproximation of the exact projection onto the (x_1 x_500) plane. Notice that it takes about 0.064 seconds for the whole operation, allocating less than 10MB of RAM. Let us note that if the set operations were done explicitly, this would be much (!) slower. For instance, already the explicit computation of the matrix exponential would have cost 10x more, and allocated around 300MB. For even higher n, an evaluation will probably run out of RAM. But this is doable with LazySets because the action of the matrix exponential on the set is only evaluated along the directions of interest. Similar comments apply to the Minkowski sum above.We can visualize the result using plot, as shown below (left-most plot).(Image: assets/example_ch.png)In the second and third plots, we have used a refined method that allows to specify a prescribed accuracy for the projection (in terms of the Hausdorff distance). For the theoretical background, see this reference. It can be passed as a second argument to overapproximate.Error tol. time (s) memory (MB)\n∞ (no refinement) 0.022 5.27\n1e-1 0.051 7.91\n1e-3 0.17 30.3This table shows the runtime and memory consumption for different error tolerances, and the results are shown in three plots of above, from left to right. When passing to a smaller tolerance, the corners connecting edges are more \"rounded\", at the expense of computational resources, since more support vectors have to be evaluated."
 },
 
 {
@@ -37,7 +37,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Features",
     "category": "section",
-    "text": "The core functionality of LazySets is:Lazy (i.e. symbolic) types for several classes of convex sets such as balls in different norms, polygons in constraint or vertex representation, zonotopes, special types such as lines and linear constraints, hyperrectangles, and high-dimensional polyhedra.\nMost commonly used set operations, e.g. Minkowski sum, Cartesian product, convex hull and interval hull approximations. Moreover, lazy linear maps and lazy exponential maps are also provided.On top of the previous basic type representations and operations, LazySets can be used to:Efficiently evaluate the support vector of nested lazy sets using parametrized LazySet arrays.\nCartesian decomposition of lazy sets using two-dimensional projections.\nFast overapproximation of an exact set using a polyhedral approximation, to the desired accuracy.\nExtensive visualization capabilities through Julia's Plots.jl framework."
+    "text": "The core functionality of LazySets is:Lazy (i.e., symbolic) types for several classes of convex sets such as balls in different norms, polygons in constraint or vertex representation, zonotopes, special types such as lines and linear constraints, hyperrectangles, and high-dimensional polyhedra.\nLazy implementations for most commonly used set operations, e.g., Minkowski sum, Cartesian product, convex hull and interval hull approximations, and linear and exponential maps.On top of the previous basic type representations and operations, LazySets can be used to:Efficiently evaluate the support vector of nested lazy sets.\nCartesian decomposition of lazy sets using two-dimensional projections.\nFast overapproximation of an exact set using a polyhedral approximation, to the desired accuracy.\nExtensive visualization capabilities through the Plots.jl framework."
 },
 
 {
@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Manual Outline",
     "category": "section",
-    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\"\n]\nDepth = 2"
 },
 
 {
@@ -77,7 +77,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Getting Started",
     "title": "Setup",
     "category": "section",
-    "text": "This package requires Julia v0.6 or later. Refer to the official documentation on how to install it for your system. Below we explains the steps for setting up LazySets in your system and checking that it builds correctly."
+    "text": "This package requires Julia v0.6 or later. Refer to the official documentation on how to install it for your system. Below we explain the steps for setting up LazySets on your system and checking that it builds correctly."
 },
 
 {
@@ -85,15 +85,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Getting Started",
     "title": "Installation",
     "category": "section",
-    "text": "To install LazySets use the following command inside Julia's REPL:Pkg.clone(\"https://github.com/JuliaReach/LazySets.jl\")The dependencies of LazySets, such as Expokit – which provides lazy matrix exponentiation routines – are automatically installed through Julia's package manager. The full list of dependencies is specified in the REQUIRE file. The minimal Julia version required is v0.6.0. "
-},
-
-{
-    "location": "man/getting_started.html#Testing-1",
-    "page": "Getting Started",
-    "title": "Testing",
-    "category": "section",
-    "text": "Unit tests execute specific portions of the library code, checking that the result produced is the expected one. To run the unit tests run the following command in the terminal:$ julia --color=yes test/runtests.jlAlternatively, you can test the package in Julia's REPL with the command:julia> Pkg.test(\"LazySets\")"
+    "text": "To install LazySets, use the following command inside Julia's REPL:Pkg.clone(\"https://github.com/JuliaReach/LazySets.jl\")The dependencies of LazySets, such as Expokit.jl – which provides lazy matrix exponentiation routines – are automatically installed through Julia's package manager. The full list of dependencies is specified in the REQUIRE file."
 },
 
 {
@@ -101,7 +93,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Getting Started",
     "title": "Workflow tips",
     "category": "section",
-    "text": "There are different ways to use Julia: from the terminal (so called REPL), from IJulia (i.e. Jupyter notebook), from Juno, ... If you don't have a preferred choice, we recommend using LazySets through IJulia; one reason is that the visualization is conveniently embedded into the notebook, and it can be exported into different formats, among other benefits. On the other hand, for development purposes you'll probably prefer using the REPL or the Juno environment."
+    "text": "There are different ways to use Julia: from the terminal, from the Julia REPL, from IJulia (i.e., Jupyter notebook), from Juno, etc. If you do not have a preferred choice, we recommend using LazySets through IJulia; one reason is that the visualization is conveniently embedded into the notebook, and it can be exported into different formats, among other benefits. On the other hand, for development purposes you probably want to use the REPL or the Juno environment."
 },
 
 {
@@ -109,7 +101,39 @@ var documenterSearchIndex = {"docs": [
     "page": "Getting Started",
     "title": "Updating",
     "category": "section",
-    "text": "After working with LazySets for some time, you may want to get the newest version. For this you can use this command:Pkg.checkout(\"LazySets\")That will checkout the latest version master branch, and precompile it the next time you enter a session and do using LazySets."
+    "text": "After working with LazySets for some time, you may want to get the newest version. For this you can use the following command (e.g., from the REPL):Pkg.checkout(\"LazySets\")That will check out the latest version in the master branch, and precompile it the next time you enter a session and execute using LazySets."
+},
+
+{
+    "location": "man/getting_started.html#Development-1",
+    "page": "Getting Started",
+    "title": "Development",
+    "category": "section",
+    "text": "If you want to contribute to this package, you are very welcome.To preserve maintainability of this package, we have three policies: pull requests, documentation, and unit testing."
+},
+
+{
+    "location": "man/getting_started.html#Pull-requests-1",
+    "page": "Getting Started",
+    "title": "Pull requests",
+    "category": "section",
+    "text": "We use a standard pull request policy: You work in a private branch and eventually add a pull request, which is then reviewed by other programmers and merged into the master branch."
+},
+
+{
+    "location": "man/getting_started.html#Documentation-1",
+    "page": "Getting Started",
+    "title": "Documentation",
+    "category": "section",
+    "text": "New functions and types should be documented according to our guidelines directly in the source code.You can view the source code documentation from inside the REPL by typing ? followed by the name of the type or function. For example, the following command will print the documentation of the LazySet type:julia> ?LazySetTo create this documentation you are currently reading, we use Documenter.jl. The sources for creating this documentation are found in docs/src. You can easily include the documentation that you wrote for your functions or types there (see the Documenter.jl guide or our sources for examples).To generate the documentation locally, execute the following command in the terminal:$ julia --color=yes docs/make.jl"
+},
+
+{
+    "location": "man/getting_started.html#Unit-testing-1",
+    "page": "Getting Started",
+    "title": "Unit testing",
+    "category": "section",
+    "text": "Unit tests execute specific portions of the library code and check that the produced result is the expected one.When you modify code in this package, you should make sure that all unit tests pass. We also advise adding new unit tests when adding new features to ensure long-term support of your contributions.Thanks to continuous integration machinery, all unit tests are automatically executed for every branch (and hence also every pull request) on the server.To run the unit tests locally, execute the following command in the terminal:$ julia --color=yes test/runtests.jlAlternatively, you can achieve the same from inside the REPL using the following command:julia> Pkg.test(\"LazySets\")"
 },
 
 {
@@ -141,7 +165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Polyhedral Approximations",
     "title": "Support Function",
     "category": "section",
-    "text": "The support function is a basic notion for approximating convex sets. Let mathcalX subset mathbbR^n be a compact convex set. The support function of mathcalX is the function rho_mathcalX  mathbbR^nto mathbbR, defined asrho_mathcalX(ell) = maxlimits_x in mathcalX ell^mathrmT xWe recall the following elementary properties of the support function.Proposition. For all compact convex sets mathcalX, mathcalY in mathbbR^n, for all ntimes n real matrices M, all scalars lambda, and all vectors ell in mathbbR^n, we have:(1.1) rho_lambdamathcalX (ell) = rho_mathcalX (lambda ell), and         rho_lambdamathcalX (ell) = lambda rho_mathcalX (ell) if lambda  0.(1.2) rho_MmathcalX (ell) = rho_mathcalX (M^mathrmT ell)(1.3) rho_mathcalX oplus mathcalY (ell) = rho_mathcalX (ell) + rho_mathcalY (ell)(1.4) rho_mathcalX times mathcalY (ell) = ell^mathrmT sigma_mathcalX times mathcalY(ell)(1.5) rho_mathrmCH(mathcalXcupmathcalY) (ell) = max (rho_mathcalX (ell) rho_mathcalY (ell))"
+    "text": "The support function is a basic notion for approximating convex sets. Let mathcalX subset mathbbR^n be a compact convex set. The support function of mathcalX is the function rho_mathcalX  mathbbR^nto mathbbR, defined asrho_mathcalX(ell) = maxlimits_x in mathcalX ell^mathrmT xWe recall the following elementary properties of the support function.Proposition. For all compact convex sets mathcalX, mathcalY in mathbbR^n, for all ntimes n real matrices M, all scalars lambda, and all vectors ell in mathbbR^n, we have:beginalign*\nquad rho_lambdamathcalX (ell) = rho_mathcalX (lambda ell)\ntext and  rho_lambdamathcalX (ell) = lambda rho_mathcalX (ell) text if  lambda  0 tag11 1mm\n\nquad rho_MmathcalX (ell) = rho_mathcalX (M^mathrmT ell) tag12 1mm\n\nquad rho_mathcalX oplus mathcalY (ell) = rho_mathcalX (ell) + rho_mathcalY (ell) tag13 1mm\n\nquad rho_mathcalX times mathcalY (ell) = ell^mathrmT sigma_mathcalX times mathcalY(ell) tag14 1mm\n\nquad rho_mathrmCH(mathcalXcupmathcalY) (ell) = max (rho_mathcalX (ell) rho_mathcalY (ell)) tag15\nendalign*"
 },
 
 {
@@ -149,7 +173,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Polyhedral Approximations",
     "title": "Support Vector",
     "category": "section",
-    "text": "The farthest points of mathcalX in the direction ell  are the support vectors denoted sigma_mathcalX(ell). These points correspond to the optimal points for the support function, i.e.,sigma_mathcalX(ell) =  x in mathcalX  ell^mathrmT x  = rho_mathcalX(ell)  Since all support vectors in a given direction evaluate to the same value of the support function, we often speak of the support vector, where the choice of any support vector is implied.(Image: Illustration of the support function and the support vector)Proposition 2. Under the same conditions as in Proposition 1, the following hold:(2.1) sigma_lambdamathcalX (ell) = lambda sigma_mathcalX (lambda ell)(2.2) sigma_MmathcalX (ell) = Msigma_mathcalX (M^mathrmT ell)(2.3) sigma_mathcalX oplus mathcalY (ell) = sigma_mathcalX (ell) oplus sigma_mathcalY (ell)(2.4) sigma_mathcalX times mathcalY (ell) = (sigma_mathcalX(ell_1) sigma_mathcalY(ell_2)) ell = (ell_1 ell_2)(2.5) sigma_mathrmCH(mathcalXcupmathcalY) (ell) = textargmax_x y (ell^mathrmT x ell^mathrmT y),       where x in sigma_mathcalX(ell) y in sigma_mathcalY(ell)"
+    "text": "The farthest points of mathcalX in the direction ell  are the support vectors denoted sigma_mathcalX(ell). These points correspond to the optimal points for the support function, i.e.,sigma_mathcalX(ell) =  x in mathcalX  ell^mathrmT x  = rho_mathcalX(ell)  Since all support vectors in a given direction evaluate to the same value of the support function, we often speak of the support vector, where the choice of any support vector is implied.(Image: Illustration of the support function and the support vector)Proposition 2. Under the same conditions as in Proposition 1, the following hold:beginalign*\nquad sigma_lambdamathcalX (ell) = lambda sigma_mathcalX (lambda ell) tag21 1mm\n\nquad sigma_MmathcalX (ell) = Msigma_mathcalX (M^mathrmT ell) tag22 1mm\n\nquad sigma_mathcalX oplus mathcalY (ell) = sigma_mathcalX (ell) oplus sigma_mathcalY (ell) tag23 1mm\n\nquad sigma_mathcalX times mathcalY (ell) = (sigma_mathcalX(ell_1) sigma_mathcalY(ell_2)) text where  ell = (ell_1 ell_2) tag24 1mm\n\nquad sigma_mathrmCH(mathcalXcupmathcalY) (ell) =\ntextargmax_x y (ell^mathrmT x ell^mathrmT y)\ntext where  x in sigma_mathcalX(ell) y in sigma_mathcalY(ell) tag25\nendalign*"
 },
 
 {
@@ -157,7 +181,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Polyhedral Approximations",
     "title": "Polyhedral approximation of a convex set",
     "category": "section",
-    "text": ""
+    "text": "The projection of a set into a low dimensional space (a special case of M mathcalX) can be conveniently evaluated using support functions, since sigma_MmathcalX(ell) = sigma_mathcalX(M^Tell). Moreover, for some classical convex sets such as unit balls in the infinity norm, in the 2-norm, or polyhedra in constraint representation, the support functions can be efficiently computed. For example, the support function of the unit ball mathcalB_p^n is rho_mathcalB_p^n(ell) = VertellVert_fracpp-1Given directions ell_1ldotsell_m, a tight overapproximation of mathcalX is the outer polyhedron given by the constraints beginequation*\nquad bigwedge_i ell_i^T x leq rho_mathcalX(ell_i) tag3\nendequation*For instance, a bounding box involves evaluating the support function in 2n directions. To quantify this, we use the following distance measure.A set mathcalhatX is within Hausdorff distance varepsilon of mathcalX if and only ifmathcalhatX subseteq mathcalX oplus varepsilonmathcalB_p^n\ntext and  mathcalX subseteq mathcalhatX oplus\nvarepsilonmathcalB_p^nThe infimum varepsilon geq 0 that satisfies the above equation is called the Hausdorff distance between mathcalX and mathcalhatX with respect to the p-norm, and is denoted d_H^pbigl(mathcalXmathcalhatXbigr).Another useful characterization of the Hausdorff distance is the following. Let mathcalX mathcalY subset mathbbR^n be polytopes. Thend^p_H(mathcalX mathcalY) = max_ell in mathcalB_p^n\nleftrho_mathcalY(ell) - rho_mathcalX(ell)rightIn the special case mathcalX subseteq mathcalY, the absolute value can be removed.By adding directions using Lotov's method (s. below), the outer polyhedron in (3) is within Hausdorff distance varepsilon VertXVert_p for mathcalOleft(frac1varepsilon^n-1right) directions, and this bound is optimal. It follows that accurate outer polyhedral approximations are possible only in low dimensions. For n=2, the bound can be lowered to mathcalOleft(frac1sqrtvarepsilonright) directions, which is particularly efficient and the reason why we chose to decompose the system into subsystems of dimension 2."
+},
+
+{
+    "location": "man/polyhedral_approximations.html#Lotov's-method-1",
+    "page": "Polyhedral Approximations",
+    "title": "Lotov's method",
+    "category": "section",
+    "text": "An overapproximation of the projections of a polyhedron given in constraint form can be obtained using Lotov's method; this is a particularly effective method in two dimensions. Lotov's algorithm proceeds as follows. Starting with at least n linearly independent template directions, compute an outer approximation. From the corresponding support vectors, compute an inner approximation, as the convex hull of the support vectors. Now compute the facet normals of the inner approximation, and the distance between the facets of the inner and the vertices of the outer approximation. Finally, pick the facet normal with the largest distance, and add it to the template directions. This procedure is repeated until the distance is smaller than the desired error.For more details we refer to the paper."
 },
 
 {
@@ -173,7 +205,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Decomposing an Affine Map",
     "title": "Decomposing an Affine Map",
     "category": "section",
-    "text": "In this section we present an illustrative example of the decomposed image of a linear map."
+    "text": "In this section we present an illustrative example of the decomposed image of a linear map.DocTestSetup = quote\n    using LazySets, LazySets.Approximations\nend"
+},
+
+{
+    "location": "man/decompose_example.html#Preliminaries:-Polygon,-Linear-Map,-and-Plotting-1",
+    "page": "Decomposing an Affine Map",
+    "title": "Preliminaries: Polygon, Linear Map, and Plotting",
+    "category": "section",
+    "text": "Let  = 4 and  = beginpmatrix cos()  -sin()  sin()  cos() endpmatrix.julia> theta = pi/4.;\n\njulia> Φ = [cos(theta) -sin(theta); sin(theta) cos(theta)];\nNow define an arbitrary convex polygon with five vertices with operatornameCH denoting the convex hull operation. mathcalX = operatornameCHbig( (1 05) (11 02) (14 03) (17 05) (14 08) big)julia> X = VPolygon([[1.0, 0.5], [1.1, 0.2], [1.4, 0.3], [1.7, 0.5], [1.4, 0.8]])\nLazySets.VPolygon{Float64}(Array{Float64,1}[[1.0, 0.5], [1.1, 0.2], [1.4, 0.3], [1.7, 0.5], [1.4, 0.8]])Applying the linear map   mathcalX, we get a new polygon mathcalX which is the counter-clockwise turn of mathcalX by  triangleq 45. In this package the linear map is not computed explicitly but only wrapped in a LinearMap instance.julia> Xp = Φ * X;\n\njulia> typeof(Xp)\nLazySets.LinearMap{LazySets.VPolygon{Float64},Float64}Let us plot the two polygons, mathcalX in green and mathcalX in blue.julia> using Plots;\n\njulia> plot(X, color=\"green\")\n\njulia> plot!(Xp, 1e-2, color=\"blue\")\nNote that we have passed 1e-2 as additional argument for the LinearMap set (mathcalX) because by default such a set is just plotted as its box (or hyperrectangle) approximation. The value 1e-2 is the precision up to which the set is (over-)approximated with a polgon, which in this case is sufficient to obtain the actual set again.(Image: ../assets/linmap_deco_1.png)"
+},
+
+{
+    "location": "man/decompose_example.html#Cartesian-Decomposition-1",
+    "page": "Decomposing an Affine Map",
+    "title": "Cartesian Decomposition",
+    "category": "section",
+    "text": "Next we want to decompose mathcalX into a Cartesian product of intervals. That is, we project it to the x-axis and y-axis and then compose these intervals again: hatmathcalX = hatmathcalX_1 times hatmathcalX_2.julia> Xhat = overapproximate(X);\n\njulia> plot(Xhat, color=\"gray\", alpha=0.3)\n\njulia> plot!(X, color=\"green\")\n\njulia> plot!(Xp, 1e-2, color=\"blue\")\n(Image: ../assets/linmap_deco_2.png)"
+},
+
+{
+    "location": "man/decompose_example.html#Decomposed-Image-of-a-Linear-Map-1",
+    "page": "Decomposing an Affine Map",
+    "title": "Decomposed Image of a Linear Map",
+    "category": "section",
+    "text": "Now let us compute the linear map for the box approximation, and let us call it mathcalY =   hatmathcalX. This will be a diamond-like shape (the box turned by 45°).julia> Xphat = Φ * Xhat;\n\njulia> plot(Xhat, color=\"gray\", alpha=0.3)\n\njulia> plot!(X, color=\"green\")\n\njulia> plot!(Xphat, 1e-2, color=\"yellow\", alpha=0.3)\n\njulia> plot!(Xp, 1e-2, color=\"blue\")\n(Image: ../assets/linmap_deco_3.png)However, we want our approximation be again a Cartesian product of intervals, so we have to overapproximate this diamond-like shape again: hatmathcalY = hatmathcalX = hatmathcalX_1 times hatmathcalX_2julia> Xhatp = overapproximate(Xphat);\n\njulia> plot(Xhat, color=\"gray\", alpha=0.3)\n\njulia> plot!(X, color=\"green\")\n\njulia> plot!(Xhatp, 1e-2, color=\"gray\", alpha=0.3)\n\njulia> plot!(Xphat, 1e-2, color=\"yellow\", alpha=0.3)\n\njulia> plot!(Xp, 1e-2, color=\"blue\")\n(Image: ../assets/linmap_deco_4.png)As we can see, the resulting box hatmathcalX is not a tight overapproximation of mathcalX. We can, however, gain precision by reducing the angle by which we turn the set, e.g., making two smaller turns. Why not try it out?"
 },
 
 {
@@ -197,7 +253,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Fast 2D LPs",
     "title": "Introduction",
     "category": "section",
-    "text": "Since vectors in the plane can be ordered by the angle with respect to the positive real axis, we can efficiently evaluate the support vector of a polygon in constraint representation by comparing normal directions, provided that its edges are ordered. We use the symbol preceq to compare directions, where the increasing direction is counter-clockwise.(Image: ../assets/intuition2dlp.png)"
+    "text": "Since vectors in the plane can be ordered by the angle with respect to the positive real axis, we can efficiently evaluate the support vector of a polygon in constraint representation by comparing normal directions, provided that its edges are ordered.This is illustrated in the following picture.(Image: ../assets/intuition2dlp.png)If the normal directions of the polygon are ordered, the support vector in any direction always lies between two consecutive edges, a_i+1 preceq ell preceq a_i. Here we use the symbol preceq to compare directions, where the increasing direction is counter-clockwise.The following lemma provides an algorithm to find the support vector."
+},
+
+{
+    "location": "man/fast_2d_LPs.html#Lemma-1",
+    "page": "Fast 2D LPs",
+    "title": "Lemma",
+    "category": "section",
+    "text": "Let mathcalX be a polygon described by m linear constraints a_i^T x leq b_i, ordered by the normal vectors (a_i), i.e., a_i preceq a_i+1 for all i in 1ldotsm, where we identify a_m+1 with a_1. Let ell in mathbbR^2 setminus mathbf0_2. Then there exists i in 1dotsm such that a_i preceq ell preceq a_i+1 and every optimal solution barx of the linear program rho_mathcalX(ell) = max ell^T x  x in mathcalX satisfies barx in x  a_i^T x leq b_i cap x  a_i+1^T x leq b_i+1"
 },
 
 {
@@ -205,7 +269,47 @@ var documenterSearchIndex = {"docs": [
     "page": "Fast 2D LPs",
     "title": "Algorithm",
     "category": "section",
+    "text": "First define a <= b as the comparison of directions using polar angles, with 0 being the direction (1, 0).Now assume that the constraints in a polytope mathcalX are given as a_i x + b_i.The following pseudocode explains how to find barx.σ(d, X):\n    let i be the smallest index such that a_{i-1} <= d and a_i > d\n    return the vertex at the intersection of constraints i and i-1"
+},
+
+{
+    "location": "man/iterative_refinement.html#",
+    "page": "Iterative refinement",
+    "title": "Iterative refinement",
+    "category": "page",
     "text": ""
+},
+
+{
+    "location": "man/iterative_refinement.html#LazySets.Approximations.Approximation2D",
+    "page": "Iterative refinement",
+    "title": "LazySets.Approximations.Approximation2D",
+    "category": "Type",
+    "text": "Approximation2D{N<:AbstractFloat}\n\nType that represents a local approximation in 2D.\n\nFields\n\np1        – first inner point\nd1        – first direction\np2        – second inner point\nd2        – second direction\nerr       – error made\nndir      – normal direction of the inner approximation\nrefinable – states if this approximation is refinable\n\n\n\n"
+},
+
+{
+    "location": "man/iterative_refinement.html#LazySets.Approximations.Approximation2D-NTuple{4,Array{Float64,1}}",
+    "page": "Iterative refinement",
+    "title": "LazySets.Approximations.Approximation2D",
+    "category": "Method",
+    "text": "Approximation2D(p1::Vector{N}, d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where {N<:AbstractFloat}\n\nConstructor of Approximation2D from two inner points and two directions.\n\nInput\n\np1        – first inner point\nd1        – first direction\np2        – second inner point\nd2        – second direction\n\nOutput\n\nA new Approximation2D instance.\n\n\n\n"
+},
+
+{
+    "location": "man/iterative_refinement.html#LazySets.Approximations.refine-Tuple{LazySets.LazySet,LazySets.Approximations.Approximation2D}",
+    "page": "Iterative refinement",
+    "title": "LazySets.Approximations.refine",
+    "category": "Method",
+    "text": "refine(S::LazySet, approx::Approximation2D)::Tuple{Approximation2D, Approximation2D}\n\nRefine the given approximation.\n\nInput\n\nS      – 2D convex set that is approximated\napprox – approximation to refine\n\nOutput\n\nThe refined approximation.\n\n\n\n"
+},
+
+{
+    "location": "man/iterative_refinement.html#Iterative-Refinement-1",
+    "page": "Iterative refinement",
+    "title": "Iterative Refinement",
+    "category": "section",
+    "text": "This section of the manual describes an approximation method for an arbitrary two-dimensional convex set S and a given error bound  using support vectors.CurrentModule = LazySets.ApproximationsThe basic idea is to add new supporting directions whenever the approximation error is still bigger than .The approximation is represented by a list of local refinements. Each refinement describes a set with one angle and is wrapped in the following type.Approximation2D\nApproximation2D(::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})The approximation is initialized with box directions, i.e., we have four refinement instances, one for each angle. Then we just iterate through all refinement instances and check if the error is bigger than the threshold individually. If so, we refine the instance by splitting into two more precise refinement instances and apply the checks recursively.refine(::LazySet, ::Approximation2D)"
 },
 
 {
@@ -221,7 +325,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Common Set Representations",
     "category": "section",
-    "text": "This section of the manual describes the basic set representation types.Pages = [\"representations.md\"]\nDepth = 3CurrentModule = LazySets"
+    "text": "This section of the manual describes the basic set representation types.Pages = [\"representations.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nend"
 },
 
 {
@@ -237,7 +341,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.LazySet",
     "category": "Type",
-    "text": "LazySet\n\nAbstract type for a lazy set.\n\nEvery concrete LazySet must define a σ(d, X), representing the support vector of X in a given direction d, and dim, the ambient dimension of the set X.\n\n\n\n"
+    "text": "LazySet\n\nAbstract type for a lazy set.\n\nNotes\n\nEvery concrete LazySet must define a function σ(d, X), representing the support vector of X in a given direction d, and dim, the ambient dimension of the set X.\n\nLazySet types should be parameterized with a type N, typically N<:Real, to support computations with different numeric types.\n\n\n\n"
 },
 
 {
@@ -245,7 +349,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.ρ",
     "category": "Function",
-    "text": "ρ(d::Vector{Float64}, sf::LazySet)::Float64\n\nEvaluate the support function of a set in a given direction.\n\nInput\n\nd  – a real vector, the direction investigated\nsf – a convex set\n\nOutput\n\nρ(d, sf) – the support function\n\n\n\n"
+    "text": "ρ(d::AbstractVector{N}, S::LazySet)::N where {N<:Real}\n\nEvaluate the support function of a set in a given direction.\n\nInput\n\nd – direction\nS – convex set\n\nOutput\n\nThe support function of the set S for the direction d.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.support_function",
+    "page": "Common Set Representations",
+    "title": "LazySets.support_function",
+    "category": "Function",
+    "text": "support_function\n\nAlias for the support function ρ.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.support_vector",
+    "page": "Common Set Representations",
+    "title": "LazySets.support_vector",
+    "category": "Function",
+    "text": "support_vector\n\nAlias for the support vector σ.\n\n\n\n"
 },
 
 {
@@ -253,7 +373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Abstract support function and support vector",
     "category": "section",
-    "text": "LazySets\nLazySets.LazySet\nρ"
+    "text": "LazySets\nLazySets.LazySet\nρ\nsupport_function\nsupport_vector"
 },
 
 {
@@ -269,7 +389,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ball2",
     "category": "Type",
-    "text": "Ball2 <: LazySet\n\nType that represents a ball in the 2-norm.\n\nIt is defined as the set\n\nmathcalB_2^n(c r) =  x  mathbbR^n   x - c _2  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _2 denotes the Euclidean norm (also known as 2-norm), defined as  x _2 = left( sumlimits_i=1^n x_i^2 right)^12 for any x  mathbbR^n.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nA five-dimensional ball in the 2-norm centered at the origin of radius 0.5:\n\njulia> using LazySets\njulia> B = Ball2(zeros(5), 0.5)\nLazySets.Ball2([0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nEvaluate its support vector in the 125 direction:\n\njulia> σ([1.,2,3,4,5], B)\n5-element Array{Float64,1}:\n 0.06742\n 0.13484\n 0.20226\n 0.26968\n 0.3371\n\n\n\n"
+    "text": "Ball2{N<:Real} <: LazySet\n\nType that represents a ball in the 2-norm.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a real scalar ( 0)\n\nNotes\n\nMathematically, a ball in the 2-norm is defined as the set\n\nmathcalB_2^n(c r) =  x  mathbbR^n   x - c _2  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _2 denotes the Euclidean norm (also known as 2-norm), defined as  x _2 = left( sumlimits_i=1^n x_i^2 right)^12 for any x  mathbbR^n.\n\nExamples\n\nCreate a five-dimensional ball B in the 2-norm centered at the origin with radius 0.5:\n\njulia> B = Ball2(zeros(5), 0.5)\nLazySets.Ball2{Float64}([0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nEvaluate B's support vector in the direction 12345:\n\njulia> σ([1.,2.,3.,4.,5.], B)\n5-element Array{Float64,1}:\n 0.06742\n 0.13484\n 0.20226\n 0.26968\n 0.3371\n\n\n\n"
 },
 
 {
@@ -277,7 +397,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(B::Ball2)\n\nReturn the dimension of a ball in the 2-norm.\n\nInput\n\nB – a ball in the 2-norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
+    "text": "dim(B::Ball2)\n\nReturn the dimension of a ball in the 2-norm.\n\nInput\n\nB – ball in the 2-norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
 },
 
 {
@@ -285,7 +405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d::AbstractVector{N}, B::Ball2)::AbstractVector{N} where{N<:AbstractFloat}\n\nReturn the support vector of a ball in the 2-norm in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction. If the given direction has norm zero, the origin is returned.\n\nNotes\n\nThis function requires computing the 2-norm of the input direction, and this is performed in the given precision of the direction's datatype. Exact inputs are not handled.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, B::Ball2)::AbstractVector{<:AbstractFloat} where {N<:AbstractFloat}\n\nReturn the support vector of a 2-norm ball in a given direction.\n\nInput\n\nd – direction\nB – ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the origin is returned.\n\nNotes\n\nLet c and r be the center and radius of a ball B in the 2-norm, respectively. For nonzero direction d, we have σ(d, B) = c + d * (r / ||d||).\n\nThis function requires computing the 2-norm of the input direction, which is performed in the given precision of the numeric datatype of both the direction and the set. Exact inputs are not supported.\n\n\n\n"
 },
 
 {
@@ -293,7 +413,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\ndim(B::Ball2)\nσ(d::AbstractVector{Float64}, B::Ball2)"
+    "text": "Ball2\ndim(::Ball2)\nσ(::AbstractVector{Float64}, ::Ball2)"
 },
 
 {
@@ -301,7 +421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.BallInf",
     "category": "Type",
-    "text": "BallInf <: LazySet\n\nType that represents a ball in the infinity norm.\n\nIt is defined as the set\n\nmathcalB_^n(c r) =  x  mathbbR^n   x - c _  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _ denotes the infinity norm, defined as  x _ = maxlimits_i=1n vert x_i vert for any x  mathbbR^n.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nWe create the two-dimensional unit ball, and compute its support function along the positive x=y direction:\n\njulia> B = BallInf(zeros(2), 0.1)\nLazySets.BallInf([0.0, 0.0], 0.1)\njulia> dim(B)\n2\njulia> ρ([1., 1.], B)\n0.2\n\n\n\n"
+    "text": "BallInf{N<:Real} <: LazySet\n\nType that represents a ball in the infinity norm.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a real scalar ( 0)\n\nNotes\n\nMathematically, a ball in the infinity norm is defined as the set\n\nmathcalB_^n(c r) =  x  mathbbR^n   x - c _  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _ denotes the infinity norm, defined as  x _ = maxlimits_i=1n vert x_i vert for any x  mathbbR^n.\n\nExamples\n\nCreate the two-dimensional unit ball and compute its support function along the positive x=y direction:\n\njulia> B = BallInf(zeros(2), 1.0)\nLazySets.BallInf{Float64}([0.0, 0.0], 1.0)\njulia> dim(B)\n2\njulia> ρ([1., 1.], B)\n2.0\n\n\n\n"
 },
 
 {
@@ -309,7 +429,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(B::BallInf)\n\nReturn the dimension of a ball in the infinity norm.\n\nInput\n\nB – a ball in the infinity norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
+    "text": "dim(B::BallInf)\n\nReturn the dimension of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
 },
 
 {
@@ -317,7 +437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d::AbstractVector{<:Real}, B::BallInf)\n\nReturn the support vector of an infinity norm ball in a given direction.\n\nInput\n\nd – direction\nB – unit ball in the infinity norm\n\n\n\n"
+    "text": "σ(d::AbstractVector{<:Real}, B::BallInf)::AbstractVector{<:Real}\n\nReturn the support vector of an infinity norm ball in a given direction.\n\nInput\n\nd – direction\nB – ball in the infinity norm\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\n"
 },
 
 {
@@ -325,7 +445,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(B::BallInf)\n\nReturn the list of vertices of a ball in the infinity norm.\n\nInput\n\nB – a ball in the infinity norm\n\nOutput\n\nThe list of vertices as an array of floating-point vectors.\n\nNotes\n\nFor high-dimensions, it is preferable to develop a vertex_iterator approach.\n\nExamples\n\njulia> B = BallInf(zeros(2), 0.1)\nLazySets.BallInf{Float64}([0.0, 0.0], 0.1)\njulia> vertices_list(B)\n4-element Array{Array{Float64,1},1}:\n [0.1, 0.1]\n [-0.1, 0.1]\n [0.1, -0.1]\n [-0.1, -0.1]\n\n\n\n"
+    "text": "vertices_list(B::BallInf{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\n\nOutput\n\nA list of vertices.\n\nNotes\n\nFor high dimensions, it is preferable to develop a vertex_iterator approach.\n\nExamples\n\njulia> B = BallInf(zeros(2), 0.1)\nLazySets.BallInf{Float64}([0.0, 0.0], 0.1)\njulia> vertices_list(B)\n4-element Array{Array{Float64,1},1}:\n [0.1, 0.1]\n [-0.1, 0.1]\n [0.1, -0.1]\n [-0.1, -0.1]\n\n\n\n"
 },
 
 {
@@ -333,7 +453,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(B::BallInf, [p])\n\nReturn the norm of a ball in the infinity norm.\n\nIt is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(B::BallInf, [p]::Real=Inf)::Real\n\nReturn the norm of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of an infinity ball is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -341,7 +461,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Function",
-    "text": "radius(B::BallInf, [p])\n\nReturn the radius of a ball in the infinity norm.\n\nIt is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\nInput\n\nB – a ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+    "text": "radius(B::BallInf, [p]::Real=Inf)\n\nReturn the radius of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -349,7 +469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(B::BallInf, [p])\n\nReturn the diameter of a ball in the infinity norm.\n\nIt corresponds to the maximum distance between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\nInput\n\nB – a ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(B::BallInf, [p]::Real=Inf)\n\nReturn the diameter of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -357,7 +477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ndim(B::BallInf)\nσ(d::AbstractVector{Float64}, B::BallInf)\nvertices_list(B::BallInf)\nnorm(B::BallInf, p::Real=Inf)\nradius(B::BallInf, p::Real=Inf)\ndiameter(B::BallInf, p::Real=Inf)"
+    "text": "BallInf\ndim(::BallInf)\nσ(::AbstractVector{Float64}, ::BallInf)\nvertices_list(::BallInf)\nnorm(::BallInf, ::Real=Inf)\nradius(::BallInf, ::Real=Inf)\ndiameter(::BallInf, ::Real=Inf)"
 },
 
 {
@@ -373,15 +493,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolygon",
     "category": "Type",
-    "text": "HPolygon <: LazySet\n\nType that represents a convex polygon in constraint representation, whose edges are sorted in counter-clockwise fashion with respect to their normal directions.\n\nFields\n\nconstraints_list –  an array of linear constraints\n\nNote\n\nThe HPolygon constructor does not perform sorting of the given list of edges. Use addconstraint! to iteratively add and sort the edges.\n\n\n\n"
+    "text": "HPolygon{N<:Real} <: LazySet\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions.\n\nFields\n\nconstraints_list – list of linear constraints, sorted by the angle\n\nNotes\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygon(constraints_list::Vector{LinearConstraint{<:Real}}) – default constructor\nHPolygon() – constructor with no constraints\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygon,LazySets.LinearConstraint}",
+    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygon{Float64},LazySets.LinearConstraint{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.addconstraint!",
     "category": "Method",
-    "text": "addconstraint!(P, constraint)\n\nAdd a linear constraint to a polygon in constraint representation keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – a polygon\nconstraint – the linear constraint to add, see LinearConstraint\n\n\n\n"
+    "text": "addconstraint!(P::HPolygon{N}, constraint::LinearConstraint{N}) where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon\nconstraint – linear constraint to add\n\n\n\n"
 },
 
 {
@@ -389,7 +509,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(P)\n\nReturn the ambient dimension of the polygon.\n\nInput\n\nP – polygon in constraint representation\n\n\n\n"
+    "text": "dim(P::HPolygon)\n\nReturn the dimension of a polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe ambient dimension of the polygon.\n\n\n\n"
 },
 
 {
@@ -397,15 +517,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, P)\n\nReturn the support vector of a polygon in a given direction.\n\nInput\n\nd – direction\nP – polygon in constraint representation\n\nAlgorithm\n\nComparison of directions is performed using polar angles, see the overload of <= for two-dimensional vectors.\n\n\n\n"
+    "text": "σ(d::AbstractVector{<:Real}, P::HPolygon{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a polygon in a given direction.\n\nInput\n\nd – direction\nP – polygon in constraint representation\n\nOutput\n\nThe support vector in the given direction. The result is always one of the vertices; in particular, if the direction has norm zero, any vertex is returned.\n\nAlgorithm\n\nComparison of directions is performed using polar angles; see the overload of <= for two-dimensional vectors.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.HPolygon}",
+    "location": "lib/representations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.HPolygon{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.is_contained",
     "category": "Method",
-    "text": "is_contained(x, P)\n\nReturn whether a given vector is contained in the polygon.\n\nInput\n\nx – two-dimensional vector\nP – polygon in constraint representation\n\nOutput\n\nReturn true iff x ∈ P.\n\n\n\n"
+    "text": "is_contained(x::AbstractVector{<:Real}, P::HPolygon)::Bool\n\nReturn whether a given vector is contained in a polygon.\n\nInput\n\nx – two-dimensional vector\nP – polygon in constraint representation\n\nOutput\n\nReturn true iff x  P.\n\n\n\n"
 },
 
 {
@@ -413,7 +533,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tovrep",
     "category": "Method",
-    "text": "tovrep(P)\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe same polygon but in vertex representation, VPolygon.\n\nNote\n\nThe linear constraints of the input HPolygon are assumed to be sorted by their normal directions in counter-clockwise fashion.\n\n\n\n"
+    "text": "tovrep(P::HPolygon)::VPolygon\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe same polygon but in vertex representation, a VPolygon.\n\n\n\n"
 },
 
 {
@@ -421,7 +541,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{<:Real}}.\n\n\n\n"
+    "text": "vertices_list(P::HPolygon{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nList of vertices.\n\n\n\n"
 },
 
 {
@@ -429,7 +549,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "HPolygon\naddconstraint!(P::HPolygon, c::LinearConstraint)\ndim(P::HPolygon)\nσ(d::AbstractVector{Float64}, P::HPolygon)\n\nis_contained(x::AbstractVector{Float64}, P::HPolygon)\ntovrep(P::HPolygon)\nvertices_list(P::HPolygon)"
+    "text": "HPolygon\naddconstraint!(::HPolygon{Float64}, ::LinearConstraint{Float64})\ndim(::HPolygon)\nσ(::AbstractVector{Float64}, ::HPolygon)\nis_contained(::AbstractVector{Float64}, ::HPolygon{Float64})\ntovrep(::HPolygon)\nvertices_list(::HPolygon)"
 },
 
 {
@@ -437,15 +557,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolygonOpt",
     "category": "Type",
-    "text": "HPolygonOpt <: LazySet\n\nType that represents a convex polygon in constraint representation, whose edges are sorted in counter-clockwise fashion with respect to their normal directions. This is a refined version of HPolygon.\n\nFields\n\nP   – polygon\nind – an index in the list of constraints to begin the search to          evaluate the support functions.\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions, which are one to one close. The strategy is to have an index that can be used to warm-start the search for optimal values in the support vector computation.\n\n\n\n"
+    "text": "HPolygonOpt{N<:Real} <: LazySet\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions. This is a refined version of HPolygon.\n\nFields\n\nconstraints_list – list of linear constraints\nind – index in the list of constraints to begin the search to evaluate the          support function\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions that are close to each other. The strategy is to have an index that can be used to warm-start the search for optimal values in the support vector computation.\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygonOpt(constraints_list::Vector{LinearConstraint{<:Real}}, ind::Int64) – default constructor\nHPolygonOpt(constraints_list::Vector{LinearConstraint{<:Real}}) – constructor without index\nHPolygonOpt(H::HPolygon{<:Real}) – constructor from an HPolygon\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygonOpt,LazySets.LinearConstraint}",
+    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygonOpt{Float64},LazySets.LinearConstraint{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.addconstraint!",
     "category": "Method",
-    "text": "addconstraint!(P, constraint)\n\nAdd a linear constraint to an optimized polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – optimized polygon\nconstraint – the linear constraint to add, see LinearConstraint\n\n\n\n"
+    "text": "addconstraint!(P::HPolygonOpt{N}, constraint::LinearConstraint{N}) where {N<:Real}\n\nAdd a linear constraint to an optimized polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – optimized polygon\nconstraint – linear constraint to add\n\n\n\n"
 },
 
 {
@@ -453,15 +573,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(P)\n\nReturn the ambient dimension of the optimized polygon.\n\nInput\n\nP – optimized polygon\n\n\n\n"
+    "text": "dim(P::HPolygonOpt)\n\nReturn the dimension of an optimized polygon.\n\nInput\n\nP – optimized polygon in constraint representation\n\nOutput\n\nThe ambient dimension of the optimized polygon.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, P)\n\nReturn the support vector of the optimized polygon in a given direction.\n\nInput\n\nd – direction\nP – optimized polygon in constraint representation\n\n\n\n"
+    "text": "σ(d::AbstractVector{<:Real}, P::HPolygonOpt{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of an optimized polygon in a given direction.\n\nInput\n\nd – direction\nP – optimized polygon in constraint representation\n\nOutput\n\nThe support vector in the given direction. The result is always one of the vertices; in particular, if the direction has norm zero, any vertex is returned.\n\nAlgorithm\n\nComparison of directions is performed using polar angles; see the overload of <= for two-dimensional vectors.\n\n\n\n"
 },
 
 {
@@ -469,7 +589,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.is_contained",
     "category": "Method",
-    "text": "is_contained(x, P)\n\nReturn whether a given vector is contained in an optimized polygon in constraint representation.\n\nInput\n\nx – two-dimensional vector\nP – optimized polygon in constraint representation\n\nOutput\n\nReturn true iff x ∈ P.\n\n\n\n"
+    "text": "is_contained(x::AbstractVector{<:Real}, P::HPolygonOpt)::Bool\n\nReturn whether a given vector is contained in an optimized polygon.\n\nInput\n\nx – two-dimensional vector\nP – optimized polygon in constraint representation\n\nOutput\n\nReturn true iff x  P.\n\n\n\n"
 },
 
 {
@@ -477,7 +597,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tovrep",
     "category": "Method",
-    "text": "tovrep(P)\n\nBuild a vertex representation of the given optimized polygon.\n\nInput\n\nP – optimized polygon in constraint representation\n\nOutput\n\nThe same polygon in vertex representation, VPolygon.\n\nNote\n\nThe linear constraints of the input HPolygonOpt are assumed to be sorted by their normal directions in counter-clockwise fashion.\n\n\n\n"
+    "text": "tovrep(P::HPolygonOpt)::VPolygon\n\nBuild a vertex representation of the given optimized polygon.\n\nInput\n\nP – optimized polygon in constraint representation\n\nOutput\n\nThe same polygon but in vertex representation, a VPolygon.\n\n\n\n"
 },
 
 {
@@ -485,7 +605,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in constraint representation.\n\nInput\n\nP – an optimized polygon in constraint representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{Float64}}.\n\n\n\n"
+    "text": "vertices_list(P::HPolygonOpt{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of an optimized polygon in constraint representation.\n\nInput\n\nP – an optimized polygon in constraint representation\n\nOutput\n\nList of vertices.\n\n\n\n"
 },
 
 {
@@ -493,7 +613,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\naddconstraint!(P::HPolygonOpt, c::LinearConstraint)\ndim(P::HPolygonOpt)\nσ(d::AbstractVector{Float64}, P::HPolygonOpt)\n\nis_contained(x::AbstractVector{Float64}, P::HPolygonOpt)\ntovrep(P::HPolygonOpt)\nvertices_list(P::HPolygonOpt)"
+    "text": "HPolygonOpt\naddconstraint!(::HPolygonOpt{Float64}, ::LinearConstraint{Float64})\ndim(::HPolygonOpt)\nσ(::AbstractVector{Float64}, ::HPolygonOpt{Float64})\nis_contained(::AbstractVector{Float64}, ::HPolygonOpt)\ntovrep(::HPolygonOpt)\nvertices_list(::HPolygonOpt)"
 },
 
 {
@@ -501,7 +621,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.VPolygon",
     "category": "Type",
-    "text": "VPolygon <: LazySet\n\nType that represents a polygon by its vertices.\n\nFields\n\nvertices_list – the list of vertices\n\nNotes\n\nThe constructor of VPolygon runs a convex hull algorithm, and the given vertices are sorted in counter-clockwise fashion. If you don't want to take the convex hull, set the apply_convex_hull=false flag when instantiating the constructor.\n\n\n\n"
+    "text": "VPolygon{N<:Real} <: LazySet\n\nType that represents a polygon by its vertices.\n\nFields\n\nvertices_list – the list of vertices\n\nNotes\n\nThe constructor of VPolygon runs a convex hull algorithm, and the given vertices are sorted in counter-clockwise fashion. The constructor flag apply_convex_hull can be used to skip the computation of the convex hull.\n\nVPolygon(vertices_list::Vector{Vector{N}};           apply_convex_hull::Bool=true,           algorithm::String=\"monotone_chain\")\n\n\n\n"
 },
 
 {
@@ -509,7 +629,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(P)\n\nReturn the ambient dimension of the polygon.\n\nInput\n\nP – polygon in vertex representation\n\n\n\n"
+    "text": "dim(P::VPolygon)\n\nReturn the dimension of a polygon in vertex representation.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe ambient dimension of the polygon.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.VPolygon}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, P::VPolygon{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a polygon in a given direction.\n\nInput\n\nd – direction\nP – polygon in vertex representation\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the first vertex is returned.\n\nAlgorithm\n\nThis implementation performs a brute-force search, comparing the projection of each vector along the given direction. It runs in O(n) where n is the number of vertices.\n\nNotes\n\nFor arbitrary points without structure this is the best one can do. However, a more efficient approach can be used if the vertices of the polygon have been sorted in counter-clockwise fashion. In that case a binary search algorithm can be used that runs in O(log n). See issue #40.\n\n\n\n"
 },
 
 {
@@ -517,7 +645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(P)\n\nReturn the list of vertices of a convex polygon in vertex representation.\n\nInput\n\nP – a polygon given in vertex representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Vector{N}}.\n\n\n\n"
+    "text": "vertices_list(P::VPolygon{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a convex polygon in vertex representation.\n\nInput\n\nP – a polygon vertex representation\n\nOutput\n\nList of vertices.\n\n\n\n"
 },
 
 {
@@ -525,7 +653,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.singleton_list",
     "category": "Method",
-    "text": "singleton_list(P)\n\nReturn the vertices of a convex polygon in vertex representation as a list of singletons.\n\nInput\n\nP – a polygon given in vertex representation\n\nOutput\n\nList of vertices as an array of vertex pairs, Vector{Singleton{N}}.\n\n\n\n"
+    "text": "singleton_list(P::VPolygon{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a convex polygon in vertex representation as a list of singletons.\n\nInput\n\nP – a polygon vertex representation\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
 },
 
 {
@@ -533,15 +661,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\ndim(P::VPolygon)\nvertices_list(P::VPolygon)\nsingleton_list(P::VPolygon)"
-},
-
-{
-    "location": "lib/representations.html#LazySets.intersection",
-    "page": "Common Set Representations",
-    "title": "LazySets.intersection",
-    "category": "Function",
-    "text": "intersection(Δ1, Δ2)\n\nReturn the intersection of two 2D lines.\n\nInput\n\nΔ1 – a line\nΔ2 – another line\n\nOutput\n\nThe intersection point.\n\nExamples\n\nThe line y = -x + 1 intersected with y = x:\n\njulia> intersection(Line([1., 1.], 1.), Line([-1., 1.], 0.))\n2-element Array{Float64,1}:\n 0.5\n 0.5\n\n\n\n"
+    "text": "VPolygon\ndim(::VPolygon)\nσ(::AbstractVector{Float64}, ::VPolygon)\nvertices_list(::VPolygon)\nsingleton_list(::VPolygon)"
 },
 
 {
@@ -549,7 +669,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.LinearConstraint",
     "category": "Type",
-    "text": "LinearConstraint\n\nType that represents a linear constraint (a half-space) of the form a⋅x ≦ b.\n\nFields\n\na –  a normal direction\nb – the constraint\n\nEXAMPLES:\n\nThe set y >= 0 in the plane:\n\njulia> LinearConstraint([0, -1.], 0.)\nLazySets.LinearConstraint([0.0, -1.0], 0.0)\n\n\n\n"
+    "text": "LinearConstraint{N<:Real}\n\nType that represents a linear constraint (a half-space) of the form ax  b.\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe set y  0 in the plane:\n\njulia> LinearConstraint([0, -1.], 0.)\nLazySets.LinearConstraint{Float64}([0.0, -1.0], 0.0)\n\n\n\n"
 },
 
 {
@@ -557,7 +677,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Line",
     "category": "Type",
-    "text": "Line\n\nType that represents a line in 2D of the form a⋅x = b.\n\nFields\n\na  – a normal direction (size = 2)\nb  – the constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLazySets.Line([1.0, 1.0], 1.0)\n\n\n\n"
+    "text": "Line{N<:Real}\n\nType that represents a line in 2D of the form ax = b.\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLazySets.Line{Float64}([1.0, 1.0], 1.0)\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.intersection-Tuple{LazySets.Line{Float64},LazySets.Line{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.intersection",
+    "category": "Method",
+    "text": "intersection(L1::Line{N}, L2::Line{N})::Vector{N} where {N<:Real}\n\nReturn the intersection of two 2D lines.\n\nInput\n\nL1 – first line\nL2 – second line\n\nOutput\n\nThe intersection point, if any. Throws a SingularException if the lines do not intersect.\n\nExamples\n\nThe line y = -x + 1 intersected with the line y = x:\n\njulia> intersection(Line([-1., 1.], 0.), Line([1., 1.], 1.))\n2-element Array{Float64,1}:\n 0.5\n 0.5\n\n\n\n"
 },
 
 {
@@ -565,7 +693,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Lines and linear constraints",
     "category": "section",
-    "text": "intersection\nLinearConstraint\nLine"
+    "text": "LinearConstraint\nLine\nintersection(::Line{Float64}, L2::Line{Float64})"
 },
 
 {
@@ -573,7 +701,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Hyperrectangle",
     "category": "Type",
-    "text": "Hyperrectangle <: LazySet\n\nType that represents a hyperrectangle.\n\nA hyperrectangle is the Cartesian product of one-dimensional intervals.\n\nFields\n\ncenter – center of the hyperrectangle as a real vector\nradius – radius of the ball as a real vector, i.e., half of its width along             each coordinate direction\n\n\n\n"
+    "text": "Hyperrectangle{N<:Real} <: LazySet\n\nType that represents a hyperrectangle.\n\nA hyperrectangle is the Cartesian product of one-dimensional intervals.\n\nFields\n\ncenter – center of the hyperrectangle as a real vector\nradius – radius of the ball as a real vector, i.e., half of its width along             each coordinate direction\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.Hyperrectangle-Tuple{}",
+    "page": "Common Set Representations",
+    "title": "LazySets.Hyperrectangle",
+    "category": "Method",
+    "text": "Hyperrectangle(;kwargs...)\n\nConstruct a hyperrectangle from keyword arguments.\n\nInput\n\nkwargs – keyword arguments; two combinations are allowed:\ncenter, radius – vectors\nhigh, low      – vectors (if both center and radius are also                       defined, those are chosen instead)\n\nOutput\n\nA hyperrectangle.\n\nExamples\n\nThe following three constructions are equivalent:\n\njulia> c = ones(2);\n\njulia> r = [0.1, 0.2];\n\njulia> l = [0.9, 0.8];\n\njulia> h = [1.1, 1.2];\n\njulia> H1 = Hyperrectangle(c, r)\nLazySets.Hyperrectangle{Float64}([1.0, 1.0], [0.1, 0.2])\njulia> H2 = Hyperrectangle(center=c, radius=r)\nLazySets.Hyperrectangle{Float64}([1.0, 1.0], [0.1, 0.2])\njulia> H3 = Hyperrectangle(low=l, high=h)\nLazySets.Hyperrectangle{Float64}([1.0, 1.0], [0.1, 0.2])\n\n\n\n"
 },
 
 {
@@ -581,7 +717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(H)\n\nReturn the dimension of a Hyperrectangle.\n\nInput\n\nH – a hyperrectangle\n\nOutput\n\nThe ambient dimension of the hyperrectangle as an integer.\n\n\n\n"
+    "text": "dim(H::Hyperrectangle)\n\nReturn the dimension of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nThe ambient dimension of the hyperrectangle.\n\n\n\n"
 },
 
 {
@@ -589,7 +725,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, H)\n\nReturn the support vector of a Hyperrectangle in a given direction.\n\n\n\n"
+    "text": "σ(d::AbstractVector{<:Real}, H::Hyperrectangle)::AbstractVector{<:Real}\n\nReturn the support vector of a hyperrectangle in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangle\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\n"
 },
 
 {
@@ -597,7 +733,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(H::Hyperrectangle)\n\nReturn the vertices of a hyperrectangle.\n\nInput\n\nH – a hyperrectangle\n\nOutput\n\nThe list of vertices as an array of floating-point vectors.\n\nNotes\n\nFor high-dimensions, it is preferable to develop a vertex_iterator approach.\n\n\n\n"
+    "text": "vertices_list(H::Hyperrectangle{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the vertices of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nA list of vertices.\n\nNotes\n\nFor high dimensions, it is preferable to develop a vertex_iterator approach.\n\n\n\n"
 },
 
 {
@@ -605,7 +741,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(H::Hyperrectangle, [p])\n\nReturn the norm of a Hyperrectangle. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(H::Hyperrectangle, [p]::Real=Inf)\n\nReturn the norm of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangle is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -613,7 +749,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Function",
-    "text": "radius(H::Hyperrectangle, [p])\n\nReturn the radius of a hyperrectangle. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+    "text": "radius(H::Hyperrectangle, [p]::Real=Inf)\n\nReturn the radius of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -621,7 +757,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(H::Hyperrectangle, [p])\n\nReturn the diameter of a hyperrectangle. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nH – a hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(H::Hyperrectangle, [p]::Real=Inf)\n\nReturn the diameter of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -629,7 +765,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.high",
     "category": "Method",
-    "text": "high(H::Hyperrectangle)\n\nReturn the higher coordinates of a hyperrectangle.\n\nInput\n\nH – a hyperrectangle\n\nOutput\n\nA vector with the higher coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
+    "text": "high(H::Hyperrectangle)\n\nReturn the higher coordinates of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nA vector with the higher coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
 },
 
 {
@@ -637,7 +773,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.low",
     "category": "Method",
-    "text": "low(H::Hyperrectangle)\n\nReturn the lower coordinates of a hyperrectangle.\n\nInput\n\nH – a hyperrectangle\n\nOutput\n\nA vector with the lower coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
+    "text": "low(H::Hyperrectangle)\n\nReturn the lower coordinates of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nA vector with the lower coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
 },
 
 {
@@ -645,7 +781,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangles",
     "category": "section",
-    "text": "Hyperrectangle\ndim(H::Hyperrectangle)\nσ(d::AbstractVector{Float64}, H::Hyperrectangle)\nvertices_list(H::Hyperrectangle)\nnorm(H::Hyperrectangle, p::Real=Inf)\nradius(H::Hyperrectangle, p::Real=Inf)\ndiameter(H::Hyperrectangle, p::Real=Inf)\nhigh(H::Hyperrectangle)\nlow(H::Hyperrectangle)"
+    "text": "Hyperrectangle\nHyperrectangle(;kwargs...)\ndim(::Hyperrectangle)\nσ(::AbstractVector{Float64}, ::Hyperrectangle)\nvertices_list(::Hyperrectangle)\nnorm(::Hyperrectangle, ::Real=Inf)\nradius(::Hyperrectangle, ::Real=Inf)\ndiameter(::Hyperrectangle, ::Real=Inf)\nhigh(::Hyperrectangle)\nlow(::Hyperrectangle)"
 },
 
 {
@@ -669,7 +805,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Singleton",
     "category": "Type",
-    "text": "Singleton <: LazySet\n\nType that represents a singleton, that is, a set with a unique element.\n\nFields\n\nelement – the only element of the set\n\n\n\n"
+    "text": "Singleton{N<:Real} <: LazySet\n\nType that represents a singleton, that is, a set with a unique element.\n\nFields\n\nelement – the only element of the set\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Singleton}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(S::Singleton)\n\nReturn the dimension of a singleton.\n\nInput\n\nS – singleton\n\nOutput\n\nThe ambient dimension of the singleton.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Singleton}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, S::LazySets.Singleton{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a singleton.\n\nInput\n\nd – direction\nB – singleton\n\nOutput\n\nThe support vector, which is the singleton's vector itself, irrespective of the given direction.\n\n\n\n"
 },
 
 {
@@ -677,7 +829,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Singletons",
     "category": "section",
-    "text": "Singleton"
+    "text": "Singleton\ndim(::Singleton)\nσ(::AbstractVector{Float64}, ::Singleton)"
 },
 
 {
@@ -685,15 +837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Zonotope",
     "category": "Type",
-    "text": "Zonotope <: LazySet\n\nType that represents a zonotope.\n\nIt is defined as the set\n\nZ = left c + sum_i=1^p _i g_i _i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line elements. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – two dimensional matrix where each column is a generator of the zonotope\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> using LazySets\njulia> X = Zonotope([1.0, 0.0], 0.1*eye(2))\nLazySets.Zonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(X)\n2\n\nWe can ask for its vertices with the vertices_list function:\n\njulia> vertices_list(X)\n4-element Array{Array{Float64,1},1}:\n[0.9, -0.1]\n[1.1, -0.1]\n[1.1, 0.1]\n[0.9, 0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], X)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.Zonotope-Union{Tuple{AbstractArray{T,1} where T,AbstractArray{T,1}}, Tuple{T}} where T<:(AbstractArray{T,1} where T)",
-    "page": "Common Set Representations",
-    "title": "LazySets.Zonotope",
-    "category": "Method",
-    "text": "Zonotope(center::AbstractVector, generators::AbstractVector{T}) where{T<:AbstractVector}\n\nConstruct a zonotope given its center and the set of generators.\n\nInput\n\ncenter     – center of the zonotope\ngenerators – list of generators of the zonotope\n\nOutput\n\nA zonotope with the given center and set of generators.\n\nExamples\n\nA zonotope in two dimensions with three generators:\n\njulia> X = Zonotope(ones(2), [[1., 0], [0., 1], [1, 1]])\nLazySets.Zonotope{Float64}([1.0, 1.0], [1.0 0.0; 0.0 1.0; 1.0 1.0])\njulia> X.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n"
+    "text": "Zonotope{N<:Real} <: LazySet\n\nType that represents a zonotope.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – matrix; each column is a generator of the zonotope\n\nNotes\n\nMathematically, a zonotope is defined as the set\n\nZ = left c + sum_i=1^p _i g_i _i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line elements. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nZonotope(center::AbstractVector{N},           generators::AbstractMatrix{N}) where {N<:Real}\nZonotope(center::AbstractVector{N},           generators_list::AbstractVector{T}) where {N<:Real, T<:AbstractVector{N}}\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> Z = Zonotope([1.0, 0.0], 0.1*eye(2))\nLazySets.Zonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(Z)\n2\n\nCompute its vertices:\n\njulia> vertices_list(Z)\n4-element Array{Array{Float64,1},1}:\n [0.9, -0.1]\n [1.1, -0.1]\n [1.1, 0.1]\n [0.9, 0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], Z)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\nAlternative constructor: A zonotope in two dimensions with three generators:\n\njulia> Z = Zonotope(ones(2), [[1., 0.], [0., 1.], [1., 1.]])\nLazySets.Zonotope{Float64}([1.0, 1.0], [1.0 0.0 1.0; 0.0 1.0 1.0])\njulia> Z.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n"
 },
 
 {
@@ -701,7 +845,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(Z)\n\nReturn the ambient dimension of a zonotope.\n\nInput\n\nZ – a zonotope\n\nOutput\n\nThe ambient dimension of the zonotope.\n\n\n\n"
+    "text": "dim(Z::Zonotope)\n\nReturn the dimension of a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe ambient dimension of the zonotope.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Zonotope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, Z::Zonotope)::AbstractVector{<:Real}\n\nReturn the support vector of a zonotope in a given direction.\n\nInput\n\nd – direction\nZ – zonotope\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
 },
 
 {
@@ -709,15 +861,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(Z::Zonotope)\n\nReturn the vertices of a zonotope.\n\nInput\n\nZ – a zonotope\n\nOutput\n\nThe list of vertices as a linear array of n-dimensional vectors, where n is the dimension of the zonotope.\n\nNotes\n\nFor high dimensions, it would be preferable to develop a vertex_iterator approach.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{T,1} where T,LazySets.Zonotope}",
-    "page": "Common Set Representations",
-    "title": "LazySets.σ",
-    "category": "Method",
-    "text": "σ(d, Z)\n\nReturn the support vector of a zonotope in a given direction.\n\nInput\n\nd – direction\nZ – zonotope\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+    "text": "vertices_list(Z::Zonotope{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the vertices of a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nList of vertices.\n\nNotes\n\nThis implementation computes a convex hull.\n\nFor high dimensions, it would be preferable to develop a vertex_iterator approach.\n\n\n\n"
 },
 
 {
@@ -725,7 +869,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.order",
     "category": "Method",
-    "text": "order(Z::Zonotope)\n\nReturn the order of a zonotope.\n\nThe order of the zonotope is defined as the quotient between the number of generators and its dimension.\n\nInput\n\nZ – a zonotope\n\nOutput\n\nA rational number representing its order.\n\n\n\n"
+    "text": "order(Z::Zonotope)::Rational\n\nReturn the order of a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nA rational number representing the order of the zonotope.\n\nNotes\n\nThe order of a zonotope is defined as the quotient of its number of generators and its dimension.\n\n\n\n"
 },
 
 {
@@ -733,7 +877,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotopes",
     "category": "section",
-    "text": "Zonotope\nZonotope(center::AbstractVector, generators::AbstractVector{T}) where{T<:AbstractVector}\ndim(Z::Zonotope)\nvertices_list(Z::Zonotope{Float64})\nσ(d::AbstractVector, Z::Zonotope)\norder(Z::Zonotope)"
+    "text": "Zonotope\ndim(::Zonotope)\nσ(d::AbstractVector{Float64}, Z::Zonotope)\nvertices_list(::Zonotope{Float64})\norder(::Zonotope)"
 },
 
 {
@@ -749,7 +893,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Common Set Operations",
     "category": "section",
-    "text": "This section of the manual describes the basic symbolic types describing operations between sets.Pages = [\"operations.md\"]\nDepth = 3CurrentModule = LazySets"
+    "text": "This section of the manual describes the basic symbolic types describing operations between sets.Pages = [\"operations.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nend"
+},
+
+{
+    "location": "lib/operations.html#Minkowski-Sum-1",
+    "page": "Common Set Operations",
+    "title": "Minkowski Sum",
+    "category": "section",
+    "text": ""
 },
 
 {
@@ -757,7 +909,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.MinkowskiSum",
     "category": "Type",
-    "text": "MinkowskiSum <: LazySet\n\nType that represents the Minkowski sum of two convex sets.\n\nFields\n\nX – a convex set\nY – a convex set\n\n\n\n"
+    "text": "MinkowskiSum{T1<:LazySet, T2<:LazySet} <: LazySet\n\nType that represents the Minkowski sum of two convex sets.\n\nFields\n\nX – first convex set\nY – second convex set\n\n\n\n"
 },
 
 {
@@ -765,7 +917,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(ms)\n\nAmbient dimension of a Minkowski product.\n\nInput\n\nms – Minkowski sum\n\n\n\n"
+    "text": "dim(ms::MinkowskiSum)\n\nReturn the dimension of a Minkowski sum.\n\nInput\n\nms – Minkowski sum\n\nOutput\n\nThe ambient dimension of the Minkowski sum.\n\n\n\n"
 },
 
 {
@@ -773,7 +925,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, ms)\n\nSupport vector of a Minkowski sum.\n\nInput\n\nd  – vector\nms – Minkowski sum\n\n\n\n"
+    "text": "σ(d::AbstractVector{<:Real}, ms::MinkowskiSum)::AbstractVector{<:Real}\n\nReturn the support vector of a Minkowski sum.\n\nInput\n\nd  – direction\nms – Minkowski sum\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the summand sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:+-Tuple{LazySets.LazySet,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:+",
+    "category": "Method",
+    "text": "+(X::LazySet, Y::LazySet)\n\nReturn the Minkowski sum of two convex sets.\n\nInput\n\nX – convex set\nY – convex set\n\nOutput\n\nThe Minkowski sum of the two convex sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Binary-Minkowski-Sum-1",
+    "page": "Common Set Operations",
+    "title": "Binary Minkowski Sum",
+    "category": "section",
+    "text": "MinkowskiSum\ndim(::MinkowskiSum)\nσ(::AbstractVector{Float64}, ::MinkowskiSum)\nBase.:+(::LazySet, ::LazySet)"
 },
 
 {
@@ -781,7 +949,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.MinkowskiSumArray",
     "category": "Type",
-    "text": "MinkowskiSumArray <: LazySet\n\nType that represents the Minkowski sum of a finite number of sets.\n\nFields\n\nsfarray – array of sets\n\nNotes\n\nThis type is optimized to be used on the left-hand side of additions only.\n\n\n\n"
+    "text": "MinkowskiSumArray{T<:LazySet} <: LazySet\n\nType that represents the Minkowski sum of a finite number of convex sets.\n\nFields\n\nsfarray – array of convex sets\n\nNotes\n\nThis type assumes that the dimensions of all elements match.\n\nMinkowskiSumArray(sfarray::Vector{<:LazySet}) – default constructor\nMinkowskiSumArray() – constructor for an empty sum\nMinkowskiSumArray(n::Integer) – constructor for an empty sum with size hint\n\n\n\n"
 },
 
 {
@@ -789,7 +957,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(ms::MinkowskiSumArray)\n\nAmbient dimension of the Minkowski sum of a finite number of sets.\n\nInput\n\nms – Minkowski sum array\n\nNotes\n\nWe do not double-check that the dimensions always match.\n\n\n\n"
+    "text": "dim(msa::MinkowskiSumArray)\n\nReturn the dimension of a Minkowski sum of a finite number of sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe ambient dimension of the Minkowski sum of a finite number of sets.\n\n\n\n"
 },
 
 {
@@ -797,7 +965,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, ms)\n\nSupport vector of the Minkowski sum of a finite number of sets.\n\nInput\n\nd – direction\nms – Minkowski sum array\n\n\n\n"
+    "text": "σ(d::AbstractVector{<:Real}, msa::MinkowskiSumArray)::Vector{<:Real}\n\nReturn the support vector of a Minkowski sum of a finite number of sets in a given direction.\n\nInput\n\nd   – direction\nmsa – Minkowski sum array\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the summand sets.\n\n\n\n"
 },
 
 {
@@ -805,7 +973,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:+",
     "category": "Method",
-    "text": "+(msa, sf)\n\nAdds the support function to the array.\n\nInput\n\nmsa – Minkowski sum array\nsf – general support function\n\nNotes\n\nThis function is overridden for more specific types of sf.\n\n\n\n"
+    "text": "+(msa::MinkowskiSumArray, S::LazySet)::MinkowskiSumArray\n\nAdd a convex set to a Minkowski sum of a finite number of convex sets from the right.\n\nInput\n\nmsa – Minkowski sum array (is modified)\nS   – convex set\n\nOutput\n\nThe modified Minkowski sum of a finite number of convex sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:+-Tuple{LazySets.LazySet,LazySets.MinkowskiSumArray}",
+    "page": "Common Set Operations",
+    "title": "Base.:+",
+    "category": "Method",
+    "text": "+(S::LazySet, msa::MinkowskiSumArray)::MinkowskiSumArray\n\nAdd a convex set to a Minkowski sum of a finite number of convex sets from the left.\n\nInput\n\nS   – convex set\nmsa – Minkowski sum array (is modified)\n\nOutput\n\nThe modified Minkowski sum of a finite number of convex sets.\n\n\n\n"
 },
 
 {
@@ -813,7 +989,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:+",
     "category": "Method",
-    "text": "+(msa1, msa2)\n\nAppends the elements of the second array to the first array.\n\nInput\n\nmsa1 – first Minkowski sum array\nmsa2 – second Minkowski sum array\n\n\n\n"
+    "text": "+(msa1::MinkowskiSumArray, msa2::MinkowskiSumArray)::MinkowskiSumArray\n\nAdd the elements of a finite Minkowski sum of convex sets to another finite Minkowski sum.\n\nInput\n\nmsa1 – first Minkowski sum array (is modified)\nmsa2 – second Minkowski sum array\n\nOutput\n\nThe modified first Minkowski sum of a finite number of convex sets.\n\n\n\n"
 },
 
 {
@@ -825,11 +1001,275 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Minkowski-Sum-1",
+    "location": "lib/operations.html#n-ary-Minkowski-Sum-1",
     "page": "Common Set Operations",
-    "title": "Minkowski Sum",
+    "title": "n-ary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSum\ndim(ms::MinkowskiSum)\nσ(d::AbstractVector{Float64}, ms::MinkowskiSum)MinkowskiSumArray\ndim(ms::MinkowskiSumArray)\nσ(d::AbstractVector{Float64}, ms::MinkowskiSumArray)\nBase.:+(msa::MinkowskiSumArray, sf::LazySet)\nBase.:+(msa1::MinkowskiSumArray, msa2::MinkowskiSumArray)\nBase.:+(msa::MinkowskiSumArray, sf::VoidSet)"
+    "text": "MinkowskiSumArray\ndim(::MinkowskiSumArray)\nσ(::AbstractVector{Float64}, ::MinkowskiSumArray)\nBase.:+(::MinkowskiSumArray, ::LazySet)\nBase.:+(::LazySet, ::MinkowskiSumArray)\nBase.:+(::MinkowskiSumArray, ::MinkowskiSumArray)\nBase.:+(::MinkowskiSumArray, ::VoidSet)"
+},
+
+{
+    "location": "lib/operations.html#Cartesian-Product-1",
+    "page": "Common Set Operations",
+    "title": "Cartesian Product",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "lib/operations.html#LazySets.CartesianProduct",
+    "page": "Common Set Operations",
+    "title": "LazySets.CartesianProduct",
+    "category": "Type",
+    "text": "CartesianProduct{S1<:LazySet,S2<:LazySet} <: LazySet\n\nType that represents a Cartesian product of two convex sets.\n\nFields\n\nX – first convex set\nY – second convex set\n\nNotes\n\nThe Cartesian product of three elements is obtained recursively. See also CartesianProductArray for an implementation of a Cartesian product of many sets without recursion, instead using an array.\n\nCartesianProduct{S1<:LazySet,S2<:LazySet} – default constructor\nCartesianProduct(Xarr::Vector{S}) where {S<:LazySet} – constructor from an array of convex sets\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CartesianProduct}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(cp::CartesianProduct)\n\nReturn the dimension of a Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nThe ambient dimension of the Cartesian product.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.CartesianProduct}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, cp::CartesianProduct)::AbstractVector{<:Real}\n\nReturn the support vector of a Cartesian product.\n\nInput\n\nd  – direction\ncp – Cartesian product\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the product sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:*-Tuple{LazySets.LazySet,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:*",
+    "category": "Method",
+    "text": "*(X::LazySet, Y::LazySet)::CartesianProduct\n\nReturn the Cartesian product of two convex sets.\n\nInput\n\nX – convex set\nY – convex set\n\nOutput\n\nThe Cartesian product of the two convex sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.CartesianProduct}",
+    "page": "Common Set Operations",
+    "title": "LazySets.is_contained",
+    "category": "Method",
+    "text": "is_contained(x::AbstractVector{<:Real}, cp::CartesianProduct)::Bool\n\nReturn whether a given vector is contained in a Cartesian product set.\n\nInput\n\nx  – vector\ncp – Cartesian product\n\nOutput\n\nReturn true iff x  cp.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Binary-Cartesian-Product-1",
+    "page": "Common Set Operations",
+    "title": "Binary Cartesian Product",
+    "category": "section",
+    "text": "CartesianProduct\ndim(::CartesianProduct)\nσ(::AbstractVector{Float64}, ::CartesianProduct)\nBase.:*(::LazySet, ::LazySet)\nis_contained(::AbstractVector{Float64}, ::CartesianProduct)"
+},
+
+{
+    "location": "lib/operations.html#LazySets.CartesianProductArray",
+    "page": "Common Set Operations",
+    "title": "LazySets.CartesianProductArray",
+    "category": "Type",
+    "text": "CartesianProductArray{S<:LazySet} <: LazySet\n\nType that represents the Cartesian product of a finite number of convex sets.\n\nFields\n\nsfarray – array of sets\n\nNotes\n\nCartesianProductArray(sfarray::Vector{<:LazySet}) – default constructor\nCartesianProductArray() – constructor for an empty Cartesian product\nCartesianProductArray(n::Integer) – constructor for an empty Cartesian product with size hint\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CartesianProductArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(cpa::CartesianProductArray)\n\nReturn the dimension of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe ambient dimension of the Cartesian product of a finite number of convex sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.CartesianProductArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, cpa::CartesianProductArray)::AbstractVector{<:Real}\n\nSupport vector of a Cartesian product.\n\nInput\n\nd   – direction\ncpa – Cartesian product array\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the product sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:*-Tuple{LazySets.CartesianProductArray,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:*",
+    "category": "Method",
+    "text": "*(cpa::CartesianProductArray, S::LazySet)::CartesianProductArray\n\nMultiply a convex set to a Cartesian product of a finite number of convex sets from the right.\n\nInput\n\ncpa – Cartesian product array (is modified)\nS   – convex set\n\nOutput\n\nThe modified Cartesian product of a finite number of convex sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:*-Tuple{LazySets.LazySet,LazySets.CartesianProductArray}",
+    "page": "Common Set Operations",
+    "title": "Base.:*",
+    "category": "Method",
+    "text": "*(S::LazySet, cpa::CartesianProductArray)::CartesianProductArray\n\nMultiply a convex set to a Cartesian product of a finite number of convex sets from the left.\n\nInput\n\nS   – convex set\ncpa – Cartesian product array (is modified)\n\nOutput\n\nThe modified Cartesian product of a finite number of convex sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:*-Tuple{LazySets.CartesianProductArray,LazySets.CartesianProductArray}",
+    "page": "Common Set Operations",
+    "title": "Base.:*",
+    "category": "Method",
+    "text": "*(cpa1::CartesianProductArray, cpa2::CartesianProductArray)::CartesianProductArray\n\nMultiply a finite Cartesian product of convex sets to another finite Cartesian product.\n\nInput\n\ncpa1 – first Cartesian product array (is modified)\ncpa2 – second Cartesian product array\n\nOutput\n\nThe modified first Cartesian product.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.CartesianProductArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.is_contained",
+    "category": "Method",
+    "text": "is_contained(x::AbstractVector{<:Real}, cpa::CartesianProductArray)::Bool\n\nReturn whether a given vector is contained in a Cartesian product of a finite number of sets.\n\nInput\n\nx   – vector\ncpa – Cartesian product array\n\nOutput\n\nReturn true iff x  cpa.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#n-ary-Cartesian-Product-1",
+    "page": "Common Set Operations",
+    "title": "n-ary Cartesian Product",
+    "category": "section",
+    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Float64}, ::CartesianProductArray)\nBase.:*(::CartesianProductArray, ::LazySet)\nBase.:*(::LazySet, ::CartesianProductArray)\nBase.:*(::CartesianProductArray, ::CartesianProductArray)\nis_contained(::AbstractVector{Float64}, ::CartesianProductArray)"
+},
+
+{
+    "location": "lib/operations.html#Maps-1",
+    "page": "Common Set Operations",
+    "title": "Maps",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "lib/operations.html#LazySets.LinearMap",
+    "page": "Common Set Operations",
+    "title": "LazySets.LinearMap",
+    "category": "Type",
+    "text": "LinearMap{S<:LazySet, N<:Real} <: LazySet\n\nType that represents a linear transformation MS of a convex set S.\n\nFields\n\nM  – matrix/linear map\nsf – convex set\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.LinearMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(lm::LinearMap)\n\nReturn the dimension of a linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nThe ambient dimension of the linear map.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.LinearMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, lm::LinearMap)::AbstractVector{<:Real}\n\nReturn the support vector of the linear map.\n\nInput\n\nd  – direction\nlm – linear map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf L = MS, where M is a matrix and S is a convex set, it follows that (d L) = M(M^T d S) for any direction d.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:*-Tuple{AbstractArray{Float64,2},LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:*",
+    "category": "Method",
+    "text": "*(M::AbstractMatrix{<:Real}, S::LazySet)\n\nReturn the linear map of a convex set.\n\nInput\n\nM – matrix/linear map\nS – convex set\n\nOutput\n\nThe linear map of the convex set.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:*-Tuple{Real,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:*",
+    "category": "Method",
+    "text": "*(a::Real, S::LazySet)::LinearMap\n\nReturn a linear map of a convex set by a scalar value.\n\nInput\n\na – real scalar\nS – convex set\n\nOutput\n\nThe linear map of the convex set.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Linear-Map-1",
+    "page": "Common Set Operations",
+    "title": "Linear Map",
+    "category": "section",
+    "text": "LinearMap\ndim(::LinearMap)\nσ(::AbstractVector{Float64}, ::LinearMap)\n*(::AbstractMatrix{Float64}, ::LazySet)\n*(::Real, ::LazySet)"
+},
+
+{
+    "location": "lib/operations.html#LazySets.ExponentialMap",
+    "page": "Common Set Operations",
+    "title": "LazySets.ExponentialMap",
+    "category": "Type",
+    "text": "ExponentialMap{S<:LazySet} <: LazySet\n\nType that represents the action of an exponential map on a convex set.\n\nFields\n\nspmexp – sparse matrix exponential\nX      – convex set\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ExponentialMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(em::ExponentialMap)\n\nReturn the dimension of an exponential map.\n\nInput\n\nem – an ExponentialMap\n\nOutput\n\nThe ambient dimension of the exponential map.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ExponentialMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{Float64}, em::ExponentialMap)::AbstractVector{Float64}\n\nReturn the support vector of the exponential map.\n\nInput\n\nd  – direction\nem – exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf E = exp(M)S, where M is a matrix and S is a convex set, it follows that (d E) = exp(M)(exp(M)^T d S) for any direction d.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.ExponentialProjectionMap",
+    "page": "Common Set Operations",
+    "title": "LazySets.ExponentialProjectionMap",
+    "category": "Type",
+    "text": "ExponentialProjectionMap{S<:LazySet} <: LazySet\n\nType that represents the application of a projection of a sparse matrix exponential to a convex set.\n\nFields\n\nspmexp – projection of a sparse matrix exponential\nX      – convex set\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ExponentialProjectionMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(eprojmap::ExponentialProjectionMap)\n\nReturn the dimension of a projection of an exponential map.\n\nInput\n\neprojmap – projection of an exponential map\n\nOutput\n\nThe ambient dimension of the projection of an exponential map.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ExponentialProjectionMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{Float64}, eprojmap::ExponentialProjectionMap)::AbstractVector{Float64}\n\nReturn the support vector of a projection of an exponential map.\n\nInput\n\nd        – direction\neprojmap – projection of an exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf S = (LMR)X, where L and R are matrices, M is a matrix exponential, and X is a set, it follows that (d S) = LMR(R^TM^TL^Td X) for any direction d.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.SparseMatrixExp",
+    "page": "Common Set Operations",
+    "title": "LazySets.SparseMatrixExp",
+    "category": "Type",
+    "text": "SparseMatrixExp{N<:Real}\n\nType that represents the matrix exponential, exp(M), of a sparse matrix.\n\nFields\n\nM – sparse matrix\n\nNotes\n\nThis type is provided for use with very large and very sparse matrices. The evaluation of the exponential matrix action over vectors relies on the Expokit package.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:*-Tuple{LazySets.SparseMatrixExp,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:*",
+    "category": "Method",
+    "text": "*(spmexp::SparseMatrixExp, X::LazySet)\n\nReturn the exponential map of a convex set from a sparse matrix exponential.\n\nInput\n\nspmexp – sparse matrix exponential\nX      – convex set\n\nOutput\n\nThe exponential map of the convex set.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.ProjectionSparseMatrixExp",
+    "page": "Common Set Operations",
+    "title": "LazySets.ProjectionSparseMatrixExp",
+    "category": "Type",
+    "text": "ProjectionSparseMatrixExp{N<:Real}\n\nType that represents the projection of a sparse matrix exponential, i.e., Lexp(M)R for a given sparse matrix M.\n\nFields\n\nL – left multiplication matrix\nE – sparse matrix exponential\nR – right multiplication matrix\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:*-Tuple{LazySets.ProjectionSparseMatrixExp,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:*",
+    "category": "Method",
+    "text": "*(projspmexp::ProjectionSparseMatrixExp, X::LazySet)::ExponentialProjectionMap\n\nReturn the application of a projection of a sparse matrix exponential to a convex set.\n\nInput\n\nprojspmexp – projection of a sparse matrix exponential\nX          – convex set\n\nOutput\n\nThe application of the projection of a sparse matrix exponential to the convex set.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Exponential-Map-1",
+    "page": "Common Set Operations",
+    "title": "Exponential Map",
+    "category": "section",
+    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Float64}, ::ExponentialMap)ExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Float64}, ::ExponentialProjectionMap)SparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
 },
 
 {
@@ -837,7 +1277,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.ConvexHull",
     "category": "Type",
-    "text": "ConvexHull <: LazySet\n\nType that represents the convex hull of the union of two convex sets.\n\nFields\n\nX – a convex set\nY – another convex set\n\n\n\n"
+    "text": "ConvexHull{S1<:LazySet, S2<:LazySet} <: LazySet\n\nType that represents the convex hull of the union of two convex sets.\n\nFields\n\nX – convex set\nY – convex set\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.CH",
+    "page": "Common Set Operations",
+    "title": "LazySets.CH",
+    "category": "Type",
+    "text": "CH\n\nAlias for ConvexHull.\n\n\n\n"
 },
 
 {
@@ -845,7 +1293,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(P)\n\nReturn the ambient dimension of the convex hull of two sets.\n\nInput\n\nch – the convex hull of two sets\n\n\n\n"
+    "text": "dim(ch::ConvexHull)\n\nReturn the dimension of a convex hull of two convex sets.\n\nInput\n\nch – convex hull of two convex sets\n\nOutput\n\nThe ambient dimension of the convex hull of two convex sets.\n\n\n\n"
 },
 
 {
@@ -853,7 +1301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d, P)\n\nReturn the support vector of a convex hull in a given direction.\n\nInput\n\nd  – direction\nch – the convex hull of two sets\n\n\n\n"
+    "text": "σ(d::AbstractVector{<:Real}, ch::ConvexHull)::AbstractVector{<:Real}\n\nReturn the support vector of a convex hull of two convex sets in a given direction.\n\nInput\n\nd  – direction\nch – convex hull of two convex sets\n\n\n\n"
 },
 
 {
@@ -861,7 +1309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Convex Hull",
     "category": "section",
-    "text": "ConvexHull\ndim(ch::ConvexHull)\nσ(d::AbstractVector{Float64}, ch::ConvexHull)"
+    "text": "ConvexHull\nCH\ndim(::ConvexHull)\nσ(::AbstractVector{Float64}, ::ConvexHull)"
 },
 
 {
@@ -869,7 +1317,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull",
     "category": "Function",
-    "text": "convex_hull(points; algorithm)\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – array of vectors containing the 2D coordinates of the points\nalgorithm – (optional, default: \"monotone_chain\") choose the convex                hull algorithm, valid options are:\n\"monotone_chain\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\njulia> hull = convex_hull(points);\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nWe can plot the random points, and the polygon whose vertices are the computed convex hull, using Plots:\n\njulia> using Plots\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter)\njulia> plot!(VPolygon(hull), alpha=0.2)\n\n\n\n"
+    "text": "convex_hull(points; [algorithm]::String=\"monotone_chain\")\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – list of 2D vectors\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\n\njulia> hull = convex_hull(points);\n\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nPlot both the random points and the computed convex hull polygon:\n\njulia> using Plots;\n\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter);\n\njulia> plot!(VPolygon(hull), alpha=0.2);\n\n\n\n"
 },
 
 {
@@ -877,7 +1325,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull!",
     "category": "Function",
-    "text": "convex_hull!(points; algorithm)\n\nCompute the convex hull of points in the plane, in-place. See also: convex_hull.\n\n\n\n"
+    "text": "convex_hull!(points; algorithm::String=\"monotone_chain\")\n\nCompute the convex hull of points in the plane, in-place.\n\nInput\n\npoints    – list of 2D vectors (is modified)\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\nNotes\n\nSee the non-modifying version convex_hull for more details.\n\n\n\n"
 },
 
 {
@@ -885,7 +1333,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.right_turn",
     "category": "Function",
-    "text": "right_turn(O, A, B)\n\nDetermine if the acute angle defined by the three points O, A, B in the plane is a right turn (counter-clockwise) with respect to the center O.\n\nInput\n\nO – center point\nA – one point\nB – another point\n\nAlgorithm\n\nThe cross product is used to determine the sense of rotation. If the result is 0, the points are collinear; if it is positive, the three points constitute a positive angle of rotation around O from A to B; otherwise a negative angle.\n\n\n\n"
+    "text": "right_turn(O, A, B)\n\nDetermine if the acute angle defined by the three points O, A, B in the plane is a right turn (counter-clockwise) with respect to the center O.\n\nInput\n\nO – center point\nA – one point\nB – another point\n\nAlgorithm\n\nThe cross product is used to determine the sense of rotation. If the result is 0, the points are collinear; if it is positive, the three points constitute a positive angle of rotation around O from A to B; otherwise they constitute a negative angle.\n\n\n\n"
 },
 
 {
@@ -893,7 +1341,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.monotone_chain!",
     "category": "Function",
-    "text": "monotone_chain!(points)\n\nCompute the convex hull of points in the plane using Andrew's monotone chain method.\n\nInput\n\npoints – array of vectors containing the 2D coordinates of the points;             is sorted in-place inside this function\n\nOutput\n\nArray of vectors containing the 2D coordinates of the corner points of the convex hull.\n\nNotes\n\nFor large sets of points, it is convenient to use static vectors to get maximum performance. For information on how to convert usual vectors into static vectors, see the type SVector provided by the StaticArrays package.\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see the wikipedia page: Monotone chain\n\n\n\n"
+    "text": "monotone_chain!(points::Vector{S}) where {S<:AbstractVector{N}} where {N<:Real}\n\nCompute the convex hull of points in the plane using Andrew's monotone chain method.\n\nInput\n\npoints – list of 2D vectors; is sorted in-place inside this function\n\nOutput\n\nList of vectors containing the 2D coordinates of the corner points of the convex hull.\n\nNotes\n\nFor large sets of points, it is convenient to use static vectors to get maximum performance. For information on how to convert usual vectors into static vectors, see the type SVector provided by the StaticArrays package.\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see Monotone chain\n\n\n\n"
 },
 
 {
@@ -905,174 +1353,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.CartesianProduct",
-    "page": "Common Set Operations",
-    "title": "LazySets.CartesianProduct",
-    "category": "Type",
-    "text": "CartesianProduct <: LazySet\n\nType that represents the cartesian product.\n\nFields\n\nX – convex set\nY – another convex set\n\nNotes\n\nThe Cartesian product of three elements is done recursively. See also CartesianProductArray for implementation of a cartesian product of many sets without recursion, using instead an array.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CartesianProduct}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "Method",
-    "text": "dim(cp)\n\nAmbient dimension of a Cartesian product.\n\nInput\n\ncp – cartesian product\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.CartesianProduct}",
-    "page": "Common Set Operations",
-    "title": "LazySets.σ",
-    "category": "Method",
-    "text": "σ(d, cp)\n\nSupport vector of a Cartesian product.\n\nInput\n\nd  – direction\ncp – cartesian product\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.CartesianProduct}",
-    "page": "Common Set Operations",
-    "title": "LazySets.is_contained",
-    "category": "Method",
-    "text": "is_contained(d, cp)\n\nReturn whether a vector belongs to a given cartesian product set.\n\nInput\n\nd    –  a vector\ncp   – a cartesian product\n\nOutput\n\nReturn true iff d ∈ cp.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.CartesianProductArray",
-    "page": "Common Set Operations",
-    "title": "LazySets.CartesianProductArray",
-    "category": "Type",
-    "text": "CartesianProductArray <: LazySet\n\nType that represents the cartesian product of a finite number of sets.\n\nFields\n\nsfarray – array of sets\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CartesianProductArray}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "Method",
-    "text": "dim(cp)\n\nAmbient dimension of the Cartesian product of a finite number of sets.\n\nInput\n\ncp – cartesian product array\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.CartesianProductArray}",
-    "page": "Common Set Operations",
-    "title": "LazySets.σ",
-    "category": "Method",
-    "text": "σ(d, cp)\n\nSupport vector of the Cartesian product of a finite number of sets.\n\nInput\n\nd  – direction\ncp – cartesian product array\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.CartesianProductArray}",
-    "page": "Common Set Operations",
-    "title": "LazySets.is_contained",
-    "category": "Method",
-    "text": "is_contained(d, cp)\n\nReturn whether a given vector is contained in the cartesian product of a finite number of sets.\n\nInput\n\nd  – vector\ncp – cartesian product array\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Cartesian-Product-1",
-    "page": "Common Set Operations",
-    "title": "Cartesian Product",
-    "category": "section",
-    "text": "CartesianProduct\ndim(cp::CartesianProduct)\nσ(d::AbstractVector{Float64}, cp::CartesianProduct)\nis_contained(d::AbstractVector{Float64}, cp::CartesianProduct)CartesianProductArray\ndim(cp::CartesianProductArray)\nσ(d::AbstractVector{Float64}, cp::CartesianProductArray)\nis_contained(d::AbstractVector{Float64}, cp::CartesianProductArray)"
-},
-
-{
-    "location": "lib/operations.html#LazySets.LinearMap",
-    "page": "Common Set Operations",
-    "title": "LazySets.LinearMap",
-    "category": "Type",
-    "text": "LinearMap <: LazySet\n\nType that represents a linear transform of a set. This class is a wrapper around a linear transformation MS of a set S, such that it changes the behaviour of the support vector of the new set.\n\nFields\n\nM  – a linear map, which can a be densem matrix, sparse matrix or a subarray object\nsf – a convex set represented by its support function\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.LinearMap}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "Method",
-    "text": "dim(lm)\n\nAmbient dimension of the linear map of a set.\n\nIt corresponds to the output dimension of the linear map.\n\nInput\n\nlm – a linear map\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.LinearMap}",
-    "page": "Common Set Operations",
-    "title": "LazySets.σ",
-    "category": "Method",
-    "text": "σ(d, lm)\n\nSupport vector of the linear map of a set.\n\nIf S = MB, where M is sa matrix and B is a set, it follows that σ(d, S) = Mσ(M^T d, B) for any direction d.\n\nInput\n\nd  – a direction\nlm – a linear map\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Linear-Maps-1",
-    "page": "Common Set Operations",
-    "title": "Linear Maps",
-    "category": "section",
-    "text": "LinearMap\ndim(lm::LinearMap)\nσ(d::AbstractVector{Float64}, lm::LinearMap)"
-},
-
-{
-    "location": "lib/operations.html#LazySets.ExponentialMap",
-    "page": "Common Set Operations",
-    "title": "LazySets.ExponentialMap",
-    "category": "Type",
-    "text": "ExponentialMap <: LazySet\n\nType that represents the action of an exponential map on a set.\n\nFields\n\nspmexp – a matrix exponential\nX      – a convex set represented by its support function\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ExponentialMap}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "Method",
-    "text": "dim(em)\n\nThe ambient dimension of a ExponentialMap.\n\nInput\n\nem – an ExponentialMap\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ExponentialProjectionMap}",
-    "page": "Common Set Operations",
-    "title": "LazySets.σ",
-    "category": "Method",
-    "text": "σ(d, eprojmap)\n\nSupport vector of an ExponentialProjectionMap.\n\nInput\n\nd         – a direction\neprojmap  – the projection of an exponential map\n\nIf S = (LMR)B, where L and R are dense matrices, M is a matrix exponential, and B is a set, it follows that: σ(d, S) = LMR σ(R^T M^T L^T d, B) for any direction d.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.ExponentialProjectionMap",
-    "page": "Common Set Operations",
-    "title": "LazySets.ExponentialProjectionMap",
-    "category": "Type",
-    "text": "ExponentialProjectionMap\n\nType that represents the application of the projection of a SparseMatrixExp over a given set.\n\nFields\n\nspmexp   – the projection of an exponential map\nX       – a set represented by its support function\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ExponentialProjectionMap}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "Method",
-    "text": "dim(eprojmap)\n\nThe ambient dimension of a ExponentialProjectionMap.\n\nIt is given by the output dimension (left-most matrix).\n\nInput\n\neprojmap – an ExponentialProjectionMap\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.ProjectionSparseMatrixExp",
-    "page": "Common Set Operations",
-    "title": "LazySets.ProjectionSparseMatrixExp",
-    "category": "Type",
-    "text": "ProjectionSparseMatrixExp\n\nType that represents the projection of a SparseMatrixExp.\n\nFields\n\nL – left multiplication matrix\nE – the exponential of a sparse matrix\nR – right multiplication matrix\n\nOutput\n\nA type that abstract the matrix operation L * exp(E.M) * R, for a given sparse matrix E.M.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.SparseMatrixExp",
-    "page": "Common Set Operations",
-    "title": "LazySets.SparseMatrixExp",
-    "category": "Type",
-    "text": "SparseMatrixExp\n\nType that represents the matrix exponential of a sparse matrix, and provides evaluation of its action on vectors.\n\nFields\n\nM – sparse matrix\n\nNotes\n\nThis class is provided for use with very large and very sparse matrices. The evaluation of the exponential matrix action over vectores relies on the Expokit package.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Exponential-Maps-1",
-    "page": "Common Set Operations",
-    "title": "Exponential Maps",
-    "category": "section",
-    "text": "ExponentialMap\ndim(emap::ExponentialMap)\nσ(d::AbstractVector{Float64}, eprojmap::ExponentialProjectionMap)ExponentialProjectionMap\ndim(eprojmap::ExponentialProjectionMap)ProjectionSparseMatrixExp\nSparseMatrixExp"
-},
-
-{
     "location": "lib/approximations.html#",
     "page": "Approximations",
     "title": "Approximations",
@@ -1081,11 +1361,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/approximations.html#LazySets.Approximations",
+    "page": "Approximations",
+    "title": "LazySets.Approximations",
+    "category": "Module",
+    "text": "Module Approximations.jl – polygonal approximation of convex sets through support vectors.\n\n\n\n"
+},
+
+{
     "location": "lib/approximations.html#Approximations-1",
     "page": "Approximations",
     "title": "Approximations",
     "category": "section",
-    "text": "This section of the manual describes the Cartesian decomposition algorithms and the approximation of high-dimensional convex sets using projections.Pages = [\"approximations.md\"]\nDepth = 3CurrentModule = LazySets.Approximations"
+    "text": "This section of the manual describes the Cartesian decomposition algorithms and the approximation of high-dimensional convex sets using projections.Pages = [\"approximations.md\"]\nDepth = 3CurrentModule = LazySets.Approximations\nDocTestSetup = quote\n    using LazySets, LazySets.Approximations\nendApproximations"
 },
 
 {
@@ -1093,7 +1381,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.decompose",
     "category": "Function",
-    "text": "decompose(X)\n\nCompute an overapproximation of the projections of the given set over each two-dimensional subspace using box directions.\n\nInput\n\nX  – lazy set\n\nOutput\n\nA CartesianProductArray corresponding to the cartesian product of 2x2 polygons.\n\n\n\ndecompose(X, ɛi)\n\nCompute an overapproximation of the projections of the given set over each two-dimensional subspace with a certified error bound.\n\nInput\n\nX  – lazy set\nɛi – array with the error bound for each projection (different error bounds         can be passed to different blocks)\n\nOutput\n\nA CartesianProductArray corresponding to the cartesian product of 2x2 polygons.\n\nAlgorithm\n\nThis algorithm assumes a decomposition into two-dimensional subspaces only, i.e. partitions of the form 2 2  2. In particular if X is a CartesianProductArray, no check is performed to verify that assumption.\n\nIt proceeds as follows:\n\nProject the set X into each partition, with MX, where M is the identity matrix in the block coordinates and zero otherwise.\nOverapproximate the set with a given error bound, ɛi[i], for i = 1  b,\nReturn the result as an array of support functions.\n\n\n\ndecompose(X, ɛ)\n\nCompute an overapproximation of the projections of the given set over each two-dimensional subspace with a certified error bound.\n\nThis function is a particular case of decompose(X, ɛi), where the same error bound for each block is assumed.\n\nInput\n\nX  – lazy set\nɛ –  error bound\n\nOutput\n\nA CartesianProductArray corresponding to the cartesian product of 2x2 polygons.\n\n\n\n"
+    "text": "decompose(S::LazySet)::CartesianProductArray\n\nCompute an overapproximation of the projections of the given convex set over each two-dimensional subspace using box directions.\n\nInput\n\nS – convex set\n\nOutput\n\nA CartesianProductArray corresponding to the Cartesian product of 2 times 2 box-shaped polygons.\n\n\n\ndecompose(S::LazySet, ɛi::Vector{Float64})::CartesianProductArray\n\nCompute an overapproximation of the projections of the given convex set over each two-dimensional subspace with a certified error bound.\n\nInput\n\nS  – convex set\nɛi – array with the error bound for each projection (different error bounds         can be passed for different blocks)\n\nOutput\n\nA CartesianProductArray corresponding to the Cartesian product of 2 times 2 polygons.\n\nAlgorithm\n\nThis algorithm assumes a decomposition into two-dimensional subspaces only, i.e., partitions of the form 2 2  2. In particular, if S is a CartesianProductArray, no check is performed to verify that assumption.\n\nThe algorithm proceeds as follows:\n\nProject the set S into each partition, with M⋅S, where M is the identity matrix in the block coordinates and zero otherwise.\nOverapproximate the set with a given error bound, ɛi[i], for i = 1  b,\nReturn the result as a CartesianProductArray.\n\n\n\ndecompose(S::LazySet, ɛ::Float64)::CartesianProductArray\n\nCompute an overapproximation of the projections of the given convex set over each two-dimensional subspace with a certified error bound.\n\nInput\n\nS – convex set\nɛ –  error bound\n\nOutput\n\nA CartesianProductArray corresponding to the Cartesian product of 2 times 2 polygons.\n\nNotes\n\nThis function is a particular case of decompose(S, ɛi), where the same error bound for each block is assumed.\n\n\n\n"
 },
 
 {
@@ -1101,7 +1389,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.overapproximate",
     "category": "Function",
-    "text": "overapproximate(X)\n\nReturn an approximation of the given 2D set as a box-shaped polygon.\n\nInput\n\nX – lazy set, assumed to be two-dimensional\n\nOutput\n\nA polygon in constraint representation.\n\n\n\noverapproximate(X, ɛ)\n\nReturn an ɛ-close approximation of the given 2D set (in terms of Hausdorff distance) as a polygon.\n\nInput\n\nX – lazy set, assumed to be two-dimensional\nɛ – the error bound\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n"
+    "text": "overapproximate(S::LazySet)::HPolygon\n\nReturn an approximation of a given 2D convex set as a box-shaped polygon.\n\nInput\n\nS – convex set, assumed to be two-dimensional\n\nOutput\n\nA box-shaped polygon in constraint representation.\n\n\n\noverapproximate(S::LazySet, ɛ::Float64)::HPolygon\n\nReturn an ɛ-close approximation of the given 2D set (in terms of Hausdorff distance) as a polygon.\n\nInput\n\nS – convex set, assumed to be two-dimensional\nɛ – error bound\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n"
 },
 
 {
@@ -1117,7 +1405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.ballinf_approximation",
     "category": "Function",
-    "text": "ballinf_approximation(X)\n\nOverapproximation of a set by a ball in the infinity norm.\n\nInput\n\nX – a lazy set\n\nOutput\n\nH – a ball in the infinity norm which tightly contains the given set\n\nAlgorithm\n\nThe center and radius of the box are obtained by evaluating the support function of the given set along the canonical directions.\n\n\n\n"
+    "text": "ballinf_approximation(S)\n\nOverapproximate a convex set by a tight ball in the infinity norm.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight ball in the infinity norm.\n\nAlgorithm\n\nThe center and radius of the box are obtained by evaluating the support function of the given convex set along the canonical directions.\n\n\n\n"
 },
 
 {
@@ -1125,7 +1413,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation",
     "category": "Function",
-    "text": "box_approximation(X)\n\nOverapproximate a set by a box (hyperrectangle).\n\nInput\n\nX – a lazy set\n\nOutput\n\nH – a (tight) hyperrectangle\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaring the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n"
+    "text": "box_approximation(S::LazySet)::Hyperrectangle\n\nOverapproximate a convex set by a tight hyperrectangle.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle.\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.interval_hull",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.interval_hull",
+    "category": "Function",
+    "text": "interval_hull\n\nAlias for box_approximation.\n\n\n\n"
 },
 
 {
@@ -1133,7 +1429,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation_symmetric",
     "category": "Function",
-    "text": "box_approximation_symmetric(X)\n\nOverapproximation of a set by a hyperrectangle which contains the origin.\n\nInput\n\nX – a lazy set\n\nOuptut\n\nH – a symmetric interval around the origin which tightly contains the given set\n\nAlgorithm\n\nThe center of the box is the origin, and the radius is obtained by computing the maximum value of the support function evaluated at the canonical directions.\n\n\n\n"
+    "text": "box_approximation_symmetric(S::LazySet)::Hyperrectangle\n\nOverapproximate a convex set by a tight hyperrectangle centered in the origin.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle centered in the origin.\n\nAlgorithm\n\nThe center of the box is the origin, and the radius is obtained by computing the maximum value of the support function evaluated at the canonical directions.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.symmetric_interval_hull",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.symmetric_interval_hull",
+    "category": "Function",
+    "text": "symmetric_interval_hull\n\nAlias for box_approximation_symmetric.\n\n\n\n"
 },
 
 {
@@ -1141,7 +1445,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation_helper",
     "category": "Function",
-    "text": "box_approximation_helper(X)\n\nCommon code of box_approximation and box_approximation_symmetric.\n\nInput\n\nX – a lazy set\n\nOutput\n\nH – a (tight) hyperrectangle\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaring the support function the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n"
+    "text": "box_approximation_helper(S::LazySet)\n\nCommon code of box_approximation and box_approximation_symmetric.\n\nInput\n\nS – convex set\n\nOutput\n\nA tuple containing the data that is needed to construct a tightly overapproximating hyperrectangle.\n\nc – center\nr – radius\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given convex set in the canonical directions. The lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n"
 },
 
 {
@@ -1149,7 +1453,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Box Approximations",
     "category": "section",
-    "text": "ballinf_approximation\nbox_approximation\nbox_approximation_symmetric\nbox_approximation_helper"
+    "text": "ballinf_approximation\nbox_approximation\ninterval_hull\nbox_approximation_symmetric\nsymmetric_interval_hull\nbox_approximation_helper"
 },
 
 {
@@ -1157,7 +1461,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(X::LazySet, [p])\n\nReturn the norm of a LazySet. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nX – a lazy set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
 },
 
 {
@@ -1165,7 +1469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.radius",
     "category": "Function",
-    "text": "radius(X::LazySet, [p])\n\nReturn the radius of a LazySet. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nX – lazy set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
 },
 
 {
@@ -1173,7 +1477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(X::LazySet, [p])\n\nReturn the diameter of a LazySet. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nX – lazy set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
 },
 
 {
@@ -1181,7 +1485,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Metric properties of sets",
     "category": "section",
-    "text": "norm(X::LazySet, p::Real=Inf)\nradius(X::LazySet, p::Real=Inf)\ndiameter(X::LazySet, p::Real=Inf)"
+    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)"
 },
 
 {
@@ -1189,7 +1493,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.approximate",
     "category": "Function",
-    "text": "approximate(X, ɛ)\n\nReturn an ɛ-close approximation of the given 2D set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nX – a 2D set defined by its support function\nɛ – the error bound\n\n\n\n"
+    "text": "approximate(S::LazySet, ɛ::Float64)::Vector{Approximation2D}\n\nReturn an ɛ-close approximation of the given 2D convex set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nS – 2D convex set\nɛ – error bound\n\nOutput\n\nAn ɛ-close approximation of the given 2D convex set.\n\n\n\n"
 },
 
 {
@@ -1197,7 +1501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Iterative refinement",
     "category": "section",
-    "text": "approximate"
+    "text": "approximateSee Iterative Refinement for more details."
 },
 
 {
@@ -1205,7 +1509,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Utility Functions",
     "category": "page",
-    "text": ""
+    "text": "CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nend"
 },
 
 {
@@ -1213,7 +1517,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.unit_step",
     "category": "Method",
-    "text": "unit_step(x)\n\nThe unit step function, which returns 1 if and only if x is greater or equal than zero.\n\nInput\n\nx – a floating point number\n\nNotes\n\nThis function can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> unit_step.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n"
+    "text": "unit_step(x::Real)\n\nThe unit step function, which returns 1 iff x is greater than or equal to zero.\n\nInput\n\nx – real scalar\n\nOutput\n\n1 if x  0, 0 otherwise.\n\nNotes\n\nThis function can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> unit_step.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n"
 },
 
 {
@@ -1221,7 +1525,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.jump2pi",
     "category": "Function",
-    "text": "jump2pi(x)\n\nReturn x + 2 if x is negative, otherwise return x.\n\nInput\n\nx – a floating point number\n\nExamples\n\njulia> jump2pi(0.0)\n0.0\njulia> jump2pi(-0.5)\n5.783185307179586\njulia> jump2pi(0.5)\n0.5\n\n\n\n"
+    "text": "jump2pi(x::Float64)\n\nReturn x + 2 if x is negative, otherwise return x.\n\nInput\n\nx – real scalar\n\nOutput\n\nx + 2 if x is negative, x otherwise.\n\nExamples\n\njulia> jump2pi(0.0)\n0.0\njulia> jump2pi(-0.5)\n5.783185307179586\njulia> jump2pi(0.5)\n0.5\n\n\n\n"
 },
 
 {
@@ -1229,7 +1533,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Base.:<=",
     "category": "Method",
-    "text": "u <= v\n\nStates if arg(u) [2π] <= arg(v) [2π].\n\nInput\n\nu –  a first direction\nv –  a second direction\n\nOutput\n\nTrue iff arg(u) [2π] <= arg(v) [2π]\n\nNotes\n\nThe argument is measured in counter-clockwise fashion, with the 0 being the direction (1, 0).\n\n\n\n"
+    "text": "u <= v\n\nCompares two 2D vectors by their direction.\n\nInput\n\nu –  first 2D direction\nv –  second 2D direction\n\nOutput\n\nTrue iff arg(u) 2  arg(v) 2\n\nNotes\n\nThe argument is measured in counter-clockwise fashion, with the 0 being the direction (1, 0).\n\n\n\n"
 },
 
 {
