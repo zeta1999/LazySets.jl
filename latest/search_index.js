@@ -365,7 +365,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(B::Ball2)\n\nReturn the dimension of a ball in the 2-norm.\n\nInput\n\nB – ball in the 2-norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
+    "text": "dim(B::Ball2)::Int\n\nReturn the dimension of a ball in the 2-norm.\n\nInput\n\nB – ball in the 2-norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
 },
 
 {
@@ -397,7 +397,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(B::BallInf)\n\nReturn the dimension of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
+    "text": "dim(B::BallInf)::Int\n\nReturn the dimension of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
 },
 
 {
@@ -477,7 +477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(P::HPolygon)\n\nReturn the dimension of a polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe ambient dimension of the polygon.\n\n\n\n"
+    "text": "dim(P::HPolygon)::Int\n\nReturn the dimension of a polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe ambient dimension of the polygon.\n\n\n\n"
 },
 
 {
@@ -541,7 +541,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(P::HPolygonOpt)\n\nReturn the dimension of an optimized polygon.\n\nInput\n\nP – optimized polygon in constraint representation\n\nOutput\n\nThe ambient dimension of the optimized polygon.\n\n\n\n"
+    "text": "dim(P::HPolygonOpt)::Int\n\nReturn the dimension of an optimized polygon.\n\nInput\n\nP – optimized polygon in constraint representation\n\nOutput\n\nThe ambient dimension of the optimized polygon.\n\n\n\n"
 },
 
 {
@@ -597,7 +597,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(P::VPolygon)\n\nReturn the dimension of a polygon in vertex representation.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe ambient dimension of the polygon.\n\n\n\n"
+    "text": "dim(P::VPolygon)::Int\n\nReturn the dimension of a polygon in vertex representation.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe ambient dimension of the polygon.\n\n\n\n"
 },
 
 {
@@ -685,7 +685,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(H::Hyperrectangle)\n\nReturn the dimension of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nThe ambient dimension of the hyperrectangle.\n\n\n\n"
+    "text": "dim(H::Hyperrectangle)::Int\n\nReturn the dimension of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nThe ambient dimension of the hyperrectangle.\n\n\n\n"
 },
 
 {
@@ -781,7 +781,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(S::Singleton)\n\nReturn the dimension of a singleton.\n\nInput\n\nS – singleton\n\nOutput\n\nThe ambient dimension of the singleton.\n\n\n\n"
+    "text": "dim(S::Singleton)::Int\n\nReturn the dimension of a singleton.\n\nInput\n\nS – singleton\n\nOutput\n\nThe ambient dimension of the singleton.\n\n\n\n"
 },
 
 {
@@ -813,7 +813,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(Z::Zonotope)\n\nReturn the dimension of a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe ambient dimension of the zonotope.\n\n\n\n"
+    "text": "dim(Z::Zonotope)::Int\n\nReturn the dimension of a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe ambient dimension of the zonotope.\n\n\n\n"
 },
 
 {
@@ -885,7 +885,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(ms::MinkowskiSum)\n\nReturn the dimension of a Minkowski sum.\n\nInput\n\nms – Minkowski sum\n\nOutput\n\nThe ambient dimension of the Minkowski sum.\n\n\n\n"
+    "text": "dim(ms::MinkowskiSum)::Int\n\nReturn the dimension of a Minkowski sum.\n\nInput\n\nms – Minkowski sum\n\nOutput\n\nThe ambient dimension of the Minkowski sum.\n\n\n\n"
 },
 
 {
@@ -925,7 +925,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(msa::MinkowskiSumArray)\n\nReturn the dimension of a Minkowski sum of a finite number of sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe ambient dimension of the Minkowski sum of a finite number of sets.\n\n\n\n"
+    "text": "dim(msa::MinkowskiSumArray)::Int\n\nReturn the dimension of a Minkowski sum of a finite number of sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe ambient dimension of the Minkowski sum of a finite number of sets.\n\n\n\n"
 },
 
 {
@@ -997,7 +997,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(cp::CartesianProduct)\n\nReturn the dimension of a Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nThe ambient dimension of the Cartesian product.\n\n\n\n"
+    "text": "dim(cp::CartesianProduct)::Int\n\nReturn the dimension of a Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nThe ambient dimension of the Cartesian product.\n\n\n\n"
 },
 
 {
@@ -1045,7 +1045,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(cpa::CartesianProductArray)\n\nReturn the dimension of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe ambient dimension of the Cartesian product of a finite number of convex sets.\n\n\n\n"
+    "text": "dim(cpa::CartesianProductArray)::Int\n\nReturn the dimension of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe ambient dimension of the Cartesian product of a finite number of convex sets.\n\n\n\n"
 },
 
 {
@@ -1117,7 +1117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(lm::LinearMap)\n\nReturn the dimension of a linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nThe ambient dimension of the linear map.\n\n\n\n"
+    "text": "dim(lm::LinearMap)::Int\n\nReturn the dimension of a linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nThe ambient dimension of the linear map.\n\n\n\n"
 },
 
 {
@@ -1165,7 +1165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(em::ExponentialMap)\n\nReturn the dimension of an exponential map.\n\nInput\n\nem – an ExponentialMap\n\nOutput\n\nThe ambient dimension of the exponential map.\n\n\n\n"
+    "text": "dim(em::ExponentialMap)::Int\n\nReturn the dimension of an exponential map.\n\nInput\n\nem – an ExponentialMap\n\nOutput\n\nThe ambient dimension of the exponential map.\n\n\n\n"
 },
 
 {
@@ -1189,7 +1189,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(eprojmap::ExponentialProjectionMap)\n\nReturn the dimension of a projection of an exponential map.\n\nInput\n\neprojmap – projection of an exponential map\n\nOutput\n\nThe ambient dimension of the projection of an exponential map.\n\n\n\n"
+    "text": "dim(eprojmap::ExponentialProjectionMap)::Int\n\nReturn the dimension of a projection of an exponential map.\n\nInput\n\neprojmap – projection of an exponential map\n\nOutput\n\nThe ambient dimension of the projection of an exponential map.\n\n\n\n"
 },
 
 {
@@ -1261,7 +1261,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "Method",
-    "text": "dim(ch::ConvexHull)\n\nReturn the dimension of a convex hull of two convex sets.\n\nInput\n\nch – convex hull of two convex sets\n\nOutput\n\nThe ambient dimension of the convex hull of two convex sets.\n\n\n\n"
+    "text": "dim(ch::ConvexHull)::Int\n\nReturn the dimension of a convex hull of two convex sets.\n\nInput\n\nch – convex hull of two convex sets\n\nOutput\n\nThe ambient dimension of the convex hull of two convex sets.\n\n\n\n"
 },
 
 {
