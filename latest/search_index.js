@@ -449,6 +449,70 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.Ball1",
+    "page": "Common Set Representations",
+    "title": "LazySets.Ball1",
+    "category": "Type",
+    "text": "Ball1 <: LazySet\n\nType that represents a ball in the 1-norm, also known as Manhattan or Taxicab norm.\n\nIt is defined as the set\n\nmathcalB_1^n(c r) =  x  mathbbR^n  _i=1^n x_i  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nUnit ball in the 1-norm in the plane:\n\njulia> B = Ball1(zeros(2), 1.)\nLazySets.Ball1{Float64}([0.0, 0.0], 1.0)\njulia> dim(B)\n2\n\nWe evaluate the support vector in the East direction:\n\njulia> σ([0.,1], B)\n1-element Array{Float64,1}:\n 1.0\n 0.0\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Ball1}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(B::Ball1)::Int\n\nReturn the dimension of a Ball1.\n\nInput\n\nB – a ball in the 1-norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Ball1}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{N}, B::Ball1)::AbstractVector{N} where {N<:AbstractFloat}\n\nReturn the support vector of a Ball1 in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the p-norm\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Manhattan-norm-ball-1",
+    "page": "Common Set Representations",
+    "title": "Manhattan norm ball",
+    "category": "section",
+    "text": "Ball1\ndim(::Ball1)\nσ(::AbstractVector{Float64}, ::Ball1)"
+},
+
+{
+    "location": "lib/representations.html#LazySets.Ballp",
+    "page": "Common Set Representations",
+    "title": "LazySets.Ballp",
+    "category": "Type",
+    "text": "Ballp <: LazySet\n\nType that represents a ball in the p-norm, for 1  p  .\n\nIt is defined as the set\n\nmathcalB_p^n(c r) =  x  mathbbR^n   x - c _p  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _p for 1  p   denotes the vector p-norm, defined as  x _p = left( sumlimits_i=1^n x_i^p right)^1p for any x  mathbbR^n.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nNotes\n\nThe special cases p=1, p=2 and p= fall back to the specialized types Ball1, Ball2 and BallInf respectively.\n\nExamples\n\nA five-dimensional ball in the p=32 norm centered at the origin of radius 0.5:\n\njulia> B = Ballp(3/2, zeros(5), 0.5)\nLazySets.Ballp{Float64}(1.5, [0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nWe evaluate the support vector in direction 125:\n\njulia> σ(1.:5, B)\n5-element Array{Float64,1}:\n 0.013516\n 0.054064\n 0.121644\n 0.216256\n 0.3379\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Ballp}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(B::Ballp)::Int\n\nReturn the dimension of a Ballp.\n\nInput\n\nB – a ball in the p-norm\n\nOutput\n\nThe ambient dimension of the ball.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Ballp}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{N}, B::Ballp)::AbstractVector{N} where {N<:AbstractFloat}\n\nReturn the support vector of a Ballp in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the p-norm\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThe support vector of the unit ball in the p-norm along direction d is:\n\n_mathcalB_p^n(0 1)(d) = dfractildevtildev_q\n\nwhere tildev_i = fracd_i^qd_i if d_i  0 and tildev_i = 0 otherwise, for all i=1n, and q is the conjugate number of p. By the affine transformation x = rtildex + c, one obtains that the support vector of mathcalB_p^n(c r) is\n\n_mathcalB_p^n(c r)(d) = dfracvv_q\n\nwhere v_i = c_i + rfracd_i^qd_i if d_i  0 and v_i = 0 otherwise, for all i = 1  n.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#p-norm-ball-1",
+    "page": "Common Set Representations",
+    "title": "p-norm ball",
+    "category": "section",
+    "text": "Ballp\ndim(B::Ballp)\nσ(d::AbstractVector{Float64}, B::Ballp)"
+},
+
+{
     "location": "lib/representations.html#Polygons-1",
     "page": "Common Set Representations",
     "title": "Polygons",
