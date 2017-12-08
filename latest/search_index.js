@@ -1481,11 +1481,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/utils.html#LazySets.unit_step-Tuple{Float64}",
+    "location": "lib/utils.html#LazySets.sign_cadlag-Tuple{Float64}",
     "page": "Utility Functions",
-    "title": "LazySets.unit_step",
+    "title": "LazySets.sign_cadlag",
     "category": "Method",
-    "text": "unit_step(x::Real)\n\nThe unit step function, which returns 1 iff x is greater than or equal to zero.\n\nInput\n\nx – real scalar\n\nOutput\n\n1 if x  0, 0 otherwise.\n\nNotes\n\nThis function can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> unit_step.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n"
+    "text": "sign_cadlag(x::Real)\n\nThis function works like the sign function but is 1 for input 0.\n\nInput\n\nx – real scalar\n\nOutput\n\n1 if x  0, 0 otherwise.\n\nNotes\n\nThis function can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> sign_cadlag.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n"
 },
 
 {
@@ -1509,7 +1509,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Utility functions",
     "category": "section",
-    "text": "unit_step(x::Float64)\njump2pi\nBase.:<=(u::AbstractVector{Float64}, v::AbstractVector{Float64})"
+    "text": "sign_cadlag(x::Float64)\njump2pi\nBase.:<=(u::AbstractVector{Float64}, v::AbstractVector{Float64})"
 },
 
 {
