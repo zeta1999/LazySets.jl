@@ -525,7 +525,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolygonOpt",
     "category": "Type",
-    "text": "HPolygonOpt{N<:Real} <: LazySet\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions. This is a refined version of HPolygon.\n\nFields\n\nconstraints_list – list of linear constraints\nind – index in the list of constraints to begin the search to evaluate the          support function\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions that are close to each other. The strategy is to have an index that can be used to warm-start the search for optimal values in the support vector computation.\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygonOpt(constraints_list::Vector{LinearConstraint{<:Real}}, ind::Int64) – default constructor\nHPolygonOpt(constraints_list::Vector{LinearConstraint{<:Real}}) – constructor without index\nHPolygonOpt(H::HPolygon{<:Real}) – constructor from an HPolygon\n\n\n\n"
+    "text": "HPolygonOpt{N<:Real} <: LazySet\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions. This is a refined version of HPolygon.\n\nFields\n\nconstraints_list – list of linear constraints\nind – index in the list of constraints to begin the search to evaluate the          support function\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions that are close to each other. The strategy is to have an index that can be used to warm-start the search for optimal values in the support vector computation.\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygonOpt(constraints_list::Vector{LinearConstraint{<:Real}}, ind::Int) – default constructor\nHPolygonOpt(constraints_list::Vector{LinearConstraint{<:Real}}) – constructor without index\nHPolygonOpt(H::HPolygon{<:Real}) – constructor from an HPolygon\n\n\n\n"
 },
 
 {
@@ -917,7 +917,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.MinkowskiSumArray",
     "category": "Type",
-    "text": "MinkowskiSumArray{T<:LazySet} <: LazySet\n\nType that represents the Minkowski sum of a finite number of convex sets.\n\nFields\n\nsfarray – array of convex sets\n\nNotes\n\nThis type assumes that the dimensions of all elements match.\n\nMinkowskiSumArray(sfarray::Vector{<:LazySet}) – default constructor\nMinkowskiSumArray() – constructor for an empty sum\nMinkowskiSumArray(n::Integer) – constructor for an empty sum with size hint\n\n\n\n"
+    "text": "MinkowskiSumArray{T<:LazySet} <: LazySet\n\nType that represents the Minkowski sum of a finite number of convex sets.\n\nFields\n\nsfarray – array of convex sets\n\nNotes\n\nThis type assumes that the dimensions of all elements match.\n\nMinkowskiSumArray(sfarray::Vector{<:LazySet}) – default constructor\nMinkowskiSumArray() – constructor for an empty sum\nMinkowskiSumArray(n::Int) – constructor for an empty sum with size hint\n\n\n\n"
 },
 
 {
@@ -1037,7 +1037,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.CartesianProductArray",
     "category": "Type",
-    "text": "CartesianProductArray{S<:LazySet} <: LazySet\n\nType that represents the Cartesian product of a finite number of convex sets.\n\nFields\n\nsfarray – array of sets\n\nNotes\n\nCartesianProductArray(sfarray::Vector{<:LazySet}) – default constructor\nCartesianProductArray() – constructor for an empty Cartesian product\nCartesianProductArray(n::Integer) – constructor for an empty Cartesian product with size hint\n\n\n\n"
+    "text": "CartesianProductArray{S<:LazySet} <: LazySet\n\nType that represents the Cartesian product of a finite number of convex sets.\n\nFields\n\nsfarray – array of sets\n\nNotes\n\nCartesianProductArray(sfarray::Vector{<:LazySet}) – default constructor\nCartesianProductArray() – constructor for an empty Cartesian product\nCartesianProductArray(n::Int) – constructor for an empty Cartesian product with size hint\n\n\n\n"
 },
 
 {
