@@ -429,7 +429,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Function",
-    "text": "radius(B::BallInf, [p]::Real=Inf)\n\nReturn the radius of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
+    "text": "radius(B::BallInf, [p]::Real=Inf)::Real\n\nReturn the radius of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -437,7 +437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(B::BallInf, [p]::Real=Inf)\n\nReturn the diameter of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
+    "text": "diameter(B::BallInf, [p]::Real=Inf)::Real\n\nReturn the diameter of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -485,7 +485,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ballp",
     "category": "Type",
-    "text": "Ballp <: LazySet\n\nType that represents a ball in the p-norm, for 1  p  .\n\nIt is defined as the set\n\nmathcalB_p^n(c r) =  x  mathbbR^n   x - c _p  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _p for 1  p   denotes the vector p-norm, defined as  x _p = left( sumlimits_i=1^n x_i^p right)^1p for any x  mathbbR^n.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nNotes\n\nThe special cases p=1, p=2 and p= fall back to the specialized types Ball1, Ball2 and BallInf respectively.\n\nExamples\n\nA five-dimensional ball in the p=32 norm centered at the origin of radius 0.5:\n\njulia> B = Ballp(3/2, zeros(5), 0.5)\nLazySets.Ballp{Float64}(1.5, [0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nWe evaluate the support vector in direction 125:\n\njulia> σ(1.:5, B)\n5-element Array{Float64,1}:\n 0.013516\n 0.054064\n 0.121644\n 0.216256\n 0.3379\n\n\n\n"
+    "text": "Ballp <: LazySet\n\nType that represents a ball in the p-norm, for 1  p  .\n\nIt is defined as the set\n\nmathcalB_p^n(c r) =  x  mathbbR^n   x - c _p  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _p for 1  p   denotes the vector p-norm, defined as  x _p = left( sumlimits_i=1^n x_i^p right)^1p for any x  mathbbR^n.\n\nFields\n\np      – norm as a real scalar\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nNotes\n\nThe special cases p=1, p=2 and p= fall back to the specialized types Ball1, Ball2 and BallInf, respectively.\n\nExamples\n\nA five-dimensional ball in the p=32 norm centered at the origin of radius 0.5:\n\njulia> B = Ballp(3/2, zeros(5), 0.5)\nLazySets.Ballp{Float64}(1.5, [0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nWe evaluate the support vector in direction 125:\n\njulia> σ(1.:5, B)\n5-element Array{Float64,1}:\n 0.013516\n 0.054064\n 0.121644\n 0.216256\n 0.3379\n\n\n\n"
 },
 
 {
@@ -501,7 +501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d::AbstractVector{N}, B::Ballp)::AbstractVector{N} where {N<:AbstractFloat}\n\nReturn the support vector of a Ballp in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the p-norm\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThe support vector of the unit ball in the p-norm along direction d is:\n\n_mathcalB_p^n(0 1)(d) = dfractildevtildev_q\n\nwhere tildev_i = fracd_i^qd_i if d_i  0 and tildev_i = 0 otherwise, for all i=1n, and q is the conjugate number of p. By the affine transformation x = rtildex + c, one obtains that the support vector of mathcalB_p^n(c r) is\n\n_mathcalB_p^n(c r)(d) = dfracvv_q\n\nwhere v_i = c_i + rfracd_i^qd_i if d_i  0 and v_i = 0 otherwise, for all i = 1  n.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, B::Ballp)::AbstractVector{N} where {N<:AbstractFloat}\n\nReturn the support vector of a Ballp in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the p-norm\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the center of the ball is returned.\n\nAlgorithm\n\nThe support vector of the unit ball in the p-norm along direction d is:\n\n_mathcalB_p^n(0 1)(d) = dfractildevtildev_q\n\nwhere tildev_i = fracd_i^qd_i if d_i  0 and tildev_i = 0 otherwise, for all i=1n, and q is the conjugate number of p. By the affine transformation x = rtildex + c, one obtains that the support vector of mathcalB_p^n(c r) is\n\n_mathcalB_p^n(c r)(d) = dfracvv_q\n\nwhere v_i = c_i + rfracd_i^qd_i if d_i  0 and v_i = 0 otherwise, for all i = 1  n.\n\n\n\n"
 },
 
 {
@@ -533,7 +533,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.addconstraint!",
     "category": "Method",
-    "text": "addconstraint!(P::HPolygon{N}, constraint::LinearConstraint{N}) where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon\nconstraint – linear constraint to add\n\n\n\n"
+    "text": "addconstraint!(P::HPolygon{N}, constraint::LinearConstraint{N})::Void where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n"
 },
 
 {
@@ -553,11 +553,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.HPolygon{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.HPolygon{Float64}}",
     "page": "Common Set Representations",
-    "title": "LazySets.is_contained",
+    "title": "Base.:∈",
     "category": "Method",
-    "text": "is_contained(x::AbstractVector{<:Real}, P::HPolygon)::Bool\n\nReturn whether a given vector is contained in a polygon.\n\nInput\n\nx – two-dimensional vector\nP – polygon in constraint representation\n\nOutput\n\nReturn true iff x  P.\n\n\n\n"
+    "text": "∈(x::AbstractVector{<:Real}, P::HPolygon)::Bool\n\nReturn whether a given vector is contained in a polygon.\n\nInput\n\nx – two-dimensional vector\nP – polygon in constraint representation\n\nOutput\n\nReturn true iff x  P.\n\n\n\n"
 },
 
 {
@@ -581,7 +581,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "HPolygon\naddconstraint!(::HPolygon{Float64}, ::LinearConstraint{Float64})\ndim(::HPolygon)\nσ(::AbstractVector{Float64}, ::HPolygon)\nis_contained(::AbstractVector{Float64}, ::HPolygon{Float64})\ntovrep(::HPolygon)\nvertices_list(::HPolygon)"
+    "text": "HPolygon\naddconstraint!(::HPolygon{Float64}, ::LinearConstraint{Float64})\ndim(::HPolygon)\nσ(::AbstractVector{Float64}, ::HPolygon)\n∈(::AbstractVector{Float64}, ::HPolygon{Float64})\ntovrep(::HPolygon)\nvertices_list(::HPolygon)"
 },
 
 {
@@ -597,7 +597,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.addconstraint!",
     "category": "Method",
-    "text": "addconstraint!(P::HPolygonOpt{N}, constraint::LinearConstraint{N}) where {N<:Real}\n\nAdd a linear constraint to an optimized polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – optimized polygon\nconstraint – linear constraint to add\n\n\n\n"
+    "text": "addconstraint!(P::HPolygonOpt{N}, constraint::LinearConstraint{N})::Void where {N<:Real}\n\nAdd a linear constraint to an optimized polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – optimized polygon\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n"
 },
 
 {
@@ -617,11 +617,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt}",
     "page": "Common Set Representations",
-    "title": "LazySets.is_contained",
+    "title": "Base.:∈",
     "category": "Method",
-    "text": "is_contained(x::AbstractVector{<:Real}, P::HPolygonOpt)::Bool\n\nReturn whether a given vector is contained in an optimized polygon.\n\nInput\n\nx – two-dimensional vector\nP – optimized polygon in constraint representation\n\nOutput\n\nReturn true iff x  P.\n\n\n\n"
+    "text": "∈(x::AbstractVector{<:Real}, P::HPolygonOpt)::Bool\n\nReturn whether a given vector is contained in an optimized polygon.\n\nInput\n\nx – two-dimensional vector\nP – optimized polygon in constraint representation\n\nOutput\n\nReturn true iff x  P.\n\n\n\n"
 },
 
 {
@@ -645,7 +645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\naddconstraint!(::HPolygonOpt{Float64}, ::LinearConstraint{Float64})\ndim(::HPolygonOpt)\nσ(::AbstractVector{Float64}, ::HPolygonOpt{Float64})\nis_contained(::AbstractVector{Float64}, ::HPolygonOpt)\ntovrep(::HPolygonOpt)\nvertices_list(::HPolygonOpt)"
+    "text": "HPolygonOpt\naddconstraint!(::HPolygonOpt{Float64}, ::LinearConstraint{Float64})\ndim(::HPolygonOpt)\nσ(::AbstractVector{Float64}, ::HPolygonOpt{Float64})\n∈(::AbstractVector{Float64}, ::HPolygonOpt)\ntovrep(::HPolygonOpt)\nvertices_list(::HPolygonOpt)"
 },
 
 {
@@ -773,7 +773,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(H::Hyperrectangle, [p]::Real=Inf)\n\nReturn the norm of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangle is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
+    "text": "norm(H::Hyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangle is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -781,7 +781,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Function",
-    "text": "radius(H::Hyperrectangle, [p]::Real=Inf)\n\nReturn the radius of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
+    "text": "radius(H::Hyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -789,7 +789,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(H::Hyperrectangle, [p]::Real=Inf)\n\nReturn the diameter of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
+    "text": "diameter(H::Hyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -797,7 +797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.high",
     "category": "Method",
-    "text": "high(H::Hyperrectangle)\n\nReturn the higher coordinates of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nA vector with the higher coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
+    "text": "high(H::Hyperrectangle{N})::Vector{N} where {N<:Real}\n\nReturn the higher coordinates of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nA vector with the higher coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
 },
 
 {
@@ -805,7 +805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.low",
     "category": "Method",
-    "text": "low(H::Hyperrectangle)\n\nReturn the lower coordinates of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nA vector with the lower coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
+    "text": "low(H::Hyperrectangle{N})::Vector{N} where {N<:Real}\n\nReturn the lower coordinates of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nA vector with the lower coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
 },
 
 {
@@ -901,7 +901,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d::AbstractVector{<:Real}, Z::Zonotope)::AbstractVector{<:Real}\n\nReturn the support vector of a zonotope in a given direction.\n\nInput\n\nd – direction\nZ – zonotope\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+    "text": "σ(d::AbstractVector{<:Real}, Z::Zonotope)::AbstractVector{<:Real}\n\nReturn the support vector of a zonotope in a given direction.\n\nInput\n\nd – direction\nZ – zonotope\n\nOutput\n\nSupport vector in the given direction. If the direction has norm zero, the vertex with _i = 1    i = 1 p is returned.\n\n\n\n"
 },
 
 {
@@ -1013,7 +1013,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:+",
     "category": "Method",
-    "text": "+(msa, Z)\n\nReturns the original array because addition with an empty set is a no-op.\n\nInput\n\nmsa – Minkowski sum array\nZ  – a Zero set\n\n\n\n"
+    "text": "+(msa::MinkowskiSumArray, Z::ZeroSet)::MinkowskiSumArray\n\nReturns the original array because addition with an empty set is a no-op.\n\nInput\n\nmsa – Minkowski sum array\nZ  – a Zero set\n\n\n\n"
 },
 
 {
@@ -1065,11 +1065,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.CartesianProduct}",
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.CartesianProduct}",
     "page": "Common Set Operations",
-    "title": "LazySets.is_contained",
+    "title": "Base.:∈",
     "category": "Method",
-    "text": "is_contained(x::AbstractVector{<:Real}, cp::CartesianProduct)::Bool\n\nReturn whether a given vector is contained in a Cartesian product set.\n\nInput\n\nx  – vector\ncp – Cartesian product\n\nOutput\n\nReturn true iff x  cp.\n\n\n\n"
+    "text": "∈(x::AbstractVector{<:Real}, cp::CartesianProduct)::Bool\n\nReturn whether a given vector is contained in a Cartesian product set.\n\nInput\n\nx  – vector\ncp – Cartesian product\n\nOutput\n\nReturn true iff x  cp.\n\n\n\n"
 },
 
 {
@@ -1077,7 +1077,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Cartesian Product",
     "category": "section",
-    "text": "CartesianProduct\ndim(::CartesianProduct)\nσ(::AbstractVector{Float64}, ::CartesianProduct)\nBase.:*(::LazySet, ::LazySet)\nis_contained(::AbstractVector{Float64}, ::CartesianProduct)"
+    "text": "CartesianProduct\ndim(::CartesianProduct)\nσ(::AbstractVector{Float64}, ::CartesianProduct)\nBase.:*(::LazySet, ::LazySet)\n∈(::AbstractVector{Float64}, ::CartesianProduct)"
 },
 
 {
@@ -1129,11 +1129,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.is_contained-Tuple{AbstractArray{Float64,1},LazySets.CartesianProductArray}",
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.CartesianProductArray}",
     "page": "Common Set Operations",
-    "title": "LazySets.is_contained",
+    "title": "Base.:∈",
     "category": "Method",
-    "text": "is_contained(x::AbstractVector{<:Real}, cpa::CartesianProductArray)::Bool\n\nReturn whether a given vector is contained in a Cartesian product of a finite number of sets.\n\nInput\n\nx   – vector\ncpa – Cartesian product array\n\nOutput\n\nReturn true iff x  cpa.\n\n\n\n"
+    "text": "∈(x::AbstractVector{<:Real}, cpa::CartesianProductArray)::Bool\n\nReturn whether a given vector is contained in a Cartesian product of a finite number of sets.\n\nInput\n\nx   – vector\ncpa – Cartesian product array\n\nOutput\n\nReturn true iff x  cpa.\n\n\n\n"
 },
 
 {
@@ -1141,7 +1141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Cartesian Product",
     "category": "section",
-    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Float64}, ::CartesianProductArray)\nBase.:*(::CartesianProductArray, ::LazySet)\nBase.:*(::LazySet, ::CartesianProductArray)\nBase.:*(::CartesianProductArray, ::CartesianProductArray)\nis_contained(::AbstractVector{Float64}, ::CartesianProductArray)"
+    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Float64}, ::CartesianProductArray)\nBase.:*(::CartesianProductArray, ::LazySet)\nBase.:*(::LazySet, ::CartesianProductArray)\nBase.:*(::CartesianProductArray, ::CartesianProductArray)\n∈(::AbstractVector{Float64}, ::CartesianProductArray)"
 },
 
 {
@@ -1261,7 +1261,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:*",
     "category": "Method",
-    "text": "    *(spmexp::SparseMatrixExp, X::LazySet)\n\nReturn the exponential map of a convex set from a sparse matrix exponential.\n\nInput\n\nspmexp – sparse matrix exponential\nX      – convex set\n\nOutput\n\nThe exponential map of the convex set.\n\n\n\n"
+    "text": "    *(spmexp::SparseMatrixExp, X::LazySet)::ExponentialMap\n\nReturn the exponential map of a convex set from a sparse matrix exponential.\n\nInput\n\nspmexp – sparse matrix exponential\nX      – convex set\n\nOutput\n\nThe exponential map of the convex set.\n\n\n\n"
 },
 
 {
@@ -1333,7 +1333,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull",
     "category": "Function",
-    "text": "convex_hull(points; [algorithm]::String=\"monotone_chain\")\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – list of 2D vectors\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\n\njulia> hull = convex_hull(points);\n\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nPlot both the random points and the computed convex hull polygon:\n\njulia> using Plots;\n\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter);\n\njulia> plot!(VPolygon(hull), alpha=0.2);\n\n\n\n"
+    "text": "convex_hull(points::Vector{S}; [algorithm]::String=\"monotone_chain\")::Vector{S} where {S<:AbstractVector{N}} where {N<:Real}\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – list of 2D vectors\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\n\njulia> hull = convex_hull(points);\n\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nPlot both the random points and the computed convex hull polygon:\n\njulia> using Plots;\n\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter);\n\njulia> plot!(VPolygon(hull), alpha=0.2);\n\n\n\n"
 },
 
 {
@@ -1341,7 +1341,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull!",
     "category": "Function",
-    "text": "convex_hull!(points; algorithm::String=\"monotone_chain\")\n\nCompute the convex hull of points in the plane, in-place.\n\nInput\n\npoints    – list of 2D vectors (is modified)\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\nNotes\n\nSee the non-modifying version convex_hull for more details.\n\n\n\n"
+    "text": "convex_hull!(points::Vector{S}; [algorithm]::String=\"monotone_chain\")::Vector{S} where {S<:AbstractVector{N}} where {N<:Real}\n\nCompute the convex hull of points in the plane, in-place.\n\nInput\n\npoints    – list of 2D vectors (is modified)\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nNotes\n\nSee the non-modifying version convex_hull for more details.\n\n\n\n"
 },
 
 {
@@ -1349,7 +1349,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.right_turn",
     "category": "Function",
-    "text": "right_turn(O, A, B)\n\nDetermine if the acute angle defined by the three points O, A, B in the plane is a right turn (counter-clockwise) with respect to the center O.\n\nInput\n\nO – center point\nA – one point\nB – another point\n\nAlgorithm\n\nThe cross product is used to determine the sense of rotation. If the result is 0, the points are collinear; if it is positive, the three points constitute a positive angle of rotation around O from A to B; otherwise they constitute a negative angle.\n\n\n\n"
+    "text": "right_turn(O::AbstractVector{N}, A::AbstractVector{N}, B::AbstractVector{N})::N where {N<:Real}\n\nDetermine if the acute angle defined by the three points O, A, B in the plane is a right turn (counter-clockwise) with respect to the center O.\n\nInput\n\nO – 2D center point\nA – 2D one point\nB – 2D another point\n\nOutput\n\nScalar representing the rotation.\n\nAlgorithm\n\nThe cross product is used to determine the sense of rotation. If the result is 0, the points are collinear; if it is positive, the three points constitute a positive angle of rotation around O from A to B; otherwise they constitute a negative angle.\n\n\n\n"
 },
 
 {
@@ -1357,7 +1357,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.monotone_chain!",
     "category": "Function",
-    "text": "monotone_chain!(points::Vector{S}) where {S<:AbstractVector{N}} where {N<:Real}\n\nCompute the convex hull of points in the plane using Andrew's monotone chain method.\n\nInput\n\npoints – list of 2D vectors; is sorted in-place inside this function\n\nOutput\n\nList of vectors containing the 2D coordinates of the corner points of the convex hull.\n\nNotes\n\nFor large sets of points, it is convenient to use static vectors to get maximum performance. For information on how to convert usual vectors into static vectors, see the type SVector provided by the StaticArrays package.\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see Monotone chain\n\n\n\n"
+    "text": "monotone_chain!(points::Vector{S})::Vector{S} where {S<:AbstractVector{N}} where {N<:Real}\n\nCompute the convex hull of points in the plane using Andrew's monotone chain method.\n\nInput\n\npoints – list of 2D vectors; is sorted in-place inside this function\n\nOutput\n\nList of vectors containing the 2D coordinates of the corner points of the convex hull.\n\nNotes\n\nFor large sets of points, it is convenient to use static vectors to get maximum performance. For information on how to convert usual vectors into static vectors, see the type SVector provided by the StaticArrays package.\n\nAlgorithm\n\nThis function implements Andrew's monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see Monotone chain\n\n\n\n"
 },
 
 {
@@ -1529,11 +1529,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/utils.html#LazySets.sign_cadlag-Tuple{Float64}",
+    "location": "lib/utils.html#LazySets.sign_cadlag",
     "page": "Utility Functions",
     "title": "LazySets.sign_cadlag",
-    "category": "Method",
-    "text": "sign_cadlag(x::Real)\n\nThis function works like the sign function but is 1 for input 0.\n\nInput\n\nx – real scalar\n\nOutput\n\n1 if x  0, 0 otherwise.\n\nNotes\n\nThis function can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> sign_cadlag.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n"
+    "category": "Function",
+    "text": "sign_cadlag(x::N)::N where {N<:Real}\n\nThis function works like the sign function but is 1 for input 0.\n\nInput\n\nx – real scalar\n\nOutput\n\n1 if x  0, -1 otherwise.\n\nNotes\n\nThis is the sign function right-continuous at zero (see càdlàg function). It can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> sign_cadlag.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n"
 },
 
 {
@@ -1541,7 +1541,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.jump2pi",
     "category": "Function",
-    "text": "jump2pi(x::Float64)\n\nReturn x + 2 if x is negative, otherwise return x.\n\nInput\n\nx – real scalar\n\nOutput\n\nx + 2 if x is negative, x otherwise.\n\nExamples\n\njulia> jump2pi(0.0)\n0.0\njulia> jump2pi(-0.5)\n5.783185307179586\njulia> jump2pi(0.5)\n0.5\n\n\n\n"
+    "text": "jump2pi(x::Float64)::Float64\n\nReturn x + 2 if x is negative, otherwise return x.\n\nInput\n\nx – real scalar\n\nOutput\n\nx + 2 if x is negative, x otherwise.\n\nExamples\n\njulia> jump2pi(0.0)\n0.0\njulia> jump2pi(-0.5)\n5.783185307179586\njulia> jump2pi(0.5)\n0.5\n\n\n\n"
 },
 
 {
@@ -1549,7 +1549,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Base.:<=",
     "category": "Method",
-    "text": "u <= v\n\nCompares two 2D vectors by their direction.\n\nInput\n\nu –  first 2D direction\nv –  second 2D direction\n\nOutput\n\nTrue iff arg(u) 2  arg(v) 2\n\nNotes\n\nThe argument is measured in counter-clockwise fashion, with the 0 being the direction (1, 0).\n\n\n\n"
+    "text": "<=(u::AbstractVector{Float64}, v::AbstractVector{Float64})::Bool\n\nCompares two 2D vectors by their direction.\n\nInput\n\nu –  first 2D direction\nv –  second 2D direction\n\nOutput\n\nTrue iff arg(u) 2  arg(v) 2\n\nNotes\n\nThe argument is measured in counter-clockwise fashion, with the 0 being the direction (1, 0).\n\n\n\n"
 },
 
 {
@@ -1557,7 +1557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Utility functions",
     "category": "section",
-    "text": "sign_cadlag(x::Float64)\njump2pi\nBase.:<=(u::AbstractVector{Float64}, v::AbstractVector{Float64})"
+    "text": "sign_cadlag\njump2pi\n<=(::AbstractVector{Float64}, ::AbstractVector{Float64})"
 },
 
 {
