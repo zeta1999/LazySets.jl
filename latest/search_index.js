@@ -373,7 +373,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d::AbstractVector{N}, B::Ball2)::AbstractVector{<:AbstractFloat} where {N<:AbstractFloat}\n\nReturn the support vector of a 2-norm ball in a given direction.\n\nInput\n\nd – direction\nB – ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the origin is returned.\n\nNotes\n\nLet c and r be the center and radius of a ball B in the 2-norm, respectively. For nonzero direction d, we have σ(d, B) = c + d * (r / ||d||).\n\nThis function requires computing the 2-norm of the input direction, which is performed in the given precision of the numeric datatype of both the direction and the set. Exact inputs are not supported.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, B::Ball2)::AbstractVector{<:AbstractFloat} where {N<:AbstractFloat}\n\nReturn the support vector of a 2-norm ball in a given direction.\n\nInput\n\nd – direction\nB – ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the origin is returned.\n\nNotes\n\nLet c and r be the center and radius of a ball B in the 2-norm, respectively. For nonzero direction d we have (d B) = c + r * (d  d_2).\n\nThis function requires computing the 2-norm of the input direction, which is performed in the given precision of the numeric datatype of both the direction and the set. Exact inputs are not supported.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Ball2{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, B::Ball2{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a ball in the 2-norm.\n\nInput\n\nx – point/vector\nB – ball in the 2-norm\n\nOutput\n\ntrue iff x  B.\n\nNotes\n\nThis implementation is worst-case optimized, i.e., it is optimistic and first computes (see below) the whole sum before comparing to the radius. In applications where the point is typically far away from the ball, a fail-fast implementation with interleaved comparisons could be more efficient.\n\nAlgorithm\n\nLet B be an n-dimensional ball in the 2-norm with radius r and let c_i and x_i be the ball's center and the vector x in dimension i, respectively. Then x  B iff left( _i=1^n c_i - x_i^2 right)^12  r.\n\nExamples\n\njulia> B = Ball2([1., 1.], sqrt(0.5))\nLazySets.Ball2{Float64}([1.0, 1.0], 0.7071067811865476)\njulia> ∈([.5, 1.6], B)\nfalse\njulia> ∈([.5, 1.5], B)\ntrue\n\n\n\n"
 },
 
 {
@@ -381,7 +389,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\ndim(::Ball2)\nσ(::AbstractVector{Float64}, ::Ball2)"
+    "text": "Ball2\ndim(::Ball2)\nσ(::AbstractVector{Float64}, ::Ball2)\n∈(::AbstractVector{Float64}, ::Ball2{Float64})"
 },
 
 {
@@ -441,11 +449,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.BallInf{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, B::BallInf{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a ball in the infinity norm.\n\nInput\n\nx – point/vector\nB – ball in the infinity norm\n\nOutput\n\ntrue iff x  B.\n\nAlgorithm\n\nLet B be an n-dimensional ball in the infinity norm with radius r and let c_i and x_i be the ball's center and the vector x in dimension i, respectively. Then x  B iff c_i - x_i  r for all i=1n.\n\nExamples\n\njulia> B = BallInf([1., 1.], 1.);\n\njulia> ∈([.5, -.5], B)\nfalse\njulia> ∈([.5, 1.5], B)\ntrue\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Infinity-norm-ball-1",
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ndim(::BallInf)\nσ(::AbstractVector{Float64}, ::BallInf)\nvertices_list(::BallInf)\nnorm(::BallInf, ::Real=Inf)\nradius(::BallInf, ::Real=Inf)\ndiameter(::BallInf, ::Real=Inf)"
+    "text": "BallInf\ndim(::BallInf)\nσ(::AbstractVector{Float64}, ::BallInf)\nvertices_list(::BallInf)\nnorm(::BallInf, ::Real=Inf)\nradius(::BallInf, ::Real=Inf)\ndiameter(::BallInf, ::Real=Inf)\n∈(::AbstractVector{Float64}, ::BallInf{Float64})"
 },
 
 {
@@ -453,7 +469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ball1",
     "category": "Type",
-    "text": "Ball1 <: LazySet\n\nType that represents a ball in the 1-norm, also known as Manhattan or Taxicab norm.\n\nIt is defined as the set\n\nmathcalB_1^n(c r) =  x  mathbbR^n  _i=1^n x_i  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nUnit ball in the 1-norm in the plane:\n\njulia> B = Ball1(zeros(2), 1.)\nLazySets.Ball1{Float64}([0.0, 0.0], 1.0)\njulia> dim(B)\n2\n\nWe evaluate the support vector in the East direction:\n\njulia> σ([0.,1], B)\n2-element Array{Float64,1}:\n 0.0\n 1.0\n\n\n\n"
+    "text": "Ball1 <: LazySet\n\nType that represents a ball in the 1-norm, also known as Manhattan or Taxicab norm.\n\nIt is defined as the set\n\nmathcalB_1^n(c r) =  x  mathbbR^n  _i=1^n c_i - x_i  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nUnit ball in the 1-norm in the plane:\n\njulia> B = Ball1(zeros(2), 1.)\nLazySets.Ball1{Float64}([0.0, 0.0], 1.0)\njulia> dim(B)\n2\n\nWe evaluate the support vector in the East direction:\n\njulia> σ([0.,1], B)\n2-element Array{Float64,1}:\n 0.0\n 1.0\n\n\n\n"
 },
 
 {
@@ -469,7 +485,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "Method",
-    "text": "σ(d::AbstractVector{N}, B::Ball1)::AbstractVector{N} where {N<:AbstractFloat}\n\nReturn the support vector of a Ball1 in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the p-norm\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, B::Ball1)::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of a Ball1 in a given direction.\n\nInput\n\nd – a direction\nB – a ball in the p-norm\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Ball1{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, B::Ball1{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a ball in the 1-norm.\n\nInput\n\nx – point/vector\nB – ball in the 1-norm\n\nOutput\n\ntrue iff x  B.\n\nNotes\n\nThis implementation is worst-case optimized, i.e., it is optimistic and first computes (see below) the whole sum before comparing to the radius. In applications where the point is typically far away from the ball, a fail-fast implementation with interleaved comparisons could be more efficient.\n\nAlgorithm\n\nLet B be an n-dimensional ball in the 1-norm with radius r and let c_i and x_i be the ball's center and the vector x in dimension i, respectively. Then x  B iff _i=1^n c_i - x_i  r.\n\nExamples\n\njulia> B = Ball1([1., 1.], 1.);\n\njulia> ∈([.5, -.5], B)\nfalse\njulia> ∈([.5, 1.5], B)\ntrue\n\n\n\n"
 },
 
 {
@@ -477,7 +501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\ndim(::Ball1)\nσ(::AbstractVector{Float64}, ::Ball1)"
+    "text": "Ball1\ndim(::Ball1)\nσ(::AbstractVector{Float64}, ::Ball1)\n∈(::AbstractVector{Float64}, ::Ball1{Float64})"
 },
 
 {
@@ -505,11 +529,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Ballp{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, B::Ballp{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a ball in the p-norm.\n\nInput\n\nx – point/vector\nB – ball in the p-norm\n\nOutput\n\ntrue iff x  B.\n\nNotes\n\nThis implementation is worst-case optimized, i.e., it is optimistic and first computes (see below) the whole sum before comparing to the radius. In applications where the point is typically far away from the ball, a fail-fast implementation with interleaved comparisons could be more efficient.\n\nAlgorithm\n\nLet B be an n-dimensional ball in the p-norm with radius r and let c_i and x_i be the ball's center and the vector x in dimension i, respectively. Then x  B iff left( _i=1^n c_i - x_i^p right)^1p  r.\n\nExamples\n\njulia> B = Ballp(1.5, [1., 1.], 1.)\nLazySets.Ballp{Float64}(1.5, [1.0, 1.0], 1.0)\njulia> ∈([.5, -.5], B)\nfalse\njulia> ∈([.5, 1.5], B)\ntrue\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#p-norm-ball-1",
     "page": "Common Set Representations",
     "title": "p-norm ball",
     "category": "section",
-    "text": "Ballp\ndim(B::Ballp)\nσ(d::AbstractVector{Float64}, B::Ballp)"
+    "text": "Ballp\ndim(::Ballp)\nσ(::AbstractVector{Float64}, ::Ballp)\n∈(::AbstractVector{Float64}, ::Ballp{Float64})"
 },
 
 {
@@ -557,7 +589,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "Method",
-    "text": "∈(x::AbstractVector{<:Real}, P::HPolygon)::Bool\n\nReturn whether a given vector is contained in a polygon.\n\nInput\n\nx – two-dimensional vector\nP – polygon in constraint representation\n\nOutput\n\nReturn true iff x  P.\n\n\n\n"
+    "text": "∈(x::AbstractVector{N}, P::HPolygon{N})::Bool where {N<:Real}\n\nCheck whether a given 2D point is contained in a polygon in constraint representation.\n\nInput\n\nx – two-dimensional point/vector\nP – polygon in constraint representation\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation checks if the point lies on the outside of each edge.\n\n\n\n"
 },
 
 {
@@ -617,11 +649,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt{Float64}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "Method",
-    "text": "∈(x::AbstractVector{<:Real}, P::HPolygonOpt)::Bool\n\nReturn whether a given vector is contained in an optimized polygon.\n\nInput\n\nx – two-dimensional vector\nP – optimized polygon in constraint representation\n\nOutput\n\nReturn true iff x  P.\n\n\n\n"
+    "text": "∈(x::AbstractVector{N}, P::HPolygonOpt{N})::Bool where {N<:Real}\n\nCheck whether a given 2D point is contained in an optimized polygon in constraint representation.\n\nInput\n\nx – two-dimensional point/vector\nP – optimized polygon in constraint representation\n\nOutput\n\ntrue iff x  P.\n\n\n\n"
 },
 
 {
@@ -645,7 +677,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\naddconstraint!(::HPolygonOpt{Float64}, ::LinearConstraint{Float64})\ndim(::HPolygonOpt)\nσ(::AbstractVector{Float64}, ::HPolygonOpt{Float64})\n∈(::AbstractVector{Float64}, ::HPolygonOpt)\ntovrep(::HPolygonOpt)\nvertices_list(::HPolygonOpt)"
+    "text": "HPolygonOpt\naddconstraint!(::HPolygonOpt{Float64}, ::LinearConstraint{Float64})\ndim(::HPolygonOpt)\nσ(::AbstractVector{Float64}, ::HPolygonOpt{Float64})\n∈(::AbstractVector{Float64}, ::HPolygonOpt{Float64})\ntovrep(::HPolygonOpt)\nvertices_list(::HPolygonOpt)"
 },
 
 {
@@ -689,11 +721,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.VPolygon{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, P::VPolygon{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a polygon in vertex representation.\n\nInput\n\nx – point/vector\nP – polygon in vertex representation\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation exploits that the polygon's vertices are sorted in counter-clockwise fashion. Under this assumption we can just check if the vertex lies on the left of each edge, using the dot product.\n\nExamples\n\njulia> P = VPolygon([[2.0, 3.0], [3.0, 1.0], [5.0, 1.0], [4.0, 5.0]];\n                    apply_convex_hull=false);\n\njulia> ∈([4.5, 3.1], P)\nfalse\njulia> ∈([4.5, 3.0], P)\ntrue\njulia> ∈([4.4, 3.4], P)  #  point lies on the edge -> floating point error\nfalse\njulia> P = VPolygon([[2//1, 3//1], [3//1, 1//1], [5//1, 1//1], [4//1, 5//1]];\n                     apply_convex_hull=false);\n\njulia> ∈([44//10, 34//10], P)  #  with rational numbers the answer is correct\ntrue\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Vertex-representation-1",
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\ndim(::VPolygon)\nσ(::AbstractVector{Float64}, ::VPolygon)\nvertices_list(::VPolygon)\nsingleton_list(::VPolygon)"
+    "text": "VPolygon\ndim(::VPolygon)\nσ(::AbstractVector{Float64}, ::VPolygon)\nvertices_list(::VPolygon)\nsingleton_list(::VPolygon)\n∈(::AbstractVector{Float64}, ::VPolygon{Float64})"
 },
 
 {
@@ -793,6 +833,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Hyperrectangle{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, H::Hyperrectangle{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a hyperrectangle.\n\nInput\n\nx – point/vector\nH – hyperrectangle\n\nOutput\n\ntrue iff x  H.\n\nAlgorithm\n\nLet H be an n-dimensional hyperrectangle, c_i and r_i be the ball's center and radius and x_i be the vector x in dimension i, respectively. Then x  H iff c_i - x_i  r_i for all i=1n.\n\nExamples\n\njulia> H = Hyperrectangle([1.0, 1.0], [2.0, 3.0]);\n\njulia> ∈([-1.1, 4.1], H)\nfalse\njulia> ∈([-1.0, 4.0], H)\ntrue\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.high-Tuple{LazySets.Hyperrectangle}",
     "page": "Common Set Representations",
     "title": "LazySets.high",
@@ -813,7 +861,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangles",
     "category": "section",
-    "text": "Hyperrectangle\nHyperrectangle(;kwargs...)\ndim(::Hyperrectangle)\nσ(::AbstractVector{Float64}, ::Hyperrectangle)\nvertices_list(::Hyperrectangle)\nnorm(::Hyperrectangle, ::Real=Inf)\nradius(::Hyperrectangle, ::Real=Inf)\ndiameter(::Hyperrectangle, ::Real=Inf)\nhigh(::Hyperrectangle)\nlow(::Hyperrectangle)"
+    "text": "Hyperrectangle\nHyperrectangle(;kwargs...)\ndim(::Hyperrectangle)\nσ(::AbstractVector{Float64}, ::Hyperrectangle)\nvertices_list(::Hyperrectangle)\nnorm(::Hyperrectangle, ::Real=Inf)\nradius(::Hyperrectangle, ::Real=Inf)\ndiameter(::Hyperrectangle, ::Real=Inf)\n∈(::AbstractVector{Float64}, ::Hyperrectangle{Float64})\nhigh(::Hyperrectangle)\nlow(::Hyperrectangle)"
 },
 
 {
@@ -821,7 +869,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.EmptySet",
     "category": "Type",
-    "text": "EmptySet <: LazySet\n\nType that represents the empty set, i.e. the set with no elements.\n\n\n\n"
+    "text": "EmptySet <: LazySet\n\nType that represents the empty set, i.e., the set with no elements.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.EmptySet}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(S::EmptySet)\n\nReturn the dimension of the empty set, which is -1 by convention.\n\nInput\n\nS – an empty set\n\nOutput\n\n-1 by convention.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.EmptySet}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d, ∅)\n\nReturn the support vector of an empty set.\n\nInput\n\n∅ – an empty set\n\nOutput\n\nAn error.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.EmptySet}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector, ∅::EmptySet)::Bool\n\nCheck whether a given point is contained in an empty set.\n\nInput\n\nx – point/vector\n∅ – empty set\n\nOutput\n\nThe output is always false.\n\nExamples\n\njulia> ∈([1.0, 0.0], ∅)\nfalse\n\n\n\n"
 },
 
 {
@@ -829,7 +901,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "EmptySet",
     "category": "section",
-    "text": "EmptySet"
+    "text": "EmptySet\ndim(::EmptySet)\nσ(::AbstractVector{Float64}, ::EmptySet)\n∈(::AbstractVector{Float64}, ::EmptySet)"
 },
 
 {
@@ -837,7 +909,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.ZeroSet",
     "category": "Type",
-    "text": "ZeroSet <: LazySet\n\nType that represents the zero set, i.e. the set which only contains the origin.\n\nFields\n\ndim – the ambient dimension of this zero set\n\n\n\n"
+    "text": "ZeroSet <: LazySet\n\nType that represents the zero set, i.e., the set that only contains the origin.\n\nFields\n\ndim – the ambient dimension of this zero set\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.ZeroSet}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(Z::ZeroSet)::Int\n\nReturn the ambient dimension of this zero set.\n\nInput\n\nZ – a zero set, i.e., a set that only contains the origin\n\nOutput\n\nThe ambient dimension of the zero set.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ZeroSet}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d, Z)\n\nReturn the support vector of a zero set.\n\nInput\n\nZ – a zero set, i.e., a set that only contains the origin\n\nOutput\n\nThe returned value is the origin since it is the only point that belongs to this set.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.ZeroSet}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector, Z::ZeroSet)::Bool\n\nCheck whether a given point is contained in a zero set.\n\nInput\n\nx – point/vector\nZ – zero set\n\nOutput\n\ntrue iff x  Z.\n\nExamples\n\njulia> Z = ZeroSet(2);\n\njulia> ∈([1.0, 0.0], Z)\nfalse\njulia> ∈([0.0, 0.0], Z)\ntrue\n\n\n\n"
 },
 
 {
@@ -845,7 +941,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "ZeroSet",
     "category": "section",
-    "text": "ZeroSet"
+    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{Float64}, ::ZeroSet)\n∈(::AbstractVector{Float64}, ::ZeroSet)"
 },
 
 {
@@ -873,11 +969,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Singleton{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, S::Singleton{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a singleton.\n\nInput\n\nx – point/vector\nS – singleton\n\nOutput\n\ntrue iff x  S.\n\nNotes\n\nThis implementation performs an exact comparison, which may be insufficient with floating point computations.\n\nExamples\n\njulia> S = Singleton([1., 1.]);\n\njulia> ∈([0.9, 1.1], S)\nfalse\njulia> ∈([1.0, 1.0], S)\ntrue\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Singletons-1",
     "page": "Common Set Representations",
     "title": "Singletons",
     "category": "section",
-    "text": "Singleton\ndim(::Singleton)\nσ(::AbstractVector{Float64}, ::Singleton)"
+    "text": "Singleton\ndim(::Singleton)\nσ(::AbstractVector{Float64}, ::Singleton)\n∈(::AbstractVector{Float64}, ::Singleton{Float64})"
 },
 
 {
@@ -885,7 +989,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Zonotope",
     "category": "Type",
-    "text": "Zonotope{N<:Real} <: LazySet\n\nType that represents a zonotope.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – matrix; each column is a generator of the zonotope\n\nNotes\n\nMathematically, a zonotope is defined as the set\n\nZ = left c + sum_i=1^p _i g_i _i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line elements. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nZonotope(center::AbstractVector{N},           generators::AbstractMatrix{N}) where {N<:Real}\nZonotope(center::AbstractVector{N},           generators_list::AbstractVector{T}) where {N<:Real, T<:AbstractVector{N}}\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> Z = Zonotope([1.0, 0.0], 0.1*eye(2))\nLazySets.Zonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(Z)\n2\n\nCompute its vertices:\n\njulia> vertices_list(Z)\n4-element Array{Array{Float64,1},1}:\n [0.9, -0.1]\n [1.1, -0.1]\n [1.1, 0.1]\n [0.9, 0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], Z)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\nAlternative constructor: A zonotope in two dimensions with three generators:\n\njulia> Z = Zonotope(ones(2), [[1., 0.], [0., 1.], [1., 1.]])\nLazySets.Zonotope{Float64}([1.0, 1.0], [1.0 0.0 1.0; 0.0 1.0 1.0])\njulia> Z.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n"
+    "text": "Zonotope{N<:Real} <: LazySet\n\nType that represents a zonotope.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – matrix; each column is a generator of the zonotope\n\nNotes\n\nMathematically, a zonotope is defined as the set\n\nZ = left c + _i=1^p _i g_i _i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line elements. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nZonotope(center::AbstractVector{N},           generators::AbstractMatrix{N}) where {N<:Real}\nZonotope(center::AbstractVector{N},           generators_list::AbstractVector{T}) where {N<:Real, T<:AbstractVector{N}}\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> Z = Zonotope([1.0, 0.0], 0.1*eye(2))\nLazySets.Zonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(Z)\n2\n\nCompute its vertices:\n\njulia> vertices_list(Z)\n4-element Array{Array{Float64,1},1}:\n [0.9, -0.1]\n [1.1, -0.1]\n [1.1, 0.1]\n [0.9, 0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], Z)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\nAlternative constructor: A zonotope in two dimensions with three generators:\n\njulia> Z = Zonotope(ones(2), [[1., 0.], [0., 1.], [1., 1.]])\nLazySets.Zonotope{Float64}([1.0, 1.0], [1.0 0.0 1.0; 0.0 1.0 1.0])\njulia> Z.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n"
 },
 
 {
@@ -921,11 +1025,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Zonotope{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, Z::Zonotope{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a zonotope.\n\nInput\n\nx – point/vector\nZ – zonotope\n\nOutput\n\ntrue iff x  Z.\n\nAlgorithm\n\nThis implementation poses the problem as a linear equality system and solves it using Base.:. A zonotope centered in the origin with generators g_i contains a point x iff x = _i=1^p _i g_i for some _i in -1 1  i = 1 p. Thus, we first ask for a solution and then check if it is in this Cartesian product of intervals.\n\nOther algorithms exist which test the feasibility of an LP.\n\nExamples\n\njulia> Z = Zonotope([1.0, 0.0], 0.1*eye(2));\n\njulia> ∈([1.0, 0.2], Z)\nfalse\njulia> ∈([1.0, 0.1], Z)\ntrue\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Zonotopes-1",
     "page": "Common Set Representations",
     "title": "Zonotopes",
     "category": "section",
-    "text": "Zonotope\ndim(::Zonotope)\nσ(d::AbstractVector{Float64}, Z::Zonotope)\nvertices_list(::Zonotope{Float64})\norder(::Zonotope)"
+    "text": "Zonotope\ndim(::Zonotope)\nσ(d::AbstractVector{Float64}, Z::Zonotope)\nvertices_list(::Zonotope{Float64})\norder(::Zonotope)\n∈(::AbstractVector{Float64}, ::Zonotope{Float64})"
 },
 
 {
@@ -1069,7 +1181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "Method",
-    "text": "∈(x::AbstractVector{<:Real}, cp::CartesianProduct)::Bool\n\nReturn whether a given vector is contained in a Cartesian product set.\n\nInput\n\nx  – vector\ncp – Cartesian product\n\nOutput\n\nReturn true iff x  cp.\n\n\n\n"
+    "text": "∈(x::AbstractVector{<:Real}, cp::CartesianProduct)::Bool\n\nCheck whether a given point is contained in a Cartesian product set.\n\nInput\n\nx  – point/vector\ncp – Cartesian product\n\nOutput\n\ntrue iff x  cp.\n\n\n\n"
 },
 
 {
@@ -1133,7 +1245,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "Method",
-    "text": "∈(x::AbstractVector{<:Real}, cpa::CartesianProductArray)::Bool\n\nReturn whether a given vector is contained in a Cartesian product of a finite number of sets.\n\nInput\n\nx   – vector\ncpa – Cartesian product array\n\nOutput\n\nReturn true iff x  cpa.\n\n\n\n"
+    "text": "∈(x::AbstractVector{<:Real}, cpa::CartesianProductArray)::Bool\n\nCheck whether a given point is contained in a Cartesian product of a finite number of sets.\n\nInput\n\nx   – point/vector\ncpa – Cartesian product array\n\nOutput\n\ntrue iff x  textcpa.\n\n\n\n"
 },
 
 {
@@ -1193,11 +1305,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.LinearMap{#s1,Float64} where #s1<:LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, lm::LinearMap{<:LazySet, N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a linear map of a convex set.\n\nInput\n\nx  – point/vector\nlm – linear map of a convex set\n\nOutput\n\ntrue iff x  lm.\n\nAlgorithm\n\nNote that x  MS iff M^-1x  S. This implementation does not explicitly invert the matrix, which is why it also works for non-square matrices.\n\nExamples\n\njulia> lm = LinearMap([2.0 0.0; 0.0 1.0], BallInf([1., 1.], 1.));\n\njulia> ∈([5.0, 1.0], lm)\nfalse\njulia> ∈([3.0, 1.0], lm)\ntrue\n\nAn example with non-square matrix:\n\njulia> B = BallInf(zeros(4), 1.);\n\njulia> M = [1. 0 0 0; 0 1 0 0]/2;\n\njulia> ∈([0.5, 0.5], M*B)\ntrue\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Linear-Map-1",
     "page": "Common Set Operations",
     "title": "Linear Map",
     "category": "section",
-    "text": "LinearMap\ndim(::LinearMap)\nσ(::AbstractVector{Float64}, ::LinearMap)\n*(::AbstractMatrix{Float64}, ::LazySet)\n*(::Real, ::LazySet)"
+    "text": "LinearMap\ndim(::LinearMap)\nσ(::AbstractVector{Float64}, ::LinearMap)\n*(::AbstractMatrix{Float64}, ::LazySet)\n*(::Real, ::LazySet)\n∈(::AbstractVector{Float64}, ::LinearMap{<:LazySet, Float64})"
 },
 
 {
@@ -1222,6 +1342,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.σ",
     "category": "Method",
     "text": "σ(d::AbstractVector{Float64}, em::ExponentialMap)::AbstractVector{Float64}\n\nReturn the support vector of the exponential map.\n\nInput\n\nd  – direction\nem – exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf E = exp(M)S, where M is a matrix and S is a convex set, it follows that (d E) = exp(M)(exp(M)^T d S) for any direction d.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.ExponentialMap{#s1} where #s1<:LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{<:Real}, em::ExponentialMap{<:LazySet})::Bool\n\nCheck whether a given point is contained in an exponential map of a convex set.\n\nInput\n\nx  – point/vector\nem – linear map of a convex set\n\nOutput\n\ntrue iff x  em.\n\nAlgorithm\n\nThis implementation exploits that x  exp(M)S iff exp(-M)x  S. This follows from exp(-M)exp(M) = I for any M.\n\nExamples\n\njulia> em = ExponentialMap(SparseMatrixExp(SparseMatrixCSC([2.0 0.0; 0.0 1.0])),\n                           BallInf([1., 1.], 1.));\n\njulia> ∈([5.0, 1.0], em)\nfalse\njulia> ∈([1.0, 1.0], em)\ntrue\n\n\n\n"
 },
 
 {
@@ -1285,7 +1413,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Exponential Map",
     "category": "section",
-    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Float64}, ::ExponentialMap)ExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Float64}, ::ExponentialProjectionMap)SparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
+    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Float64}, ::ExponentialMap)\n∈(::AbstractVector{Float64}, ::ExponentialMap{<:LazySet})ExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Float64}, ::ExponentialProjectionMap)SparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
 },
 
 {
