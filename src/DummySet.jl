@@ -1,12 +1,14 @@
-export DummySet
-
-import Base:+, *
 
 """
     DummySet <: LazySet
 
-Type that represents a "neutral" set with special properties, in a sense described
-below.
+Type that represents a "neutral" set with an associated ambient dimension,
+and it is such that:
+
+- it is a neutral element for the Minkowski sum, i.e. ``X ⊕ D = D ⊕ X = X`` for
+  any ``X``
+- it is a neutral element for the Cartesian product, in the sense that ``X × D = X``
+  if ``D`` is a dummy set. 
 
 ### Fields
 
