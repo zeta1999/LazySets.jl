@@ -453,7 +453,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ball1",
     "category": "Type",
-    "text": "Ball1 <: LazySet\n\nType that represents a ball in the 1-norm, also known as Manhattan or Taxicab norm.\n\nIt is defined as the set\n\nmathcalB_1^n(c r) =  x  mathbbR^n  _i=1^n x_i  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nUnit ball in the 1-norm in the plane:\n\njulia> B = Ball1(zeros(2), 1.)\nLazySets.Ball1{Float64}([0.0, 0.0], 1.0)\njulia> dim(B)\n2\n\nWe evaluate the support vector in the East direction:\n\njulia> σ([0.,1], B)\n1-element Array{Float64,1}:\n 1.0\n 0.0\n\n\n\n"
+    "text": "Ball1 <: LazySet\n\nType that represents a ball in the 1-norm, also known as Manhattan or Taxicab norm.\n\nIt is defined as the set\n\nmathcalB_1^n(c r) =  x  mathbbR^n  _i=1^n x_i  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nUnit ball in the 1-norm in the plane:\n\njulia> B = Ball1(zeros(2), 1.)\nLazySets.Ball1{Float64}([0.0, 0.0], 1.0)\njulia> dim(B)\n2\n\nWe evaluate the support vector in the East direction:\n\njulia> σ([0.,1], B)\n2-element Array{Float64,1}:\n 0.0\n 1.0\n\n\n\n"
 },
 
 {
@@ -817,19 +817,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.VoidSet",
+    "location": "lib/representations.html#LazySets.EmptySet",
     "page": "Common Set Representations",
-    "title": "LazySets.VoidSet",
+    "title": "LazySets.EmptySet",
     "category": "Type",
-    "text": "VoidSet <: LazySet\n\nType that represents a void (neutral) set with respect to Minkowski sum.\n\nFields\n\ndim – ambient dimension of the VoidSet\n\n\n\n"
+    "text": "EmptySet <: LazySet\n\nType that represents the empty set, i.e. the set with no elements.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#VoidSets-1",
+    "location": "lib/representations.html#EmptySet-1",
     "page": "Common Set Representations",
-    "title": "VoidSets",
+    "title": "EmptySet",
     "category": "section",
-    "text": "VoidSet"
+    "text": "EmptySet"
+},
+
+{
+    "location": "lib/representations.html#LazySets.ZeroSet",
+    "page": "Common Set Representations",
+    "title": "LazySets.ZeroSet",
+    "category": "Type",
+    "text": "ZeroSet <: LazySet\n\nType that represents the zero set, i.e. the set which only contains the origin.\n\nFields\n\ndim – the ambient dimension of this zero set\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#ZeroSet-1",
+    "page": "Common Set Representations",
+    "title": "ZeroSet",
+    "category": "section",
+    "text": "ZeroSet"
 },
 
 {
@@ -937,43 +953,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.MinkowskiSum",
-    "page": "Common Set Operations",
-    "title": "LazySets.MinkowskiSum",
-    "category": "Type",
-    "text": "MinkowskiSum{T1<:LazySet, T2<:LazySet} <: LazySet\n\nType that represents the Minkowski sum of two convex sets.\n\nFields\n\nX – first convex set\nY – second convex set\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.MinkowskiSum}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "Method",
-    "text": "dim(ms::MinkowskiSum)::Int\n\nReturn the dimension of a Minkowski sum.\n\nInput\n\nms – Minkowski sum\n\nOutput\n\nThe ambient dimension of the Minkowski sum.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.MinkowskiSum}",
-    "page": "Common Set Operations",
-    "title": "LazySets.σ",
-    "category": "Method",
-    "text": "σ(d::AbstractVector{<:Real}, ms::MinkowskiSum)::AbstractVector{<:Real}\n\nReturn the support vector of a Minkowski sum.\n\nInput\n\nd  – direction\nms – Minkowski sum\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the summand sets.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Base.:+-Tuple{LazySets.LazySet,LazySets.LazySet}",
-    "page": "Common Set Operations",
-    "title": "Base.:+",
-    "category": "Method",
-    "text": "+(X::LazySet, Y::LazySet)\n\nReturn the Minkowski sum of two convex sets.\n\nInput\n\nX – convex set\nY – convex set\n\nOutput\n\nThe Minkowski sum of the two convex sets.\n\n\n\n"
-},
-
-{
     "location": "lib/operations.html#Binary-Minkowski-Sum-1",
     "page": "Common Set Operations",
     "title": "Binary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSum\ndim(::MinkowskiSum)\nσ(::AbstractVector{Float64}, ::MinkowskiSum)\nBase.:+(::LazySet, ::LazySet)"
+    "text": "MinkowskiSum\ndim(::MinkowskiSum)\nσ(::AbstractVector{Float64}, ::MinkowskiSum)\nBase.:+(::LazySet, ::LazySet)\n⊕"
 },
 
 {
@@ -1025,11 +1009,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:+-Tuple{LazySets.MinkowskiSumArray,LazySets.VoidSet}",
+    "location": "lib/operations.html#Base.:+-Tuple{LazySets.MinkowskiSumArray,LazySets.ZeroSet}",
     "page": "Common Set Operations",
     "title": "Base.:+",
     "category": "Method",
-    "text": "+(msa, vs)\n\nReturns the original array because addition with a void set is a no-op.\n\nInput\n\nmsa – Minkowski sum array\nvs – void set\n\n\n\n"
+    "text": "+(msa, Z)\n\nReturns the original array because addition with an empty set is a no-op.\n\nInput\n\nmsa – Minkowski sum array\nZ  – a Zero set\n\n\n\n"
 },
 
 {
@@ -1037,7 +1021,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSumArray\ndim(::MinkowskiSumArray)\nσ(::AbstractVector{Float64}, ::MinkowskiSumArray)\nBase.:+(::MinkowskiSumArray, ::LazySet)\nBase.:+(::LazySet, ::MinkowskiSumArray)\nBase.:+(::MinkowskiSumArray, ::MinkowskiSumArray)\nBase.:+(::MinkowskiSumArray, ::VoidSet)"
+    "text": "MinkowskiSumArray\ndim(::MinkowskiSumArray)\nσ(::AbstractVector{Float64}, ::MinkowskiSumArray)\nBase.:+(::MinkowskiSumArray, ::LazySet)\nBase.:+(::LazySet, ::MinkowskiSumArray)\nBase.:+(::MinkowskiSumArray, ::MinkowskiSumArray)\nBase.:+(::MinkowskiSumArray, ::ZeroSet)"
 },
 
 {
@@ -1053,7 +1037,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.CartesianProduct",
     "category": "Type",
-    "text": "CartesianProduct{S1<:LazySet,S2<:LazySet} <: LazySet\n\nType that represents a Cartesian product of two convex sets.\n\nFields\n\nX – first convex set\nY – second convex set\n\nNotes\n\nThe Cartesian product of three elements is obtained recursively. See also CartesianProductArray for an implementation of a Cartesian product of many sets without recursion, instead using an array.\n\nCartesianProduct{S1<:LazySet,S2<:LazySet} – default constructor\nCartesianProduct(Xarr::Vector{S}) where {S<:LazySet} – constructor from an array of convex sets\n\n\n\n"
+    "text": "CartesianProduct{S1<:LazySet,S2<:LazySet} <: LazySet\n\nType that represents a Cartesian product of two convex sets.\n\nFields\n\nX – first convex set\nY – second convex set\n\nNotes\n\nThe Cartesian product of three elements is obtained recursively. See also CartesianProductArray for an implementation of a Cartesian product of many sets without recursion, instead using an array.\n\nCartesianProduct{S1<:LazySet,S2<:LazySet}            – default constructor\nCartesianProduct(Xarr::Vector{S}) where {S<:LazySet} – constructor from an                                                           array of convex sets\n\n\n\n"
 },
 
 {
@@ -1197,7 +1181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:*",
     "category": "Method",
-    "text": "    *(M::AbstractMatrix{<:Real}, S::LazySet)\n\nReturn the linear map of a convex set.\n\nInput\n\nM – matrix/linear map\nS – convex set\n\nOutput\n\nThe linear map of the convex set.\n\n\n\n"
+    "text": "    *(M::AbstractMatrix{<:Real}, S::LazySet)\n\nReturn the linear map of a convex set.\n\nInput\n\nM – matrix/linear map\nS – convex set\n\nOutput\n\nIf the matrix is null, a ZeroSet is returned; otherwise a lazy linear map.\n\n\n\n"
 },
 
 {
