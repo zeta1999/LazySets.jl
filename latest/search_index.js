@@ -977,11 +977,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:⊆-Tuple{LazySets.Singleton,LazySets.LazySet}",
+    "page": "Common Set Representations",
+    "title": "Base.:⊆",
+    "category": "Method",
+    "text": "⊆(S::Singleton, set::LazySet)::Bool\n\nCheck whether a given singleton is contained in a convex set.\n\nInput\n\nS   – singleton\nset – convex set\n\nOutput\n\ntrue iff S  textset.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Singletons-1",
     "page": "Common Set Representations",
     "title": "Singletons",
     "category": "section",
-    "text": "Singleton\ndim(::Singleton)\nσ(::AbstractVector{Float64}, ::Singleton)\n∈(::AbstractVector{Float64}, ::Singleton{Float64})"
+    "text": "Singleton\ndim(::Singleton)\nσ(::AbstractVector{Float64}, ::Singleton)\n∈(::AbstractVector{Float64}, ::Singleton{Float64})\n⊆(::Singleton, ::LazySet)"
 },
 
 {
