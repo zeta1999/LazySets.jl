@@ -173,7 +173,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Decomposing an Affine Map",
     "title": "Decomposing an Affine Map",
     "category": "section",
-    "text": "In this section we present an illustrative example of the decomposed image of a linear map.DocTestSetup = quote\n    using LazySets, LazySets.Approximations\nend"
+    "text": "In this section we present an illustrative example of the decomposed image of a linear map.Pages = [\"decompose_example.md\"]\nDepth = 3"
 },
 
 {
@@ -181,7 +181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Decomposing an Affine Map",
     "title": "Preliminaries: Polygon, Linear Map, and Plotting",
     "category": "section",
-    "text": "Let  = 4 and  = beginpmatrix cos()  -sin()  sin()  cos() endpmatrix.julia> theta = pi/4.;\n\njulia> Φ = [cos(theta) -sin(theta); sin(theta) cos(theta)];\nNow define an arbitrary convex polygon with five vertices with operatornameCH denoting the convex hull operation. mathcalX = operatornameCHbig( (1 05) (11 02) (14 03) (17 05) (14 08) big)julia> X = VPolygon([[1.0, 0.5], [1.1, 0.2], [1.4, 0.3], [1.7, 0.5], [1.4, 0.8]])\nLazySets.VPolygon{Float64}(Array{Float64,1}[[1.0, 0.5], [1.1, 0.2], [1.4, 0.3], [1.7, 0.5], [1.4, 0.8]])Applying the linear map   mathcalX, we get a new polygon mathcalX which is the counter-clockwise turn of mathcalX by  triangleq 45. In this package the linear map is not computed explicitly but only wrapped in a LinearMap instance.julia> Xp = Φ * X;\n\njulia> typeof(Xp)\nLazySets.LinearMap{LazySets.VPolygon{Float64},Float64}Let us plot the two polygons, mathcalX in green and mathcalX in blue.julia> using Plots;\n\njulia> plot(X, color=\"green\")\n\njulia> plot!(Xp, 1e-2, color=\"blue\")\nNote that we have passed 1e-2 as additional argument for the LinearMap set (mathcalX) because by default such a set is just plotted as its box (or hyperrectangle) approximation. The value 1e-2 is the precision up to which the set is (over-)approximated with a polgon, which in this case is sufficient to obtain the actual set again.(Image: ../assets/linmap_deco_1.png)"
+    "text": "Consider the matrix-valued function () = beginpmatrix cos ()  -sin ()  sin ()  cos () endpmatrix,    .using LazySets, LazySets.Approximations, Plots\n\nΦ(theta) = [cos(theta) -sin(theta); sin(theta) cos(theta)]Now define an arbitrary convex polygon with five vertices with operatornameCH denoting the convex hull operation,mathcalX = operatornameCHbig( (1 05) (11 02) (14 03) (17 05) (14 08) big)This set can be defined as:X = VPolygon([[1.0, 0.5], [1.1, 0.2], [1.4, 0.3], [1.7, 0.5], [1.4, 0.8]])note: Note\nYou can as well define the convex hull of the one element sets (singletons) viaC = CH([Singleton([1.0, 0.5]), Singleton([1.1, 0.2]), Singleton([1.4, 0.3]), Singleton([1.7, 0.5]), Singleton([1.4, 0.8])])Observe that C is just a lazy convex hull, whereas X is a polygon in vertex representation.Applying the linear map (4)  mathcalX, we get a new polygon mathcalX which is the counter-clockwise turn of mathcalX by  triangleq 45. In this package the linear map is not computed explicitly but only wrapped in a LinearMap instance.Xp = Φ(pi/4) * X\n\ntypeof(Xp)Let us plot the two polygons, mathcalX in green and mathcalX in blue.example = plot(X, color=\"green\")\n\nplot!(example, Xp, 1e-2, color=\"blue\")Note that we have passed 1e-2 as additional argument for the LinearMap set (mathcalX) because by default such a set is just plotted as its box (or hyperrectangle) approximation. The value 1e-2 is the precision up to which the set is (over-)approximated with a polgon, which in this case is sufficient to obtain the actual set again."
 },
 
 {
@@ -189,7 +189,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Decomposing an Affine Map",
     "title": "Cartesian Decomposition",
     "category": "section",
-    "text": "Next we want to decompose mathcalX into a Cartesian product of intervals. That is, we project it to the x-axis and y-axis and then compose these intervals again: hatmathcalX = hatmathcalX_1 times hatmathcalX_2.julia> Xhat = overapproximate(X);\n\njulia> plot(Xhat, color=\"gray\", alpha=0.3)\n\njulia> plot!(X, color=\"green\")\n\njulia> plot!(Xp, 1e-2, color=\"blue\")\n(Image: ../assets/linmap_deco_2.png)"
+    "text": "Next we want to decompose mathcalX into a Cartesian product of intervals. That is, we project it to the x-axis and y-axis and then compose these intervals again: hatmathcalX = hatmathcalX_1 times hatmathcalX_2.Xhat = overapproximate(X)  # approximation of X with an axis-aligned polygon\n\nplot!(example, Xhat, color=\"gray\", alpha=0.3)"
 },
 
 {
@@ -197,7 +197,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Decomposing an Affine Map",
     "title": "Decomposed Image of a Linear Map",
     "category": "section",
-    "text": "Now let us compute the linear map for the box approximation, and let us call it mathcalY =   hatmathcalX. This will be a diamond-like shape (the box turned by 45°).julia> Xphat = Φ * Xhat;\n\njulia> plot(Xhat, color=\"gray\", alpha=0.3)\n\njulia> plot!(X, color=\"green\")\n\njulia> plot!(Xphat, 1e-2, color=\"yellow\", alpha=0.3)\n\njulia> plot!(Xp, 1e-2, color=\"blue\")\n(Image: ../assets/linmap_deco_3.png)However, we want our approximation be again a Cartesian product of intervals, so we have to overapproximate this diamond-like shape again: hatmathcalY = hatmathcalX = hatmathcalX_1 times hatmathcalX_2julia> Xhatp = overapproximate(Xphat);\n\njulia> plot(Xhat, color=\"gray\", alpha=0.3)\n\njulia> plot!(X, color=\"green\")\n\njulia> plot!(Xhatp, 1e-2, color=\"gray\", alpha=0.3)\n\njulia> plot!(Xphat, 1e-2, color=\"yellow\", alpha=0.3)\n\njulia> plot!(Xp, 1e-2, color=\"blue\")\n(Image: ../assets/linmap_deco_4.png)As we can see, the resulting box hatmathcalX is not a tight overapproximation of mathcalX. We can, however, gain precision by reducing the angle by which we turn the set, e.g., making two smaller turns. Why not try it out?"
+    "text": "Now let us compute the linear map for the box approximation, and let us call it mathcalY = (4)  hatmathcalX. This will be a diamond-like shape (the box turned by 45°).Y = Φ(pi/4) * Xhat\n\nplot!(example, Y, 1e-2, color=\"yellow\", alpha=0.3)However, we want our approximation be again a Cartesian product of intervals, so we have to overapproximate this diamond-like shape again: hatmathcalY = hatmathcalX = hatmathcalX_1 times hatmathcalX_2Xhatp = overapproximate(Y)\n\nplot!(example, Xhatp, 1e-2, color=\"gray\", alpha=0.3)As we can see, the resulting box hatmathcalX is not a tight overapproximation of mathcalX. We can, however, gain precision by reducing the angle by which we turn the set, e.g., making two smaller turns. Why not try it out?"
 },
 
 {
