@@ -685,7 +685,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "Method",
-    "text": "vertices_list(B::Ball1{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a ball in the 1-norm.\n\nInput\n\nB – ball in the 1-norm\n\nOutput\n\nA list containing only a single vertex.\n\n\n\n"
+    "text": "vertices_list(B::Ball1{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a ball in the 1-norm.\n\nInput\n\nB – ball in the 1-norm\n\nOutput\n\nA list containing the vertices of the ball in the 1-norm.\n\n\n\n"
 },
 
 {
