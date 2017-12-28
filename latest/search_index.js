@@ -53,7 +53,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Library Outline",
     "category": "section",
-    "text": "Pages = [\n    \"lib/representations.md\",\n    \"lib/operations.md\",\n    \"lib/approximations.md\",\n    \"lib/utils.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"lib/interfaces.md\",\n    \"lib/representations.md\",\n    \"lib/operations.md\",\n    \"lib/approximations.md\",\n    \"lib/utils.md\"\n]\nDepth = 2"
 },
 
 {
@@ -242,15 +242,15 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "man/iterative_refinement.html#",
-    "page": "Iterative refinement",
-    "title": "Iterative refinement",
+    "page": "Iterative Refinement",
+    "title": "Iterative Refinement",
     "category": "page",
     "text": ""
 },
 
 {
     "location": "man/iterative_refinement.html#LazySets.Approximations.Approximation2D",
-    "page": "Iterative refinement",
+    "page": "Iterative Refinement",
     "title": "LazySets.Approximations.Approximation2D",
     "category": "Type",
     "text": "Approximation2D{N<:AbstractFloat}\n\nType that represents a local approximation in 2D.\n\nFields\n\np1        – first inner point\nd1        – first direction\np2        – second inner point\nd2        – second direction\nerr       – error made\nndir      – normal direction of the inner approximation\nrefinable – states if this approximation is refinable\n\n\n\n"
@@ -258,7 +258,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "man/iterative_refinement.html#LazySets.Approximations.Approximation2D-NTuple{4,Array{Float64,1}}",
-    "page": "Iterative refinement",
+    "page": "Iterative Refinement",
     "title": "LazySets.Approximations.Approximation2D",
     "category": "Method",
     "text": "Approximation2D(p1::Vector{N}, d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where {N<:AbstractFloat}\n\nConstructor of Approximation2D from two inner points and two directions.\n\nInput\n\np1        – first inner point\nd1        – first direction\np2        – second inner point\nd2        – second direction\n\nOutput\n\nA new Approximation2D instance.\n\n\n\n"
@@ -266,7 +266,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "man/iterative_refinement.html#LazySets.Approximations.refine-Tuple{LazySets.LazySet,LazySets.Approximations.Approximation2D}",
-    "page": "Iterative refinement",
+    "page": "Iterative Refinement",
     "title": "LazySets.Approximations.refine",
     "category": "Method",
     "text": "refine(S::LazySet, approx::Approximation2D)::Tuple{Approximation2D, Approximation2D}\n\nRefine the given approximation.\n\nInput\n\nS      – 2D convex set that is approximated\napprox – approximation to refine\n\nOutput\n\nThe refined approximation.\n\n\n\n"
@@ -274,7 +274,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "man/iterative_refinement.html#Iterative-Refinement-1",
-    "page": "Iterative refinement",
+    "page": "Iterative Refinement",
     "title": "Iterative Refinement",
     "category": "section",
     "text": "This section of the manual describes an approximation method for an arbitrary two-dimensional convex set S and a given error bound  using support vectors.CurrentModule = LazySets.ApproximationsThe basic idea is to add new supporting directions whenever the approximation error is still bigger than .The approximation is represented by a list of local refinements. Each refinement describes a set with one angle and is wrapped in the following type.Approximation2D\nApproximation2D(::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})The approximation is initialized with box directions, i.e., we have four refinement instances, one for each angle. Then we just iterate through all refinement instances and check if the error is bigger than the threshold individually. If so, we refine the instance by splitting into two more precise refinement instances and apply the checks recursively.refine(::LazySet, ::Approximation2D)"
@@ -337,6 +337,150 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#",
+    "page": "Set Interfaces",
+    "title": "Set Interfaces",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "lib/interfaces.html#Set-Interfaces-1",
+    "page": "Set Interfaces",
+    "title": "Set Interfaces",
+    "category": "section",
+    "text": "This section of the manual describes the interfaces for different set types. Every set that fits the description of an interface should also implement it. This helps in several ways:avoid code duplicates,\nprovide functions for many sets at once,\nallow changes in the source code without changing the API.The interface functions are outlined in the interface documentation. See Common Set Representations for implementations of the interfaces.note: Note\nThe naming convention is such that all interface names (with the exception of the main abstract type LazySet) should be preceded by Abstract.The following diagram shows the interface hierarchy.(Image: ../assets/interfaces.png)Pages = [\"interfaces.md\"]\nDepth = 4CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nend"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.LazySet",
+    "page": "Set Interfaces",
+    "title": "LazySets.LazySet",
+    "category": "Type",
+    "text": "LazySet\n\nAbstract type for a lazy set.\n\nNotes\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet)::AbstractVector{N} – the support vector   of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\nLazySet types should be parameterized with a type N, typically N<:Real, to support computations with different numeric types.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySet-1",
+    "page": "Set Interfaces",
+    "title": "LazySet",
+    "category": "section",
+    "text": "Every convex set in this library implements the main LazySet interface.LazySet"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.AbstractPointSymmetric",
+    "page": "Set Interfaces",
+    "title": "LazySets.AbstractPointSymmetric",
+    "category": "Type",
+    "text": "AbstractPointSymmetric{N<:Real} <: LazySet\n\nAbstract type for point symmetric sets.\n\nNotes\n\nEvery concrete AbstractPointSymmetric must define the following functions:\n\ncenter(::AbstractPointSymmetric{N})::Vector{N} – return the center point\n\njulia> subtypes(AbstractPointSymmetric)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.Ball2                   \n LazySets.Ballp                   \n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Point-symmetric-set-1",
+    "page": "Set Interfaces",
+    "title": "Point symmetric set",
+    "category": "section",
+    "text": "Point symmetric sets such as balls of different norms are characterized by a center. Note that there is a special interface combination Point symmetric polytope.AbstractPointSymmetric"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.AbstractPolytope",
+    "page": "Set Interfaces",
+    "title": "LazySets.AbstractPolytope",
+    "category": "Type",
+    "text": "AbstractPolytope{N<:Real} <: LazySet\n\nAbstract type for polytopic sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of halfspaces, or equivalently, sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetricPolytope\n LazySets.AbstractPolygon\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Polytope-1",
+    "page": "Set Interfaces",
+    "title": "Polytope",
+    "category": "section",
+    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Point symmetric polytope.AbstractPolytope"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.AbstractPolygon",
+    "page": "Set Interfaces",
+    "title": "LazySets.AbstractPolygon",
+    "category": "Type",
+    "text": "AbstractPolygon{N<:Real} <: AbstractPolytope{N}\n\nAbstract type for polygons (i.e., 2D polytopes).\n\nNotes\n\nEvery concrete AbstractPolygon must define the following functions:\n\ntovrep(::AbstractPolygon{N})::VPolygon{N}         – transform into   V-representation\ntohrep(::AbstractPolygon{N})::AbstractHPolygon{N} – transform into   H-representation\n\njulia> subtypes(AbstractPolygon)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractHPolygon\n LazySets.VPolygon\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Polygon-1",
+    "page": "Set Interfaces",
+    "title": "Polygon",
+    "category": "section",
+    "text": "A polygon is a two-dimensional polytope.AbstractPolygon"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.AbstractHPolygon",
+    "page": "Set Interfaces",
+    "title": "LazySets.AbstractHPolygon",
+    "category": "Type",
+    "text": "AbstractHPolygon{N<:Real} <: AbstractPolygon{N}\n\nAbstract type for polygons in H-representation (i.e., constraints).\n\nNotes\n\nEvery concrete AbstractHPolygon must have the following fields:\n\nconstraints_list::Vector{LinearConstraint{N}} – the constraints\n\njulia> subtypes(AbstractHPolygon)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.HPolygon   \n LazySets.HPolygonOpt\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#HPolygon-1",
+    "page": "Set Interfaces",
+    "title": "HPolygon",
+    "category": "section",
+    "text": "An HPolygon is a polygon in H-representation (or constraint representation).AbstractHPolygon"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.AbstractPointSymmetricPolytope",
+    "page": "Set Interfaces",
+    "title": "LazySets.AbstractPointSymmetricPolytope",
+    "category": "Type",
+    "text": "AbstractPointSymmetricPolytope{N<:Real} <: AbstractPolytope{N}\n\nAbstract type for point symmetric, polytopic sets. It combines the AbstractPointSymmetric and AbstractPolytope interfaces. Such a type combination is necessary as long as Julia does not support multiple inheritance.\n\nNotes\n\nEvery concrete AbstractPointSymmetricPolytope must define the following functions:\n\nfrom AbstractPointSymmetric:\ncenter(::AbstractPointSymmetricPolytope{N})::Vector{N} – return the  center point\nfrom AbstractPolytope:\nvertices_list(::AbstractPointSymmetricPolytope{N})::Vector{Vector{N}}  – return a list of all vertices\n\njulia> subtypes(AbstractPointSymmetricPolytope)\n3-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractHyperrectangle\n LazySets.Ball1\n LazySets.Zonotope\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Point-symmetric-polytope-1",
+    "page": "Set Interfaces",
+    "title": "Point symmetric polytope",
+    "category": "section",
+    "text": "A point symmetric polytope is a combination of two other interfaces: Point symmetric set and Polytope.AbstractPointSymmetricPolytope"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.AbstractHyperrectangle",
+    "page": "Set Interfaces",
+    "title": "LazySets.AbstractHyperrectangle",
+    "category": "Type",
+    "text": "AbstractHyperrectangle{N<:Real} <: AbstractPointSymmetricPolytope{N}\n\nAbstract type for box-shaped sets.\n\nNotes\n\nEvery concrete AbstractHyperrectangle must define the following functions:\n\nradius_hyperrectangle(::AbstractHyperrectangle{N})::Vector{N} – return the   hyperrectangle's radius, which is a full-dimensional vector\nradius_hyperrectangle(::AbstractHyperrectangle{N}, i::Int)::N – return the   hyperrectangle's radius in the i-th dimension\n\njulia> subtypes(AbstractHyperrectangle)\n3-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractSingleton\n LazySets.BallInf       \n LazySets.Hyperrectangle\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Hyperrectangle-1",
+    "page": "Set Interfaces",
+    "title": "Hyperrectangle",
+    "category": "section",
+    "text": "A hyperrectangle is a special point symmetric polytope with axis-aligned facets.AbstractHyperrectangle"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.AbstractSingleton",
+    "page": "Set Interfaces",
+    "title": "LazySets.AbstractSingleton",
+    "category": "Type",
+    "text": "AbstractSingleton{N<:Real} <: AbstractHyperrectangle{N}\n\nAbstract type for sets with a single value.\n\nNotes\n\nEvery concrete AbstractSingleton must define the following functions:\n\nelement(::AbstractSingleton{N})::Vector{N} – return the single element\nelement(::AbstractSingleton{N}, i::Int)::N – return the single element's   entry in the i-th dimension\n\njulia> subtypes(AbstractSingleton)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.Singleton\n LazySets.ZeroSet\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Singleton-1",
+    "page": "Set Interfaces",
+    "title": "Singleton",
+    "category": "section",
+    "text": "A singleton is a special hyperrectangle consisting of only one point.AbstractSingleton"
+},
+
+{
     "location": "lib/representations.html#",
     "page": "Common Set Representations",
     "title": "Common Set Representations",
@@ -358,14 +502,6 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets",
     "category": "Module",
     "text": "Main module for LazySets.jl – a Julia package for calculus with convex sets.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.LazySet",
-    "page": "Common Set Representations",
-    "title": "LazySets.LazySet",
-    "category": "Type",
-    "text": "LazySet\n\nAbstract type for a lazy set.\n\nNotes\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet)::AbstractVector{N} – the support vector   of S in a given direction d\ndim(::LazySet)::Int – the ambient dimension of S\n\nLazySet types should be parameterized with a type N, typically N<:Real, to support computations with different numeric types.\n\n\n\n"
 },
 
 {
@@ -393,75 +529,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Abstract-support-function-and-support-vector-1",
+    "location": "lib/representations.html#Support-function-and-support-vector-1",
     "page": "Common Set Representations",
-    "title": "Abstract support function and support vector",
+    "title": "Support function and support vector",
     "category": "section",
-    "text": "LazySets\nLazySets.LazySet\nρ\nsupport_function\nsupport_vector"
-},
-
-{
-    "location": "lib/representations.html#LazySets.AbstractSingleton",
-    "page": "Common Set Representations",
-    "title": "LazySets.AbstractSingleton",
-    "category": "Type",
-    "text": "AbstractSingleton{N<:Real} <: AbstractHyperrectangle{N}\n\nAbstract type for sets with a single value.\n\nNotes\n\nEvery concrete AbstractSingleton must define the following functions:\n\nelement(::AbstractSingleton{N})::Vector{N} – return the single element\nelement(::AbstractSingleton{N}, i::Int)::N – return the single element's   entry in the i-th dimension\n\njulia> subtypes(AbstractSingleton)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.Singleton\n LazySets.ZeroSet\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.AbstractHPolygon",
-    "page": "Common Set Representations",
-    "title": "LazySets.AbstractHPolygon",
-    "category": "Type",
-    "text": "AbstractHPolygon{N<:Real} <: AbstractPolygon{N}\n\nAbstract type for polygons in H-representation (i.e., constraints).\n\nNotes\n\nEvery concrete AbstractHPolygon must have the following fields:\n\nconstraints_list::Vector{LinearConstraint{N}} – the constraints\n\njulia> subtypes(AbstractHPolygon)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.HPolygon   \n LazySets.HPolygonOpt\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.AbstractPolygon",
-    "page": "Common Set Representations",
-    "title": "LazySets.AbstractPolygon",
-    "category": "Type",
-    "text": "AbstractPolygon{N<:Real} <: AbstractPolytope{N}\n\nAbstract type for polygons (i.e., 2D polytopes).\n\nNotes\n\nEvery concrete AbstractPolygon must define the following functions:\n\ntovrep(::AbstractPolygon{N})::VPolygon{N}         – transform into   V-representation\ntohrep(::AbstractPolygon{N})::AbstractHPolygon{N} – transform into   H-representation\n\njulia> subtypes(AbstractPolygon)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractHPolygon\n LazySets.VPolygon\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.AbstractHyperrectangle",
-    "page": "Common Set Representations",
-    "title": "LazySets.AbstractHyperrectangle",
-    "category": "Type",
-    "text": "AbstractHyperrectangle{N<:Real} <: AbstractPointSymmetricPolytope{N}\n\nAbstract type for box-shaped sets.\n\nNotes\n\nEvery concrete AbstractHyperrectangle must define the following functions:\n\nradius_hyperrectangle(::AbstractHyperrectangle{N})::Vector{N} – return the   hyperrectangle's radius, which is a full-dimensional vector\nradius_hyperrectangle(::AbstractHyperrectangle{N}, i::Int)::N – return the   hyperrectangle's radius in the i-th dimension\n\njulia> subtypes(AbstractHyperrectangle)\n3-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractSingleton\n LazySets.BallInf       \n LazySets.Hyperrectangle\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.AbstractPointSymmetric",
-    "page": "Common Set Representations",
-    "title": "LazySets.AbstractPointSymmetric",
-    "category": "Type",
-    "text": "AbstractPointSymmetric{N<:Real} <: LazySet\n\nAbstract type for point symmetric sets.\n\nNotes\n\nEvery concrete AbstractPointSymmetric must define the following functions:\n\ncenter(::AbstractPointSymmetric{N})::Vector{N} – return the center point\n\njulia> subtypes(AbstractPointSymmetric)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.Ball2                   \n LazySets.Ballp                   \n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.AbstractPolytope",
-    "page": "Common Set Representations",
-    "title": "LazySets.AbstractPolytope",
-    "category": "Type",
-    "text": "AbstractPolytope{N<:Real} <: LazySet\n\nAbstract type for polytopic sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of halfspaces, or equivalently, sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n1-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPolygon\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.AbstractPointSymmetricPolytope",
-    "page": "Common Set Representations",
-    "title": "LazySets.AbstractPointSymmetricPolytope",
-    "category": "Type",
-    "text": "AbstractPointSymmetricPolytope{N<:Real} <: AbstractPolytope{N}\n\nAbstract type for point symmetric, polytopic sets. It combines the AbstractPointSymmetric and AbstractPolytope interfaces. Such a type combination is necessary as long as Julia does not support multiple inheritance.\n\nNotes\n\nEvery concrete AbstractPointSymmetricPolytope must define the following functions:\n\nfrom AbstractPointSymmetric:\ncenter(::AbstractPointSymmetricPolytope{N})::Vector{N} – return the  center point\nfrom AbstractPolytope:\nvertices_list(::AbstractPointSymmetricPolytope{N})::Vector{Vector{N}}  – return a list of all vertices\n\njulia> subtypes(AbstractPointSymmetricPolytope)\n3-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractHyperrectangle\n LazySets.Ball1\n LazySets.Zonotope\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySet-interfaces-1",
-    "page": "Common Set Representations",
-    "title": "LazySet interfaces",
-    "category": "section",
-    "text": "AbstractSingleton\nAbstractHPolygon\nAbstractPolygon\nAbstractHyperrectangle\nAbstractPointSymmetric\nAbstractPolytope\nAbstractPointSymmetricPolytope"
+    "text": "LazySets\nρ\nsupport_function\nsupport_vector"
 },
 
 {
