@@ -377,6 +377,62 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "man/reach_zonotopes.html#",
+    "page": "A Reachability Algorithm",
+    "title": "A Reachability Algorithm",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "man/reach_zonotopes.html#A-Reachability-Algorithm-Using-Zonotopes-1",
+    "page": "A Reachability Algorithm",
+    "title": "A Reachability Algorithm Using Zonotopes",
+    "category": "section",
+    "text": "Pages = [\"reach_zonotopes.md\"]\nDepth = 3"
+},
+
+{
+    "location": "man/reach_zonotopes.html#Introduction-1",
+    "page": "A Reachability Algorithm",
+    "title": "Introduction",
+    "category": "section",
+    "text": "In this section we present an algorithm implemented using LazySets that computes the reach sets of an affine ordinary differential equation (ODE). This algorithm is from A. Girard's \"Reachability of uncertain linear systems using zonotopes, HSCC. Vol. 5. 2005. We have chosen this algorithm for the purpose of illustration of a complete application of LazySets.Let us introduce some notation. Consider the continuous initial set-valued problem (IVP)    x(t) = A x(t) + u(t)in the time interval t  0 T, where:A is a real matrix of order n,\nu(t) is a non-deterministic input such that Vert u(t) Vert_   for all t,\nx(0)  mathcalX_0, where mathcalX_0 is a convex set.Given a step size , Algorithm1 returns a sequence of sets that overapproximates the states reachable by any trajectory of this IVP."
+},
+
+{
+    "location": "man/reach_zonotopes.html#Algorithm-1",
+    "page": "A Reachability Algorithm",
+    "title": "Algorithm",
+    "category": "section",
+    "text": "using LazySets, Plots\n\nfunction Algorithm1(A, δ, X0, μ, T)\n\n    # bloating factors\n    Anorm = norm(A, Inf)\n    α = (expm(δ*Anorm) - 1 - δ*Anorm)/norm(X0, Inf)\n    β = (expm(δ*Anorm) - 1)*μ/Anorm\n\n    # discretized system\n    n = size(A, 1)\n    ϕ = expm(δ*A)\n    N = floor(Int, T/δ)\n\n    # preallocate working vector and output\n    Q = Vector{LazySets.LazySet}(N)\n    R = Vector{LazySets.LazySet}(N)\n\n    # initial reach set in the time interval [0, δ]\n    ϕp = (I+ϕ)/2\n    ϕm = (I-ϕ)/2\n    c = X0.center\n    Q1_generators = hcat(ϕp * X0.generators, ϕm * c, ϕm * X0.generators)\n    Q[1] = Zonotope(ϕp * c, Q1_generators) ⊕ BallInf(zeros(n), α + β)\n    R[1] = Q[1]\n\n    # set recurrence for [δ, 2δ], ..., [(N-1)δ, Nδ]\n    Ballβ = BallInf(zeros(n), β)\n    for i in 2:N\n        Q[i] = ϕ * Q[i-1] ⊕ Ballβ\n        R[i] = Q[i]\n    end\n    return R\nend"
+},
+
+{
+    "location": "man/reach_zonotopes.html#Projection-1",
+    "page": "A Reachability Algorithm",
+    "title": "Projection",
+    "category": "section",
+    "text": "function project(R, vars, n)\n    # projection matrix\n    M = sparse(1:2, vars, [1., 1.], 2, n)\n    return [M * Ri for Ri in R]\nend"
+},
+
+{
+    "location": "man/reach_zonotopes.html#Example-1-1",
+    "page": "A Reachability Algorithm",
+    "title": "Example 1",
+    "category": "section",
+    "text": "A = [-1 -4; 4 -1]\nX0 = Zonotope([1.0, 0.0], 0.1*eye(2))\nμ = 0.05\nδ = 0.02\nT = 2.\n\nR = Algorithm1(A, δ, X0, μ, 2.*δ); # warm-up\n\nR = Algorithm1(A, δ, X0, μ, T)\n\nplot(R, 1e-2, fillalpha=0.1)"
+},
+
+{
+    "location": "man/reach_zonotopes.html#Example-2-1",
+    "page": "A Reachability Algorithm",
+    "title": "Example 2",
+    "category": "section",
+    "text": "A = Matrix{Float64}([-1 -4 0 0 0;\n                      4 -1 0 0 0;\n                      0 0 -3 1 0;\n                      0 0 -1 -3 0;\n                      0 0 0 0 -2])\nX0 = Zonotope([1.0, 0.0, 0.0, 0.0, 0.0], 0.1*eye(5))\nμ = 0.01\nδ = 0.005\nT = 1.\n\nR = Algorithm1(A, δ, X0, μ, 2*δ); # warm-up\n\nR = Algorithm1(A, δ, X0, μ, T)\nR = project(R, [1, 3], 5)\n\nplot(R, 1e-2, fillalpha=0.1, xlabel=\"x1\", ylabel=\"x3\")"
+},
+
+{
     "location": "lib/interfaces.html#",
     "page": "Set Interfaces",
     "title": "Set Interfaces",
