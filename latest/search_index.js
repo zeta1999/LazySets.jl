@@ -249,35 +249,51 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "man/iterative_refinement.html#LazySets.Approximations.Approximation2D",
-    "page": "Iterative Refinement",
-    "title": "LazySets.Approximations.Approximation2D",
-    "category": "Type",
-    "text": "Approximation2D{N<:AbstractFloat}\n\nType that represents a local approximation in 2D.\n\nFields\n\np1        – first inner point\nd1        – first direction\np2        – second inner point\nd2        – second direction\nerr       – error made\nndir      – normal direction of the inner approximation\nrefinable – states if this approximation is refinable\n\n\n\n"
-},
-
-{
-    "location": "man/iterative_refinement.html#LazySets.Approximations.Approximation2D-NTuple{4,Array{Float64,1}}",
-    "page": "Iterative Refinement",
-    "title": "LazySets.Approximations.Approximation2D",
-    "category": "Method",
-    "text": "Approximation2D(p1::Vector{N}, d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where {N<:AbstractFloat}\n\nConstructor of Approximation2D from two inner points and two directions.\n\nInput\n\np1        – first inner point\nd1        – first direction\np2        – second inner point\nd2        – second direction\n\nOutput\n\nA new Approximation2D instance.\n\n\n\n"
-},
-
-{
-    "location": "man/iterative_refinement.html#LazySets.Approximations.refine-Tuple{LazySets.LazySet,LazySets.Approximations.Approximation2D}",
-    "page": "Iterative Refinement",
-    "title": "LazySets.Approximations.refine",
-    "category": "Method",
-    "text": "refine(S::LazySet, approx::Approximation2D)::Tuple{Approximation2D, Approximation2D}\n\nRefine the given approximation.\n\nInput\n\nS      – 2D convex set that is approximated\napprox – approximation to refine\n\nOutput\n\nThe refined approximation.\n\n\n\n"
-},
-
-{
     "location": "man/iterative_refinement.html#Iterative-Refinement-1",
     "page": "Iterative Refinement",
     "title": "Iterative Refinement",
     "category": "section",
-    "text": "This section of the manual describes an approximation method for an arbitrary two-dimensional convex set S and a given error bound  using support vectors.CurrentModule = LazySets.ApproximationsThe basic idea is to add new supporting directions whenever the approximation error is still bigger than .The approximation is represented by a list of local refinements. Each refinement describes a set with one angle and is wrapped in the following type.Approximation2D\nApproximation2D(::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})The approximation is initialized with box directions, i.e., we have four refinement instances, one for each angle. Then we just iterate through all refinement instances and check if the error is bigger than the threshold individually. If so, we refine the instance by splitting into two more precise refinement instances and apply the checks recursively.refine(::LazySet, ::Approximation2D)"
+    "text": "This section of the manual describes an approximation method for an arbitrary two-dimensional convex set S and a given error bound  using support vectors.Pages = [\"iterative_refinement.md\"]\nDepth = 3CurrentModule = LazySets.ApproximationsThe basic idea is to add new supporting directions whenever the approximation error is still bigger than ."
+},
+
+{
+    "location": "man/iterative_refinement.html#Local-approximations-1",
+    "page": "Iterative Refinement",
+    "title": "Local approximations",
+    "category": "section",
+    "text": "The approximation is represented by a list of local approximations or refinements. Each refinement describes a set with one angle. More precisely, a local approximation is a triple (p_1 p_2 q), where:p_1 and p_2 belong to S\nthe segments (p_1 q) and (p_2 q) belong to support lines of SRecall that, since S is assumed to be convex, the segment (p_1 p_2) is inside S. The type Approximation2D implements a local approximation in 2D."
+},
+
+{
+    "location": "man/iterative_refinement.html#Initialization-1",
+    "page": "Iterative Refinement",
+    "title": "Initialization",
+    "category": "section",
+    "text": "The approximation is initialized with box directions, i.e., we have four refinement instances, one for each angle.Let ndir denote the direction normal to the inner approximation."
+},
+
+{
+    "location": "man/iterative_refinement.html#Iteration-1",
+    "page": "Iterative Refinement",
+    "title": "Iteration",
+    "category": "section",
+    "text": "Then we just iterate through all refinement instances and check if the error is bigger than the threshold individually. If so, we refine the instance by splitting into two more precise refinement instances and apply the checks recursively."
+},
+
+{
+    "location": "man/iterative_refinement.html#Stopping-criteria-1",
+    "page": "Iterative Refinement",
+    "title": "Stopping criteria",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "man/iterative_refinement.html#Examples-1",
+    "page": "Iterative Refinement",
+    "title": "Examples",
+    "category": "section",
+    "text": "Consider in two dimensions a centered unit ball in the 2-norm. Let's consider a polygonal approximation with error bound  = 01.using LazySets, LazySets.Approximations, Plots\n\nb = Ball2(zeros(2), 1.)\nɛ = .5\np = overapproximate(b, ɛ)\n\nplot(b, 1e-3, aspectratio=1)  # use 1e-3 for precise definition of borders\nplot!(p, alpha=0.4)Let's analyze in some detail how p was actually computed. The \"box\" directions are used as the initialization.import LazySets.Approximations:Approximation2D, refine\n\nconst DIR_EAST, DIR_NORTH, DIR_WEST, DIR_SOUTH = [1., 0.], [0., 1.], [-1., 0.], [0., -1.]\n"
 },
 
 {
@@ -741,7 +757,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
+    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
 },
 
 {
@@ -757,7 +773,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
+    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
 },
 
 {
@@ -1285,7 +1301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
+    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
 },
 
 {
@@ -1301,7 +1317,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
+    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
 },
 
 {
@@ -1461,7 +1477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
+    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
 },
 
 {
@@ -1469,7 +1485,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
+    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
 },
 
 {
@@ -1589,7 +1605,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
+    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
 },
 
 {
@@ -1597,7 +1613,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
+    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
 },
 
 {
@@ -2345,10 +2361,58 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/approximations.html#LazySets.Approximations.approximate",
+    "location": "lib/approximations.html#LazySets.Approximations.LocalApproximation",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.LocalApproximation",
+    "category": "Type",
+    "text": "LocalApproximation{N<:Real}\n\nType that represents a local approximation in 2D.\n\nFields\n\np1         – first inner point\nd1         – first direction\np2         – second inner point\nd2         – second direction\nq          – intersection of the lines l1 ⟂ d1 at p1 and l2 ⟂ d2 at p2\nrefinable  – states if this approximation is refinable\nerr        – error upper bound\n\nNotes\n\nThe criteria for refinable are determined in the method new_approx.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.PolygonalOverapproximation",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.PolygonalOverapproximation",
+    "category": "Type",
+    "text": "PolygonalOverapproximation{N<:Real}\n\nType that represents the polygonal approximation of a convex set.\n\nFields\n\nS           – convex set\napprox_list – vector of local approximations\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.new_approx-Tuple{LazySets.LazySet,Array{Float64,1},Array{Float64,1},Array{Float64,1},Array{Float64,1}}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.new_approx",
+    "category": "Method",
+    "text": "new_approx(S::LazySet, p1::Vector{N}, d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where {N<:Real}\n\nInput\n\nS          – convex set\np1         – first inner point\nd1         – first direction\np2         – second inner point\nd2         – second direction\n\nOutput\n\nA local approximation of S in the given directions.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.addapproximation!-Tuple{LazySets.Approximations.PolygonalOverapproximation,Array{Float64,1},Array{Float64,1},Array{Float64,1},Array{Float64,1}}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.addapproximation!",
+    "category": "Method",
+    "text": "addapproximation!(Ω::PolygonalOverapproximation,\n    p1::Vector{N}, d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where {N<:Real}\n\nInput\n\nΩ          – polygonal overapproximation of a convex set\np1         – first inner point\nd1         – first direction\np2         – second inner point\nd2         – second direction\n\nOutput\n\nThe list of local approximations in Ω of the set Ω.S is updated in-place and the new approximation is returned by this function.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.refine-Tuple{LazySets.Approximations.PolygonalOverapproximation,Int64}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.refine",
+    "category": "Method",
+    "text": "refine(Ω::PolygonalOverapproximation, i::Int)::Tuple{LocalApproximation, LocalApproximation}\n\nRefine a given local approximation of the polygonal approximation of a convex set, by splitting along the normal direction to the approximation.\n\nInput\n\nΩ   – polygonal overapproximation of a convex set\ni   – integer index for the local approximation to be refined\n\nOutput\n\nThe tuple consisting of the refined right and left local approximations.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.tohrep-Tuple{LazySets.Approximations.PolygonalOverapproximation}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.tohrep",
+    "category": "Method",
+    "text": "tohrep(Ω::PolygonalOverapproximation)::AbstractHPolygon\n\nConvert a polygonal overapproximation into a concrete polygon.\n\nInput\n\nΩ   – polygonal overapproximation of a convex set\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.approximate-Tuple{LazySets.LazySet,Float64}",
     "page": "Approximations",
     "title": "LazySets.Approximations.approximate",
-    "category": "Function",
+    "category": "Method",
     "text": "approximate(S::LazySet, ɛ::Float64)::Vector{Approximation2D}\n\nReturn an ɛ-close approximation of the given 2D convex set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nS – 2D convex set\nɛ – error bound\n\nOutput\n\nAn ɛ-close approximation of the given 2D convex set.\n\n\n\n"
 },
 
@@ -2357,7 +2421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Iterative refinement",
     "category": "section",
-    "text": "approximateSee Iterative Refinement for more details."
+    "text": "LocalApproximation\nPolygonalOverapproximation\nnew_approx(S::LazySet, p1::Vector{Float64}, d1::Vector{Float64}, p2::Vector{Float64}, d2::Vector{Float64})\naddapproximation!(Ω::PolygonalOverapproximation, p1::Vector{Float64}, d1::Vector{Float64}, p2::Vector{Float64}, d2::Vector{Float64})\nrefine(Ω::PolygonalOverapproximation, i::Int)\ntohrep(Ω::PolygonalOverapproximation)\napproximate(S::LazySet, ɛ::Float64)See Iterative Refinement for more details."
 },
 
 {
