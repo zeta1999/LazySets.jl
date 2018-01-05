@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Manual Outline",
     "category": "section",
-    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\"\n    \"man/interval_hulls.md\"\n    \"man/convex_hulls.md\"\n    \"man/reach_zonotopes.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\",\n    \"man/interval_hulls.md\",\n    \"man/convex_hulls.md\",\n    \"man/reach_zonotopes.md\"\n]\nDepth = 2"
 },
 
 {
@@ -1790,6 +1790,46 @@ var documenterSearchIndex = {"docs": [
     "title": "Minkowski Sum",
     "category": "section",
     "text": ""
+},
+
+{
+    "location": "lib/operations.html#LazySets.MinkowskiSum",
+    "page": "Common Set Operations",
+    "title": "LazySets.MinkowskiSum",
+    "category": "Type",
+    "text": "MinkowskiSum{T1<:LazySet, T2<:LazySet} <: LazySet\n\nType that represents the Minkowski sum of two convex sets.\n\nFields\n\nX – first convex set\nY – second convex set\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.MinkowskiSum}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(ms::MinkowskiSum)::Int\n\nReturn the dimension of a Minkowski sum.\n\nInput\n\nms – Minkowski sum\n\nOutput\n\nThe ambient dimension of the Minkowski sum.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.MinkowskiSum}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, ms::MinkowskiSum)::AbstractVector{<:Real}\n\nReturn the support vector of a Minkowski sum.\n\nInput\n\nd  – direction\nms – Minkowski sum\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the summand sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:+-Tuple{LazySets.LazySet,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:+",
+    "category": "Method",
+    "text": "X + Y\n\nConvenience constructor for Minkowski sum.\n\nInput\n\nX – a convex set\nY – another convex set\n\nOutput\n\nThe symbolic Minkowski sum of X and Y.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.:⊕",
+    "page": "Common Set Operations",
+    "title": "LazySets.:⊕",
+    "category": "Function",
+    "text": "⊕(X::LazySet, Y::LazySet)\n\nUnicode alias constructor oplus for the Minkowski sum operator +(X, Y).\n\n\n\n"
 },
 
 {
