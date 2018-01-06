@@ -777,11 +777,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∩-Tuple{LazySets.BallInf{Float64},LazySets.AbstractHyperrectangle{Float64},Bool}",
+    "page": "Common Set Representations",
+    "title": "Base.:∩",
+    "category": "Method",
+    "text": "∩(H1::AbstractHyperrectangle{N}, H2::AbstractHyperrectangle{N},\n  witness::Bool=false)::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two hyperrectangles intersect, and if so, optionally compute a witness.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2  \nIf witness option is activated:\n(true, v) iff H1  H2   and v  H1  H2\n(false, []) iff H1  H2 = \n\nAlgorithm\n\nH1  H2   iff c_2 - c_1  r_1 + r_2, where  is taken component-wise.\n\nA witness is computed by starting in one center and moving toward the other center for as long as the minimum of the radius and the center distance. In other words, the witness is the point in H1 that is closest to the center of H2.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.LinAlg.norm",
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -797,7 +805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -845,7 +853,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ndim(::BallInf)\nσ(::AbstractVector{Float64}, ::BallInf{Float64})\n∈(::AbstractVector{Float64}, ::BallInf{Float64})\nan_element(::BallInf{Float64})\n⊆(::BallInf, ::AbstractHyperrectangle)\n⊆(::BallInf, ::LazySet)\nnorm(::BallInf, ::Real=Inf)\nradius(::BallInf, ::Real=Inf)\ndiameter(::BallInf, ::Real=Inf)\nvertices_list(::BallInf{Float64})\nsingleton_list(::BallInf{Float64})\ncenter(::BallInf{Float64})\nradius_hyperrectangle(::BallInf{Float64})\nradius_hyperrectangle(::BallInf{Float64}, ::Int)"
+    "text": "BallInf\ndim(::BallInf)\nσ(::AbstractVector{Float64}, ::BallInf{Float64})\n∈(::AbstractVector{Float64}, ::BallInf{Float64})\nan_element(::BallInf{Float64})\n⊆(::BallInf, ::AbstractHyperrectangle)\n⊆(::BallInf, ::LazySet)\n∩(::BallInf{Float64}, ::AbstractHyperrectangle{Float64}, ::Bool)\nnorm(::BallInf, ::Real=Inf)\nradius(::BallInf, ::Real=Inf)\ndiameter(::BallInf, ::Real=Inf)\nvertices_list(::BallInf{Float64})\nsingleton_list(::BallInf{Float64})\ncenter(::BallInf{Float64})\nradius_hyperrectangle(::BallInf{Float64})\nradius_hyperrectangle(::BallInf{Float64}, ::Int)"
 },
 
 {
@@ -1385,11 +1393,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∩-Tuple{LazySets.Hyperrectangle{Float64},LazySets.AbstractHyperrectangle{Float64},Bool}",
+    "page": "Common Set Representations",
+    "title": "Base.:∩",
+    "category": "Method",
+    "text": "∩(H1::AbstractHyperrectangle{N}, H2::AbstractHyperrectangle{N},\n  witness::Bool=false)::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two hyperrectangles intersect, and if so, optionally compute a witness.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2  \nIf witness option is activated:\n(true, v) iff H1  H2   and v  H1  H2\n(false, []) iff H1  H2 = \n\nAlgorithm\n\nH1  H2   iff c_2 - c_1  r_1 + r_2, where  is taken component-wise.\n\nA witness is computed by starting in one center and moving toward the other center for as long as the minimum of the radius and the center distance. In other words, the witness is the point in H1 that is closest to the center of H2.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.LinAlg.norm",
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -1405,7 +1421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1469,7 +1485,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangles",
     "category": "section",
-    "text": "Hyperrectangle\nHyperrectangle(;kwargs...)\ndim(::Hyperrectangle)\nσ(::AbstractVector{Float64}, ::Hyperrectangle{Float64})\n∈(::AbstractVector{Float64}, ::Hyperrectangle{Float64})\nan_element(::Hyperrectangle{Float64})\n⊆(::Hyperrectangle, ::AbstractHyperrectangle)\n⊆(::Hyperrectangle, ::LazySet)\nnorm(::Hyperrectangle, ::Real=Inf)\nradius(::Hyperrectangle, ::Real=Inf)\ndiameter(::Hyperrectangle, ::Real=Inf)\nvertices_list(::Hyperrectangle{Float64})\nsingleton_list(::Hyperrectangle{Float64})\ncenter(::Hyperrectangle{Float64})\nradius_hyperrectangle(::Hyperrectangle{Float64})\nradius_hyperrectangle(::Hyperrectangle{Float64}, ::Int)\nhigh(::Hyperrectangle)\nlow(::Hyperrectangle)"
+    "text": "Hyperrectangle\nHyperrectangle(;kwargs...)\ndim(::Hyperrectangle)\nσ(::AbstractVector{Float64}, ::Hyperrectangle{Float64})\n∈(::AbstractVector{Float64}, ::Hyperrectangle{Float64})\nan_element(::Hyperrectangle{Float64})\n⊆(::Hyperrectangle, ::AbstractHyperrectangle)\n⊆(::Hyperrectangle, ::LazySet)\n∩(::Hyperrectangle{Float64}, ::AbstractHyperrectangle{Float64}, ::Bool)\nnorm(::Hyperrectangle, ::Real=Inf)\nradius(::Hyperrectangle, ::Real=Inf)\ndiameter(::Hyperrectangle, ::Real=Inf)\nvertices_list(::Hyperrectangle{Float64})\nsingleton_list(::Hyperrectangle{Float64})\ncenter(::Hyperrectangle{Float64})\nradius_hyperrectangle(::Hyperrectangle{Float64})\nradius_hyperrectangle(::Hyperrectangle{Float64}, ::Int)\nhigh(::Hyperrectangle)\nlow(::Hyperrectangle)"
 },
 
 {
@@ -1569,11 +1585,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∩-Tuple{LazySets.Singleton{Float64},LazySets.LazySet,Bool}",
+    "page": "Common Set Representations",
+    "title": "Base.:∩",
+    "category": "Method",
+    "text": "∩(S::AbstractSingleton{N}, set::LazySet, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a convex set intersect, and if so, optionally compute a witness.\n\nInput\n\nS   – singleton\nset – convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset  \nIf witness option is activated:\n(true, v) iff S  operatornameset   and v = element(S)\n(false, []) iff S  operatornameset = \n\nAlgorithm\n\nS  operatornameset   iff element(S)  operatornameset.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∩-Tuple{LazySets.LazySet,LazySets.Singleton{Float64},Bool}",
+    "page": "Common Set Representations",
+    "title": "Base.:∩",
+    "category": "Method",
+    "text": "∩(set::LazySet, S::AbstractSingleton{N}, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a convex set and a singleton intersect, and if so, optionally compute a witness.\n\nInput\n\nset – convex set\nS   – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset  \nIf witness option is activated:\n(true, v) iff S  operatornameset   and v = element(S)\n(false, []) iff S  operatornameset = \n\nAlgorithm\n\nS  operatornameset   iff element(S)  operatornameset.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∩-Tuple{LazySets.Singleton{Float64},LazySets.Singleton{Float64},Bool}",
+    "page": "Common Set Representations",
+    "title": "Base.:∩",
+    "category": "Method",
+    "text": "∩(H1::AbstractHyperrectangle{N}, H2::AbstractHyperrectangle{N},\n  witness::Bool=false)::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two hyperrectangles intersect, and if so, optionally compute a witness.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2  \nIf witness option is activated:\n(true, v) iff H1  H2   and v  H1  H2\n(false, []) iff H1  H2 = \n\nAlgorithm\n\nH1  H2   iff c_2 - c_1  r_1 + r_2, where  is taken component-wise.\n\nA witness is computed by starting in one center and moving toward the other center for as long as the minimum of the radius and the center distance. In other words, the witness is the point in H1 that is closest to the center of H2.\n\n\n\n∩(S::AbstractSingleton{N}, set::LazySet, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a convex set intersect, and if so, optionally compute a witness.\n\nInput\n\nS   – singleton\nset – convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset  \nIf witness option is activated:\n(true, v) iff S  operatornameset   and v = element(S)\n(false, []) iff S  operatornameset = \n\nAlgorithm\n\nS  operatornameset   iff element(S)  operatornameset.\n\n\n\n∩(set::LazySet, S::AbstractSingleton{N}, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a convex set and a singleton intersect, and if so, optionally compute a witness.\n\nInput\n\nset – convex set\nS   – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset  \nIf witness option is activated:\n(true, v) iff S  operatornameset   and v = element(S)\n(false, []) iff S  operatornameset = \n\nAlgorithm\n\nS  operatornameset   iff element(S)  operatornameset.\n\n\n\n∩(S1::AbstractSingleton{N}, S2::AbstractSingleton{N}, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two singletons intersect, and if so, optionally compute a witness.\n\nInput\n\nS1 – first singleton\nS2 – second singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2  \nIf witness option is activated:\n(true, v) iff S1  S2   and v = element(S1)\n(false, []) iff S1  S2 = \n\nAlgorithm\n\nS1  S2   iff S1 = S2.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.LinAlg.norm",
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -1581,7 +1621,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1653,7 +1693,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Singletons",
     "category": "section",
-    "text": "Singleton\ndim(::Singleton)\nσ(::AbstractVector{Float64}, ::Singleton{Float64})\n∈(::AbstractVector{Float64}, ::Singleton{Float64})\n⊆(::Singleton, ::AbstractSingleton)\n⊆(::Singleton, ::LazySet)\nnorm(::Singleton, ::Real=Inf)\ndiameter(::Singleton, ::Real=Inf)\nvertices_list(::Singleton{Float64})\nsingleton_list(::Singleton{Float64})\ncenter(::Singleton{Float64})\nradius_hyperrectangle(::Singleton{Float64})\nradius_hyperrectangle(::Singleton{Float64}, ::Int)\nan_element(::Singleton{Float64})\nelement(::Singleton{Float64})\nelement(::Singleton{Float64}, ::Int)"
+    "text": "Singleton\ndim(::Singleton)\nσ(::AbstractVector{Float64}, ::Singleton{Float64})\n∈(::AbstractVector{Float64}, ::Singleton{Float64})\n⊆(::Singleton, ::AbstractSingleton)\n⊆(::Singleton, ::LazySet)\n∩(::Singleton{Float64}, ::LazySet, ::Bool)\n∩(::LazySet, ::Singleton{Float64}, ::Bool)\n∩(::Singleton{Float64}, ::Singleton{Float64}, ::Bool)\nnorm(::Singleton, ::Real=Inf)\ndiameter(::Singleton, ::Real=Inf)\nvertices_list(::Singleton{Float64})\nsingleton_list(::Singleton{Float64})\ncenter(::Singleton{Float64})\nradius_hyperrectangle(::Singleton{Float64})\nradius_hyperrectangle(::Singleton{Float64}, ::Int)\nan_element(::Singleton{Float64})\nelement(::Singleton{Float64})\nelement(::Singleton{Float64}, ::Int)"
 },
 
 {
@@ -1705,11 +1745,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∩-Tuple{LazySets.ZeroSet{Float64},LazySets.LazySet,Bool}",
+    "page": "Common Set Representations",
+    "title": "Base.:∩",
+    "category": "Method",
+    "text": "∩(S::AbstractSingleton{N}, set::LazySet, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a convex set intersect, and if so, optionally compute a witness.\n\nInput\n\nS   – singleton\nset – convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset  \nIf witness option is activated:\n(true, v) iff S  operatornameset   and v = element(S)\n(false, []) iff S  operatornameset = \n\nAlgorithm\n\nS  operatornameset   iff element(S)  operatornameset.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∩-Tuple{LazySets.LazySet,LazySets.ZeroSet{Float64},Bool}",
+    "page": "Common Set Representations",
+    "title": "Base.:∩",
+    "category": "Method",
+    "text": "∩(set::LazySet, S::AbstractSingleton{N}, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a convex set and a singleton intersect, and if so, optionally compute a witness.\n\nInput\n\nset – convex set\nS   – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset  \nIf witness option is activated:\n(true, v) iff S  operatornameset   and v = element(S)\n(false, []) iff S  operatornameset = \n\nAlgorithm\n\nS  operatornameset   iff element(S)  operatornameset.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∩-Tuple{LazySets.ZeroSet{Float64},LazySets.ZeroSet{Float64},Bool}",
+    "page": "Common Set Representations",
+    "title": "Base.:∩",
+    "category": "Method",
+    "text": "∩(H1::AbstractHyperrectangle{N}, H2::AbstractHyperrectangle{N},\n  witness::Bool=false)::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two hyperrectangles intersect, and if so, optionally compute a witness.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2  \nIf witness option is activated:\n(true, v) iff H1  H2   and v  H1  H2\n(false, []) iff H1  H2 = \n\nAlgorithm\n\nH1  H2   iff c_2 - c_1  r_1 + r_2, where  is taken component-wise.\n\nA witness is computed by starting in one center and moving toward the other center for as long as the minimum of the radius and the center distance. In other words, the witness is the point in H1 that is closest to the center of H2.\n\n\n\n∩(S::AbstractSingleton{N}, set::LazySet, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a convex set intersect, and if so, optionally compute a witness.\n\nInput\n\nS   – singleton\nset – convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset  \nIf witness option is activated:\n(true, v) iff S  operatornameset   and v = element(S)\n(false, []) iff S  operatornameset = \n\nAlgorithm\n\nS  operatornameset   iff element(S)  operatornameset.\n\n\n\n∩(set::LazySet, S::AbstractSingleton{N}, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a convex set and a singleton intersect, and if so, optionally compute a witness.\n\nInput\n\nset – convex set\nS   – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset  \nIf witness option is activated:\n(true, v) iff S  operatornameset   and v = element(S)\n(false, []) iff S  operatornameset = \n\nAlgorithm\n\nS  operatornameset   iff element(S)  operatornameset.\n\n\n\n∩(S1::AbstractSingleton{N}, S2::AbstractSingleton{N}, witness::Bool=false\n )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two singletons intersect, and if so, optionally compute a witness.\n\nInput\n\nS1 – first singleton\nS2 – second singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2  \nIf witness option is activated:\n(true, v) iff S1  S2   and v = element(S1)\n(false, []) iff S1  S2 = \n\nAlgorithm\n\nS1  S2   iff S1 = S2.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.LinAlg.norm",
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Function",
-    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -1717,7 +1781,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Function",
-    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1789,7 +1853,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "ZeroSet",
     "category": "section",
-    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{Float64}, ::ZeroSet)\n∈(::AbstractVector{Float64}, ::ZeroSet{Float64})\n⊆(::ZeroSet, ::AbstractSingleton)\n⊆(::ZeroSet, ::LazySet)\nnorm(::ZeroSet, ::Real=Inf)\ndiameter(::ZeroSet, ::Real=Inf)\nvertices_list(::ZeroSet{Float64})\nsingleton_list(::ZeroSet{Float64})\ncenter(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64}, ::Int)\nan_element(::ZeroSet{Float64})\nelement(::ZeroSet{Float64})\nelement(::ZeroSet{Float64}, ::Int)"
+    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{Float64}, ::ZeroSet)\n∈(::AbstractVector{Float64}, ::ZeroSet{Float64})\n⊆(::ZeroSet, ::AbstractSingleton)\n⊆(::ZeroSet, ::LazySet)\n∩(::ZeroSet{Float64}, ::LazySet, ::Bool)\n∩(::LazySet, ::ZeroSet{Float64}, ::Bool)\n∩(::ZeroSet{Float64}, ::ZeroSet{Float64}, ::Bool)\nnorm(::ZeroSet, ::Real=Inf)\ndiameter(::ZeroSet, ::Real=Inf)\nvertices_list(::ZeroSet{Float64})\nsingleton_list(::ZeroSet{Float64})\ncenter(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64}, ::Int)\nan_element(::ZeroSet{Float64})\nelement(::ZeroSet{Float64})\nelement(::ZeroSet{Float64}, ::Int)"
 },
 
 {
