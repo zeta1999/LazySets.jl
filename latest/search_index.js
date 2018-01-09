@@ -705,6 +705,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.is_intersection_empty-Tuple{LazySets.Ball2{Float64},LazySets.Ball2{Float64},Bool}",
+    "page": "Common Set Representations",
+    "title": "LazySets.is_intersection_empty",
+    "category": "Method",
+    "text": "is_intersection_empty(B1::Ball2{N},\n                      B2::Ball2{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two balls in the 2-norm intersect, and if so, optionally compute a witness.\n\nInput\n\nB1 – first ball in the 2-norm\nB2 – second ball in the 2-norm\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B1  B2  \nIf witness option is activated:\n(true, v) iff B1  B2   and v  B1  B2\n(false, []) iff B1  B2 = \n\nAlgorithm\n\nB1  B2   iff  c_2 - c_1 _2  r_1 + r_2.\n\nA witness is computed depending on the smaller/bigger ball (to break ties, choose B1 for the smaller ball) as follows.\n\nIf the smaller ball's center is contained in the bigger ball, we return it.\nOtherwise start in the smaller ball's center and move toward the other center until hitting the smaller ball's border. In other words, the witness is the point in the smaller ball that is closest to the center of the bigger ball.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ball2{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.center",
@@ -717,7 +725,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\ndim(::Ball2)\nσ(::AbstractVector{Float64}, ::Ball2)\n∈(::AbstractVector{Float64}, ::Ball2{Float64})\nan_element(::Ball2{Float64})\n⊆(::Ball2, ::Singleton)\n⊆(::Ball2, ::AbstractHyperrectangle)\ncenter(::Ball2{Float64})"
+    "text": "Ball2\ndim(::Ball2)\nσ(::AbstractVector{Float64}, ::Ball2)\n∈(::AbstractVector{Float64}, ::Ball2{Float64})\nan_element(::Ball2{Float64})\n⊆(::Ball2, ::Singleton)\n⊆(::Ball2, ::AbstractHyperrectangle)\nis_intersection_empty(::Ball2{Float64}, ::Ball2{Float64}, ::Bool)\ncenter(::Ball2{Float64})"
 },
 
 {
