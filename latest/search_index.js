@@ -2257,7 +2257,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.LinearMap{#s379,Float64} where #s379<:LazySets.LazySet}",
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.LinearMap{#s4,Float64} where #s4<:LazySets.LazySet}",
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "Method",
@@ -2297,7 +2297,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.ExponentialMap{#s379} where #s379<:LazySets.LazySet}",
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.ExponentialMap{#s4} where #s4<:LazySets.LazySet}",
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "Method",
