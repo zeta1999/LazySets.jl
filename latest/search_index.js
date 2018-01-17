@@ -797,7 +797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Method",
-    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -805,7 +805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Method",
-    "text": "radius(B::BallInf, [p]::Real=Inf)::Real\n\nReturn the radius of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\nradius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\nradius(B::BallInf, [p]::Real=Inf)::Real\n\nReturn the radius of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -813,7 +813,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Method",
-    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1305,6 +1305,54 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.HPolytope",
+    "page": "Common Set Representations",
+    "title": "LazySets.HPolytope",
+    "category": "Type",
+    "text": "HPolytope{N<:Real} <: AbstractPolytope{N}\n\nType that represents a convex polytope in H-representation.\n\nFields\n\nconstraints – vector of linear constraints\n\nNote\n\nThis type is more appropriately a polyhedron, because no check in the constructor is made that the constraints determine a bounded set from the finite intersection of half-spaces. This is a running assumption in this type.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.HPolytope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(P::HPolytope)::Int\n\nReturn the dimension of a polytope in H-representation.\n\nInput\n\nP  – polytope in H-representation\n\nOutput\n\nThe ambient dimension of the polytope in H-representation. If it has no constraints, the result is -1.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolytope{Float64},LazySets.LinearConstraint{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.addconstraint!",
+    "category": "Method",
+    "text": "addconstraint!(P::HPolytope{N},\n               constraint::LinearConstraint{N})::Void where {N<:Real}\n\nAdd a linear constraint to a polyhedron in H-representation.\n\nInput\n\nP          – polyhedron in H-representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\nNotes\n\nIt is left to the user to guarantee that the dimension of all linear constraints is the same.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.constraints_list-Tuple{LazySets.HPolytope{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "Method",
+    "text": "constraints_list(P::HPolytope{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a polyhedron in H-representation.\n\nInput\n\nP – polytope in H-representation\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.HPolytope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, P::HPolytope)::Vector{<:Real}\n\nReturn the support vector of a polyhedron (in H-representation) in a given direction.\n\nInput\n\nd – direction\nP – polyhedron in H-representation\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThis implementation uses GLPKSolverLP as linear programming backend.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Polytopes-1",
+    "page": "Common Set Representations",
+    "title": "Polytopes",
+    "category": "section",
+    "text": "HPolytope\ndim(P::HPolytope)\naddconstraint!(P::HPolytope{Float64}, constraint::LinearConstraint{Float64})\nconstraints_list(P::HPolytope{Float64})\nσ(d::AbstractVector{Float64}, P::HPolytope)"
+},
+
+{
     "location": "lib/representations.html#LazySets.LinearConstraint",
     "page": "Common Set Representations",
     "title": "LazySets.LinearConstraint",
@@ -1413,7 +1461,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Method",
-    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -1421,7 +1469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Method",
-    "text": "radius(H::Hyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\nradius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\nradius(H::Hyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1429,7 +1477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Method",
-    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1621,7 +1669,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Method",
-    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -1629,7 +1677,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Method",
-    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1781,7 +1829,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Method",
-    "text": "norm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a box-shaped set.\n\nInput\n\nB – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a box-shaped set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -1789,7 +1837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Method",
-    "text": "diameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(B::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a box-shaped set.\n\nInput\n\nH – box-shaped set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
