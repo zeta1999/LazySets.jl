@@ -2417,6 +2417,38 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.Intersection",
+    "page": "Common Set Operations",
+    "title": "LazySets.Intersection",
+    "category": "Type",
+    "text": "Intersection{N<:Real, S1<:LazySet{N}, S2<:LazySet{N}} <: LazySet{N}\n\nType that represents the intersection of two convex sets.\n\nFields\n\nX – convex set\nY – convex set\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.Intersection{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(cap::Intersection)::Int\n\nReturn the dimension of an intersection of two convex sets.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\nThe ambient dimension of the intersection of two convex sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Intersection{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, cap::Intersection)::AbstractVector{<:Real}\n\nReturn the support vector of an intersection of two convex sets in a given direction.\n\nInput\n\nd   – direction\ncap – intersection of two convex sets\n\nOutput\n\nThe support vector in the given direction.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Intersection-1",
+    "page": "Common Set Operations",
+    "title": "Intersection",
+    "category": "section",
+    "text": "Intersection\ndim(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})"
+},
+
+{
     "location": "lib/operations.html#LazySets.ConvexHull",
     "page": "Common Set Operations",
     "title": "LazySets.ConvexHull",
