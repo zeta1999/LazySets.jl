@@ -557,7 +557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractHyperrectangle",
     "category": "Type",
-    "text": "AbstractHyperrectangle{N<:Real} <: AbstractPointSymmetricPolytope{N}\n\nAbstract type for box-shaped sets.\n\nNotes\n\nEvery concrete AbstractHyperrectangle must define the following functions:\n\nradius_hyperrectangle(::AbstractHyperrectangle{N})::Vector{N} – return the   hyperrectangle's radius, which is a full-dimensional vector\nradius_hyperrectangle(::AbstractHyperrectangle{N}, i::Int)::N – return the   hyperrectangle's radius in the i-th dimension\n\njulia> subtypes(AbstractHyperrectangle)\n3-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractSingleton\n LazySets.BallInf       \n LazySets.Hyperrectangle\n\n\n\n"
+    "text": "AbstractHyperrectangle{N<:Real} <: AbstractPointSymmetricPolytope{N}\n\nAbstract type for box-shaped sets.\n\nNotes\n\nEvery concrete AbstractHyperrectangle must define the following functions:\n\nradius_hyperrectangle(::AbstractHyperrectangle{N})::Vector{N} – return the   hyperrectangle's radius, which is a full-dimensional vector\nradius_hyperrectangle(::AbstractHyperrectangle{N}, i::Int)::N – return the   hyperrectangle's radius in the i-th dimension\n\njulia> subtypes(AbstractHyperrectangle)\n4-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractSingleton\n LazySets.BallInf\n LazySets.Hyperrectangle\n LazySets.SymmetricIntervalHull\n\n\n\n"
 },
 
 {
@@ -2526,6 +2526,46 @@ var documenterSearchIndex = {"docs": [
     "title": "Convex Hull Algorithms",
     "category": "section",
     "text": "convex_hull\nconvex_hull!\nright_turn\nmonotone_chain!"
+},
+
+{
+    "location": "lib/operations.html#LazySets.SymmetricIntervalHull",
+    "page": "Common Set Operations",
+    "title": "LazySets.SymmetricIntervalHull",
+    "category": "Type",
+    "text": "SymmetricIntervalHull{N<:Real, S<:LazySet{N}} <: AbstractHyperrectangle{N}\n\nType that represents the symmetric interval hull of a convex set.\n\nFields\n\nX     – convex set\ncache – partial storage of already computed bounds, organized as mapping   from dimension to tuples (bound, valid), where valid is a flag   indicating if the bound entry has been computed\n\nNotes\n\nThe symmetric interval hull can be computed with 2n support vector queries of unit vectors, where n is the dimension of the wrapped set (i.e., two queries per dimension). When asking for the support vector for a direction d, one needs 2k such queries, where k is the number of non-zero entries in d.\n\nHowever, if one asks for many support vectors in a loop, the number of computations may exceed 2n. To be most efficient in such cases, this type stores the intermediately computed bounds in the cache field.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.SymmetricIntervalHull{Float64,LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\ndim(sih::SymmetricIntervalHull)::Int\n\nReturn the dimension of a symmetric interval hull of a convex set.\n\nInput\n\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe ambient dimension of the symmetric interval hull of a convex set.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.SymmetricIntervalHull{Float64,LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{N}, B::AbstractHyperrectangle{N}\n )::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of a box-shaped set in a given direction.\n\nInput\n\nd – direction\nB – box-shaped set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::AbstractVector{N}, sih::SymmetricIntervalHull\n )::AbstractVector{<:Real} where {N<:Real}\n\nReturn the support vector of a symmetric interval hull of a convex set in a given direction.\n\nInput\n\nd   – direction\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe support vector of the symmetric interval hull of a convex set in the given direction. If the direction has norm zero, the origin is returned.\n\nAlgorithm\n\nFor each non-zero entry in d we need to either look up the bound (if it has been computed before) or compute it, in which case we store it for future queries. One such computation just asks for the support vector of the underlying set for both the positive and negative unit vector in the respective dimension.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.an_element-Tuple{LazySets.SymmetricIntervalHull{Float64,LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.an_element",
+    "category": "Method",
+    "text": "an_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Symmetric-Interval-Hull-1",
+    "page": "Common Set Operations",
+    "title": "Symmetric Interval Hull",
+    "category": "section",
+    "text": "SymmetricIntervalHull\ndim(::SymmetricIntervalHull{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::SymmetricIntervalHull{Float64, LazySet{Float64}})\nan_element(::SymmetricIntervalHull{Float64, LazySet{Float64}})"
 },
 
 {
