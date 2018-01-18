@@ -477,7 +477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractPointSymmetric",
     "category": "Type",
-    "text": "AbstractPointSymmetric{N<:Real} <: LazySet{N}\n\nAbstract type for point symmetric sets.\n\nNotes\n\nEvery concrete AbstractPointSymmetric must define the following functions:\n\ncenter(::AbstractPointSymmetric{N})::Vector{N} – return the center point\n\njulia> subtypes(AbstractPointSymmetric)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.Ball2                   \n LazySets.Ballp                   \n\n\n\n"
+    "text": "AbstractPointSymmetric{N<:Real} <: LazySet{N}\n\nAbstract type for point symmetric sets.\n\nNotes\n\nEvery concrete AbstractPointSymmetric must define the following functions:\n\ncenter(::AbstractPointSymmetric{N})::Vector{N} – return the center point\n\njulia> subtypes(AbstractPointSymmetric)\n3-element Array{Union{DataType, UnionAll},1}:\n LazySets.Ball2\n LazySets.Ballp\n LazySets.Ellipsoid\n\n\n\n"
 },
 
 {
@@ -1014,6 +1014,46 @@ var documenterSearchIndex = {"docs": [
     "title": "p-norm ball",
     "category": "section",
     "text": "Ballp\ndim(::Ballp{Float64})\nσ(::AbstractVector{Float64}, ::Ballp{Float64})\n∈(::AbstractVector{Float64}, ::Ballp{Float64})\nan_element(::Ballp{Float64})\n⊆(::Ballp{Float64}, ::Singleton{Float64})\n⊆(::Ballp{Float64}, ::AbstractHyperrectangle{Float64})\ncenter(::Ballp{Float64})"
+},
+
+{
+    "location": "lib/representations.html#LazySets.Ellipsoid",
+    "page": "Common Set Representations",
+    "title": "LazySets.Ellipsoid",
+    "category": "Type",
+    "text": "Ellipsoid{N<:Real} <:  AbstractPointSymmetric{N}\n\nType that represents an ellipsoid.\n\nIt is defined as the set\n\nE = left x  mathbbR^n  (x-c)Q^-1(x-c)  1 right\n\nwhere c in mathbbR^n is its center and Q in mathbbR^nn its shape matrix, which should be a positive definite matrix. An ellipsoid can also be characterized as the image of a Euclidean ball by an invertible linear transformation.\n\nFields\n\ncenter       – center of the ellipsoid\nshape matrix – real positive definite matrix, i.e. it is equal to its transpose                   and x^mathrmTQx  0 for all nonzero x\n\nExamples\n\nIf the center is not specified, it is assumed that the center is the origin. For instance, a 3D ellipsoid with center at the origin and the shape matrix being the identity can be created with:\n\njulia> E = Ellipsoid(eye(3))\nLazySets.Ellipsoid{Float64}([0.0, 0.0, 0.0], [1.0 0.0 0.0; 0.0 1.0 0.0; 0.0 0.0 1.0])\n\njulia> dim(E)\n3\n\njulia> an_element(E)\n3-element Array{Float64,1}:\n 0.0\n 0.0\n 0.0\n\nThis ellipsoid corresponds to the unit Euclidean ball. Let's evaluate its support vector in a given direction:\n\njulia> σ(ones(3), E)\n3-element Array{Float64,1}:\n 0.57735\n 0.57735\n 0.57735\n\nA two-dimensional ellipsoid with given center and shape matrix:\n\njulia> E = Ellipsoid(ones(2), diagm([2.0, 0.5]))\nLazySets.Ellipsoid{Float64}([1.0, 1.0], [2.0 0.0; 0.0 0.5])\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Ellipsoid{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{N},\n           E::Ellipsoid{N})::AbstractVector{<:AbstractFloat} where {N<:AbstractFloat}\n\nReturn the support vector of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nE – ellipsoid\n\nOutput\n\nSupport vector in the given direction.\n\nAlgorithm\n\nLet E be an ellipsoid of center c and shape matrix Q = BB^mathrmT. Its support vector along direction d can be deduced from that of the unit Euclidean ball mathcalB_2 using the algebraic relations for the support vector,\n\n_BmathcalB_2  c(d) = c + B_mathcalB_2 (B^mathrmT d)\n= c + dfracQdsqrtd^mathrmTQ d\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ellipsoid{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.center",
+    "category": "Method",
+    "text": "center(E::Ellipsoid{N})::Vector{N} where {N<:AbstractFloat}\n\nReturn the center of the ellipsoid.\n\nInput\n\nE – ellipsoid\n\nOutput\n\nThe center of the ellipsoid.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Ellipsoid{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, E::Ellipsoid{N})::Bool where {N<:AbstractFloat}\n\nCheck whether a given point is contained in an ellipsoid.\n\nInput\n\nx – point/vector\nE – ellipsoid\n\nOutput\n\ntrue iff x ∈ E.\n\nAlgorithm\n\nThe point x belongs to the ellipsoid of center c and shape matrix Q if and only if\n\n(x-c)^mathrmT Q^-1 (x-c)  1\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Ellipsoid-1",
+    "page": "Common Set Representations",
+    "title": "Ellipsoid",
+    "category": "section",
+    "text": "Ellipsoid\nσ(::AbstractVector{Float64}, ::Ellipsoid{Float64})\ncenter(::Ellipsoid{Float64})\n∈(::AbstractVector{Float64}, ::Ellipsoid{Float64})"
 },
 
 {
