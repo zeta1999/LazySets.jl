@@ -181,7 +181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Decomposing an Affine Map",
     "title": "Preliminaries: Polygon, Linear Map, and Plotting",
     "category": "section",
-    "text": "Consider the matrix-valued function () = beginpmatrix cos ()  -sin ()  sin ()  cos () endpmatrix,    .using LazySets, LazySets.Approximations, Plots\n\nΦ(theta) = [cos(theta) -sin(theta); sin(theta) cos(theta)]Now define an arbitrary convex polygon with five vertices with operatornameCH denoting the convex hull operation,mathcalX = operatornameCHbig( (1 05) (11 02) (14 03) (17 05) (14 08) big)This set can be defined as:X = VPolygon([[1.0, 0.5], [1.1, 0.2], [1.4, 0.3], [1.7, 0.5], [1.4, 0.8]])note: Note\nYou can as well define the convex hull of the one element sets (singletons) viaC = CH([Singleton([1.0, 0.5]), Singleton([1.1, 0.2]), Singleton([1.4, 0.3]), Singleton([1.7, 0.5]), Singleton([1.4, 0.8])])Observe that C is just a lazy convex hull, whereas X is a polygon in vertex representation.Applying the linear map (4)  mathcalX, we get a new polygon mathcalX which is the counter-clockwise turn of mathcalX by  triangleq 45. In this package the linear map is not computed explicitly but only wrapped in a LinearMap instance.Xp = Φ(pi/4) * X\n\ntypeof(Xp)Let us plot the two polygons, mathcalX in green and mathcalX in blue.example = plot(X, color=\"green\")\n\nplot!(example, Xp, 1e-2, color=\"blue\")Note that we have passed 1e-2 as additional argument for the LinearMap set (mathcalX) because by default such a set is just plotted as its box (or hyperrectangle) approximation. The value 1e-2 is the precision up to which the set is (over-)approximated with a polgon, which in this case is sufficient to obtain the actual set again."
+    "text": "Consider the matrix-valued function () = beginpmatrix cos ()  -sin ()  sin ()  cos () endpmatrix,    .using LazySets, LazySets.Approximations, Plots\n\nΦ(theta) = [cos(theta) -sin(theta); sin(theta) cos(theta)]Now define an arbitrary convex polygon with five vertices with operatornameCH denoting the convex hull operation,mathcalX = operatornameCHbig( (1 05) (11 02) (14 03) (17 05) (14 08) big)This set can be defined as:X = VPolygon([[1.0, 0.5], [1.1, 0.2], [1.4, 0.3], [1.7, 0.5], [1.4, 0.8]])note: Note\nYou can as well define the convex hull of the one element sets (singletons) viaC = CHArray([Singleton([1.0, 0.5]), Singleton([1.1, 0.2]), Singleton([1.4, 0.3]), Singleton([1.7, 0.5]), Singleton([1.4, 0.8])])Observe that C is just a lazy convex hull, whereas X is a polygon in vertex representation.Applying the linear map (4)  mathcalX, we get a new polygon mathcalX which is the counter-clockwise turn of mathcalX by  triangleq 45. In this package the linear map is not computed explicitly but only wrapped in a LinearMap instance.Xp = Φ(pi/4) * X\n\ntypeof(Xp)Let us plot the two polygons, mathcalX in green and mathcalX in blue.example = plot(X, color=\"green\")\n\nplot!(example, Xp, 1e-2, color=\"blue\")Note that we have passed 1e-2 as additional argument for the LinearMap set (mathcalX) because by default such a set is just plotted as its box (or hyperrectangle) approximation. The value 1e-2 is the precision up to which the set is (over-)approximated with a polgon, which in this case is sufficient to obtain the actual set again."
 },
 
 {
@@ -365,7 +365,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Convex Hulls",
     "title": "Symbolic convex hull",
     "category": "section",
-    "text": "The lazy convex hull, ConvexHull, is the binary operator that implements the convex hull of the union between two convex sets.using LazySets, Plots\n\nA = 1/sqrt(2.) * [1 -1; 1 1]\nBn = n -> BallInf(ones(n), 0.2)\n\nX = Bn(2)\nY = CH(X, expm(A) * X)This type is parametric in the operands's types.p = plot(X, 1e-2, color=\"blue\")\nplot!(p, expm(A) * X, 1e-2, color=\"green\")\nplot!(p, Y, 1e-2, color=\"red\", alpha=0.2)We can as well work with a 100-dimensional set:X = Bn(100)\nA = blkdiag([sparse(A) for i in 1:50]...)\nY = CH(X, expm(full(A)) * X)\n\ndim(Y)"
+    "text": "The lazy convex hull, ConvexHull, is the binary operator that implements the convex hull of the union between two convex sets.using LazySets, Plots\n\nA = 1/sqrt(2.) * [1 -1; 1 1]\nBn = n -> BallInf(ones(n), 0.2)\n\nX = Bn(2)\nY = CH(X, expm(A) * X)The name CH is an alias for ConvexHull, so you can use both interchangeably. This type is parametric in the operands's types.p = plot(X, 1e-2, color=\"blue\")\nplot!(p, expm(A) * X, 1e-2, color=\"green\")\nplot!(p, Y, 1e-2, color=\"red\", alpha=0.2)We can as well work with a 100-dimensional set:X = Bn(100)\nA = blkdiag([sparse(A) for i in 1:50]...)\nY = CH(X, expm(full(A)) * X)\n\ndim(Y)To take the convex hull of a large number of sets, there is the n-ary type ConvexHullArray. For instance, below we create a collection of balls b via list comprehension, and pass them to create a new ConvexHullArray instance.b = [Ball2([2*pi*i/100, sin(2*pi*i/100)], 0.05) for i in 1:100];\nc = ConvexHullArray(b);\n\nplot(c, 1e-3, alpha=0.1, color=\"blue\")\nplot!(b, 1e-3, alpha=0.5, color=\"red\")"
 },
 
 {
@@ -797,7 +797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Method",
-    "text": "norm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -805,7 +805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Method",
-    "text": "radius(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center. It is the same for all corners of a hyperrectangular set.\n\n\n\nradius(B::BallInf, [p]::Real=Inf)::Real\n\nReturn the radius of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\nradius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\nradius(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center. It is the same for all corners of a hyperrectangular set.\n\n\n\nradius(B::BallInf, [p]::Real=Inf)::Real\n\nReturn the radius of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -813,7 +813,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Method",
-    "text": "diameter(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1373,7 +1373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
     "category": "Method",
-    "text": "constraints_list(P::HPolytope{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a polyhedron in H-representation.\n\nInput\n\nP – polytope in H-representation\n\n\n\n"
+    "text": "constraints_list(P::HPolytope{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a polyhedron in H-representation.\n\nInput\n\nP – polytope in H-representation\n\nOutput\n\nThe list of constraints of the polyhedron.\n\n\n\n"
 },
 
 {
@@ -1385,11 +1385,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.HPolytope{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, P::HPolytope{N})::Bool where {N<:Real}\n\nCheck whether a given 2D point is contained in a polytope in constraint representation.\n\nInput\n\nx – two-dimensional point/vector\nP – polytope in constraint representation\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation checks if the point lies on the outside of each hyperplane. This is equivalent to checking if the point lies in each half-space.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Polytopes-1",
     "page": "Common Set Representations",
     "title": "Polytopes",
     "category": "section",
-    "text": "HPolytope\ndim(P::HPolytope)\naddconstraint!(P::HPolytope{Float64}, constraint::LinearConstraint{Float64})\nconstraints_list(P::HPolytope{Float64})\nσ(d::AbstractVector{Float64}, P::HPolytope)"
+    "text": "HPolytope\ndim(P::HPolytope)\naddconstraint!(P::HPolytope{Float64}, constraint::LinearConstraint{Float64})\nconstraints_list(P::HPolytope{Float64})\nσ(d::AbstractVector{Float64}, P::HPolytope)\n∈(::AbstractVector{Float64}, ::HPolytope{Float64})"
 },
 
 {
@@ -1501,7 +1509,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Method",
-    "text": "norm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -1509,7 +1517,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius",
     "category": "Method",
-    "text": "radius(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center. It is the same for all corners of a hyperrectangular set.\n\n\n\nradius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\nradius(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center. It is the same for all corners of a hyperrectangular set.\n\n\n\n"
 },
 
 {
@@ -1517,7 +1525,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Method",
-    "text": "diameter(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1709,7 +1717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Method",
-    "text": "norm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -1717,7 +1725,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Method",
-    "text": "diameter(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -1869,7 +1877,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.LinAlg.norm",
     "category": "Method",
-    "text": "norm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\nnorm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given norm) of minimal volume.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume.\n\n\n\n"
 },
 
 {
@@ -1877,7 +1885,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.diameter",
     "category": "Method",
-    "text": "diameter(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\ndiameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the diameter of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\nNotes\n\nThe diameter is defined as the maximum distance in the given p-norm between any two elements of the set. Equivalently, it is the diameter of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
 },
 
 {
@@ -2577,11 +2585,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Intersection{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, cap::Intersection{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a intersection of two convex sets.\n\nInput\n\nx – point/vector\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff x  cap.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.Intersection{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "Method",
+    "text": "isempty(cap::Intersection)::Bool\n\nReturn if the intersection is empty or not.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff the intersection is empty.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Intersection-1",
     "page": "Common Set Operations",
     "title": "Intersection",
     "category": "section",
-    "text": "Intersection\ndim(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})"
+    "text": "Intersection\ndim(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\n∈(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nisempty(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})"
+},
+
+{
+    "location": "lib/operations.html#Convex-Hull-1",
+    "page": "Common Set Operations",
+    "title": "Convex Hull",
+    "category": "section",
+    "text": ""
 },
 
 {
@@ -2589,7 +2621,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.ConvexHull",
     "category": "Type",
-    "text": "ConvexHull{N<:Real, S1<:LazySet{N}, S2<:LazySet{N}} <: LazySet{N}\n\nType that represents the convex hull of the union of two convex sets.\n\nFields\n\nX – convex set\nY – convex set\n\n\n\n"
+    "text": "ConvexHull{N<:Real, S1<:LazySet{N}, S2<:LazySet{N}} <: LazySet{N}\n\nType that represents the convex hull of the union of two convex sets.\n\nFields\n\nX – convex set\nY – convex set\n\nExamples\n\nConvex hull of two 100-dimensional Euclidean balls:\n\njulia> b1, b2 = Ball2(zeros(100), 0.1), Ball2(4*ones(100), 0.2);\n\njulia> c = ConvexHull(b1, b2);\n\njulia> typeof(c)\nLazySets.ConvexHull{Float64,LazySets.Ball2{Float64},LazySets.Ball2{Float64}}\n\n\n\n"
 },
 
 {
@@ -2617,11 +2649,51 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Convex-Hull-1",
+    "location": "lib/operations.html#Binary-Convex-Hull-1",
     "page": "Common Set Operations",
-    "title": "Convex Hull",
+    "title": "Binary Convex Hull",
     "category": "section",
     "text": "ConvexHull\nCH\ndim(::ConvexHull{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::ConvexHull{Float64, LazySet{Float64}, LazySet{Float64}})"
+},
+
+{
+    "location": "lib/operations.html#LazySets.ConvexHullArray",
+    "page": "Common Set Operations",
+    "title": "LazySets.ConvexHullArray",
+    "category": "Type",
+    "text": "ConvexHullArray{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the symbolic convex hull of a finite number of convex sets.\n\nFields\n\narray – array of sets\n\nExamples\n\nConvex hull of 100 two-dimensional balls whose centers follows a sinusoidal:\n\njulia> b = [Ball2([2*pi*i/100, sin(2*pi*i/100)], 0.05) for i in 1:100];\n\njulia> c = ConvexHullArray(b);\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.CHArray",
+    "page": "Common Set Operations",
+    "title": "LazySets.CHArray",
+    "category": "Type",
+    "text": "CHArray\n\nAlias for ConvexHullArray.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ConvexHullArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(cha::ConvexHullArray)::Int\n\nReturn the dimension of the convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe ambient dimension of the convex hull of a finite number of convex sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ConvexHullArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, cha::ConvexHullArray)::AbstractVector{<:Real}\n\nReturn the support vector of a convex hull array in a given direction.\n\nInput\n\nd   – direction\ncha – convex hull array\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#n-ary-Convex-Hull-1",
+    "page": "Common Set Operations",
+    "title": "n-ary Convex Hull",
+    "category": "section",
+    "text": "ConvexHullArray\nCHArray\ndim(cha::ConvexHullArray)\nσ(d::AbstractVector{Float64}, cha::ConvexHullArray)"
 },
 
 {
