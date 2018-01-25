@@ -2961,26 +2961,26 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/approximations.html#Base.LinAlg.norm",
+    "location": "lib/approximations.html#Base.LinAlg.norm-Tuple{LazySets.LazySet,Real}",
     "page": "Approximations",
     "title": "Base.LinAlg.norm",
-    "category": "Function",
+    "category": "Method",
     "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
 },
 
 {
-    "location": "lib/approximations.html#LazySets.radius",
+    "location": "lib/approximations.html#LazySets.radius-Tuple{LazySets.LazySet,Real}",
     "page": "Approximations",
     "title": "LazySets.radius",
-    "category": "Function",
+    "category": "Method",
     "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
 },
 
 {
-    "location": "lib/approximations.html#LazySets.diameter",
+    "location": "lib/approximations.html#LazySets.diameter-Tuple{LazySets.LazySet,Real}",
     "page": "Approximations",
     "title": "LazySets.diameter",
-    "category": "Function",
+    "category": "Method",
     "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
 },
 
@@ -2989,7 +2989,63 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Metric properties of sets",
     "category": "section",
-    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)"
+    "text": "norm(::LazySet, ::Real)\nradius(::LazySet, ::Real)\ndiameter(::LazySet, ::Real)"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.LocalApproximation",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.LocalApproximation",
+    "category": "Type",
+    "text": "LocalApproximation{N<:Real}\n\nType that represents a local approximation in 2D.\n\nFields\n\np1         – first inner point\nd1         – first direction\np2         – second inner point\nd2         – second direction\nq          – intersection of the lines l1 ⟂ d1 at p1 and l2 ⟂ d2 at p2\nrefinable  – states if this approximation is refinable\nerr        – error upper bound\n\nNotes\n\nThe criteria for refinable are determined in the method new_approx.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.PolygonalOverapproximation",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.PolygonalOverapproximation",
+    "category": "Type",
+    "text": "PolygonalOverapproximation{N<:Real}\n\nType that represents the polygonal approximation of a convex set.\n\nFields\n\nS           – convex set\napprox_list – vector of local approximations\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.new_approx-Tuple{LazySets.LazySet,Array{Float64,1},Array{Float64,1},Array{Float64,1},Array{Float64,1}}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.new_approx",
+    "category": "Method",
+    "text": "new_approx(S::LazySet, p1::Vector{N}, d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where {N<:Real}\n\nInput\n\nS          – convex set\np1         – first inner point\nd1         – first direction\np2         – second inner point\nd2         – second direction\n\nOutput\n\nA local approximation of S in the given directions.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.addapproximation!-Tuple{LazySets.Approximations.PolygonalOverapproximation,Array{Float64,1},Array{Float64,1},Array{Float64,1},Array{Float64,1}}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.addapproximation!",
+    "category": "Method",
+    "text": "addapproximation!(Ω::PolygonalOverapproximation,\n    p1::Vector{N}, d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where {N<:Real}\n\nInput\n\nΩ          – polygonal overapproximation of a convex set\np1         – first inner point\nd1         – first direction\np2         – second inner point\nd2         – second direction\n\nOutput\n\nThe list of local approximations in Ω of the set Ω.S is updated in-place and the new approximation is returned by this function.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.refine-Tuple{LazySets.Approximations.PolygonalOverapproximation,Int64}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.refine",
+    "category": "Method",
+    "text": "refine(Ω::PolygonalOverapproximation, i::Int)::Tuple{LocalApproximation, LocalApproximation}\n\nRefine a given local approximation of the polygonal approximation of a convex set, by splitting along the normal direction to the approximation.\n\nInput\n\nΩ   – polygonal overapproximation of a convex set\ni   – integer index for the local approximation to be refined\n\nOutput\n\nThe tuple consisting of the refined right and left local approximations.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.tohrep-Tuple{LazySets.Approximations.PolygonalOverapproximation}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.tohrep",
+    "category": "Method",
+    "text": "tohrep(Ω::PolygonalOverapproximation{N})::AbstractHPolygon where {N<:Real}\n\nConvert a polygonal overapproximation into a concrete polygon.\n\nInput\n\nΩ   – polygonal overapproximation of a convex set\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.approximate-Tuple{LazySets.LazySet{Float64},Float64}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.approximate",
+    "category": "Method",
+    "text": "approximate(S::LazySet{N},\n            ɛ::N)::PolygonalOverapproximation{N} where {N<:Real}\n\nReturn an ɛ-close approximation of the given 2D convex set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nS – 2D convex set\nɛ – error bound\n\nOutput\n\nAn ɛ-close approximation of the given 2D convex set.\n\n\n\n"
 },
 
 {
@@ -2997,7 +3053,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Iterative refinement",
     "category": "section",
-    "text": "LocalApproximation\nPolygonalOverapproximation\nnew_approx(S::LazySet, p1::Vector{Float64}, d1::Vector{Float64}, p2::Vector{Float64}, d2::Vector{Float64})\naddapproximation!(Ω::PolygonalOverapproximation, p1::Vector{Float64}, d1::Vector{Float64}, p2::Vector{Float64}, d2::Vector{Float64})\nrefine(Ω::PolygonalOverapproximation, i::Int)\ntohrep(Ω::PolygonalOverapproximation)\napproximate(S::LazySet, ɛ::Float64)See Iterative Refinement for more details."
+    "text": "LocalApproximation\nPolygonalOverapproximation\nnew_approx(::LazySet, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\naddapproximation!(::PolygonalOverapproximation, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\nrefine(::PolygonalOverapproximation, ::Int)\ntohrep(::PolygonalOverapproximation)\napproximate(::LazySet{Float64}, ::Float64)See Iterative Refinement for more details."
 },
 
 {
@@ -3021,7 +3077,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.jump2pi",
     "category": "Function",
-    "text": "jump2pi(x::Float64)::Float64\n\nReturn x + 2 if x is negative, otherwise return x.\n\nInput\n\nx – real scalar\n\nOutput\n\nx + 2 if x is negative, x otherwise.\n\nExamples\n\njulia> jump2pi(0.0)\n0.0\njulia> jump2pi(-0.5)\n5.783185307179586\njulia> jump2pi(0.5)\n0.5\n\n\n\n"
+    "text": "jump2pi(x::N)::N where {N<:AbstractFloat}\n\nReturn x + 2 if x is negative, otherwise return x.\n\nInput\n\nx – real scalar\n\nOutput\n\nx + 2 if x is negative, x otherwise.\n\nExamples\n\njulia> jump2pi(0.0)\n0.0\njulia> jump2pi(-0.5)\n5.783185307179586\njulia> jump2pi(0.5)\n0.5\n\n\n\n"
 },
 
 {
@@ -3029,7 +3085,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Base.:<=",
     "category": "Method",
-    "text": "<=(u::AbstractVector{Float64}, v::AbstractVector{Float64})::Bool\n\nCompares two 2D vectors by their direction.\n\nInput\n\nu –  first 2D direction\nv –  second 2D direction\n\nOutput\n\nTrue iff arg(u) 2  arg(v) 2\n\nNotes\n\nThe argument is measured in counter-clockwise fashion, with the 0 being the direction (1, 0).\n\n\n\n"
+    "text": "<=(u::AbstractVector{N}, v::AbstractVector{N})::Bool where {N<:AbstractFloat}\n\nCompares two 2D vectors by their direction.\n\nInput\n\nu –  first 2D direction\nv –  second 2D direction\n\nOutput\n\nTrue iff arg(u) 2  arg(v) 2\n\nNotes\n\nThe argument is measured in counter-clockwise fashion, with the 0 being the direction (1, 0).\n\n\n\n"
 },
 
 {
