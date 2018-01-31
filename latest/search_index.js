@@ -2121,11 +2121,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.reduce_order-Tuple{LazySets.Zonotope{Float64},Int64}",
+    "location": "lib/representations.html#LazySets.reduce_order-Tuple{LazySets.Zonotope{Float64},Any}",
     "page": "Common Set Representations",
     "title": "LazySets.reduce_order",
     "category": "Method",
-    "text": "reduce_order(Z::Zonotope, r::Int)::Zonotope\n\nReduce the order of a zonotope by overapproximating with a zonotope with less generators.\n\nInput\n\nZ – zonotope\nr – desired order\n\nOutput\n\nA new zonotope with less generators, if possible.\n\nAlgorithm\n\nThis function implements the algorithm described in A. Girard's Reachability of Uncertain Linear Systems Using Zonotopes, HSCC. Vol. 5. 2005.\n\n\n\n"
+    "text": "reduce_order(Z::Zonotope, r)::Zonotope\n\nReduce the order of a zonotope by overapproximating with a zonotope with less generators.\n\nInput\n\nZ – zonotope\nr – desired order\n\nOutput\n\nA new zonotope with less generators, if possible.\n\nAlgorithm\n\nThis function implements the algorithm described in A. Girard's Reachability of Uncertain Linear Systems Using Zonotopes, HSCC. Vol. 5. 2005.\n\n\n\n"
 },
 
 {
@@ -2133,7 +2133,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotopes",
     "category": "section",
-    "text": "Zonotope\ndim(::Zonotope{Float64})\nσ(::AbstractVector{Float64}, ::Zonotope{Float64})\n∈(::AbstractVector{Float64}, ::Zonotope{Float64})\nan_element(::Zonotope{Float64})\ncenter(::Zonotope{Float64})\nvertices_list(::Zonotope{Float64})\nsingleton_list(::Zonotope{Float64})\norder(::Zonotope{Float64})\nminkowski_sum(Z1::Zonotope, Z2::Zonotope)\nlinear_map(M::AbstractMatrix, Z::Zonotope)\nscale(α::Real, Z::Zonotope)\nngens(Z::Zonotope)\nreduce_order(Z::Zonotope{Float64}, r::Int)"
+    "text": "Zonotope\ndim(::Zonotope{Float64})\nσ(::AbstractVector{Float64}, ::Zonotope{Float64})\n∈(::AbstractVector{Float64}, ::Zonotope{Float64})\nan_element(::Zonotope{Float64})\ncenter(::Zonotope{Float64})\nvertices_list(::Zonotope{Float64})\nsingleton_list(::Zonotope{Float64})\norder(::Zonotope{Float64})\nminkowski_sum(Z1::Zonotope, Z2::Zonotope)\nlinear_map(M::AbstractMatrix, Z::Zonotope)\nscale(α::Real, Z::Zonotope)\nngens(Z::Zonotope)\nreduce_order(Z::Zonotope{Float64}, r)"
 },
 
 {
