@@ -557,7 +557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Concrete Polyhedra",
     "title": "Methods",
     "category": "section",
-    "text": "The utility methods available are convex hull, intersection and cartesian product. The dual representation as a list of vertices can be obtained with the vertices_list function.For example, the intersection of two polytopes is performed with the intersect method.E = Ellipsoid(ones(2), diagm([2.0, 0.5]))\nB = Ball1([2.5, 1.5], .8)\n\nimport LazySets.Approximations.overapproximate\npolyoverapprox(x) = HPolytope(overapproximate(x, 1e-3).constraints_list)\n\nEpoly = polyoverapprox(E)\nBpoly = polyoverapprox(B)\nX = intersect(Epoly, Bpoly)\n\nplot(E, 1e-3, aspectratio=1, alpha=0.4)\nplot!(B, 1e-3, alpha=0.4)\nplot!(X, 1e-3, alpha=0.4, color=\"black\")"
+    "text": "The utility methods available are convex hull, intersection and cartesian product. The dual representation as a list of vertices can be obtained with the vertices_list function.For example, the intersection of two polytopes is performed with the intersect method.E = Ellipsoid(ones(2), diagm([2.0, 0.5]))\nB = Ball1([2.5, 1.5], .8)\n\nimport LazySets.Approximations.overapproximate\npolyoverapprox(x) = HPolytope(overapproximate(x, 1e-3).constraints)\n\nEpoly = polyoverapprox(E)\nBpoly = polyoverapprox(B)\nX = intersect(Epoly, Bpoly)\n\nplot(E, 1e-3, aspectratio=1, alpha=0.4)\nplot!(B, 1e-3, alpha=0.4)\nplot!(X, 1e-3, alpha=0.4, color=\"black\")"
 },
 
 {
@@ -685,7 +685,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractHPolygon",
     "category": "Type",
-    "text": "AbstractHPolygon{N<:Real} <: AbstractPolygon{N}\n\nAbstract type for polygons in H-representation (i.e., constraints).\n\nNotes\n\nEvery concrete AbstractHPolygon must have the following fields:\n\nconstraints_list::Vector{LinearConstraint{N}} – the constraints\n\njulia> subtypes(AbstractHPolygon)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.HPolygon   \n LazySets.HPolygonOpt\n\n\n\n"
+    "text": "AbstractHPolygon{N<:Real} <: AbstractPolygon{N}\n\nAbstract type for polygons in H-representation (i.e., constraints).\n\nNotes\n\nEvery concrete AbstractHPolygon must have the following fields:\n\nconstraints::Vector{LinearConstraint{N}} – the constraints\n\njulia> subtypes(AbstractHPolygon)\n2-element Array{Union{DataType, UnionAll},1}:\n LazySets.HPolygon\n LazySets.HPolygonOpt\n\n\n\n"
 },
 
 {
@@ -1437,7 +1437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolygon",
     "category": "Type",
-    "text": "HPolygon{N<:Real} <: AbstractHPolygon{N}\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions.\n\nFields\n\nconstraints_list – list of linear constraints, sorted by the angle\n\nNotes\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygon(constraints_list::Vector{LinearConstraint{<:Real}}) – default constructor\nHPolygon() – constructor with no constraints\n\n\n\n"
+    "text": "HPolygon{N<:Real} <: AbstractHPolygon{N}\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions.\n\nFields\n\nconstraints – list of linear constraints, sorted by the angle\n\nNotes\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygon(constraints::Vector{LinearConstraint{<:Real}}) – default constructor\nHPolygon() – constructor with no constraints\n\n\n\n"
 },
 
 {
@@ -1525,7 +1525,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolygonOpt",
     "category": "Type",
-    "text": "HPolygonOpt{N<:Real} <: AbstractHPolygon{N}\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions. This is a refined version of HPolygon.\n\nFields\n\nconstraints_list – list of linear constraints\nind – index in the list of constraints to begin the search to evaluate the          support function\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions that are close to each other. The strategy is to have an index that can be used to warm-start the search for optimal values in the support vector computation.\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygonOpt(constraints_list::Vector{LinearConstraint{<:Real}}, ind::Int) – default constructor\nHPolygonOpt(constraints_list::Vector{LinearConstraint{<:Real}}) – constructor without index\nHPolygonOpt(H::HPolygon{<:Real}) – constructor from an HPolygon\n\n\n\n"
+    "text": "HPolygonOpt{N<:Real} <: AbstractHPolygon{N}\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions. This is a refined version of HPolygon.\n\nFields\n\nconstraints – list of linear constraints\nind – index in the list of constraints to begin the search to evaluate the          support function\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions that are close to each other. The strategy is to have an index that can be used to warm-start the search for optimal values in the support vector computation.\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygonOpt(constraints::Vector{LinearConstraint{<:Real}}, ind::Int) – default constructor\nHPolygonOpt(constraints::Vector{LinearConstraint{<:Real}}) – constructor without index\nHPolygonOpt(H::HPolygon{<:Real}) – constructor from an HPolygon\n\n\n\n"
 },
 
 {
