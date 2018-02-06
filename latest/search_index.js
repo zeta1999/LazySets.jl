@@ -653,7 +653,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractPolytope",
     "category": "Type",
-    "text": "AbstractPolytope{N<:Real} <: LazySet{N}\n\nAbstract type for polytopic sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of halfspaces, or equivalently, sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n3-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetricPolytope\n LazySets.AbstractPolygon\n LazySets.HPolytope\n\n\n\n"
+    "text": "AbstractPolytope{N<:Real} <: LazySet{N}\n\nAbstract type for polytopic sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of halfspaces, or equivalently, sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n3-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetricPolytope\n LazySets.AbstractPolygon\n LazySets.HPolytope\n LazySets.VPolytope\n\n\n\n"
 },
 
 {
