@@ -2213,7 +2213,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.CartesianProductArray",
     "category": "Type",
-    "text": "CartesianProductArray{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the Cartesian product of a finite number of convex sets.\n\nFields\n\nsfarray – array of sets\n\nNotes\n\nCartesianProductArray(sfarray::Vector{<:LazySet}) – default constructor\nCartesianProductArray() – constructor for an empty Cartesian product\nCartesianProductArray(n::Int, [N]::Type=Float64) – constructor for an empty Cartesian product with size hint and numeric type\n\n\n\n"
+    "text": "CartesianProductArray{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the Cartesian product of a finite number of convex sets.\n\nFields\n\narray – array of sets\n\nNotes\n\nCartesianProductArray(array::Vector{<:LazySet}) – default constructor\nCartesianProductArray() – constructor for an empty Cartesian product\nCartesianProductArray(n::Int, [N]::Type=Float64) – constructor for an empty Cartesian product with size hint and numeric type\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.CartesianProductArray{Float64,LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "Method",
+    "text": "array(cpa::CartesianProductArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n"
 },
 
 {
@@ -2269,7 +2277,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Cartesian Product",
     "category": "section",
-    "text": "CartesianProductArray{Float64, LazySet{Float64}}\ndim(::CartesianProductArray{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::CartesianProductArray{Float64, LazySet{Float64}})\nBase.:*(::CartesianProductArray{Float64, LazySet{Float64}}, ::LazySet{Float64})\nBase.:*(::LazySet{Float64}, ::CartesianProductArray{Float64, LazySet{Float64}})\nBase.:*(::CartesianProductArray{Float64, LazySet{Float64}}, ::CartesianProductArray{Float64, LazySet{Float64}})\n∈(::AbstractVector{Float64}, ::CartesianProductArray{Float64, LazySet{Float64}})"
+    "text": "CartesianProductArray{Float64, LazySet{Float64}}\narray(::CartesianProductArray{Float64, LazySet{Float64}})\ndim(::CartesianProductArray{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::CartesianProductArray{Float64, LazySet{Float64}})\nBase.:*(::CartesianProductArray{Float64, LazySet{Float64}}, ::LazySet{Float64})\nBase.:*(::LazySet{Float64}, ::CartesianProductArray{Float64, LazySet{Float64}})\nBase.:*(::CartesianProductArray{Float64, LazySet{Float64}}, ::CartesianProductArray{Float64, LazySet{Float64}})\n∈(::AbstractVector{Float64}, ::CartesianProductArray{Float64, LazySet{Float64}})"
 },
 
 {
@@ -2337,6 +2345,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.ConvexHullArray{Float64,LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "Method",
+    "text": "array(cpa::CartesianProductArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ConvexHullArray}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
@@ -2357,7 +2373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Convex Hull",
     "category": "section",
-    "text": "ConvexHullArray\nCHArray\ndim(cha::ConvexHullArray)\nσ(d::AbstractVector{Float64}, cha::ConvexHullArray)"
+    "text": "ConvexHullArray\nCHArray\narray(::ConvexHullArray{Float64, LazySet{Float64}})\ndim(cha::ConvexHullArray)\nσ(d::AbstractVector{Float64}, cha::ConvexHullArray)"
 },
 
 {
@@ -2509,7 +2525,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.MinkowskiSumArray",
     "category": "Type",
-    "text": "MinkowskiSumArray{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the Minkowski sum of a finite number of convex sets.\n\nFields\n\nsfarray – array of convex sets\n\nNotes\n\nThis type assumes that the dimensions of all elements match.\n\nMinkowskiSumArray(sfarray::Vector{<:LazySet}) – default constructor\nMinkowskiSumArray() – constructor for an empty sum\nMinkowskiSumArray(n::Int, [N]::Type=Float64) – constructor for an empty sum with size hint and numeric type\n\n\n\n"
+    "text": "MinkowskiSumArray{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the Minkowski sum of a finite number of convex sets.\n\nFields\n\narray – array of convex sets\n\nNotes\n\nThis type assumes that the dimensions of all elements match.\n\nMinkowskiSumArray(array::Vector{<:LazySet}) – default constructor\nMinkowskiSumArray() – constructor for an empty sum\nMinkowskiSumArray(n::Int, [N]::Type=Float64) – constructor for an empty sum with size hint and numeric type\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.MinkowskiSumArray{Float64,LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "Method",
+    "text": "array(cpa::CartesianProductArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n"
 },
 
 {
@@ -2565,7 +2589,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSumArray\ndim(::MinkowskiSumArray{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::MinkowskiSumArray{Float64, LazySet{Float64}})\nBase.:+(::MinkowskiSumArray{Float64, LazySet{Float64}}, ::LazySet{Float64})\nBase.:+(::LazySet{Float64}, ::MinkowskiSumArray{Float64, LazySet{Float64}})\nBase.:+(::MinkowskiSumArray{Float64, LazySet{Float64}}, ::MinkowskiSumArray{Float64, LazySet{Float64}})\nBase.:+(::MinkowskiSumArray{Float64, LazySet{Float64}}, ::ZeroSet{Float64})"
+    "text": "MinkowskiSumArray\narray(::MinkowskiSumArray{Float64, LazySet{Float64}})\ndim(::MinkowskiSumArray{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::MinkowskiSumArray{Float64, LazySet{Float64}})\nBase.:+(::MinkowskiSumArray{Float64, LazySet{Float64}}, ::LazySet{Float64})\nBase.:+(::LazySet{Float64}, ::MinkowskiSumArray{Float64, LazySet{Float64}})\nBase.:+(::MinkowskiSumArray{Float64, LazySet{Float64}}, ::MinkowskiSumArray{Float64, LazySet{Float64}})\nBase.:+(::MinkowskiSumArray{Float64, LazySet{Float64}}, ::ZeroSet{Float64})"
 },
 
 {
