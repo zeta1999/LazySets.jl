@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Manual Outline",
     "category": "section",
-    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\",\n    \"man/interval_hulls.md\",\n    \"man/convex_hulls.md\",\n    \"man/reach_zonotopes.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\",\n    \"man/interval_hulls.md\",\n    \"man/convex_hulls.md\",\n    \"man/reach_zonotopes.md\",\n    \"man/reach_zonotopes_hybrid.md\",\n    \"man/concrete_polyhedra.md\"\n]\nDepth = 2"
 },
 
 {
@@ -526,6 +526,62 @@ var documenterSearchIndex = {"docs": [
     "title": "Example 2",
     "category": "section",
     "text": "A = Matrix{Float64}([-1 -4 0 0 0;\n                      4 -1 0 0 0;\n                      0 0 -3 1 0;\n                      0 0 -1 -3 0;\n                      0 0 0 0 -2])\nX0 = Zonotope([1.0, 0.0, 0.0, 0.0, 0.0], 0.1*eye(5))\nμ = 0.01\nδ = 0.005\nT = 1.\n\nR = Algorithm1(A, X0, δ, μ, 2*δ); # warm-up\n\nR = Algorithm1(A, X0, δ, μ, T)\nRproj = project(R, [1, 3], 5)\n\nplot(Rproj, 1e-2, fillalpha=0.1, xlabel=\"x1\", ylabel=\"x3\")"
+},
+
+{
+    "location": "man/reach_zonotopes_hybrid.html#",
+    "page": "A Hybrid Reachability Algorithm",
+    "title": "A Hybrid Reachability Algorithm",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "man/reach_zonotopes_hybrid.html#A-Hybrid-Reachability-Algorithm-Using-Zonotopes-1",
+    "page": "A Hybrid Reachability Algorithm",
+    "title": "A Hybrid Reachability Algorithm Using Zonotopes",
+    "category": "section",
+    "text": "Pages = [\"reach_zonotopes_hybrid.md\"]\nDepth = 3"
+},
+
+{
+    "location": "man/reach_zonotopes_hybrid.html#Introduction-1",
+    "page": "A Hybrid Reachability Algorithm",
+    "title": "Introduction",
+    "category": "section",
+    "text": "In this section we present an algorithm implemented using LazySets that computes the reach sets of a hybrid system of linear ordinary differential equations (ODE). This algorithm is an extension of the one presented in A Reachability Algorithm Using Zonotopes.We consider a simple case here where modes do not have invariants and transitions do not have updates. It makes sense to consider must transitions in this case, i.e., that a transition is taken as soon as it is enabled, but we also offer the may transitions interpretation below."
+},
+
+{
+    "location": "man/reach_zonotopes_hybrid.html#Hybrid-algorithm-1",
+    "page": "A Hybrid Reachability Algorithm",
+    "title": "Hybrid algorithm",
+    "category": "section",
+    "text": "The hybrid algorithm maintains a queue of triples (m X t) where m is a mode, X is a set of states, and t is a time point. For each element in the queue the algorithm calls the Continuous algorithm to compute the reachable states in the current mode m, starting in the current states X at time t. The result is a flowpipe, i.e., a sequence of sets of states. For each of those sets we check intersection with the guards of m's outgoing transitions. Depending on the transition semantics, we add the discrete successors to the queue and continue with the next iteration until the queue is empty.using LazySets, Plots\n\nfunction reach_hybrid(As, Ts, init, δ, μ, T, max_order, must_semantics)\n    # initialize queue with initial mode and states at time t=0\n    queue = [(init[1], init[2], 0.)]\n\n    res = Tuple{LazySet, Int}[]\n    while !isempty(queue)\n        init, loc, t = pop!(queue)\n        println(\"currently in location $loc at time $t\")\n        R = reach_continuous(As[loc], init, δ, μ, T-t, max_order)\n        found_transition = false\n        for i in 1:length(R)-1\n            S = R[i]\n            push!(res, (S, loc))\n            for (guard, tgt_loc) in Ts[loc]\n                if !is_intersection_empty(S, guard)\n                    new_t = t + δ * i\n                    push!(queue, (S, tgt_loc, new_t))\n                    found_transition = true\n                    println(\"transition $loc -> $tgt_loc at time $new_t\")\n                end\n            end\n            if must_semantics && found_transition\n                break\n            end\n        end\n        if !must_semantics || !found_transition && length(R) > 0\n            push!(res, (R[end], loc))\n        end\n    end\n    return res\nend"
+},
+
+{
+    "location": "man/reach_zonotopes_hybrid.html#Continuous-algorithm-1",
+    "page": "A Hybrid Reachability Algorithm",
+    "title": "Continuous algorithm",
+    "category": "section",
+    "text": "This is basically the same implementation as outlined in the section A Reachability Algorithm Using Zonotopes, only that this time we use concrete operations on zonotopes.function reach_continuous(A, X0, δ, μ, T, max_order)\n    # bloating factors\n    Anorm = norm(A, Inf)\n    α = (expm(δ*Anorm) - 1 - δ*Anorm)/norm(X0, Inf)\n    β = (expm(δ*Anorm) - 1)*μ/Anorm\n\n    # discretized system\n    n = size(A, 1)\n    ϕ = expm(δ*A)\n    N = floor(Int, T/δ)\n\n    # preallocate array\n    R = Vector{LazySet}(N)\n    if N == 0\n        return R\n    end\n\n    # initial reach set in the time interval [0, δ]\n    ϕp = (I+ϕ)/2\n    ϕm = (I-ϕ)/2\n    c = X0.center\n    Q1_generators = hcat(ϕp * X0.generators, ϕm * c, ϕm * X0.generators)\n    P1 = Phi1(A, δ)\n    R[1] = minkowski_sum(Zonotope(ϕp * c, Q1_generators),\n                         Zonotope(zeros(n), (α + β)*eye(n)))\n    if order(R[1]) > max_order\n        R[1] = reduce_order(R[1], max_order)\n    end\n\n    # set recurrence for [δ, 2δ], ..., [(N-1)δ, Nδ]\n    ballβ = Zonotope(zeros(n), β*eye(n))\n    for i in 2:N\n        R[i] = minkowski_sum(linear_map(ϕ, R[i-1]), ballβ)\n        if order(R[i]) > max_order\n            R[i] = reduce_order(R[i], max_order)\n        end\n    end\n    return R\nendThe function Phi1 represents the approximation model. We use the following implementation here.function Phi1(A, δ)\n    n = size(A, 1)\n    P = expm(full([A * δ sparse(δ*I, n, n) spzeros(n, n);\n                   spzeros(n, 2*n) sparse(δ*I, n, n);\n                   spzeros(n, 3*n)]))\n    return P[1:n, (n+1):2*n]\nend"
+},
+
+{
+    "location": "man/reach_zonotopes_hybrid.html#Plotting-results-1",
+    "page": "A Hybrid Reachability Algorithm",
+    "title": "Plotting results",
+    "category": "section",
+    "text": "For illustration purposes it is helpful to plot the flowpipes in different colors, depending on the current mode. The following function does that for 2-mode models.function plot_res(res)\n    p = plot()\n    for i in 1:length(res)\n        if res[i][2] == 1\n            c = \"blue\"\n        elseif res[i][2] == 2\n            c = \"red\"\n        end\n        plot!(p, reduce_order(res[i][1], 2), color=c, alpha=0.1)\n    end\n    return p\nend"
+},
+
+{
+    "location": "man/reach_zonotopes_hybrid.html#Example-1",
+    "page": "A Hybrid Reachability Algorithm",
+    "title": "Example",
+    "category": "section",
+    "text": "We consider an extension of the example presented in [\"Reachability of uncertain linear systems using zonotopes, A. Girard, HSCC. Vol. 5. 2005] to a hybrid system with two modes ell_i, i = 1 2, with initial states 09 11 times -01 01 and uncertain inputs from a set u with mu = Vert u Vert_infty = 0001.The dynamics matrices A_i are defined as follows:	A_1 = beginpmatrix -1  -4  4  -1 endpmatrix qquad A_2 = beginpmatrix 1  4  -4  -1 endpmatrixWe add a transition t_i from mode ell_i to ell_3-i with a hyperplane guard g_i:	g_1 triangleq x_1 = -05 qquad g_2 triangleq x_2 = -03LazySets offers an order reduction function for zonotopes, which we used here with an upper bound of 10 generators. We plot the reachable states for the time interval 0 4 and time step  = 0001.    # dynamics\n    A1 = [-1 -4; 4 -1]\n    A2 = [1 4; -4 -1]\n    As = [A1, A2]\n\n    # transitions\n    t1 = [(Hyperplane([1., 0.], -0.5), 2)]\n    t2 = [(Hyperplane([0., 1.], -0.3), 1)]\n    Ts = [t1, t2]\n\n    # initial condition\n    X0 = Zonotope([1.0, 0.0], 0.1*eye(2))\n    init_loc = 1\n    init = (X0, init_loc)\n\n    # input uncertainty\n    μ = 0.001\n\n    # discretization step\n    δ = 0.001\n\n    # time bound\n    T = 4.\n\n    # maximum order of zonotopes\n    max_order = 10\n\n    # use must semantics?\n    must_semantics = true\n\n    # run analysis\n    res = reach_hybrid(As, Ts, init, δ, μ, T, max_order, must_semantics)\n\n    # plot result\n    plot_res(res)"
 },
 
 {
