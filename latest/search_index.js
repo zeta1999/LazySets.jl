@@ -1477,7 +1477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Lines and linear constraints",
     "category": "section",
-    "text": "LinearConstraint\nLine\nintersection(::Line{Float64}, L2::Line{Float64})"
+    "text": "LinearConstraint\nLine\nintersection(::Line{Float64}, ::Line{Float64})"
 },
 
 {
@@ -2185,11 +2185,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.convert-Tuple{Type{LazySets.Zonotope},LazySets.AbstractHyperrectangle{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.convert",
+    "category": "Method",
+    "text": "convert(::Type{Zonotope}, H::AbstractHyperrectangle{N}) where {N}\n\nConverts a hyperrectangular set to a zonotope.\n\nInput\n\nZonotope\nH – hyperrectangular set\n\nOutput\n\nA zonotope.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Zonotopes-1",
     "page": "Common Set Representations",
     "title": "Zonotopes",
     "category": "section",
-    "text": "Zonotope\ndim(::Zonotope{Float64})\nσ(::AbstractVector{Float64}, ::Zonotope{Float64})\n∈(::AbstractVector{Float64}, ::Zonotope{Float64})\nan_element(::Zonotope{Float64})\ncenter(::Zonotope{Float64})\nvertices_list(::Zonotope{Float64})\nsingleton_list(::Zonotope{Float64})\norder(::Zonotope{Float64})\nminkowski_sum(Z1::Zonotope, Z2::Zonotope)\nlinear_map(M::AbstractMatrix, Z::Zonotope)\nscale(α::Real, Z::Zonotope)\nngens(Z::Zonotope)\nreduce_order(Z::Zonotope{Float64}, r)"
+    "text": "Zonotope\ndim(::Zonotope{Float64})\nσ(::AbstractVector{Float64}, ::Zonotope{Float64})\n∈(::AbstractVector{Float64}, ::Zonotope{Float64})\nan_element(::Zonotope{Float64})\ncenter(::Zonotope{Float64})\nvertices_list(::Zonotope{Float64})\nsingleton_list(::Zonotope{Float64})\norder(::Zonotope{Float64})\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope{Float64}, r)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle{Float64})"
 },
 
 {
