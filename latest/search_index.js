@@ -645,7 +645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "Type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet)::AbstractVector{N} – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n15-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric  \n LazySets.AbstractPolytope        \n LazySets.CartesianProduct        \n LazySets.CartesianProductArray   \n LazySets.ConvexHull              \n LazySets.ConvexHullArray         \n LazySets.EmptySet                \n LazySets.ExponentialMap          \n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace               \n LazySets.Hyperplane              \n LazySets.Intersection            \n LazySets.LinearMap               \n LazySets.MinkowskiSum            \n LazySets.MinkowskiSumArray\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet)::AbstractVector{N} – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n16-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric\n LazySets.AbstractPolytope\n LazySets.CartesianProduct\n LazySets.CartesianProductArray\n LazySets.ConvexHull\n LazySets.ConvexHullArray\n LazySets.EmptySet\n LazySets.ExponentialMap\n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace\n LazySets.Hyperplane\n LazySets.Intersection\n LazySets.Line\n LazySets.LinearMap\n LazySets.MinkowskiSum\n LazySets.MinkowskiSumArray\n\n\n\n"
 },
 
 {
@@ -1225,6 +1225,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.LinearConstraint",
+    "page": "Common Set Representations",
+    "title": "LazySets.LinearConstraint",
+    "category": "Type",
+    "text": "LinearConstraint\n\nAlias for HalfSpace\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.HalfSpace{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
@@ -1261,7 +1269,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\ndim(::HalfSpace{Float64})\nσ(::AbstractVector{Float64}, ::HalfSpace{Float64})\nan_element(::HalfSpace{Float64})\n∈(::AbstractVector{Float64}, ::HalfSpace{Float64})"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace{Float64})\nσ(::AbstractVector{Float64}, ::HalfSpace{Float64})\nan_element(::HalfSpace{Float64})\n∈(::AbstractVector{Float64}, ::HalfSpace{Float64})"
 },
 
 {
@@ -1449,19 +1457,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.LinearConstraint",
-    "page": "Common Set Representations",
-    "title": "LazySets.LinearConstraint",
-    "category": "Type",
-    "text": "LinearConstraint{N<:Real}\n\nType that represents a linear constraint (a half-space) of the form ax  b.\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe set y  0 in the plane:\n\njulia> LinearConstraint([0, -1.], 0.)\nLazySets.LinearConstraint{Float64}([0.0, -1.0], 0.0)\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#LazySets.Line",
     "page": "Common Set Representations",
     "title": "LazySets.Line",
     "category": "Type",
-    "text": "Line{N<:Real}\n\nType that represents a line in 2D of the form ax = b.\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLazySets.Line{Float64}([1.0, 1.0], 1.0)\n\n\n\n"
+    "text": "Line{N<:Real} <: LazySet{N}\n\nType that represents a line in 2D of the form ax = b (i.e., a special case of a Hyperplane).\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLazySets.Line{Float64}([1.0, 1.0], 1.0)\n\n\n\n"
 },
 
 {
@@ -1473,11 +1473,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Lines-and-linear-constraints-1",
+    "location": "lib/representations.html#Line-1",
     "page": "Common Set Representations",
-    "title": "Lines and linear constraints",
+    "title": "Line",
     "category": "section",
-    "text": "LinearConstraint\nLine\nintersection(::Line{Float64}, ::Line{Float64})"
+    "text": "Line\nintersection(::Line{Float64}, ::Line{Float64})"
 },
 
 {
@@ -1561,7 +1561,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygon{Float64},LazySets.LinearConstraint{Float64}}",
+    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygon{Float64},LazySets.HalfSpace{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.addconstraint!",
     "category": "Method",
@@ -1649,7 +1649,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygonOpt{Float64},LazySets.LinearConstraint{Float64}}",
+    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygonOpt{Float64},LazySets.HalfSpace{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.addconstraint!",
     "category": "Method",
@@ -1793,7 +1793,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolytope{Float64},LazySets.LinearConstraint{Float64}}",
+    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolytope{Float64},LazySets.HalfSpace{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.addconstraint!",
     "category": "Method",
