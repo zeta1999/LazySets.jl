@@ -3129,19 +3129,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/approximations.html#LazySets.Approximations.overapproximate",
-    "page": "Approximations",
-    "title": "LazySets.Approximations.overapproximate",
-    "category": "Function",
-    "text": "overapproximate(S::LazySet{N}, ::Type{<:HPolygon})::HPolygon where {N<:Real}\n\nReturn an approximation of a given 2D convex set as a box-shaped polygon.\n\nInput\n\nS – convex set, assumed to be two-dimensional\nHPolygon for dispatch\n\nOutput\n\nA box-shaped polygon in constraint representation.\n\n\n\noverapproximate(S::LazySet)::HPolygon\n\nAlias for overapproximate(S, HPolygon).\n\n\n\noverapproximate(S::LazySet, Type{<:Hyperrectangle})::Hyperrectangle\n\nReturn an approximation of a given 2D convex set as a hyperrectangle.\n\nInput\n\nS – convex set, assumed to be two-dimensional\nHyperrectangle for dispatch\n\nOutput\n\nA hyperrectangle.\n\n\n\noverapproximate(S::LazySet, ɛ::Real)::HPolygon\n\nReturn an ɛ-close approximation of the given 2D set (in terms of Hausdorff distance) as a polygon.\n\nInput\n\nS – convex set, assumed to be two-dimensional\nɛ – error bound\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n"
-},
-
-{
     "location": "lib/approximations.html#Cartesian-Decomposition-1",
     "page": "Approximations",
     "title": "Cartesian Decomposition",
     "category": "section",
-    "text": "decompose\noverapproximate"
+    "text": "decompose"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.overapproximate",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.overapproximate",
+    "category": "Function",
+    "text": "overapproximate(S::LazySet{N}, ::Type{<:HPolygon})::HPolygon where {N<:Real}\n\nReturn an approximation of a given 2D convex set as a box-shaped polygon.\n\nInput\n\nS – convex set, assumed to be two-dimensional\nHPolygon for dispatch\n\nOutput\n\nA box-shaped polygon in constraint representation.\n\n\n\noverapproximate(S::LazySet)::HPolygon\n\nAlias for overapproximate(S, HPolygon).\n\n\n\noverapproximate(S::LazySet, Type{<:Hyperrectangle})::Hyperrectangle\n\nReturn an approximation of a given 2D convex set as a hyperrectangle.\n\nInput\n\nS – convex set, assumed to be two-dimensional\nHyperrectangle for dispatch\n\nOutput\n\nA hyperrectangle.\n\n\n\noverapproximate(S::LazySet, ɛ::Real)::HPolygon\n\nReturn an ɛ-close approximation of the given 2D set (in terms of Hausdorff distance) as a polygon.\n\nInput\n\nS – convex set, assumed to be two-dimensional\nɛ – error bound\n\nOutput\n\nA polygon in constraint representation.\n\n\n\noverapproximate(S::ConvexHull{N, Zonotope{N}, Zonotope{N}},\n                 ::Type{<:Zonotope})::Zonotope where {N<:Real}\n\nOverapproximate the convex hull of two zonotopes.\n\nInput\n\nS – convex set, assumed to be two-dimensional\nZonotope for dispatch\n\nAlgorithm\n\nThis function implements the method proposed in Reachability of Uncertain Linear Systems Using Zonotopes, A. Girard, HSCC 2005.\n\nIt should be noted that the output zonotope is not necessarily the minimal enclosing zonotope, which is in general expensive in high dimensions. This is further investigated in: Zonotopes as bounding volumes, L. J. Guibas et al, Proc. of Symposium on Discrete Algorithms, pp. 803-812.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#Overapproximations-1",
+    "page": "Approximations",
+    "title": "Overapproximations",
+    "category": "section",
+    "text": "overapproximate"
 },
 
 {
