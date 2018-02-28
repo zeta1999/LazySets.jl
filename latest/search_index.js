@@ -3261,7 +3261,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.new_approx",
     "category": "Method",
-    "text": "new_approx(S::LazySet, p1::Vector{N}, d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where {N<:Real}\n\nInput\n\nS          – convex set\np1         – first inner point\nd1         – first direction\np2         – second inner point\nd2         – second direction\n\nOutput\n\nA local approximation of S in the given directions.\n\n\n\n"
+    "text": "new_approx(S::LazySet, p1::Vector{N}, d1::Vector{N}, p2::Vector{N},\n           d2::Vector{N}) where {N<:Real}\n\nInput\n\nS          – convex set\np1         – first inner point\nd1         – first direction\np2         – second inner point\nd2         – second direction\n\nOutput\n\nA local approximation of S in the given directions.\n\n\n\n"
 },
 
 {
