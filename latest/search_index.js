@@ -645,7 +645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "Type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet)::AbstractVector{N} – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n17-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric\n LazySets.AbstractPolytope\n LazySets.CartesianProduct\n LazySets.CartesianProductArray\n LazySets.ConvexHull\n LazySets.ConvexHullArray\n LazySets.EmptySet\n LazySets.ExponentialMap\n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace\n LazySets.Hyperplane\n LazySets.Intersection\n LazySets.Line\n LazySets.LinearMap\n LazySets.MinkowskiSum\n LazySets.MinkowskiSumArray\n LazySets.PolynomialZonotope\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet)::AbstractVector{N} – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n18-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric\n LazySets.AbstractPolytope\n LazySets.CartesianProduct\n LazySets.CartesianProductArray\n LazySets.ConvexHull\n LazySets.ConvexHullArray\n LazySets.EmptySet\n LazySets.ExponentialMap\n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace\n LazySets.Hyperplane\n LazySets.Intersection\n LazySets.Line\n LazySets.LinearMap\n LazySets.LineSegment\n LazySets.MinkowskiSum\n LazySets.MinkowskiSumArray\n LazySets.PolynomialZonotope\n\n\n\n"
 },
 
 {
@@ -1481,6 +1481,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Line{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(L::Line)::Int\n\nReturn the ambient dimension of a line.\n\nInput\n\nL – line\n\nOutput\n\nThe ambient dimension of the line, which is 2.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Line{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, L::Line)::AbstractVector{<:Real}\n\nReturn the support vector of a line in a given direction.\n\nInput\n\nd – direction\nL – line\n\nOutput\n\nThe support vector in the given direction, which is defined the same way as for the more general Hyperplane.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.intersection-Tuple{LazySets.Line{Float64},LazySets.Line{Float64}}",
     "page": "Common Set Representations",
     "title": "LazySets.intersection",
@@ -1493,7 +1509,47 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line",
     "category": "section",
-    "text": "Line\nintersection(::Line{Float64}, ::Line{Float64})"
+    "text": "Line\ndim(::Line{Float64})\nσ(::AbstractVector{Float64}, ::Line{Float64})\nintersection(::Line{Float64}, ::Line{Float64})"
+},
+
+{
+    "location": "lib/representations.html#LazySets.LineSegment",
+    "page": "Common Set Representations",
+    "title": "LazySets.LineSegment",
+    "category": "Type",
+    "text": "LineSegment{N<:Real} <: LazySet{N}\n\nType that represents a line segment in 2D between two points p and q.\n\nFields\n\np – first point\nq – second point\n\nExamples\n\nA line segment along the x = y diagonal:\n\njulia> s = LineSegment([0., 0], [1., 1.])\nLazySets.LineSegment{Float64}([0.0, 0.0], [1.0, 1.0])\njulia> dim(s)\n2\n\nUse plot(s) to plot the extreme points of s and the line segment joining them. Membership test is computed with ∈ (in):\n\njulia> [0., 0] ∈ s && [.25, .25] ∈ s && [1., 1] ∈ s && !([.5, .25] ∈ s)\ntrue\n\nWe can check the intersection with another line segment, and optionally compute a witness (which is just the common point in this case):\n\njulia> sn = LineSegment([1., 0], [0., 1.])\nLazySets.LineSegment{Float64}([1.0, 0.0], [0.0, 1.0])\njulia> isempty(s ∩ sn)\nfalse\njulia> is_intersection_empty(s, sn, true)\n(false, [0.5, 0.5])\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.LineSegment{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "Method",
+    "text": "dim(L::LineSegment)::Int\n\nReturn the ambient dimension of a line segment.\n\nInput\n\nL – line segment\n\nOutput\n\nThe ambient dimension of the line segment, which is 2.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.LineSegment{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "Method",
+    "text": "σ(d::AbstractVector{<:Real}, L::LineSegment)::AbstractVector{<:Real}\n\nReturn the support vector of a line segment in a given direction.\n\nInput\n\nd – direction\nL – line segment\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nIf the angle between the vector q - p and d is bigger than 90° and less than 270° (measured in counter-clockwise order), the result is p, otherwise it is q. If the angle is exactly 90° or 270°, or if the direction has norm zero, this implementation returns q.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.LineSegment{Float64}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "Method",
+    "text": "∈(x::AbstractVector{N}, L::LineSegment{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a line segment.\n\nInput\n\nx – point/vector\nL – line segment\n\nOutput\n\ntrue iff x  L.\n\nAlgorithm\n\nLet L = (p q) be the line segment with extremes p and q, and let x be the given point.\n\nA necessary condition for x  (p q) is that the three points are aligned, thus their cross product should be zero.\nIt remains to check that x belongs to the box approximation of L. This amounts to comparing each coordinate with those of the extremes p and q.\n\nNotes\n\nThe algorithm is inspired from here.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Line-segment-1",
+    "page": "Common Set Representations",
+    "title": "Line segment",
+    "category": "section",
+    "text": "LineSegment\ndim(::LineSegment{Float64})\nσ(::AbstractVector{Float64}, ::LineSegment{Float64})\n∈(::AbstractVector{Float64}, ::LineSegment{Float64})"
 },
 
 {
@@ -3005,7 +3061,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_subset",
     "category": "Method",
-    "text": "is_subset(S::LazySet{N}, H::AbstractHyperrectangle{N}, witness::Bool=false\n         )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner convex set\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nAlgorithm\n\nS  H iff operatornameihull(S)  H, where  operatornameihull is the interval hull operator.\n\n\n\nis_subset(B::Union{Ball2{N}, Ballp{N}},\n          S::AbstractSingleton{N},\n          witness::Bool=false\n         )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a ball in the 2-norm is contained in a set with a single value, and if not, optionally compute a witness.\n\nInput\n\nB – inner ball in the 2-norm or p-norm\nS – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B  S\nIf witness option is activated:\n(true, []) iff B  S\n(false, v) iff B notsubseteq S and v  B setminus S\n\n\n\n"
+    "text": "is_subset(S::LazySet{N}, H::AbstractHyperrectangle{N}, witness::Bool=false\n         )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner convex set\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nAlgorithm\n\nS  H iff operatornameihull(S)  H, where  operatornameihull is the interval hull operator.\n\n\n\nis_subset(B::Union{Ball2{N}, Ballp{N}},\n          S::AbstractSingleton{N},\n          witness::Bool=false\n         )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a ball in the 2-norm or p-norm is contained in a set with a single value, and if not, optionally compute a witness.\n\nInput\n\nB – inner ball in the 2-norm or p-norm\nS – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B  S\nIf witness option is activated:\n(true, []) iff B  S\n(false, v) iff B notsubseteq S and v  B setminus S\n\n\n\n"
 },
 
 {
@@ -3089,11 +3145,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.LineSegment{Float64},LazySets.LineSegment{Float64}}",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "Method",
+    "text": "is_intersection_empty(ls1::LineSegment{N},\n                      ls2::LineSegment{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether two line segments do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nls1 – first line segment\nls2 – second line segment\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff ls1  ls2 = \nIf witness option is activated:\n(true, []) iff ls1  ls2 = \n(false, v) iff ls1  ls2   and v  ls1  ls2\n\nAlgorithm\n\nThe algorithm is inspired from here, which again is the special 2D case of a 3D algorithm by Ronald Goldman\'s article on the Intersection of two lines in three-space in Graphics Gems, Andrew S. (ed.), 1990.\n\nWe first check if the two line segments are parallel, and if so, if they are collinear. In the latter case, we check containment of any of the end points in the other line segment. Otherwise the lines are not parallel, so we can solve an equation of the intersection point, if it exists.\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#Check-for-emptiness-of-intersection-1",
     "page": "Binary Functions on Sets",
     "title": "Check for emptiness of intersection",
     "category": "section",
-    "text": "is_intersection_empty(::AbstractHyperrectangle{Float64}, ::AbstractHyperrectangle{Float64})\nis_intersection_empty(::AbstractSingleton{Float64}, ::AbstractHyperrectangle{Float64})\nis_intersection_empty(::AbstractHyperrectangle{Float64}, ::AbstractSingleton{Float64})\nis_intersection_empty(::AbstractSingleton{Float64}, ::LazySet{Float64})\nis_intersection_empty(::LazySet{Float64}, ::AbstractSingleton{Float64})\nis_intersection_empty(::AbstractSingleton{Float64}, ::AbstractSingleton{Float64})\nis_intersection_empty(::Zonotope{Float64}, ::Hyperplane{Float64})\nis_intersection_empty(::Hyperplane{Float64}, ::Zonotope{Float64})\nis_intersection_empty(::Ball2{Float64}, ::Ball2{Float64})"
+    "text": "is_intersection_empty(::AbstractHyperrectangle{Float64}, ::AbstractHyperrectangle{Float64})\nis_intersection_empty(::AbstractSingleton{Float64}, ::AbstractHyperrectangle{Float64})\nis_intersection_empty(::AbstractHyperrectangle{Float64}, ::AbstractSingleton{Float64})\nis_intersection_empty(::AbstractSingleton{Float64}, ::LazySet{Float64})\nis_intersection_empty(::LazySet{Float64}, ::AbstractSingleton{Float64})\nis_intersection_empty(::AbstractSingleton{Float64}, ::AbstractSingleton{Float64})\nis_intersection_empty(::Zonotope{Float64}, ::Hyperplane{Float64})\nis_intersection_empty(::Hyperplane{Float64}, ::Zonotope{Float64})\nis_intersection_empty(::Ball2{Float64}, ::Ball2{Float64})\nis_intersection_empty(::LineSegment{Float64}, ::LineSegment{Float64})"
 },
 
 {
