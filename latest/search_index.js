@@ -3117,7 +3117,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.decompose",
     "category": "Function",
-    "text": "decompose(S::LazySet{N}, set_type::Type=HPolygon\n         )::CartesianProductArray where {N<:Real}\n\nCompute an overapproximation of the projections of the given convex set over each two-dimensional subspace.\n\nInput\n\nS – convex set\nset_type – (optional, default: HPolygon) type of set approximation in 2D\n\nOutput\n\nA CartesianProductArray corresponding to the Cartesian product of two-dimensional sets of type set_type.\n\nAlgorithm\n\nFor each 2D block a specific decompose_2D method is called, dispatched on the set_type argument.\n\n\n\ndecompose(S::LazySet{N}, ɛi::Vector{<:Real})::CartesianProductArray where {N<:Real}\n\nCompute an overapproximation of the projections of the given convex set over each two-dimensional subspace with a certified error bound.\n\nInput\n\nS  – convex set\nɛi – array with the error bound for each projection (different error bounds         can be passed for different blocks)\n\nOutput\n\nA CartesianProductArray corresponding to the Cartesian product of 2  2 polygons.\n\nAlgorithm\n\nThis algorithm assumes a decomposition into two-dimensional subspaces only, i.e., partitions of the form 2 2  2. In particular, if S is a CartesianProductArray, no check is performed to verify that assumption.\n\nThe algorithm proceeds as follows:\n\nProject the set S into each partition, with M⋅S, where M is the identity matrix in the block coordinates and zero otherwise.\nOverapproximate the set with a given error bound, ɛi[i], for i = 1  b,\nReturn the result as a CartesianProductArray.\n\n\n\ndecompose(S::LazySet, ɛ::Real, [set_type]::Type=HPolygon\n         )::CartesianProductArray\n\nCompute an overapproximation of the projections of the given convex set over each two-dimensional subspace with a certified error bound.\n\nInput\n\nS – convex set\nɛ –  error bound\nset_type – (optional, default: HPolygon) type of set approximation in 2D\n\nOutput\n\nA CartesianProductArray corresponding to the Cartesian product of two-dimensional sets of type set_type.\n\nNotes\n\nThis function is a particular case of decompose(S, ɛi), where the same error bound for each block is assumed.\n\nThe set_type argument is ignored if   textInf.\n\n\n\n"
+    "text": "decompose(S::LazySet{N};\n          [set_type]::Type{<:Union{Hyperrectangle, HPolygon}}=Hyperrectangle,\n          [ɛ]::Real=Inf,\n          [blocks]::AbstractVector{Int}=default_block_structure(S)\n         )::CartesianProductArray where {N<:Real}\n\nDecompose a high-dimensional set into a Cartesian product of overapproximations of the projections over the specified subspaces.\n\nInput\n\nS – set\nset_type – (optional, default: Hyperrectangle) type of set approximation               for each subspace\nɛ – (optional, default: Inf) error bound for polytopic approximation\nblocks – (optional, default: [2, …, 2]) block structure - a vector with the             size of each block\n\nOutput\n\nA CartesianProductArray containing the low-dimensional approximated projections.\n\nAlgorithm\n\nFor each block a specific project method is called, dispatched on the set_type argument.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.default_block_structure",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.default_block_structure",
+    "category": "Function",
+    "text": "default_block_structure(S::LazySet)::AbstractVector{Int}\n\nCompute the default block structure.\n\nInput\n\nS – set\n\nOutput\n\nA vector representing the block structure. The default is blocks of size 2. Depending on the dimension, the last block has size 1 or 2.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.project",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.project",
+    "category": "Function",
+    "text": "project(S::LazySet{N},\n        block::AbstractVector{Int},\n        set_type::Type{<:LazySet},\n        [n]::Int=dim(S),\n        [ɛ]::Real=Inf\n       )::LazySet{N} where {N<:Real}\n\nDefault implementation for projecting a high-dimensional set to a given set type with possible overapproximation.\n\nInput\n\nS – set\nblock – block structure - a vector with the dimensions of interest\nset_type – target set type\nn – (optional, default: dim(S)) ambient dimension of the set S\nɛ – (optional, default: Inf) ignored\n\nOutput\n\nA set of type set_type representing an overapproximation of the projection of S.\n\nAlgorithm\n\nProject the set S with M⋅S, where M is the identity matrix in the block coordinates and zero otherwise.\nOverapproximate the projected lazy set using overapproximate.\n\n\n\nproject(S::LazySet{N},\n        block::AbstractVector{Int},\n        set_type::Type{<:HPolygon},\n        [n]::Int=dim(S),\n        [ɛ]::Real=Inf\n       )::HPolygon where {N<:Real}\n\nProject a high-dimensional set to a two-dimensional polygon with a certified error bound.\n\nInput\n\nS – set\nblock – block structure - a vector with the dimensions of interest\nset_type – HPolygon - used for dispatch\nn – (optional, default: dim(S)) ambient dimension of the set S\nɛ – (optional, default: Inf) error bound for polytopic approximation\n\nOutput\n\nA HPolygon representing the epsilon-close approximation of the box approximation of the projection of S.\n\nNotes\n\nblock must have length 2.\n\nAlgorithm\n\nIf ɛ < Inf, the algorithm proceeds as follows:\n\nProject the set S with M⋅S, where M is the identity matrix in the block coordinates and zero otherwise.\nOverapproximate the set with the given error bound ɛ.\n\nIf ɛ == Inf, the algorithm uses a box approximation.\n\n\n\nproject(S::LazySet{N},\n        block::AbstractVector{Int},\n        set_type::Type{<:Hyperrectangle},\n        [n]::Int=dim(S),\n        [ɛ]::Real=Inf\n       )::Hyperrectangle where {N<:Real}\n\nProject a high-dimensional set to a low-dimensional hyperrectangle.\n\nInput\n\nS – set\nblock – block structure - a vector with the dimensions of interest\nset_type – Hyperrectangle - used for dispatch\nn – (optional, default: dim(S)) ambient dimension of the set S\nɛ – (optional, default: Inf) - used for dispatch, ignored\n\nOutput\n\nThe box approximation of the projection of S.\n\n\n\n"
 },
 
 {
@@ -3125,7 +3141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Cartesian Decomposition",
     "category": "section",
-    "text": "decompose"
+    "text": "decompose\ndefault_block_structure\nproject"
 },
 
 {
