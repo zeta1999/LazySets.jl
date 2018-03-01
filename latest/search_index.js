@@ -645,7 +645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "Type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet)::AbstractVector{N} – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n18-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric\n LazySets.AbstractPolytope\n LazySets.CartesianProduct\n LazySets.CartesianProductArray\n LazySets.ConvexHull\n LazySets.ConvexHullArray\n LazySets.EmptySet\n LazySets.ExponentialMap\n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace\n LazySets.Hyperplane\n LazySets.Intersection\n LazySets.Line\n LazySets.LineSegment\n LazySets.LinearMap\n LazySets.MinkowskiSum\n LazySets.MinkowskiSumArray\n LazySets.PolynomialZonotope\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet)::AbstractVector{N} – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n17-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric\n LazySets.AbstractPolytope\n LazySets.CartesianProduct\n LazySets.CartesianProductArray\n LazySets.ConvexHull\n LazySets.ConvexHullArray\n LazySets.EmptySet\n LazySets.ExponentialMap\n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace\n LazySets.Hyperplane\n LazySets.Intersection\n LazySets.Line\n LazySets.LineSegment\n LazySets.LinearMap\n LazySets.MinkowskiSum\n LazySets.MinkowskiSumArray\n\n\n\n"
 },
 
 {
@@ -1902,78 +1902,6 @@ var documenterSearchIndex = {"docs": [
     "title": "Polytopes",
     "category": "section",
     "text": "HPolytope\ndim(P::HPolytope)\naddconstraint!(P::HPolytope{Float64}, constraint::LinearConstraint{Float64})\nconstraints_list(P::HPolytope{Float64})\nσ(d::AbstractVector{Float64}, P::HPolytope)\n∈(::AbstractVector{Float64}, ::HPolytope{Float64})"
-},
-
-{
-    "location": "lib/representations.html#LazySets.PolynomialZonotope",
-    "page": "Common Set Representations",
-    "title": "LazySets.PolynomialZonotope",
-    "category": "Type",
-    "text": "PolynomialZonotope{N} <: LazySet{N}\n\nType that represents a polynomial zonotope.\n\nFields\n\nc  – starting point\nE  – matrix of multi-indexed generators such that all indices have the same value\nF  – matrix of multi-indexed generators such that not all indices have the same value\nG  – matrix of single-indexed generators\n\nNotes\n\nPolynomial zonotopes were introduced by M. Althoff in Reachability analysis of nonlinear systems using conservative polynomialization and non-convex sets, Hybrid Systems: Computation and Control, 2013, pp. 173–182.\n\nMathematically, it is defined as the tuple (c E F G), where:\n\nc  mathbbR^n is the starting point (in some particular cases it corresponds to the center of a usual zonotope),\nE = E^1  E^ is an n  p  (+1)2 matrix with column-blocks\n\nE^i = f^(i 1 1  1)  f^(i p p  p) qquad i = 1 \n\ncalled the matrix of multi-indexed generators with equal indices, where each f^(i k_1 k_2  k_i) is an n-vector,\n\nF = F^2  F^ is a matrix with column-blocks\n\nF^i = f^(i 1 1  1 2) f^(i 1 1  1 3)  f^(i 1 1  1 p) \nf^(i 1 1  2 2) f^(i 1 1  2 3)  f^(i 1 1  2 p) \nf^(i 1 1  3 3)  qquad i = 1 \n\ncalled the matrix of multi-indexed generators with unequal indices (or, more accurately, not-all-equal indices), where each f^(i k_1 k_2  k_i) is an n-vector,\n\nG = G^1  G^q is an n  q matrix with columns\n\nG^i = g^(i) qquad i = 1 q\n\ncalled the matrix of single-indexed generators, where each g^(i) is an n-vector.\n\nThe polynomial zonotope (c E F G) defines the set:\n\nmathcalPZ = left c + _j=1^p _j f^(1 j) + _j=1^p _k=j^p _j _k f^(2 j k) + \n+  + _j=1^p _k=j^p  _m=^p _j _k  _m f^( j k  m) + \n+ _i=1^q _i g^(i) qquad _i _i  -1 1 right\n\nwhere the number of factors in the final product, _j _k  _m, corresponds to the polynomial order .\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.PolynomialZonotope}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "Method",
-    "text": "dim(pz::PolynomialZonotope)::Int\n\nReturn the ambient dimension of a polynomial zonotope.\n\nInput\n\npz – polynomial zonotope\n\nOutput\n\nAn integer representing the ambient dimension of the polynomial zonotope.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.PolynomialZonotope{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.σ",
-    "category": "Method",
-    "text": "σ(d::AbstractVector{N}, pz::PolynomialZonotope{N})::AbstractVector{N} where {N}\n\nReturn the support vector of a polynomial zonotope along direction d.\n\nInput\n\nd  – direction\npz – polynomial zonotope\n\nOutput\n\nVector representing the support vector.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.polynomial_order-Tuple{LazySets.PolynomialZonotope}",
-    "page": "Common Set Representations",
-    "title": "LazySets.polynomial_order",
-    "category": "Method",
-    "text": "polynomial_order(pz::PolynomialZonotope)::Int\n\nPolynomial order of a polynomial zonotope.\n\nInput\n\npz – polynomial zonotope\n\nOutput\n\nThe polynomial order, defined as the maximal power of the scale factors _i. Usually denoted .\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.order-Tuple{LazySets.PolynomialZonotope}",
-    "page": "Common Set Representations",
-    "title": "LazySets.order",
-    "category": "Method",
-    "text": "order(pz::PolynomialZonotope)::Rational{Int}\n\nOrder of a polynomial zonotope.\n\nInput\n\npz – polynomial zonotope\n\nOutput\n\nThe order, defined as the number of generators divided by the ambient dimension.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.linear_map-Tuple{Array{T,2} where T,LazySets.PolynomialZonotope}",
-    "page": "Common Set Representations",
-    "title": "LazySets.linear_map",
-    "category": "Method",
-    "text": "linear_map(M::Matrix, pz::PolynomialZonotope)\n\nReturn the linear map of a polynomial zonotope.\n\nInput\n\nM  – matrix\npz – polynomial zonotope\n\nOutput\n\nPolynomial zonotope such that its starting point and generators are those of pz multiplied by the matrix M.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.scale-Tuple{Number,LazySets.PolynomialZonotope}",
-    "page": "Common Set Representations",
-    "title": "LazySets.scale",
-    "category": "Method",
-    "text": "scale(α::Number, pz::PolynomialZonotope)\n\nReturn a polynomial zonotope modified by a scale factor.\n\nInput\n\nα – polynomial zonotope\npz – polynomial zonotope\n\nOutput\n\nPolynomial zonotope such that its center and generators are multiples of those of pz by a factor .\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.minkowski_sum-Tuple{LazySets.PolynomialZonotope,LazySets.Zonotope}",
-    "page": "Common Set Representations",
-    "title": "LazySets.minkowski_sum",
-    "category": "Method",
-    "text": "minkowski_sum(pz::PolynomialZonotope, z::Zonotope)\n\nReturn the Minkowski sum of a polynomial zonotope and a usual zonotope.\n\nInput\n\npz – polynomial zonotope\nz  – usual zonotope\n\nOutput\n\nPolynomial zonotope.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Polynomial-Zonotopes-1",
-    "page": "Common Set Representations",
-    "title": "Polynomial Zonotopes",
-    "category": "section",
-    "text": "PolynomialZonotope\ndim(pz::PolynomialZonotope)\nσ(d::AbstractVector{Float64}, pz::PolynomialZonotope{Float64})\npolynomial_order(pz::PolynomialZonotope)\norder(pz::PolynomialZonotope)\nlinear_map(M::Matrix, pz::PolynomialZonotope)\nscale(α::Number, pz::PolynomialZonotope)\nminkowski_sum(pz::PolynomialZonotope, z::Zonotope)"
 },
 
 {
