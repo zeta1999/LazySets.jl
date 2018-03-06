@@ -3117,7 +3117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.decompose",
     "category": "function",
-    "text": "decompose(S::LazySet{N};\n          [set_type]::Type{<:Union{HPolygon, Hyperrectangle, LazySets.Interval}}=Hyperrectangle,\n          [ɛ]::Real=Inf,\n          [blocks]::AbstractVector{Int}=default_block_structure(S)\n         )::CartesianProductArray where {N<:Real}\n\nDecompose a high-dimensional set into a Cartesian product of overapproximations of the projections over the specified subspaces.\n\nInput\n\nS – set\nset_type – (optional, default: Hyperrectangle) type of set approximation               for each subspace\nɛ – (optional, default: Inf) error bound for polytopic approximation\nblocks – (optional, default: [2, …, 2]) block structure - a vector with the             size of each block\n\nOutput\n\nA CartesianProductArray containing the low-dimensional approximated projections.\n\nAlgorithm\n\nFor each block a specific project method is called, dispatched on the set_type argument.\n\n\n\n"
+    "text": "decompose(S::LazySet{N};\n          [set_type]::Type{<:Union{HPolygon, Hyperrectangle, LazySets.Interval}}=Hyperrectangle,\n          [ɛ]::Real=Inf,\n          [blocks]::AbstractVector{Int}=default_block_structure(S, set_type),\n         )::CartesianProductArray where {N<:Real}\n\nDecompose a high-dimensional set into a Cartesian product of overapproximations of the projections over the specified subspaces.\n\nInput\n\nS        – set\nset_type – (optional, default: Hyperrectangle) type of set approximation               for each subspace\nɛ        – (optional, default: Inf) error bound for polytopic approximation\nblocks   – (optional, default: [2, …, 2] or [1, …, 1] if set_type is an interval)               block structure - a vector with the size of each block\n\nOutput\n\nA CartesianProductArray containing the low-dimensional approximated projections.\n\nAlgorithm\n\nFor each block a specific project method is called, dispatched on the set_type argument.\n\n\n\n"
 },
 
 {
@@ -3125,7 +3125,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.default_block_structure",
     "category": "function",
-    "text": "default_block_structure(S::LazySet)::AbstractVector{Int}\n\nCompute the default block structure.\n\nInput\n\nS – set\n\nOutput\n\nA vector representing the block structure. The default is blocks of size 2. Depending on the dimension, the last block has size 1 or 2.\n\n\n\n"
+    "text": "default_block_structure(S::LazySet, set_type::Type{<:LazySet})::AbstractVector{Int}\n\nCompute the default block structure.\n\nInput\n\nS        – set\nset_type – target set type\n\nOutput\n\nA vector representing the block structure, such that:\n\nIf the target set_type is an interval, the default is blocks of size 1.\nOtherwise, the default is blocks of size 2. Depending on the dimension, the last block has size 1 or 2.\n\n\n\n"
 },
 
 {
