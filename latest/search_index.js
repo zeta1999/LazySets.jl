@@ -1473,6 +1473,118 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.Interval",
+    "page": "Common Set Representations",
+    "title": "LazySets.Interval",
+    "category": "type",
+    "text": "Interval{N<:Real, IN <: IA.AbstractInterval{N}} <: AbstractPointSymmetricPolytope{N}\n\nType representing an interval on the real line.\n\nFields\n\ndat – data container for the given interval\n\nExamples\n\nUnidimensional intervals are symbolic representations of a real closed interval. This type requires the user to load the IntervalArithmetic library, since artithmetic operations rely on that module.\n\nWe can create intervals in different ways, the simpler way is to pass a pair of numbers:\n\njulia> x = Interval(0.0, 1.0)\nLazySets.Interval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nor a 2-vector:\n\njulia> x = Interval([0.0, 1.0])\nLazySets.Interval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nNote that if the package IntervalArithmetic is loaded in the current scope, you have to prepend the LazySets to the interval type, since there is a name conflict otherwise.\n\njulia> using IntervalArithmetic\nWARNING: using IntervalArithmetic.Interval in module Main conflicts with an existing identifier.\n\njulia> x = LazySets.Interval(IntervalArithmetic.Interval(0.0, 1.0))\nLazySets.Interval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\njulia> dim(x)\n1\n\njulia> center(x)\n1-element Array{Float64,1}:\n 0.5\n\nThis type is such that the usual pairwise arithmetic operators +, -, * trigger the corresponding interval arithmetic backend method, and return a new Interval object. For the symbolic Minkowksi sum, use MinkowskiSum or ⊕.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.IA",
+    "page": "Common Set Representations",
+    "title": "LazySets.IA",
+    "category": "module",
+    "text": "IA = IntervalArithmetic\n\nName alias for the interval arithmetic library.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(x::Interval)::Int\n\nReturn the ambient dimension of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe integer 1.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Interval{Float64,IntervalArithmetic.AbstractInterval{Float64}}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{N}, x::Interval{N, IN})::AbstractVector{N} where {N, IN <: IA.AbstractInterval{N}}\n\nReturn the support vector of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nx – interval\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "LazySets.center",
+    "category": "method",
+    "text": "center(x::Interval)\n\nReturn the interval\'s center.\n\nInput\n\nx – interval\n\nOutput\n\nThe center, or midpoint, of x.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.low-Tuple{LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "LazySets.low",
+    "category": "method",
+    "text": "low(x::Interval)\n\nReturn the lower component of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe lower (lo) component of the interval.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.high-Tuple{LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "LazySets.high",
+    "category": "method",
+    "text": "high(x::Interval)\n\nReturn the higher or upper component of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe higher (hi) component of the interval.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(x::Interval)\n\nReturn the list of vertices of this interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe list of vertices of the interval represented as two one-dimensional vectors.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:+-Tuple{LazySets.Interval,LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "Base.:+",
+    "category": "method",
+    "text": "+(x::Interval, y::Interval)\n\nReturn the sum of the intervals.\n\nInput\n\nx – interval\ny – interval\n\nOutput\n\nThe sum of the intervals as a new Interval set.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:--Tuple{LazySets.Interval,LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "Base.:-",
+    "category": "method",
+    "text": "-(x::Interval, y::Interval)\n\nReturn the difference of the intervals.\n\nInput\n\nx – interval\ny – interval\n\nOutput\n\nThe difference of the intervals as a new Interval set.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:*-Tuple{LazySets.Interval,LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "Base.:*",
+    "category": "method",
+    "text": "    *(x::Interval, y::Interval)\n\nReturn the product of the intervals.\n\nInput\n\nx – interval\ny – interval\n\nOutput\n\nThe product of the intervals as a new Interval set.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{T,1} where T,LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(v::AbstractVector, x::Interval)\n\nReturn whether a vector is contained in the interval.\n\nInput\n\nv – one-dimensional vector\nx – interval\n\nOutput\n\ntrue iff x contains v\'s first component.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{Float64,LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(v::N, x::Interval) where {N}\n\nReturn whether a number is contained in the interval.\n\nInput\n\nv – scalar\nx – interval\n\nOutput\n\ntrue iff x contains v.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Intervals-1",
+    "page": "Common Set Representations",
+    "title": "Intervals",
+    "category": "section",
+    "text": "Interval\nIA\ndim(::Interval)\nσ(::AbstractVector{Float64}, ::Interval{Float64, IntervalArithmetic.AbstractInterval{Float64}})\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\nvertices_list(::Interval)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)\n∈(::AbstractVector, ::Interval)\n∈(::Float64, ::Interval)"
+},
+
+{
     "location": "lib/representations.html#LazySets.Line",
     "page": "Common Set Representations",
     "title": "LazySets.Line",
@@ -2917,7 +3029,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "function",
-    "text": "issubset(a,b)\n⊆(a,b)\n\nChecks if all the points of the interval a are within the interval b.\n\n\n\n"
+    "text": "center(x::Interval)\n\nReturn the interval\'s center.\n\nInput\n\nx – interval\n\nOutput\n\nThe center, or midpoint, of x.\n\n\n\nissubset(a,b)\n⊆(a,b)\n\nChecks if all the points of the interval a are within the interval b.\n\n\n\n"
 },
 
 {
