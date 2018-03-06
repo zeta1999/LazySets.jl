@@ -3029,7 +3029,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "function",
-    "text": "center(x::Interval)\n\nReturn the interval\'s center.\n\nInput\n\nx – interval\n\nOutput\n\nThe center, or midpoint, of x.\n\n\n\nissubset(a,b)\n⊆(a,b)\n\nChecks if all the points of the interval a are within the interval b.\n\n\n\n"
+    "text": "issubset(a,b)\n⊆(a,b)\n\nChecks if all the points of the interval a are within the interval b.\n\n\n\ncenter(x::Interval)\n\nReturn the interval\'s center.\n\nInput\n\nx – interval\n\nOutput\n\nThe center, or midpoint, of x.\n\n\n\n"
 },
 
 {
