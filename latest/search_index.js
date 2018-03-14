@@ -2821,7 +2821,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:*",
     "category": "method",
-    "text": "    *(M::AbstractMatrix, X::LazySet)\n\nReturn the linear map of a convex set.\n\nInput\n\nM – matrix/linear map\nX – convex set\n\nOutput\n\nIf the matrix is null, a ZeroSet is returned; otherwise a lazy linear map.\n\n\n\n"
+    "text": "    *(M::AbstractMatrix, X::LazySet)\n\nReturn the linear map of a convex set.\n\nInput\n\nM – matrix/linear map\nX – convex set\n\nOutput\n\nA lazy linear map, i.e. a LinearMap instance.\n\n\n\n"
 },
 
 {
@@ -3029,7 +3029,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "function",
-    "text": "center(x::Interval)\n\nReturn the interval\'s center.\n\nInput\n\nx – interval\n\nOutput\n\nThe center, or midpoint, of x.\n\n\n\nissubset(a,b)\n⊆(a,b)\n\nChecks if all the points of the interval a are within the interval b.\n\n\n\n"
+    "text": "issubset(a,b)\n⊆(a,b)\n\nChecks if all the points of the interval a are within the interval b.\n\n\n\ncenter(x::Interval)\n\nReturn the interval\'s center.\n\nInput\n\nx – interval\n\nOutput\n\nThe center, or midpoint, of x.\n\n\n\n"
 },
 
 {
