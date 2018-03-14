@@ -645,7 +645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet)::AbstractVector{N} – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n17-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric\n LazySets.AbstractPolytope\n LazySets.CartesianProduct\n LazySets.CartesianProductArray\n LazySets.ConvexHull\n LazySets.ConvexHullArray\n LazySets.EmptySet\n LazySets.ExponentialMap\n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace\n LazySets.Hyperplane\n LazySets.Intersection\n LazySets.Line\n LazySets.LineSegment\n LazySets.LinearMap\n LazySets.MinkowskiSum\n LazySets.MinkowskiSumArray\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet) – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n17-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric\n LazySets.AbstractPolytope\n LazySets.CartesianProduct\n LazySets.CartesianProductArray\n LazySets.ConvexHull\n LazySets.ConvexHullArray\n LazySets.EmptySet\n LazySets.ExponentialMap\n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace\n LazySets.Hyperplane\n LazySets.Intersection\n LazySets.Line\n LazySets.LineSegment\n LazySets.LinearMap\n LazySets.MinkowskiSum\n LazySets.MinkowskiSumArray\n\n\n\n"
 },
 
 {
@@ -693,7 +693,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\n"
 },
 
 {
@@ -861,7 +861,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, B::Ball2)::AbstractVector{<:AbstractFloat} where {N<:AbstractFloat}\n\nReturn the support vector of a 2-norm ball in a given direction.\n\nInput\n\nd – direction\nB – ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the origin is returned.\n\nNotes\n\nLet c and r be the center and radius of a ball B in the 2-norm, respectively. For nonzero direction d we have\n\n_B(d) = c + r fracdd_2\n\nThis function requires computing the 2-norm of the input direction, which is performed in the given precision of the numeric datatype of both the direction and the set. Exact inputs are not supported.\n\n\n\n"
+    "text": "σ(d::V, B::Ball2{N}) where {N<:AbstractFloat, V<:AbstractVector{N}}\n\nReturn the support vector of a 2-norm ball in a given direction.\n\nInput\n\nd – direction\nB – ball in the 2-norm\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the origin is returned.\n\nNotes\n\nLet c and r be the center and radius of a ball B in the 2-norm, respectively. For nonzero direction d we have\n\n_B(d) = c + r fracdd_2\n\nThis function requires computing the 2-norm of the input direction, which is performed in the given precision of the numeric datatype of both the direction and the set. Exact inputs are not supported.\n\n\n\n"
 },
 
 {
@@ -877,7 +877,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(S::AbstractPointSymmetric{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric set.\n\nInput\n\nS – point symmetric set\n\nOutput\n\nThe center of the point symmetric set.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(S::AbstractPointSymmetric{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric set.\n\nInput\n\nS – point symmetric set\n\nOutput\n\nThe center of the point symmetric set.\n\n\n\n"
 },
 
 {
@@ -917,7 +917,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, H::AbstractHyperrectangle{N}\n )::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\n"
+    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\n"
 },
 
 {
@@ -933,7 +933,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
 },
 
 {
@@ -1029,7 +1029,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, B::Ball1)::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of a ball in the 1-norm in a given direction.\n\nInput\n\nd – direction\nB – ball in the 1-norm\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+    "text": "σ(d::V, B::Ball1{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a ball in the 1-norm in a given direction.\n\nInput\n\nd – direction\nB – ball in the 1-norm\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
 },
 
 {
@@ -1045,7 +1045,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
 },
 
 {
@@ -1085,7 +1085,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ballp",
     "category": "type",
-    "text": "Ballp{N<:AbstractFloat} <: AbstractPointSymmetric{N}\n\nType that represents a ball in the p-norm, for 1  p  .\n\nIt is defined as the set\n\nmathcalB_p^n(c r) =  x  mathbbR^n   x - c _p  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _p for 1  p   denotes the vector p-norm, defined as  x _p = left( sumlimits_i=1^n x_i^p right)^1p for any x  mathbbR^n.\n\nFields\n\np      – norm as a real scalar\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nNotes\n\nThe special cases p=1, p=2 and p= fall back to the specialized types Ball1, Ball2 and BallInf, respectively.\n\nExamples\n\nA five-dimensional ball in the p=32 norm centered at the origin of radius 0.5:\n\njulia> B = Ballp(3/2, zeros(5), 0.5)\nLazySets.Ballp{Float64}(1.5, [0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nWe evaluate the support vector in direction 125:\n\njulia> σ(1.:5, B)\n5-element Array{Float64,1}:\n 0.013516\n 0.054064\n 0.121644\n 0.216256\n 0.3379\n\n\n\n"
+    "text": "Ballp{N<:AbstractFloat} <: AbstractPointSymmetric{N}\n\nType that represents a ball in the p-norm, for 1  p  .\n\nIt is defined as the set\n\nmathcalB_p^n(c r) =  x  mathbbR^n   x - c _p  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _p for 1  p   denotes the vector p-norm, defined as  x _p = left( sumlimits_i=1^n x_i^p right)^1p for any x  mathbbR^n.\n\nFields\n\np      – norm as a real scalar\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nNotes\n\nThe special cases p=1, p=2 and p= fall back to the specialized types Ball1, Ball2 and BallInf, respectively.\n\nExamples\n\nA five-dimensional ball in the p=32 norm centered at the origin of radius 0.5:\n\njulia> B = Ballp(3/2, zeros(5), 0.5)\nLazySets.Ballp{Float64}(1.5, [0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nWe evaluate the support vector in direction 125:\n\njulia> σ([1., 2, 3, 4, 5], B)\n5-element Array{Float64,1}:\n 0.013516\n 0.054064\n 0.121644\n 0.216256\n 0.3379\n\n\n\n"
 },
 
 {
@@ -1101,7 +1101,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, B::Ballp)::AbstractVector{N} where {N<:AbstractFloat}\n\nReturn the support vector of a Ballp in a given direction.\n\nInput\n\nd – direction\nB – ball in the p-norm\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the center of the ball is returned.\n\nAlgorithm\n\nThe support vector of the unit ball in the p-norm along direction d is:\n\n_mathcalB_p^n(0 1)(d) = dfractildevtildev_q\n\nwhere tildev_i = fracd_i^qd_i if d_i  0 and tildev_i = 0 otherwise, for all i=1n, and q is the conjugate number of p. By the affine transformation x = rtildex + c, one obtains that the support vector of mathcalB_p^n(c r) is\n\n_mathcalB_p^n(c r)(d) = dfracvv_q\n\nwhere v_i = c_i + rfracd_i^qd_i if d_i  0 and v_i = 0 otherwise, for all i = 1  n.\n\n\n\n"
+    "text": "σ(d::V, B::Ballp) where {N<:AbstractFloat, V<:AbstractVector{N}}\n\nReturn the support vector of a Ballp in a given direction.\n\nInput\n\nd – direction\nB – ball in the p-norm\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the center of the ball is returned.\n\nAlgorithm\n\nThe support vector of the unit ball in the p-norm along direction d is:\n\n_mathcalB_p^n(0 1)(d) = dfractildevtildev_q\n\nwhere tildev_i = fracd_i^qd_i if d_i  0 and tildev_i = 0 otherwise, for all i=1n, and q is the conjugate number of p. By the affine transformation x = rtildex + c, one obtains that the support vector of mathcalB_p^n(c r) is\n\n_mathcalB_p^n(c r)(d) = dfracvv_q\n\nwhere v_i = c_i + rfracd_i^qd_i if d_i  0 and v_i = 0 otherwise, for all i = 1  n.\n\n\n\n"
 },
 
 {
@@ -1117,7 +1117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(S::AbstractPointSymmetric{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric set.\n\nInput\n\nS – point symmetric set\n\nOutput\n\nThe center of the point symmetric set.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(S::AbstractPointSymmetric{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric set.\n\nInput\n\nS – point symmetric set\n\nOutput\n\nThe center of the point symmetric set.\n\n\n\n"
 },
 
 {
@@ -1149,7 +1149,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N},\n           E::Ellipsoid{N})::AbstractVector{<:AbstractFloat} where {N<:AbstractFloat}\n\nReturn the support vector of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nE – ellipsoid\n\nOutput\n\nSupport vector in the given direction.\n\nAlgorithm\n\nLet E be an ellipsoid of center c and shape matrix Q = BB^mathrmT. Its support vector along direction d can be deduced from that of the unit Euclidean ball mathcalB_2 using the algebraic relations for the support vector,\n\n_BmathcalB_2  c(d) = c + B_mathcalB_2 (B^mathrmT d)\n= c + dfracQdsqrtd^mathrmTQ d\n\n\n\n"
+    "text": "σ(d::V, E::Ellipsoid{N})::V where{N<:AbstractFloat, V<:AbstractVector{N}}\n\nReturn the support vector of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nE – ellipsoid\n\nOutput\n\nSupport vector in the given direction.\n\nAlgorithm\n\nLet E be an ellipsoid of center c and shape matrix Q = BB^mathrmT. Its support vector along direction d can be deduced from that of the unit Euclidean ball mathcalB_2 using the algebraic relations for the support vector,\n\n_BmathcalB_2  c(d) = c + B_mathcalB_2 (B^mathrmT d)\n= c + dfracQdsqrtd^mathrmTQ d\n\n\n\n"
 },
 
 {
@@ -1221,7 +1221,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(∅::EmptySet)\n\nReturn some element of an empty set.\n\nInput\n\n∅ – empty set\n\nOutput\n\nAn error.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(∅::EmptySet)\n\nReturn some element of an empty set.\n\nInput\n\n∅ – empty set\n\nOutput\n\nAn error.\n\n\n\n"
 },
 
 {
@@ -1261,7 +1261,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, hs::HalfSpace)::AbstractVector{<:Real}\n\nReturn the support vector of a half-space.\n\nInput\n\nd  – direction\nhs – half-space\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the half-space\'s normal direction.\n\nIn both cases the result is any point on the boundary (the defining hyperplane). Otherwise this function throws an error.\n\n\n\n"
+    "text": "σ(d::V, hs::HalfSpace) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a half-space.\n\nInput\n\nd  – direction\nhs – half-space\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the half-space\'s normal direction.\n\nIn both cases the result is any point on the boundary (the defining hyperplane). Otherwise this function throws an error.\n\n\n\n"
 },
 
 {
@@ -1269,7 +1269,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(hs::HalfSpace{N})::Vector{N} where {N<:Real}\n\nReturn some element of a half-space.\n\nInput\n\nhs – half-space\n\nOutput\n\nAn element on the defining hyperplane.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(hs::HalfSpace{N})::Vector{N} where {N<:Real}\n\nReturn some element of a half-space.\n\nInput\n\nhs – half-space\n\nOutput\n\nAn element on the defining hyperplane.\n\n\n\n"
 },
 
 {
@@ -1309,7 +1309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, hp::Hyperplane)::AbstractVector{<:Real}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd  – direction\nhp – hyperplane\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\n\nIn both cases the result is any point on the hyperplane. Otherwise this function throws an error.\n\n\n\n"
+    "text": "σ(d::V, hp::Hyperplane) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd  – direction\nhp – hyperplane\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\n\nIn both cases the result is any point on the hyperplane. Otherwise this function throws an error.\n\n\n\n"
 },
 
 {
@@ -1317,7 +1317,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(hp::Hyperplane{N})::Vector{N} where {N<:Real}\n\nReturn some element of a hyperplane.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nAn element in the hyperplane.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(hp::Hyperplane{N})::Vector{N} where {N<:Real}\n\nReturn some element of a hyperplane.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nAn element in the hyperplane.\n\n\n\n"
 },
 
 {
@@ -1365,7 +1365,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, H::AbstractHyperrectangle{N}\n )::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\n"
+    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\n"
 },
 
 {
@@ -1381,7 +1381,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
 },
 
 {
@@ -1501,7 +1501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, x::Interval{N, IN})::AbstractVector{N} where {N, IN <: IA.AbstractInterval{N}}\n\nReturn the support vector of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nx – interval\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+    "text": "σ(d::V, x::Interval{N, IN})::V where {N, IN <: IA.AbstractInterval{N}, V<:AbstractVector{N}}\n\nReturn the support vector of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nx – interval\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
 },
 
 {
@@ -1605,7 +1605,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, L::Line)::AbstractVector{<:Real}\n\nReturn the support vector of a line in a given direction.\n\nInput\n\nd – direction\nL – line\n\nOutput\n\nThe support vector in the given direction, which is defined the same way as for the more general Hyperplane.\n\n\n\n"
+    "text": "σ(d::V, L::Line) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a line in a given direction.\n\nInput\n\nd – direction\nL – line\n\nOutput\n\nThe support vector in the given direction, which is defined the same way as for the more general Hyperplane.\n\n\n\n"
 },
 
 {
@@ -1645,7 +1645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, L::LineSegment)::AbstractVector{<:Real}\n\nReturn the support vector of a line segment in a given direction.\n\nInput\n\nd – direction\nL – line segment\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nIf the angle between the vector q - p and d is bigger than 90° and less than 270° (measured in counter-clockwise order), the result is p, otherwise it is q. If the angle is exactly 90° or 270°, or if the direction has norm zero, this implementation returns q.\n\n\n\n"
+    "text": "σ(d::V, L::LineSegment) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a line segment in a given direction.\n\nInput\n\nd – direction\nL – line segment\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nIf the angle between the vector q - p and d is bigger than 90° and less than 270° (measured in counter-clockwise order), the result is p, otherwise it is q. If the angle is exactly 90° or 270°, or if the direction has norm zero, this implementation returns q.\n\n\n\n"
 },
 
 {
@@ -1709,7 +1709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractHPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nA vertex of the polygon in constraint representation (the first one in the order of the constraints).\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractHPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nA vertex of the polygon in constraint representation (the first one in the order of the constraints).\n\n\n\n"
 },
 
 {
@@ -1797,7 +1797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractHPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nA vertex of the polygon in constraint representation (the first one in the order of the constraints).\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractHPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nA vertex of the polygon in constraint representation (the first one in the order of the constraints).\n\n\n\n"
 },
 
 {
@@ -1885,7 +1885,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::VPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in vertex representation.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe first vertex of the polygon in vertex representation.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::VPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in vertex representation.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe first vertex of the polygon in vertex representation.\n\n\n\n"
 },
 
 {
@@ -2037,7 +2037,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, H::AbstractHyperrectangle{N}\n )::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::AbstractVector{N}, S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a set with a single value.\n\nInput\n\nd – direction\nS – set with a single value\n\nOutput\n\nThe support vector, which is the set\'s vector itself, irrespective of the given direction.\n\n\n\n"
+    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::AbstractVector{N}, S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a set with a single value.\n\nInput\n\nd – direction\nS – set with a single value\n\nOutput\n\nThe support vector, which is the set\'s vector itself, irrespective of the given direction.\n\n\n\n"
 },
 
 {
@@ -2109,7 +2109,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\nan_element(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn some element of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe only element in the set.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\nan_element(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn some element of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe only element in the set.\n\n\n\n"
 },
 
 {
@@ -2157,7 +2157,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, H::AbstractHyperrectangle{N}\n )::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::AbstractVector{N}, S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a set with a single value.\n\nInput\n\nd – direction\nS – set with a single value\n\nOutput\n\nThe support vector, which is the set\'s vector itself, irrespective of the given direction.\n\n\n\nσ(d::AbstractVector{N}, Z::ZeroSet)::Vector{N} where {N<:Real}\n\nReturn the support vector of a zero set.\n\nInput\n\nZ – a zero set, i.e., a set that only contains the origin\n\nOutput\n\nThe returned value is the origin since it is the only point that belongs to this set.\n\n\n\n"
+    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::AbstractVector{N}, S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a set with a single value.\n\nInput\n\nd – direction\nS – set with a single value\n\nOutput\n\nThe support vector, which is the set\'s vector itself, irrespective of the given direction.\n\n\n\nσ(d::AbstractVector{N}, Z::ZeroSet)::Vector{N} where {N<:Real}\n\nReturn the support vector of a zero set.\n\nInput\n\nZ – a zero set, i.e., a set that only contains the origin\n\nOutput\n\nThe returned value is the origin since it is the only point that belongs to this set.\n\n\n\n"
 },
 
 {
@@ -2229,7 +2229,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\nan_element(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn some element of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe only element in the set.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\nan_element(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn some element of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe only element in the set.\n\n\n\n"
 },
 
 {
@@ -2277,7 +2277,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, Z::Zonotope)::AbstractVector{<:Real}\n\nReturn the support vector of a zonotope in a given direction.\n\nInput\n\nd – direction\nZ – zonotope\n\nOutput\n\nSupport vector in the given direction. If the direction has norm zero, the vertex with _i = 1    i = 1 p is returned.\n\n\n\n"
+    "text": "σ(d::V, Z::Zonotope) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a zonotope in a given direction.\n\nInput\n\nd – direction\nZ – zonotope\n\nOutput\n\nSupport vector in the given direction. If the direction has norm zero, the vertex with _i = 1    i = 1 p is returned.\n\n\n\n"
 },
 
 {
@@ -2293,7 +2293,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
 },
 
 {
@@ -2437,7 +2437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, cp::CartesianProduct)::AbstractVector{<:Real}\n\nReturn the support vector of a Cartesian product.\n\nInput\n\nd  – direction\ncp – Cartesian product\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the product sets.\n\n\n\n"
+    "text": "σ(d::V, cp::CartesianProduct) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a Cartesian product.\n\nInput\n\nd  – direction\ncp – Cartesian product\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the product sets.\n\nAlgorithm\n\n\n\n"
 },
 
 {
@@ -2485,7 +2485,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, cpa::CartesianProductArray{N, <:LazySet{N}}\n )::AbstractVector{N} where {N<:Real}\n\nSupport vector of a Cartesian product.\n\nInput\n\nd   – direction\ncpa – Cartesian product array\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the product sets.\n\n\n\n"
+    "text": "σ(d::V, cpa::CartesianProductArray{N, <:LazySet{N}}) where {N<:Real, V<:AbstractVector{N}}\n\nSupport vector of a Cartesian product.\n\nInput\n\nd   – direction\ncpa – Cartesian product array\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the product sets.\n\n\n\n"
 },
 
 {
@@ -2541,7 +2541,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, ch::ConvexHull)::AbstractVector{<:Real}\n\nReturn the support vector of a convex hull of two convex sets in a given direction.\n\nInput\n\nd  – direction\nch – convex hull of two convex sets\n\n\n\n"
+    "text": "σ(d::V, ch::ConvexHull) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a convex hull of two convex sets in a given direction.\n\nInput\n\nd  – direction\nch – convex hull of two convex sets\n\n\n\n"
 },
 
 {
@@ -2589,7 +2589,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, cha::ConvexHullArray)::AbstractVector{<:Real}\n\nReturn the support vector of a convex hull array in a given direction.\n\nInput\n\nd   – direction\ncha – convex hull array\n\n\n\n"
+    "text": "σ(d::V, cha::ConvexHullArray) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a convex hull array in a given direction.\n\nInput\n\nd   – direction\ncha – convex hull array\n\n\n\n"
 },
 
 {
@@ -2661,7 +2661,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, cap::Intersection)::AbstractVector{<:Real}\n\nReturn the support vector of an intersection of two convex sets in a given direction.\n\nInput\n\nd   – direction\ncap – intersection of two convex sets\n\nOutput\n\nThe support vector in the given direction.\n\n\n\n"
+    "text": "σ(d::V, cap::Intersection) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of an intersection of two convex sets in a given direction.\n\nInput\n\nd   – direction\ncap – intersection of two convex sets\n\nOutput\n\nThe support vector in the given direction.\n\n\n\n"
 },
 
 {
@@ -2733,7 +2733,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, ms::MinkowskiSum)::AbstractVector{<:Real}\n\nReturn the support vector of a Minkowski sum.\n\nInput\n\nd  – direction\nms – Minkowski sum\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the summand sets.\n\n\n\n"
+    "text": "σ(d::V, ms::MinkowskiSum) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a Minkowski sum.\n\nInput\n\nd  – direction\nms – Minkowski sum\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the summand sets.\n\n\n\n"
 },
 
 {
@@ -2869,7 +2869,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, em::ExponentialMap)::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of the exponential map.\n\nInput\n\nd  – direction\nem – exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf E = exp(M)S, where M is a matrix and S is a convex set, it follows that (d E) = exp(M)(exp(M)^T d S) for any direction d.\n\nWe allow sparse direction vectors, but will convert them to dense vectors to be able to use expmv.\n\n\n\n"
+    "text": "σ(d::V, em::ExponentialMap) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of the exponential map.\n\nInput\n\nd  – direction\nem – exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf E = exp(M)S, where M is a matrix and S is a convex set, it follows that (d E) = exp(M)(exp(M)^T d S) for any direction d.\n\nWe allow sparse direction vectors, but will convert them to dense vectors to be able to use expmv.\n\n\n\n"
 },
 
 {
@@ -2901,7 +2901,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N},\n  eprojmap::ExponentialProjectionMap)::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of a projection of an exponential map.\n\nInput\n\nd        – direction\neprojmap – projection of an exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf S = (LMR)X, where L and R are matrices, M is a matrix exponential, and X is a set, it follows that (d S) = LMR(R^TM^TL^Td X) for any direction d.\n\nWe allow sparse direction vectors, but will convert them to dense vectors to be able to use expmv.\n\n\n\n"
+    "text": "σ(d::V, eprojmap::ExponentialProjectionMap) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a projection of an exponential map.\n\nInput\n\nd        – direction\neprojmap – projection of an exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf S = (LMR)X, where L and R are matrices, M is a matrix exponential, and X is a set, it follows that (d S) = LMR(R^TM^TL^Td X) for any direction d.\n\nWe allow sparse direction vectors, but will convert them to dense vectors to be able to use expmv.\n\n\n\n"
 },
 
 {
@@ -2965,7 +2965,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, H::AbstractHyperrectangle{N}\n )::AbstractVector{N} where {N<:Real}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::AbstractVector{N}, sih::SymmetricIntervalHull\n )::AbstractVector{<:Real} where {N<:Real}\n\nReturn the support vector of a symmetric interval hull of a convex set in a given direction.\n\nInput\n\nd   – direction\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe support vector of the symmetric interval hull of a convex set in the given direction. If the direction has norm zero, the origin is returned.\n\nAlgorithm\n\nFor each non-zero entry in d we need to either look up the bound (if it has been computed before) or compute it, in which case we store it for future queries. One such computation just asks for the support vector of the underlying set for both the positive and negative unit vector in the respective dimension.\n\n\n\n"
+    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::V, sih::SymmetricIntervalHull) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a symmetric interval hull of a convex set in a given direction.\n\nInput\n\nd   – direction\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe support vector of the symmetric interval hull of a convex set in the given direction. If the direction has norm zero, the origin is returned.\n\nAlgorithm\n\nFor each non-zero entry in d we need to either look up the bound (if it has been computed before) or compute it, in which case we store it for future queries. One such computation just asks for the support vector of the underlying set for both the positive and negative unit vector in the respective dimension.\n\n\n\n"
 },
 
 {
@@ -2973,7 +2973,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N})::AbstractVector{N} where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
 },
 
 {
@@ -3029,7 +3029,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "function",
-    "text": "issubset(a,b)\n⊆(a,b)\n\nChecks if all the points of the interval a are within the interval b.\n\n\n\ncenter(x::Interval)\n\nReturn the interval\'s center.\n\nInput\n\nx – interval\n\nOutput\n\nThe center, or midpoint, of x.\n\n\n\n"
+    "text": "center(x::Interval)\n\nReturn the interval\'s center.\n\nInput\n\nx – interval\n\nOutput\n\nThe center, or midpoint, of x.\n\n\n\nissubset(a,b)\n⊆(a,b)\n\nChecks if all the points of the interval a are within the interval b.\n\n\n\n"
 },
 
 {
