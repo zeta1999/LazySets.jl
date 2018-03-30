@@ -2909,7 +2909,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.SparseMatrixExp",
     "category": "type",
-    "text": "SparseMatrixExp{N}\n\nType that represents the matrix exponential, exp(M), of a sparse matrix.\n\nFields\n\nM – sparse matrix\n\nExamples\n\nTake for exammple a random sparse matrix:\n\njulia> A = sprandn(100, 100, 0.1);\n\njulia> E = SparseMatrixExp(A);\n\njulia> size(e)\n(100, 100)\n\nNow, E is a lazy representation of exp(A). To compute with E, use get_row and get_column (or get_rows and get_columns; they return row and column vectors (or matrices). For example:\n\njulia> get_row(E, 10); # compute E[10, :]\n\njulia> get_column(E, 10); # compute E[:, 10]\n\njulia> get_rows(E, [10]); # same as get_row(E, 10) but a 1x100 matrix is returned\n\njulia> get_columns(E, [10]); # same as get_column(E, 10) but a 100x1 matrix is returned\n\nNotes\n\nThis type is provided for use with very large and very sparse matrices. The evaluation of the exponential matrix action over vectors relies on the Expokit package.\n\n\n\n"
+    "text": "SparseMatrixExp{N}\n\nType that represents the matrix exponential, exp(M), of a sparse matrix.\n\nFields\n\nM – sparse matrix\n\nExamples\n\nTake for exammple a random sparse matrix:\n\njulia> A = sprandn(100, 100, 0.1);\n\njulia> E = SparseMatrixExp(A);\n\njulia> size(E)\n(100, 100)\n\nNow, E is a lazy representation of exp(A). To compute with E, use get_row and get_column (or get_rows and get_columns; they return row and column vectors (or matrices). For example:\n\njulia> get_row(E, 10); # compute E[10, :]\n\njulia> get_column(E, 10); # compute E[:, 10]\n\njulia> get_rows(E, [10]); # same as get_row(E, 10) but a 1x100 matrix is returned\n\njulia> get_columns(E, [10]); # same as get_column(E, 10) but a 100x1 matrix is returned\n\nNotes\n\nThis type is provided for use with very large and very sparse matrices. The evaluation of the exponential matrix action over vectors relies on the Expokit package.\n\n\n\n"
 },
 
 {
@@ -2917,7 +2917,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:*",
     "category": "method",
-    "text": "    *(spmexp::SparseMatrixExp, X::LazySet)::ExponentialMap\n\nReturn the exponential map of a convex set from a sparse matrix exponential.\n\nInput\n\nspmexp – sparse matrix exponential\nX      – convex set\n\nOutput\n\nThe exponential map of the convex set.\n\n\n\n    *(a::N, X::LazySet) where {N}\n\nReturn a linear map of a convex set by a scalar value.\n\nInput\n\na – scalar\nX – convex set\n\nOutput\n\nThe linear map of the convex set.\n\n\n\n"
+    "text": "    *(spmexp::SparseMatrixExp, X::LazySet)::ExponentialMap\n\nReturn the exponential map of a convex set from a sparse matrix exponential.\n\nInput\n\nspmexp – sparse matrix exponential\nX      – convex set\n\nOutput\n\nThe exponential map of the convex set.\n\n\n\n    *(M::AbstractMatrix, X::LazySet)\n\nReturn the linear map of a convex set.\n\nInput\n\nM – matrix/linear map\nX – convex set\n\nOutput\n\nA lazy linear map, i.e. a LinearMap instance.\n\n\n\n    *(a::N, X::LazySet) where {N}\n\nReturn a linear map of a convex set by a scalar value.\n\nInput\n\na – scalar\nX – convex set\n\nOutput\n\nThe linear map of the convex set.\n\n\n\n"
 },
 
 {
