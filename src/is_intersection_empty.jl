@@ -334,7 +334,7 @@ end
 
 # --- Zonotope ---
 
-
+#=
 """
     is_intersection_empty(Z::Zonotope{N}, H::Hyperplane{N}, witness::Bool=false
                          )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}
@@ -418,7 +418,7 @@ function is_intersection_empty(H::Hyperplane{N},
                               )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}
     return is_intersection_empty(Z, H, witness)
 end
-
+=#
 """
     is_intersection_empty(ls1::LineSegment{N},
                           ls2::LineSegment{N},

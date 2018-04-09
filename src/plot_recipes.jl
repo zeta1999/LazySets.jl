@@ -339,7 +339,7 @@ end
 # ============================
 # Plot recipes for zonotopes
 # ============================
-
+#=
 """
     plot_polygon(Z::Zonotope; ...)
 
@@ -399,7 +399,7 @@ julia> plot([Z1, Z2])
         @series (x, y) = vlist[:, 1], vlist[:, 2]
     end
 end
-
+=#
 # =====================================
 # Plot recipes for lines and intervals
 # =====================================

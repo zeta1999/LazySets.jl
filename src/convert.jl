@@ -25,7 +25,7 @@ function convert(::Type{HPOLYGON1},
                                       HPOLYGON2<:AbstractHPolygon}
     return HPOLYGON1(P.constraints)
 end
-
+#=
 """
     convert(::Type{HPolytope}, P::AbstractHPolygon)
 
@@ -83,7 +83,7 @@ A zonotope.
 function convert(::Type{Zonotope}, H::AbstractHyperrectangle{N}) where {N}
     return Zonotope{N}(center(H), diagm(radius_hyperrectangle(H)))
 end
-
+=#
 import IntervalArithmetic.AbstractInterval
 
 """

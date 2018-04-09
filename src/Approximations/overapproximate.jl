@@ -66,7 +66,7 @@ overapproximate(S::LazySet, ::Type{<:Hyperrectangle}) = box_approximation(S)
 Alias for `overapproximate(S, Hyperrectangle)`.
 """
 overapproximate(S::LazySet)::Hyperrectangle = overapproximate(S, Hyperrectangle)
-
+#=
 """
     overapproximate(S::ConvexHull{N, Zonotope{N}, Zonotope{N}},
                      ::Type{<:Zonotope})::Zonotope where {N<:Real}
@@ -102,7 +102,7 @@ function overapproximate(S::ConvexHull{N, Zonotope{N}, Zonotope{N}},
     generators = [(Z1.generators .+ Z2.generators) (Z1.center - Z2.center) (Z1.generators .- Z2.generators)]/2
     return Zonotope(center, generators)
 end
-
+=#
 @require IntervalArithmetic begin
 
 """

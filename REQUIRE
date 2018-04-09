@@ -4,8 +4,6 @@ RecipesBase
 Plots
 GR
 Expokit
-MathProgBase
-GLPKMathProgInterface
 Requires
 Polyhedra
 CDDLib
