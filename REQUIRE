@@ -5,6 +5,4 @@ Plots
 GR
 Expokit
 Requires
-Polyhedra
-CDDLib
 IntervalArithmetic
