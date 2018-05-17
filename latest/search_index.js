@@ -1709,7 +1709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=true\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) to post process or not the                        intersection of constraints with a convex hull\n\nOutput\n\nList of vertices.\n\n\n\n"
+    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=false\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) to post process or not the                        intersection of constraints with a convex hull\n\nOutput\n\nList of vertices.\n\n\n\n"
 },
 
 {
@@ -1797,7 +1797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=true\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) to post process or not the                        intersection of constraints with a convex hull\n\nOutput\n\nList of vertices.\n\n\n\n"
+    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=false\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) to post process or not the                        intersection of constraints with a convex hull\n\nOutput\n\nList of vertices.\n\n\n\n"
 },
 
 {
