@@ -1585,7 +1585,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Line{Float64}}",
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1}}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
@@ -1593,7 +1593,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Line{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1601,7 +1601,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.intersection-Tuple{LazySets.Line{Float64},LazySets.Line{Float64}}",
+    "location": "lib/representations.html#LazySets.intersection-Tuple{LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1},LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1}}",
     "page": "Common Set Representations",
     "title": "LazySets.intersection",
     "category": "method",
