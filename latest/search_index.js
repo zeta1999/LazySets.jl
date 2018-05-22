@@ -285,7 +285,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Iterative Refinement",
     "title": "Example",
     "category": "section",
-    "text": "As a final example consider the iterative refinement of the ball b for different values of the approximation threshold ε.import LazySets.Approximations:overapproximate, approximate\n\np0 = plot(b, 1e-6, aspectratio=1)\np1 = plot!(p0, overapproximate(b, 1.), alpha=0.4, aspectratio=1)\n\np0 = plot(b, 1e-6, aspectratio=1)\np2 = plot!(p0, overapproximate(b, 0.1), alpha=0.4, aspectratio=1)\n\np0 = plot(b, 1e-6, aspectratio=1)\np3 = plot!(p0, overapproximate(b, 0.01), alpha=0.4, aspectratio=1)\n\nplot(p1, p2, p3, layout=(1, 3))We can check that the error is getting smaller with ε in each case:f = x -> (minimum(x), maximum(x))\ng = ε -> f([ai.err for ai in approximate(b, ε).approx_list])\ng(1.), g(0.1), g(0.01)Meanwhile, the number of constraints of the polygonal overapproximation increases, in this example by a power of 2 when the error is divided by a factorh = ε ->  length(approximate(b, ε).approx_list)\nh(1.), h(0.1), h(0.01)note: Note\nActually, the plotting function for an arbitrary LazySet plot(...), called recipe in the context of Plots.jl, is such that it receives a numeric argument ε and the routine itself calls overapproximate. However, some sets such as abstract polygons have their own plotting recipe hence do not require the error threshold, since they are plotted exactly as the convex hull of their vertices."
+    "text": "As a final example consider the iterative refinement of the ball b for different values of the approximation threshold ε.import LazySets.Approximations:overapproximate, approximate\n\np0 = plot(b, 1e-6, aspectratio=1)\np1 = plot!(p0, overapproximate(b, 1.), alpha=0.4, aspectratio=1)\n\np0 = plot(b, 1e-6, aspectratio=1)\np2 = plot!(p0, overapproximate(b, 0.1), alpha=0.4, aspectratio=1)\n\np0 = plot(b, 1e-6, aspectratio=1)\np3 = plot!(p0, overapproximate(b, 0.01), alpha=0.4, aspectratio=1)\n\nplot(p1, p2, p3, layout=(1, 3))We can check that the error is getting smaller with ε in each case:f = x -> (minimum(x), maximum(x))\ng = ε -> f([ai.err for ai in approximate(b, ε).approx_list])\ng(1.), g(0.1), g(0.01)Meanwhile, the number of constraints of the polygonal overapproximation increases, in this example by a power of 2 when the error is divided by a factor 10.h = ε ->  length(approximate(b, ε).approx_list)\nh(1.), h(0.1), h(0.01)note: Note\nActually, the plotting function for an arbitrary LazySet plot(...), called recipe in the context of Plots.jl, is such that it receives a numeric argument ε and the routine itself calls overapproximate. However, some sets such as abstract polygons have their own plotting recipe hence do not require the error threshold, since they are plotted exactly as the convex hull of their vertices."
 },
 
 {
@@ -605,7 +605,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Concrete Polyhedra",
     "title": "Creating polyhedra",
     "category": "section",
-    "text": "To use the Polyhedra.jl interface, you need to load the package with using Polyhedra. Let\'s create an H-representation object:using LazySets, Plots, Polyhedra\n\nA = [1. 1;1 -1;-1 0]\nb = [1.,0,0]\nhrep = SimpleHRepresentation(A, b)It is used to instantiate a new polyhedron:p = polyhedron(hrep)Now, p is of the generic type Polyhedra.SimplePolyhedron{2,Float64}, where 2 states for its ambient dimension, and Float64 the numeric field:typeof(p)Observe that we instantiate a particular backend, such as the CDD library:using CDDLib\n\np = polyhedron(hrep, CDDLib.CDDLibrary())On the other hand, a LazySets.HPolytope object can be constructed from p:x = HPolytope(p)\nx.constraintsConversely, from a HPolytope we can build a polyhedron:y = polyhedron(x)\ntypeof(y)Moreover, you can specify the backend with an extra argument. For instance, we can use an exact representation through the CDDLibrary(:exact):A, b = Rational{Int}[1 1;1 -1;-1 0], Rational{Int}[1,0,0]\np = HPolytope(A, b)\n\npolyhedron(p, CDDLib.CDDLibrary(:exact))"
+    "text": "To use the Polyhedra.jl interface, you need to load the package with using Polyhedra. Let\'s create an H-representation object:using LazySets, Plots, Polyhedra\n\nA = [1. 1;1 -1;-1 0]\nb = [1.,0,0]\nH = Polyhedra.hrep(A, b)It is used to instantiate a new polyhedron:p = polyhedron(H)Now, p is of the generic type Polyhedra.SimplePolyhedron{2,Float64, ...}, where 2 states for its ambient dimension, and Float64 the numeric field. The remaining fields specify the type of representation:typeof(p)Observe that we can use a particular backend, such as the CDD library:using CDDLib\n\np = polyhedron(H, CDDLib.CDDLibrary())On the other hand, a LazySets.HPolytope object can be constructed from p:x = HPolytope(p)\nx.constraintsConversely, from a HPolytope we can build a polyhedron:y = polyhedron(x)\ntypeof(y)Moreover, you can specify the backend with an extra argument. For instance, we can use an exact representation through the CDDLibrary(:exact):A, b = Rational{Int}[1 1;1 -1;-1 0], Rational{Int}[1,0,0]\np = HPolytope(A, b)\n\npolyhedron(p, CDDLib.CDDLibrary(:exact))"
 },
 
 {
@@ -621,7 +621,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Concrete Polyhedra",
     "title": "Projections",
     "category": "section",
-    "text": "Projection of high-dimensional polyhedra and elimination of variables can be performed with the eliminate function, which supports three types of methods: :FourierMotzkin, :BlockElimination and :ProjectGenerators. See the documentation of Polyhedra.jl for further details."
+    "text": "Projection of high-dimensional polyhedra and elimination of variables can be performed with the eliminate function, which supports three types of methods: :FourierMotzkin, :BlockElimination and :ProjectGenerators.For further details, see the documentation of Polyhedra.jl."
 },
 
 {
@@ -1581,7 +1581,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Line",
     "category": "type",
-    "text": "Line{N<:Real} <: LazySet{N}\n\nType that represents a line in 2D of the form ax = b (i.e., a special case of a Hyperplane).\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLazySets.Line{Float64}([1.0, 1.0], 1.0)\n\n\n\n"
+    "text": "Line{N<:Real} <: LazySet{N}\n\nType that represents a line in 2D of the form ax = b (i.e., a special case of a Hyperplane).\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLazySets.Line{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n"
 },
 
 {
@@ -3414,6 +3414,46 @@ var documenterSearchIndex = {"docs": [
     "title": "Iterative refinement",
     "category": "section",
     "text": "LocalApproximation\nPolygonalOverapproximation\nnew_approx(::LazySet, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\naddapproximation!(::PolygonalOverapproximation, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\nrefine(::PolygonalOverapproximation, ::Int)\ntohrep(::PolygonalOverapproximation)\napproximate(::LazySet{Float64}, ::Float64)See Iterative Refinement for more details."
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.AbstractDirections",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.AbstractDirections",
+    "category": "type",
+    "text": "AbstractDirections{N}\n\nAbstract type for template direction representations.\n\nNotes\n\nAll subtypes should implement the standard iterator methods from Base and the function dim(d<:AbstractDirections)::Int.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.BoxDirections",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.BoxDirections",
+    "category": "type",
+    "text": "BoxDirections{N} <: AbstractDirections{N}\n\nBox direction representation.\n\nFields\n\nn – dimension\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.OctDirections",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.OctDirections",
+    "category": "type",
+    "text": "OctDirections{N} <: AbstractDirections{N}\n\nOctagon direction representation.\n\nFields\n\nn – dimension\n\nNotes\n\nOctagon directions consist of all vectors that are zero almost everywhere except in two dimensions i, j (possibly i = j) where it is 1.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.BoxDiagDirections",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.BoxDiagDirections",
+    "category": "type",
+    "text": "BoxDiagDirections{N} <: AbstractDirections{N}\n\nBox-diagonal direction representation.\n\nFields\n\nn – dimension\n\nNotes\n\nBox-diagonal directions can be seen as the union of diagonal directions (all entries are ±1) and box directions (one entry is ±1, all other entries are 0). The iterator first enumerates all diagonal directions, and then all box directions.\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#Template-directions-1",
+    "page": "Approximations",
+    "title": "Template directions",
+    "category": "section",
+    "text": "AbstractDirections\nBoxDirections\nOctDirections\nBoxDiagDirectionsSee also overapproximate(X::LazySet, dir::AbstractDirections)::HPolytope."
 },
 
 {
