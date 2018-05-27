@@ -2781,7 +2781,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.CacheMinkowskiSum",
     "category": "type",
-    "text": "CacheMinkowskiSum{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the Minkowski sum of a finite number of convex sets. Support vector queries are cached.\n\nFields\n\narray – array of convex sets\ncache – cache of support vector query results\n\nNotes\n\nThis type assumes that the dimensions of all elements match.\n\nThe ZeroSet is the neutral element and the EmptySet is the absorbing element for CacheMinkowskiSum.\n\nThe cache (field cache) is implemented as dictionary whose keys are directions and whose values are tuples (k, s) where k is the number of elements in the array array when the support vector was evaluated last time, and s is the support vector that was obtained. Thus this type assumes that array is not modified except by adding new sets at the end.\n\nConstructors:\n\nCacheMinkowskiSum(array::Vector{<:LazySet}) – default constructor\nCacheMinkowskiSum([n]::Int=0, [N]::Type=Float64) – constructor for an empty sum with optional size hint and numeric type\n\n\n\n"
+    "text": "CacheMinkowskiSum{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the Minkowski sum of a finite number of convex sets. Support vector queries are cached.\n\nFields\n\narray – array of convex sets\ncache – cache of support vector query results\n\nNotes\n\nThis type assumes that the dimensions of all elements match.\n\nThe ZeroSet is the neutral element and the EmptySet is the absorbing element for CacheMinkowskiSum.\n\nThe cache (field cache) is implemented as dictionary whose keys are directions and whose values are pairs (k, s) where k is the number of elements in the array array when the support vector was evaluated last time, and s is the support vector that was obtained. Thus this type assumes that array is not modified except by adding new sets at the end.\n\nConstructors:\n\nCacheMinkowskiSum(array::Vector{<:LazySet}) – default constructor\nCacheMinkowskiSum([n]::Int=0, [N]::Type=Float64) – constructor for an empty sum with optional size hint and numeric type\n\n\n\n"
 },
 
 {
@@ -2809,11 +2809,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.forget_sets!-Tuple{LazySets.CacheMinkowskiSum}",
+    "page": "Common Set Operations",
+    "title": "LazySets.forget_sets!",
+    "category": "method",
+    "text": "forget_sets!(cms::CacheMinkowskiSum)::Int\n\nTell a caching Minkowski sum to forget the stored sets (but not the support vectors). Only those sets are forgotten such that for each cached direction the support vector has been computed before.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe number of sets that have been forgotten.\n\nNotes\n\nThis function should only be used under the assertion that no new directions are queried in the future; otherwise such support vector results will be incorrect.\n\nThis implementation is optimistic and first tries to remove all sets. However, it also checks that for all cached directions the support vector has been computed before. If it finds that this is not the case, the implementation identifies the biggest index k such that the above holds for the k oldest sets, and then it only removes these. See the example below.\n\nExamples\n\njulia> x1 = BallInf(ones(3), 3.); x2 = Ball1(ones(3), 5.);\n\njulia> cms1 = CacheMinkowskiSum(2); cms2 = CacheMinkowskiSum(2);\n\njulia> d = ones(3);\n\njulia> a1 = array(cms1); a2 = array(cms2);\n\njulia> push!(a1, x1); push!(a2, x1);\n\njulia> σ(d, cms1); σ(d, cms2);\n\njulia> push!(a1, x2); push!(a2, x2);\n\njulia> σ(d, cms1);\n\n# the support vector was computed for both sets\njulia> idx1 = forget_sets!(cms1)\n2\n\n# the support vector was only computed for the first set\njulia> idx1 = forget_sets!(cms2)\n1\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#n-ary-Minkowski-Sum-with-cache-1",
     "page": "Common Set Operations",
     "title": "n-ary Minkowski Sum with cache",
     "category": "section",
-    "text": "CacheMinkowskiSum\narray(::CacheMinkowskiSum{Float64, LazySet{Float64}})\ndim(::CacheMinkowskiSum{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::CacheMinkowskiSum{Float64, LazySet{Float64}})"
+    "text": "CacheMinkowskiSum\narray(::CacheMinkowskiSum{Float64, LazySet{Float64}})\ndim(::CacheMinkowskiSum{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::CacheMinkowskiSum{Float64, LazySet{Float64}})\nforget_sets!(::CacheMinkowskiSum)"
 },
 
 {
