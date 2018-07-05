@@ -2333,7 +2333,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.linear_map",
     "category": "method",
-    "text": "linear_map(M::AbstractMatrix, Z::Zonotope)\n\nConcrete linear map of a zonotopes.\n\nInput\n\nM – matrix\nZ – zonotope\n\nOutput\n\nThe zonotope obtained by applying the linear map to the center and generators of Z.\n\n\n\n"
+    "text": "linear_map(M::AbstractMatrix, Z::Zonotope)\n\nConcrete linear map of a zonotope.\n\nInput\n\nM – matrix\nZ – zonotope\n\nOutput\n\nThe zonotope obtained by applying the linear map to the center and generators of Z.\n\n\n\n"
 },
 
 {
