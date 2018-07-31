@@ -645,7 +645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet) – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n18-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric\n LazySets.AbstractPolytope\n LazySets.CacheMinkowskiSum\n LazySets.CartesianProduct\n LazySets.CartesianProductArray\n LazySets.ConvexHull\n LazySets.ConvexHullArray\n LazySets.EmptySet\n LazySets.ExponentialMap\n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace\n LazySets.Hyperplane\n LazySets.Intersection\n LazySets.Line\n LazySets.LineSegment\n LazySets.LinearMap\n LazySets.MinkowskiSum\n LazySets.MinkowskiSumArray\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that  x + (1-) y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet) – the   support vector of S in a given direction d\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n19-element Array{Union{DataType, UnionAll},1}:\n LazySets.AbstractPointSymmetric\n LazySets.AbstractPolytope\n LazySets.CacheMinkowskiSum\n LazySets.CartesianProduct\n LazySets.CartesianProductArray\n LazySets.ConvexHull\n LazySets.ConvexHullArray\n LazySets.EmptySet\n LazySets.ExponentialMap\n LazySets.ExponentialProjectionMap\n LazySets.HalfSpace\n LazySets.Hyperplane\n LazySets.Intersection\n LazySets.IntersectionArray\n LazySets.Line\n LazySets.LineSegment\n LazySets.LinearMap\n LazySets.MinkowskiSum\n LazySets.MinkowskiSumArray\n\n\n\n"
 },
 
 {
@@ -729,11 +729,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.linear_map-Tuple{AbstractArray{T,2} where T,LazySets.AbstractPolytope{Float64}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix, P::AbstractPolytope{N}) where {N<:Real}\n\nConcrete linear map of an abstract polytype.\n\nInput\n\nM – matrix\nP – abstract polytype\n\nOutput\n\nThe polytope in V-representation obtained by applying the linear map M to the set P. If the given polytope is two-dimensional, a polygon instead of a general polytope is returned. \n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Polytope-1",
     "page": "Set Interfaces",
     "title": "Polytope",
     "category": "section",
-    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Point symmetric polytope.AbstractPolytope"
+    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Point symmetric polytope.AbstractPolytopeThis interface defines the following functions:linear_map(M::AbstractMatrix, P::AbstractPolytope{Float64})"
 },
 
 {
@@ -809,11 +817,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.linear_map-Tuple{AbstractArray{T,2} where T,LazySets.AbstractSingleton{Float64}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix, P::AbstractPolytope{N}) where {N<:Real}\n\nConcrete linear map of an abstract polytype.\n\nInput\n\nM – matrix\nP – abstract polytype\n\nOutput\n\nThe polytope in V-representation obtained by applying the linear map M to the set P. If the given polytope is two-dimensional, a polygon instead of a general polytope is returned. \n\n\n\nlinear_map(M::AbstractMatrix, S::AbstractSingleton{N}) where {N<:Real}\n\nConcrete linear map of an abstract singleton.\n\nInput\n\nM – matrix\nS – abstract singleton\n\nOutput\n\nThe abstract singleton of the same type of S obtained by applying the linear map to the element in S.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Singleton-1",
     "page": "Set Interfaces",
     "title": "Singleton",
     "category": "section",
-    "text": "A singleton is a special hyperrectangle consisting of only one point.AbstractSingleton"
+    "text": "A singleton is a special hyperrectangle consisting of only one point.AbstractSingletonThis interface defines the following functions:linear_map(M::AbstractMatrix, S::AbstractSingleton{Float64})"
 },
 
 {
@@ -1141,7 +1157,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ellipsoid",
     "category": "type",
-    "text": "Ellipsoid{N<:Real} <:  AbstractPointSymmetric{N}\n\nType that represents an ellipsoid.\n\nIt is defined as the set\n\nE = left x  mathbbR^n  (x-c)Q^-1(x-c)  1 right\n\nwhere c in mathbbR^n is its center and Q in mathbbR^nn its shape matrix, which should be a positive definite matrix. An ellipsoid can also be characterized as the image of a Euclidean ball by an invertible linear transformation.\n\nFields\n\ncenter       – center of the ellipsoid\nshape matrix – real positive definite matrix, i.e. it is equal to its transpose                   and x^mathrmTQx  0 for all nonzero x\n\nExamples\n\nIf the center is not specified, it is assumed that the center is the origin. For instance, a 3D ellipsoid with center at the origin and the shape matrix being the identity can be created with:\n\njulia> E = Ellipsoid(eye(3))\nLazySets.Ellipsoid{Float64}([0.0, 0.0, 0.0], [1.0 0.0 0.0; 0.0 1.0 0.0; 0.0 0.0 1.0])\n\njulia> dim(E)\n3\n\njulia> an_element(E)\n3-element Array{Float64,1}:\n 0.0\n 0.0\n 0.0\n\nThis ellipsoid corresponds to the unit Euclidean ball. Let\'s evaluate its support vector in a given direction:\n\njulia> σ(ones(3), E)\n3-element Array{Float64,1}:\n 0.57735\n 0.57735\n 0.57735\n\nA two-dimensional ellipsoid with given center and shape matrix:\n\njulia> E = Ellipsoid(ones(2), diagm([2.0, 0.5]))\nLazySets.Ellipsoid{Float64}([1.0, 1.0], [2.0 0.0; 0.0 0.5])\n\n\n\n"
+    "text": "Ellipsoid{N<:AbstractFloat} <:  AbstractPointSymmetric{N}\n\nType that represents an ellipsoid.\n\nIt is defined as the set\n\nE = left x  mathbbR^n  (x-c)Q^-1(x-c)  1 right\n\nwhere c in mathbbR^n is its center and Q in mathbbR^nn its shape matrix, which should be a positive definite matrix. An ellipsoid can also be characterized as the image of a Euclidean ball by an invertible linear transformation. It is the higher-dimensional generalization of an ellipse.\n\nFields\n\ncenter       – center of the ellipsoid\nshape matrix – real positive definite matrix, i.e. it is equal to its transpose                   and x^mathrmTQx  0 for all nonzero x\n\nExamples\n\nIf the center is not specified, it is assumed that the center is the origin. For instance, a 3D ellipsoid with center at the origin and the shape matrix being the identity can be created with:\n\njulia> E = Ellipsoid(eye(3))\nLazySets.Ellipsoid{Float64}([0.0, 0.0, 0.0], [1.0 0.0 0.0; 0.0 1.0 0.0; 0.0 0.0 1.0])\n\njulia> dim(E)\n3\n\njulia> an_element(E)\n3-element Array{Float64,1}:\n 0.0\n 0.0\n 0.0\n\nThis ellipsoid corresponds to the unit Euclidean ball. Let\'s evaluate its support vector in a given direction:\n\njulia> σ(ones(3), E)\n3-element Array{Float64,1}:\n 0.57735\n 0.57735\n 0.57735\n\nA two-dimensional ellipsoid with given center and shape matrix:\n\njulia> E = Ellipsoid(ones(2), diagm([2.0, 0.5]))\nLazySets.Ellipsoid{Float64}([1.0, 1.0], [2.0 0.0; 0.0 0.5])\n\n\n\n"
 },
 
 {
@@ -1281,11 +1297,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.halfspace_left-Tuple{AbstractArray{Float64,1},AbstractArray{Float64,1}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.halfspace_left",
+    "category": "method",
+    "text": "halfspace_left(p::AbstractVector{N},\n               q::AbstractVector{N})::HalfSpace{N} where {N<:Real}\n\nReturn a half-space describing the \'left\' of a two-dimensional line segment through two points.\n\nInput\n\np – first point\nq – second point\n\nOutput\n\nThe half-space whose boundary goes through the two points p and q and which describes the left-hand side of the directed line segment pq.\n\nAlgorithm\n\nThe implementation is simple: the half-space ax  b is calculated as a = [dy, -dx], where d = (dx dy) denotes the line segment pq, that is, vecd = vecp - vecq, and b = dot(p, a).\n\nExamples\n\nThe left half-space of the \"east\" and \"west\" directions in two-dimensions are the upper and lower half-spaces:\n\njulia> import LazySets.halfspace_left\n\njulia> halfspace_left([0.0, 0.0], [1.0, 0.0])\nLazySets.HalfSpace{Float64}([0.0, -1.0], 0.0)\n\njulia> halfspace_left([0.0, 0.0], [-1.0, 0.0])\nLazySets.HalfSpace{Float64}([0.0, 1.0], 0.0)\n\nWe create a box from the sequence of line segments that describe its edges:\n\njulia> H1 = halfspace_left([-1.0, -1.0], [1.0, -1.0]);\n\njulia> H2 = halfspace_left([1.0, -1.0], [1.0, 1.0]);\n\njulia> H3 = halfspace_left([1.0, 1.0], [-1.0, 1.0]);\n\njulia> H4 = halfspace_left([-1.0, 1.0], [-1.0, -1.0]);\n\njulia> H = HPolygon([H1, H2, H3, H4]);\n\njulia> B = BallInf([0.0, 0.0], 1.0);\n\njulia> B ⊆ H && H ⊆ B\ntrue\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.halfspace_right-Tuple{AbstractArray{Float64,1},AbstractArray{Float64,1}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.halfspace_right",
+    "category": "method",
+    "text": "halfspace_right(p::AbstractVector{N},\n                q::AbstractVector{N})::HalfSpace{N} where {N<:Real}\n\nReturn a half-space describing the \'right\' of a two-dimensional line segment through two points.\n\nInput\n\np – first point\nq – second point\n\nOutput\n\nThe half-space whose boundary goes through the two points p and q and which describes the right-hand side of the directed line segment pq.\n\nAlgorithm\n\nSee the documentation of halfspace_left. \n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Half-Space-1",
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace{Float64})\nσ(::AbstractVector{Float64}, ::HalfSpace{Float64})\nan_element(::HalfSpace{Float64})\n∈(::AbstractVector{Float64}, ::HalfSpace{Float64})"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace{Float64})\nσ(::AbstractVector{Float64}, ::HalfSpace{Float64})\nan_element(::HalfSpace{Float64})\n∈(::AbstractVector{Float64}, ::HalfSpace{Float64})\nLazySets.halfspace_left(::AbstractVector{Float64}, ::AbstractVector{Float64})\nLazySets.halfspace_right(::AbstractVector{Float64}, ::AbstractVector{Float64})"
 },
 
 {
@@ -1577,43 +1609,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.Line",
-    "page": "Common Set Representations",
-    "title": "LazySets.Line",
-    "category": "type",
-    "text": "Line{N<:Real} <: LazySet{N}\n\nType that represents a line in 2D of the form ax = b (i.e., a special case of a Hyperplane).\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLazySets.Line{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(L::Line)::Int\n\nReturn the ambient dimension of a line.\n\nInput\n\nL – line\n\nOutput\n\nThe ambient dimension of the line, which is 2.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.σ",
-    "category": "method",
-    "text": "σ(d::V, L::Line) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a line in a given direction.\n\nInput\n\nd – direction\nL – line\n\nOutput\n\nThe support vector in the given direction, which is defined the same way as for the more general Hyperplane.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.intersection-Tuple{LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1},LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(L1::Line{N}, L2::Line{N})::Vector{N} where {N<:Real}\n\nReturn the intersection of two 2D lines.\n\nInput\n\nL1 – first line\nL2 – second line\n\nOutput\n\nIf the lines are parallel or identical, the result is an empty vector. Otherwise the result is the only intersection point.\n\nExamples\n\nThe line y = -x + 1 intersected with the line y = x:\n\njulia> intersection(Line([-1., 1.], 0.), Line([1., 1.], 1.))\n2-element Array{Float64,1}:\n 0.5\n 0.5\njulia> intersection(Line([1., 1.], 1.), Line([1., 1.], 1.))\n0-element Array{Float64,1}\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#Line-1",
     "page": "Common Set Representations",
     "title": "Line",
     "category": "section",
-    "text": "Line\ndim(::Line{Float64})\nσ(::AbstractVector{Float64}, ::Line{Float64})\nintersection(::Line{Float64}, ::Line{Float64})"
+    "text": "Line\ndim(::Line{Float64})\nσ(::AbstractVector{Float64}, ::Line{Float64})\n∈(::AbstractVector, ::Line)\nan_element(::Line)"
 },
 
 {
@@ -1649,11 +1649,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.halfspace_left-Tuple{LazySets.LineSegment}",
+    "page": "Common Set Representations",
+    "title": "LazySets.halfspace_left",
+    "category": "method",
+    "text": "halfspace_left(L::LineSegment)\n\nReturn a half-space describing the \'left\' of a two-dimensional line segment through two points.\n\nInput\n\nL – line segment\n\nOutput\n\nThe half-space whose boundary goes through the two points p and q and which describes the left-hand side of the directed line segment pq.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.halfspace_right-Tuple{LazySets.LineSegment}",
+    "page": "Common Set Representations",
+    "title": "LazySets.halfspace_right",
+    "category": "method",
+    "text": "halfspace_right(L::LineSegment)\n\nReturn a half-space describing the \'right\' of a two-dimensional line segment through two points.\n\nInput\n\nL – line segment\n\nOutput\n\nThe half-space whose boundary goes through the two points p and q and which describes the right-hand side of the directed line segment pq.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Line-segment-1",
     "page": "Common Set Representations",
     "title": "Line segment",
     "category": "section",
-    "text": "LineSegment\ndim(::LineSegment{Float64})\nσ(::AbstractVector{Float64}, ::LineSegment{Float64})\n∈(::AbstractVector{Float64}, ::LineSegment{Float64})"
+    "text": "LineSegment\ndim(::LineSegment{Float64})\nσ(::AbstractVector{Float64}, ::LineSegment{Float64})\n∈(::AbstractVector{Float64}, ::LineSegment{Float64})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)"
 },
 
 {
@@ -1725,7 +1741,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tohrep",
     "category": "method",
-    "text": "tohrep(P::AbstractHPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a contraint representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\n"
+    "text": "tohrep(P::AbstractHPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a contraint representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\ntohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\n"
 },
 
 {
@@ -1813,7 +1829,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tohrep",
     "category": "method",
-    "text": "tohrep(P::AbstractHPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a contraint representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\n"
+    "text": "tohrep(P::AbstractHPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a contraint representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\ntohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\n"
 },
 
 {
@@ -1845,7 +1861,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.VPolygon",
     "category": "type",
-    "text": "VPolygon{N<:Real} <: AbstractPolygon{N}\n\nType that represents a polygon by its vertices.\n\nFields\n\nvertices_list – the list of vertices\n\nNotes\n\nThe constructor of VPolygon runs a convex hull algorithm, and the given vertices are sorted in counter-clockwise fashion. The constructor flag apply_convex_hull can be used to skip the computation of the convex hull.\n\nVPolygon(vertices_list::Vector{Vector{N}};           apply_convex_hull::Bool=true,           algorithm::String=\"monotone_chain\")\n\n\n\n"
+    "text": "VPolygon{N<:Real} <: AbstractPolygon{N}\n\nType that represents a polygon by its vertices.\n\nFields\n\nvertices – the list of vertices\n\nNotes\n\nThe constructor of VPolygon runs a convex hull algorithm, and the given vertices are sorted in counter-clockwise fashion. The constructor flag apply_convex_hull can be used to skip the computation of the convex hull.\n\nVPolygon(vertices::Vector{Vector{N}};           apply_convex_hull::Bool=true,           algorithm::String=\"monotone_chain\")\n\n\n\n"
 },
 
 {
@@ -1901,7 +1917,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tohrep",
     "category": "method",
-    "text": "tohrep(P::VPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\n\n\n"
+    "text": "tohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\n"
 },
 
 {
@@ -2241,11 +2257,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.linear_map-Tuple{AbstractArray{T,2} where T,LazySets.ZeroSet{Float64}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix, P::AbstractPolytope{N}) where {N<:Real}\n\nConcrete linear map of an abstract polytype.\n\nInput\n\nM – matrix\nP – abstract polytype\n\nOutput\n\nThe polytope in V-representation obtained by applying the linear map M to the set P. If the given polytope is two-dimensional, a polygon instead of a general polytope is returned. \n\n\n\nlinear_map(M::AbstractMatrix, S::AbstractSingleton{N}) where {N<:Real}\n\nConcrete linear map of an abstract singleton.\n\nInput\n\nM – matrix\nS – abstract singleton\n\nOutput\n\nThe abstract singleton of the same type of S obtained by applying the linear map to the element in S.\n\n\n\nlinear_map(M::AbstractMatrix, Z::ZeroSet{N}) where {N<:Real}\n\nConcrete linear map of a zero set.\n\nInput\n\nM – matrix\nZ – zero set\n\nOutput\n\nThe zero set whose dimension matches the output dimension of the given matrix.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#ZeroSet-1",
     "page": "Common Set Representations",
     "title": "ZeroSet",
     "category": "section",
-    "text": "ZeroSet\ndim(::ZeroSet{Float64})\nσ(::AbstractVector{Float64}, ::ZeroSet{Float64})\n∈(::AbstractVector{Float64}, ::ZeroSet{Float64})\nnorm(::ZeroSet{Float64}, ::Real)\ndiameter(::ZeroSet{Float64}, ::Real)\nvertices_list(::ZeroSet{Float64})\nsingleton_list(::ZeroSet{Float64})\ncenter(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64}, ::Int)\nan_element(::ZeroSet{Float64})\nelement(::ZeroSet{Float64})\nelement(::ZeroSet{Float64}, ::Int)"
+    "text": "ZeroSet\ndim(::ZeroSet{Float64})\nσ(::AbstractVector{Float64}, ::ZeroSet{Float64})\n∈(::AbstractVector{Float64}, ::ZeroSet{Float64})\nnorm(::ZeroSet{Float64}, ::Real)\ndiameter(::ZeroSet{Float64}, ::Real)\nvertices_list(::ZeroSet{Float64})\nsingleton_list(::ZeroSet{Float64})\ncenter(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64}, ::Int)\nan_element(::ZeroSet{Float64})\nelement(::ZeroSet{Float64})\nelement(::ZeroSet{Float64}, ::Int)\nlinear_map(M::AbstractMatrix, Z::ZeroSet{Float64})"
 },
 
 {
@@ -2361,19 +2385,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.convert-Tuple{Type{LazySets.Zonotope},LazySets.AbstractHyperrectangle{Float64}}",
-    "page": "Common Set Representations",
-    "title": "Base.convert",
-    "category": "method",
-    "text": "convert(::Type{Zonotope}, H::AbstractHyperrectangle{N}) where {N}\n\nConverts a hyperrectangular set to a zonotope.\n\nInput\n\nZonotope\nH – hyperrectangular set\n\nOutput\n\nA zonotope.\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#Zonotopes-1",
     "page": "Common Set Representations",
     "title": "Zonotopes",
     "category": "section",
-    "text": "Zonotope\ndim(::Zonotope{Float64})\nσ(::AbstractVector{Float64}, ::Zonotope{Float64})\n∈(::AbstractVector{Float64}, ::Zonotope{Float64})\nan_element(::Zonotope{Float64})\ncenter(::Zonotope{Float64})\nvertices_list(::Zonotope{Float64})\nsingleton_list(::Zonotope{Float64})\norder(::Zonotope{Float64})\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope{Float64}, r)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle{Float64})"
+    "text": "Zonotope\ndim(::Zonotope{Float64})\nσ(::AbstractVector{Float64}, ::Zonotope{Float64})\n∈(::AbstractVector{Float64}, ::Zonotope{Float64})\nan_element(::Zonotope{Float64})\ncenter(::Zonotope{Float64})\nvertices_list(::Zonotope{Float64})\nsingleton_list(::Zonotope{Float64})\norder(::Zonotope{Float64})\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope{Float64}, r)"
 },
 
 {
@@ -2461,7 +2477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
 },
 
 {
@@ -2565,7 +2581,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
 },
 
 {
@@ -2633,11 +2649,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Intersection-1",
+    "page": "Common Set Operations",
+    "title": "Intersection",
+    "category": "section",
+    "text": ""
+},
+
+{
     "location": "lib/operations.html#LazySets.Intersection",
     "page": "Common Set Operations",
     "title": "LazySets.Intersection",
     "category": "type",
     "text": "Intersection{N<:Real, S1<:LazySet{N}, S2<:LazySet{N}} <: LazySet{N}\n\nType that represents the intersection of two convex sets.\n\nFields\n\nX – convex set\nY – convex set\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:∩-Tuple{LazySets.LazySet,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:∩",
+    "category": "method",
+    "text": "∩\n\nAlias for Intersection.\n\n\n\n"
 },
 
 {
@@ -2661,7 +2693,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "method",
-    "text": "∈(x::AbstractVector{N}, cap::Intersection{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a intersection of two convex sets.\n\nInput\n\nx – point/vector\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff x  cap.\n\n\n\n"
+    "text": "∈(x::AbstractVector{N}, cap::Intersection{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in an intersection of two convex sets.\n\nInput\n\nx   – point/vector\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff x  cap.\n\n\n\n"
 },
 
 {
@@ -2673,11 +2705,51 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Intersection-1",
+    "location": "lib/operations.html#Binary-Intersection-1",
     "page": "Common Set Operations",
-    "title": "Intersection",
+    "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\ndim(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\n∈(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nisempty(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\n∈(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nisempty(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})"
+},
+
+{
+    "location": "lib/operations.html#LazySets.IntersectionArray",
+    "page": "Common Set Operations",
+    "title": "LazySets.IntersectionArray",
+    "category": "type",
+    "text": "IntersectionArray{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the intersection of a finite number of convex sets.\n\nFields\n\narray – array of convex sets\n\nNotes\n\nThis type assumes that the dimensions of all elements match.\n\nThe EmptySet is the absorbing element for IntersectionArray.\n\nConstructors:\n\nIntersectionArray(array::Vector{<:LazySet}) – default constructor\nIntersectionArray([n]::Int=0, [N]::Type=Float64) – constructor for an empty sum with optional size hint and numeric type\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.IntersectionArray{Float64,LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "method",
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.IntersectionArray{Float64,LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(ia::IntersectionArray)::Int\n\nReturn the dimension of an intersection of a finite number of sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe ambient dimension of the intersection of a finite number of sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.IntersectionArray{Float64,LazySets.LazySet{Float64}}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{<:Real}, ia::IntersectionArray)::Vector{<:Real}\n\nReturn the support vector of an intersection of a finite number of sets in a given direction.\n\nInput\n\nd  – direction\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the individual sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#n-ary-Intersection-1",
+    "page": "Common Set Operations",
+    "title": "n-ary Intersection",
+    "category": "section",
+    "text": "IntersectionArray\narray(::IntersectionArray{Float64, LazySet{Float64}})\ndim(::IntersectionArray{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::IntersectionArray{Float64, LazySet{Float64}})"
 },
 
 {
@@ -2749,7 +2821,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
 },
 
 {
@@ -2789,7 +2861,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
 },
 
 {
@@ -2881,11 +2953,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.an_element-Tuple{LazySets.LinearMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(lm::LinearMap)\n\nReturn some element of a linear map.\n\nInput\n\nlmap – linear map\n\nOutput\n\nAn element in the linear map. It relies on the an_element function of the wrapped set.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Linear-Map-1",
     "page": "Common Set Operations",
     "title": "Linear Map",
     "category": "section",
-    "text": "LinearMap\ndim(::LinearMap{Float64, Float64})\nσ(::AbstractVector{Float64}, ::LinearMap{Float64, Float64})\n*(::AbstractMatrix, ::LazySet)\n*(::Float64, ::LazySet)\n∈(x::AbstractVector{Float64}, ::LinearMap{Float64, Float64})"
+    "text": "LinearMap\ndim(::LinearMap{Float64, Float64})\nσ(::AbstractVector{Float64}, ::LinearMap{Float64, Float64})\n*(::AbstractMatrix, ::LazySet)\n*(::Float64, ::LazySet)\n∈(x::AbstractVector{Float64}, ::LinearMap{Float64, Float64})\nan_element(lm::LinearMap)"
 },
 
 {
@@ -3005,7 +3085,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::V, sih::SymmetricIntervalHull) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a symmetric interval hull of a convex set in a given direction.\n\nInput\n\nd   – direction\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe support vector of the symmetric interval hull of a convex set in the given direction. If the direction has norm zero, the origin is returned.\n\nAlgorithm\n\nFor each non-zero entry in d we need to either look up the bound (if it has been computed before) or compute it, in which case we store it for future queries. One such computation just asks for the support vector of the underlying set for both the positive and negative unit vector in the respective dimension.\n\n\n\n"
+    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::V, sih::SymmetricIntervalHull{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a symmetric interval hull of a convex set in a given direction.\n\nInput\n\nd   – direction\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe support vector of the symmetric interval hull of a convex set in the given direction. If the direction has norm zero, the origin is returned.\n\nAlgorithm\n\nFor each non-zero entry in d we need to either look up the bound (if it has been computed before) or compute it, in which case we store it for future queries. One such computation just asks for the support vector of the underlying set for both the positive and negative unit vector in the respective dimension.\n\n\n\n"
 },
 
 {
@@ -3033,11 +3113,43 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/conversion.html#Base.convert",
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolygonOpt},LazySets.HPolygon}",
     "page": "Conversion between set representations",
     "title": "Base.convert",
-    "category": "function",
-    "text": "convert(::Type{HPOLYGON1}, P::HPOLYGON2) where\n    {HPOLYGON1<:Union{HPolygon, HPolygonOpt}, HPOLYGON2<:AbstractHPolygon}\n\nConvert between polygon types in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as the target type.\n\nNotes\n\nWe need the Union type for HPOLYGON1 because the target type must be concrete.\n\n\n\nconvert(::Type{HPolytope}, P::AbstractHPolygon)\n\nConvert from polygon in H-representation to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as 2D polytope.\n\n\n\nconvert(::Type{HPOLYGON}, P::HPolytope) where {HPOLYGON<:AbstractHPolygon}\n\nConvert from 2D polytope in H-representation to polygon in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope (must be 2D)\n\nOutput\n\nThe 2D polytope represented as polygon.\n\n\n\nconvert(::Type{Zonotope}, H::AbstractHyperrectangle{N}) where {N}\n\nConverts a hyperrectangular set to a zonotope.\n\nInput\n\nZonotope\nH – hyperrectangular set\n\nOutput\n\nA zonotope.\n\n\n\nconvert(::Type{Hyperrectangle}, x::LazySets.Interval{N, IN}) where {N, IN <: AbstractInterval{N}}\n\nConverts a unidimensional interval into a hyperrectangular set.\n\nInput\n\nAbstractHyperrectangle\nx – interval\n\nOutput\n\nA hyperrectangle.\n\nExamples\n\njulia> convert(Hyperrectangle, Interval(0.0, 1.0))\nLazySets.Hyperrectangle{Float64}([0.5], [0.5])\n\n\n\n"
+    "category": "method",
+    "text": "convert(::Type{HPOLYGON1}, P::HPOLYGON2) where\n    {HPOLYGON1<:Union{HPolygon, HPolygonOpt}, HPOLYGON2<:AbstractHPolygon}\n\nConvert between polygon types in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as the target type.\n\nNotes\n\nWe need the Union type for HPOLYGON1 because the target type must be concrete.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolytope},LazySets.HPolygon}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPolytope}, P::AbstractHPolygon)\n\nConvert from polygon in H-representation to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as 2D polytope.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolygon},LazySets.HPolytope}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPOLYGON}, P::HPolytope) where {HPOLYGON<:AbstractHPolygon}\n\nConvert from 2D polytope in H-representation to polygon in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope (must be 2D)\n\nOutput\n\nThe 2D polytope represented as polygon.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.Zonotope},LazySets.AbstractHyperrectangle}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{Zonotope}, H::AbstractHyperrectangle{N}) where {N}\n\nConverts a hyperrectangular set to a zonotope.\n\nInput\n\nZonotope\nH – hyperrectangular set\n\nOutput\n\nA zonotope.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.Hyperrectangle},LazySets.Interval}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{Hyperrectangle}, x::LazySets.Interval{N, IN}) where {N, IN <: AbstractInterval{N}}\n\nConverts a unidimensional interval into a hyperrectangular set.\n\nInput\n\nAbstractHyperrectangle\nx – interval\n\nOutput\n\nA hyperrectangle.\n\nExamples\n\njulia> convert(Hyperrectangle, Interval(0.0, 1.0))\nLazySets.Hyperrectangle{Float64}([0.5], [0.5])\n\n\n\n"
 },
 
 {
@@ -3045,7 +3157,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Conversion between set representations",
     "title": "Conversion between set representations",
     "category": "section",
-    "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert"
+    "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert(::Type{HPolygonOpt}, ::HPolygon)\nconvert(::Type{HPolytope}, ::HPolygon)\nconvert(::Type{HPolygon}, ::HPolytope)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle)\nconvert(::Type{Hyperrectangle}, ::Interval)"
 },
 
 {
@@ -3069,7 +3181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "function",
-    "text": "center(x::Interval)\n\nReturn the interval\'s center.\n\nInput\n\nx – interval\n\nOutput\n\nThe center, or midpoint, of x.\n\n\n\n"
+    "text": "⊆(x::Interval, y::Interval)\n\nCheck whether an interval is contained in another interval.\n\nInput\n\nx – interval\ny – interval\n\nOutput\n\ntrue iff x  y.\n\n\n\n"
 },
 
 {
@@ -3241,6 +3353,30 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.intersection-Tuple{LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1},LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1}}",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(L1::Line{N}, L2::Line{N}\n            )::Union{Singleton{N}, Line{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two 2D lines.\n\nInput\n\nL1 – first line\nL2 – second line\n\nOutput\n\nIf the lines are identical, the result is the first line. If the lines are parallel and not identical, the result is the empty set. Otherwise the result is the only intersection point.\n\nExamples\n\nThe line y = -x + 1 intersected with the line y = x:\n\njulia> intersection(Line([-1., 1.], 0.), Line([1., 1.], 1.))\nLazySets.Singleton{Float64}([0.5, 0.5])\njulia> intersection(Line([1., 1.], 1.), Line([1., 1.], 1.))\nLazySets.Line{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Tuple{LazySets.Hyperrectangle{Float64},LazySets.Hyperrectangle{Float64}}",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(H1::AbstractHyperrectangle{N},\n             H2::AbstractHyperrectangle{N}\n            )::Union{<:Hyperrectangle{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two hyperrectangles.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\n\nOutput\n\nIf the hyperrectangles do not intersect, the result is the empty set. Otherwise the result is the hyperrectangle that describes the intersection.\n\nAlgorithm\n\nIn each isolated direction i we compute the rightmost left border and the leftmost right border of the hyperrectangles. If these borders contradict, then the intersection is empty. Otherwise the result uses these borders in each dimension.\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Intersection-of-two-sets-1",
+    "page": "Binary Functions on Sets",
+    "title": "Intersection of two sets",
+    "category": "section",
+    "text": "intersection(::Line{Float64}, ::Line{Float64})\nintersection(::Hyperrectangle{Float64}, ::Hyperrectangle{Float64})"
+},
+
+{
     "location": "lib/approximations.html#",
     "page": "Approximations",
     "title": "Approximations",
@@ -3269,7 +3405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.decompose",
     "category": "function",
-    "text": "decompose(S::LazySet{N};\n          [set_type]::Type{<:Union{HPolygon, Hyperrectangle, Interval}}=Hyperrectangle,\n          [ε]::Real=Inf,\n          [blocks]::AbstractVector{Int}=default_block_structure(S, set_type),\n          [block_types]::Dict{Type{<:LazySet}, AbstractVector{<:AbstractVector{Int}}}(),\n          [directions]::Union{Type{<:AbstractDirections}, Void}=nothing\n         )::CartesianProductArray where {N<:Real}\n\nDecompose a high-dimensional set into a Cartesian product of overapproximations of the projections over the specified subspaces.\n\nInput\n\nS           – set\nset_type    – (optional, default: Hyperrectangle) type of set approximation                  for each subspace\nε           – (optional, default: Inf) error bound for polytopic approximation\nblocks      – (optional, default: [2, …, 2] or [1, …, 1] if set_type is an interval)                  block structure - a vector with the size of each block\nblock_types – (optional, default: Interval for 1D and Hyperrectangle                  for mD blocks) a mapping from set types to blocks\ndirections  – (optional, default: nothing) template direction type, or                  nothing\n\nOutput\n\nA CartesianProductArray containing the low-dimensional approximated projections.\n\nAlgorithm\n\nFor each block a specific project method is called, dispatched on the set_type argument.\n\nNotes\n\nIf directions is different from nothing, the template directions are used together with blocks. Otherwise, if block_types is given, the options set_type and blocks are ignored.\n\nExamples\n\nThe decompose function supports different options, such as: supplying different dimensions for the decomposition, defining the target set of the decomposition, or specifying the degree of accuracy of the target decomposition. You can also choose to make the approximations in low dimensions using template directions. These options are exemplified below.\n\nDifferent dimensions\n\nBy default, decompose returns a Cartesian product of 2D Hyperrectangle sets. For example:\n\njulia> import LazySets.Approximations:decompose\n\njulia> S = Ball2(zeros(4), 1.);\n\njulia> array(decompose(S))\n2-element Array{LazySets.LazySet{Float64},1}:\n LazySets.Hyperrectangle{Float64}([0.0, 0.0], [1.0, 1.0])\n LazySets.Hyperrectangle{Float64}([0.0, 0.0], [1.0, 1.0])\n\nOther block sizes can be specified using the blocks option, which refers to each block size of the partition:\n\njulia> array(decompose(S, blocks=[1, 3]))\n2-element Array{LazySets.LazySet{Float64},1}:\n LazySets.Hyperrectangle{Float64}([0.0], [1.0])\n LazySets.Hyperrectangle{Float64}([0.0, 0.0, 0.0], [1.0, 1.0, 1.0])\n\njulia> array(decompose(S, blocks=[4]))\n1-element Array{LazySets.LazySet{Float64},1}:\n LazySets.Hyperrectangle{Float64}([0.0, 0.0, 0.0, 0.0], [1.0, 1.0, 1.0, 1.0])\n\nDifferent set types\n\nWe can also decompose using polygons in constraint representation, through the set_type optional argument:\n\njulia> all([ai isa HPolygon for ai in array(decompose(S, set_type=HPolygon))])\ntrue\n\nFor decomposition into 1D subspaces, we can use Interval:\n\njulia> all([ai isa Interval for ai in array(decompose(S, set_type=Interval))])\ntrue\n\nHowever, if you need to specify different set types for different blocks, the interface presented so far does not apply. In the paragraph Advanced different set types input we explain the input block_types, that can be used precisely for that purpose.\n\nRefining the decomposition I:  -close approximation\n\nThe  option can be used to refine, that is obtain a more accurate decomposition in those blocks where HPolygon types are used, and it relies on the iterative refinement algorithm provided in the Approximations module.\n\nTo illustrate this, consider the unit 4D ball in the 2-norm. Using smaller  implies a better precision, thus more constraints in each 2D decomposition:\n\njulia> S = Ball2(zeros(4), 1.);\n\njulia> d(ε, bi) = array(decompose(S, set_type=HPolygon, ε=ε))[bi]\nd (generic function with 1 method)\n\njulia> [length(constraints_list(d(ε, 1))) for ε in [Inf, 0.1, 0.01]]\n3-element Array{Int64,1}:\n  4\n  8\n 32\n\nRefining the decomposition II: template polyhedra\n\nAnother way to refine the decomposition is using template polyhedra. The idea is to specify a set of template directions, and on each block, compute the polytopic overapproximation obtained by evaluating the support function of the given input set over the template directions.\n\nFor example, octagonal 2D approximations of the ball S are obtained with:\n\njulia> B = decompose(S, directions=OctDirections);\n\njulia> length(B.array) == 2 && all(dim(bi) == 2 for bi in B.array)\ntrue\n\nSee template_directions.jl for the available template directions. Note that, in contrast to the polygonal -close approximation, this method can be applied for blocks of any size.\n\njulia> B = decompose(S, directions=OctDirections, blocks=[4]);\n\njulia> length(B.array) == 1 && dim(B.array[1]) == 4\ntrue\n\nAdvanced different set types input\n\nWe can define different set types for different blocks, using the optional block_types input argument. It is a dictionary where the keys correspond to set types, and the values correspond to the blocks, namely the initial and final block indices should be given.\n\nFor example:\n\njulia> S = Ball2(zeros(3), 1.);\n\njulia> array(decompose(S, block_types=Dict(Interval=>[1:1], Hyperrectangle=>[2:3])))\n2-element Array{LazySets.LazySet{Float64},1}:\n LazySets.Interval{Float64,IntervalArithmetic.Interval{Float64}}([-1, 1])\n LazySets.Hyperrectangle{Float64}([0.0, 0.0], [1.0, 1.0])\n\nWe can additionally pass ε, which is automatically used for each HPolygon type block.\n\njulia> S = Ball2(zeros(8), 1.);\n\njulia> bt = Dict(Interval=>[1:1], Hyperrectangle=>[2:4], HPolygon=>[5:6, 7:8]);\n\njulia> [typeof(ai) for ai in array(decompose(S, block_types=bt, ε=0.01))]\n4-element Array{DataType,1}:\n LazySets.Interval{Float64,IntervalArithmetic.Interval{Float64}}\n LazySets.Hyperrectangle{Float64}\n LazySets.HPolygon{Float64}\n LazySets.HPolygon{Float64}\n\n\n\n"
+    "text": "decompose(S::LazySet{N};\n          [set_type]::Type{<:Union{HPolygon, Hyperrectangle, Interval}}=Hyperrectangle,\n          [ε]::Real=Inf,\n          [blocks]::AbstractVector{Int}=default_block_structure(S, set_type),\n          [block_types]::Dict{Type{<:LazySet}, AbstractVector{<:AbstractVector{Int}}}(),\n          [directions]::Union{Type{<:AbstractDirections}, Nothing}=nothing\n         )::CartesianProductArray where {N<:Real}\n\nDecompose a high-dimensional set into a Cartesian product of overapproximations of the projections over the specified subspaces.\n\nInput\n\nS           – set\nset_type    – (optional, default: Hyperrectangle) type of set approximation                  for each subspace\nε           – (optional, default: Inf) error bound for polytopic approximation\nblocks      – (optional, default: [2, …, 2] or [1, …, 1] if set_type is an interval)                  block structure - a vector with the size of each block\nblock_types – (optional, default: Interval for 1D and Hyperrectangle                  for mD blocks) a mapping from set types to blocks\ndirections  – (optional, default: nothing) template direction type, or                  nothing\n\nOutput\n\nA CartesianProductArray containing the low-dimensional approximated projections.\n\nAlgorithm\n\nFor each block a specific project method is called, dispatched on the set_type argument.\n\nNotes\n\nIf directions is different from nothing, the template directions are used together with blocks. Otherwise, if block_types is given, the options set_type and blocks are ignored.\n\nExamples\n\nThe decompose function supports different options, such as: supplying different dimensions for the decomposition, defining the target set of the decomposition, or specifying the degree of accuracy of the target decomposition. You can also choose to make the approximations in low dimensions using template directions. These options are exemplified below.\n\nDifferent dimensions\n\nBy default, decompose returns a Cartesian product of 2D Hyperrectangle sets. For example:\n\njulia> import LazySets.Approximations:decompose\n\njulia> S = Ball2(zeros(4), 1.);\n\njulia> array(decompose(S))\n2-element Array{LazySets.LazySet{Float64},1}:\n LazySets.Hyperrectangle{Float64}([0.0, 0.0], [1.0, 1.0])\n LazySets.Hyperrectangle{Float64}([0.0, 0.0], [1.0, 1.0])\n\nOther block sizes can be specified using the blocks option, which refers to each block size of the partition:\n\njulia> array(decompose(S, blocks=[1, 3]))\n2-element Array{LazySets.LazySet{Float64},1}:\n LazySets.Hyperrectangle{Float64}([0.0], [1.0])\n LazySets.Hyperrectangle{Float64}([0.0, 0.0, 0.0], [1.0, 1.0, 1.0])\n\njulia> array(decompose(S, blocks=[4]))\n1-element Array{LazySets.LazySet{Float64},1}:\n LazySets.Hyperrectangle{Float64}([0.0, 0.0, 0.0, 0.0], [1.0, 1.0, 1.0, 1.0])\n\nDifferent set types\n\nWe can also decompose using polygons in constraint representation, through the set_type optional argument:\n\njulia> all([ai isa HPolygon for ai in array(decompose(S, set_type=HPolygon))])\ntrue\n\nFor decomposition into 1D subspaces, we can use Interval:\n\njulia> all([ai isa Interval for ai in array(decompose(S, set_type=Interval))])\ntrue\n\nHowever, if you need to specify different set types for different blocks, the interface presented so far does not apply. In the paragraph Advanced different set types input we explain the input block_types, that can be used precisely for that purpose.\n\nRefining the decomposition I:  -close approximation\n\nThe  option can be used to refine, that is obtain a more accurate decomposition in those blocks where HPolygon types are used, and it relies on the iterative refinement algorithm provided in the Approximations module.\n\nTo illustrate this, consider the unit 4D ball in the 2-norm. Using smaller  implies a better precision, thus more constraints in each 2D decomposition:\n\njulia> S = Ball2(zeros(4), 1.);\n\njulia> d(ε, bi) = array(decompose(S, set_type=HPolygon, ε=ε))[bi]\nd (generic function with 1 method)\n\njulia> [length(constraints_list(d(ε, 1))) for ε in [Inf, 0.1, 0.01]]\n3-element Array{Int64,1}:\n  4\n  8\n 32\n\nRefining the decomposition II: template polyhedra\n\nAnother way to refine the decomposition is using template polyhedra. The idea is to specify a set of template directions, and on each block, compute the polytopic overapproximation obtained by evaluating the support function of the given input set over the template directions.\n\nFor example, octagonal 2D approximations of the ball S are obtained with:\n\njulia> B = decompose(S, directions=OctDirections);\n\njulia> length(B.array) == 2 && all(dim(bi) == 2 for bi in B.array)\ntrue\n\nSee template_directions.jl for the available template directions. Note that, in contrast to the polygonal -close approximation, this method can be applied for blocks of any size.\n\njulia> B = decompose(S, directions=OctDirections, blocks=[4]);\n\njulia> length(B.array) == 1 && dim(B.array[1]) == 4\ntrue\n\nAdvanced different set types input\n\nWe can define different set types for different blocks, using the optional block_types input argument. It is a dictionary where the keys correspond to set types, and the values correspond to the blocks, namely the initial and final block indices should be given.\n\nFor example:\n\njulia> S = Ball2(zeros(3), 1.);\n\njulia> array(decompose(S, block_types=Dict(Interval=>[1:1], Hyperrectangle=>[2:3])))\n2-element Array{LazySets.LazySet{Float64},1}:\n LazySets.Interval{Float64,IntervalArithmetic.Interval{Float64}}([-1, 1])\n LazySets.Hyperrectangle{Float64}([0.0, 0.0], [1.0, 1.0])\n\nWe can additionally pass ε, which is automatically used for each HPolygon type block.\n\njulia> S = Ball2(zeros(8), 1.);\n\njulia> bt = Dict(Interval=>[1:1], Hyperrectangle=>[2:4], HPolygon=>[5:6, 7:8]);\n\njulia> [typeof(ai) for ai in array(decompose(S, block_types=bt, ε=0.01))]\n4-element Array{DataType,1}:\n LazySets.Interval{Float64,IntervalArithmetic.Interval{Float64}}\n LazySets.Hyperrectangle{Float64}\n LazySets.HPolygon{Float64}\n LazySets.HPolygon{Float64}\n\n\n\n"
 },
 
 {
@@ -3525,7 +3661,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.@neutral",
     "category": "macro",
-    "text": "@neutral(SET, NEUT)\n\nCreate functions to make a set type behave commutative with a given neutral element set type.\n\nInput\n\nSET  – set type\nNEUT – set type for neutral element\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates four functions (possibly two more if @neutral has been used in advance) (possibly two or four more if @declare_array_version has been used in advance).\n\nExamples\n\n@neutral(MinkowskiSum, N) creates at least the following functions:\n\nneutral(::MinkowskiSum) = N\nMinkowskiSum(X, N) = X\nMinkowskiSum(N, X) = X\nMinkowskiSum(N, N) = N\n\n\n\n"
+    "text": "@neutral(SET, NEUT)\n\nCreate functions to make a lazy set operation commutative with a given neutral element set type.\n\nInput\n\nSET  – lazy set operation type\nNEUT – set type for neutral element\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates four functions (possibly two more if @absorbing has been used in advance) (possibly two or four more if @declare_array_version has been used in advance).\n\nExamples\n\n@neutral(MinkowskiSum, N) creates at least the following functions:\n\nneutral(::MinkowskiSum) = N\nMinkowskiSum(X, N) = X\nMinkowskiSum(N, X) = X\nMinkowskiSum(N, N) = N\n\n\n\n"
 },
 
 {
@@ -3533,7 +3669,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.@absorbing",
     "category": "macro",
-    "text": "@absorbing(SET, ABS)\n\nCreate functions to make a set type behave commutative with a given absorbing element set type.\n\nInput\n\nSET – set type\nABS – set type for absorbing element\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates four functions (possibly two more if @absorbing has been used in advance) (possibly two or four more if @declare_array_version has been used in advance).\n\nExamples\n\n@absorbing(MinkowskiSum, A) creates at least the following functions:\n\nabsorbing(::MinkowskiSum) = A\nMinkowskiSum(X, A) = A\nMinkowskiSum(A, X) = A\nMinkowskiSum(A, A) = A\n\n\n\n"
+    "text": "@absorbing(SET, ABS)\n\nCreate functions to make a lazy set operation commutative with a given absorbing element set type.\n\nInput\n\nSET – lazy set operation type\nABS – set type for absorbing element\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates four functions (possibly two more if @neutral has been used in advance) (possibly two or four more if @declare_array_version has been used in advance).\n\nExamples\n\n@absorbing(MinkowskiSum, A) creates at least the following functions:\n\nabsorbing(::MinkowskiSum) = A\nMinkowskiSum(X, A) = A\nMinkowskiSum(A, X) = A\nMinkowskiSum(A, A) = A\n\n\n\n"
 },
 
 {
@@ -3541,7 +3677,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.@declare_array_version",
     "category": "macro",
-    "text": "@declare_array_version(SET, SETARR)\n\nCreate functions to connect a set type with its array set type.\n\nInput\n\nSET    – set type\nSETARR – array set type\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates eight functions (and possibly up to eight more if @neutral/@absorbing has been used in advance for the base and/or array set type).\n\nExamples\n\n@declare_array_version(MinkowskiSum, MinkowskiSumArray) creates at least the following functions:\n\narray_constructor(::MinkowskiSum) = MinkowskiSumArray\nis_array_constructor(::MinkowskiSumArray) = true\nMinkowskiSum!(X, Y)\nMinkowskiSum!(X, arr)\nMinkowskiSum!(arr, X)\nMinkowskiSum!(arr1, arr2)\n\n\n\n"
+    "text": "@declare_array_version(SET, SETARR)\n\nCreate functions to connect a lazy set operation with its array set type.\n\nInput\n\nSET    – lazy set operation type\nSETARR – array set type\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates eight functions (and possibly up to eight more if @neutral/@absorbing has been used in advance for the base and/or array set type).\n\nExamples\n\n@declare_array_version(MinkowskiSum, MinkowskiSumArray) creates at least the following functions:\n\narray_constructor(::MinkowskiSum) = MinkowskiSumArray\nis_array_constructor(::MinkowskiSumArray) = true\nMinkowskiSum!(X, Y)\nMinkowskiSum!(X, arr)\nMinkowskiSum!(arr, X)\nMinkowskiSum!(arr1, arr2)\n\n\n\n"
 },
 
 {
@@ -3557,7 +3693,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.@neutral_absorbing",
     "category": "macro",
-    "text": "@neutral_absorbing(SET, NEUT, ABS)\n\nCreate two functions to avoid method ambiguties for a set type with respect to neutral and absorbing element set types.\n\nInput\n\nSET  – set type\nNEUT – set type for neutral element\nABS  – set type for absorbing element\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@neutral_absorbing(MinkowskiSum, N, A) creates the following functions as quoted expressions:\n\nMinkowskiSum(N, A) = A\nMinkowskiSum(A, N) = A\n\n\n\n"
+    "text": "@neutral_absorbing(SET, NEUT, ABS)\n\nCreate two functions to avoid method ambiguties for a lazy set operation with respect to neutral and absorbing element set types.\n\nInput\n\nSET  – lazy set operation type\nNEUT – set type for neutral element\nABS  – set type for absorbing element\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@neutral_absorbing(MinkowskiSum, N, A) creates the following functions as quoted expressions:\n\nMinkowskiSum(N, A) = A\nMinkowskiSum(A, N) = A\n\n\n\n"
 },
 
 {
@@ -3565,7 +3701,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.@array_neutral",
     "category": "macro",
-    "text": "@array_neutral(FUN, NEUT, SETARR)\n\nCreate two functions to avoid method ambiguities for a set type with respect to the neutral element set type and the array set type.\n\nInput\n\nFUN     – function name\nNEUT    – set type for neutral element\nSETARR  – array set type\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@array_neutral(MinkowskiSum, N, ARR) creates the following functions as quoted expressions:\n\nMinkowskiSum(N, ARR) = ARR\nMinkowskiSum(ARR, N) = ARR\n\n\n\n"
+    "text": "@array_neutral(FUN, NEUT, SETARR)\n\nCreate two functions to avoid method ambiguities for a lazy set operation with respect to the neutral element set type and the array set type.\n\nInput\n\nFUN     – function name\nNEUT    – set type for neutral element\nSETARR  – array set type\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@array_neutral(MinkowskiSum, N, ARR) creates the following functions as quoted expressions:\n\nMinkowskiSum(N, ARR) = ARR\nMinkowskiSum(ARR, N) = ARR\n\n\n\n"
 },
 
 {
@@ -3573,7 +3709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.@array_absorbing",
     "category": "macro",
-    "text": "@array_absorbing(FUN, ABS, SETARR)\n\nCreate two functions to avoid method ambiguities for a set type with respect to the absorbing element set type and the array set type.\n\nInput\n\nFUN     – function name\nABS     – set type for absorbing element\nSETARR  – array set type\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@array_absorbing(MinkowskiSum, ABS, ARR) creates the following functions as quoted expressions:\n\nMinkowskiSum(ABS, ARR) = ABS\nMinkowskiSum(ARR, ABS) = ABS\n\n\n\n"
+    "text": "@array_absorbing(FUN, ABS, SETARR)\n\nCreate two functions to avoid method ambiguities for a lazy set operation with respect to the absorbing element set type and the array set type.\n\nInput\n\nFUN     – function name\nABS     – set type for absorbing element\nSETARR  – array set type\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@array_absorbing(MinkowskiSum, ABS, ARR) creates the following functions as quoted expressions:\n\nMinkowskiSum(ABS, ARR) = ABS\nMinkowskiSum(ARR, ABS) = ABS\n\n\n\n"
 },
 
 {
