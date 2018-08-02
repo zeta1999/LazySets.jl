@@ -665,10 +665,10 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.ρ",
+    "location": "lib/interfaces.html#LazySets.ρ-Tuple{AbstractArray{Real,1},LazySets.LazySet{Real}}",
     "page": "Set Interfaces",
     "title": "LazySets.ρ",
-    "category": "function",
+    "category": "method",
     "text": "ρ(d::AbstractVector{N}, S::LazySet{N})::N where {N<:Real}\n\nEvaluate the support function of a set in a given direction.\n\nInput\n\nd – direction\nS – convex set\n\nOutput\n\nThe support function of the set S for the direction d.\n\n\n\n"
 },
 
@@ -685,11 +685,35 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Support function and support vector",
     "category": "section",
-    "text": "Every LazySet type must define a function σ to compute the support vector.support_vector\nρ\nsupport_function"
+    "text": "Every LazySet type must define a function σ to compute the support vector.support_vector\nρ(::AbstractVector{Real}, ::LazySet{Real})\nsupport_function"
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.an_element-Tuple{LazySets.LazySet{Float64}}",
+    "location": "lib/interfaces.html#Base.LinAlg.norm-Tuple{LazySets.LazySet,Real}",
+    "page": "Set Interfaces",
+    "title": "Base.LinAlg.norm",
+    "category": "method",
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.radius-Tuple{LazySets.LazySet,Real}",
+    "page": "Set Interfaces",
+    "title": "LazySets.radius",
+    "category": "method",
+    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.diameter-Tuple{LazySets.LazySet,Real}",
+    "page": "Set Interfaces",
+    "title": "LazySets.diameter",
+    "category": "method",
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.an_element-Tuple{LazySets.LazySet{Real}}",
     "page": "Set Interfaces",
     "title": "LazySets.an_element",
     "category": "method",
@@ -701,7 +725,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Other globally defined set functions",
     "category": "section",
-    "text": "an_element(S::LazySet{Float64})"
+    "text": "norm(::LazySet, ::Real)\nradius(::LazySet, ::Real)\ndiameter(::LazySet, ::Real)\nan_element(::LazySet{Real})"
 },
 
 {
@@ -713,11 +737,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.dim-Tuple{LazySets.AbstractPointSymmetric}",
+    "page": "Set Interfaces",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(S::AbstractPointSymmetric)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nS – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{LazySets.AbstractPointSymmetric{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(S::AbstractPointSymmetric{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric set.\n\nInput\n\nS – point symmetric set\n\nOutput\n\nThe center of the point symmetric set.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Point-symmetric-set-1",
     "page": "Set Interfaces",
     "title": "Point symmetric set",
     "category": "section",
-    "text": "Point symmetric sets such as balls of different norms are characterized by a center. Note that there is a special interface combination Point symmetric polytope.AbstractPointSymmetric"
+    "text": "Point symmetric sets such as balls of different norms are characterized by a center. Note that there is a special interface combination Point symmetric polytope.AbstractPointSymmetricThis interface defines the following functions:dim(::AbstractPointSymmetric)\nan_element(::AbstractPointSymmetric{N}) where {N<:Real}"
 },
 
 {
@@ -729,7 +769,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.linear_map-Tuple{AbstractArray{T,2} where T,LazySets.AbstractPolytope{Float64}}",
+    "location": "lib/interfaces.html#LazySets.singleton_list-Tuple{LazySets.AbstractPolytope}",
+    "page": "Set Interfaces",
+    "title": "LazySets.singleton_list",
+    "category": "method",
+    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.linear_map-Tuple{AbstractArray{T,2} where T,LazySets.AbstractPolytope}",
     "page": "Set Interfaces",
     "title": "LazySets.linear_map",
     "category": "method",
@@ -741,7 +789,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Polytope",
     "category": "section",
-    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Point symmetric polytope.AbstractPolytopeThis interface defines the following functions:linear_map(M::AbstractMatrix, P::AbstractPolytope{Float64})"
+    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Point symmetric polytope.AbstractPolytopeThis interface defines the following functions:singleton_list(::AbstractPolytope)\nlinear_map(::AbstractMatrix, ::AbstractPolytope)"
 },
 
 {
@@ -753,11 +801,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.dim-Tuple{LazySets.AbstractPolygon}",
+    "page": "Set Interfaces",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(P::AbstractPolygon)::Int\n\nReturn the ambient dimension of a polygon.\n\nInput\n\nP – polygon\n\nOutput\n\nThe ambient dimension of the polygon, which is 2.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Polygon-1",
     "page": "Set Interfaces",
     "title": "Polygon",
     "category": "section",
-    "text": "A polygon is a two-dimensional polytope.AbstractPolygon"
+    "text": "A polygon is a two-dimensional polytope.AbstractPolygonThis interface defines the following functions:dim(P::AbstractPolygon)"
 },
 
 {
@@ -769,11 +825,67 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{LazySets.AbstractHPolygon{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(P::AbstractHPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nA vertex of the polygon in constraint representation (the first one in the order of the constraints).\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.AbstractHPolygon{Real}}",
+    "page": "Set Interfaces",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(x::AbstractVector{N}, P::AbstractHPolygon{N})::Bool where {N<:Real}\n\nCheck whether a given 2D point is contained in a polygon in constraint representation.\n\nInput\n\nx – two-dimensional point/vector\nP – polygon in constraint representation\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation checks if the point lies on the outside of each edge.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.vertices_list-Tuple{LazySets.AbstractHPolygon{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=false\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) to post process or not the                        intersection of constraints with a convex hull\n\nOutput\n\nList of vertices.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.tohrep-Tuple{LazySets.AbstractHPolygon{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.tohrep",
+    "category": "method",
+    "text": "tohrep(P::AbstractHPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a contraint representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\ntohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.tovrep-Tuple{LazySets.AbstractHPolygon{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.tovrep",
+    "category": "method",
+    "text": "tovrep(P::AbstractHPolygon{N})::VPolygon{N} where {N<:Real}\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe same polygon but in vertex representation, a VPolygon.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.addconstraint!-Tuple{LazySets.AbstractHPolygon{Real},LazySets.HalfSpace{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.addconstraint!",
+    "category": "method",
+    "text": "addconstraint!(P::AbstractHPolygon{N},\n               constraint::LinearConstraint{N})::Void where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon in constraint representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.constraints_list-Tuple{LazySets.AbstractHPolygon{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(P::AbstractHPolygon{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a polygon in H-representation.\n\nInput\n\nP – polygon in H-representation\n\nOutput\n\nThe list of constraints of the polygon.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#HPolygon-1",
     "page": "Set Interfaces",
     "title": "HPolygon",
     "category": "section",
-    "text": "An HPolygon is a polygon in H-representation (or constraint representation).AbstractHPolygon"
+    "text": "An HPolygon is a polygon in H-representation (or constraint representation).AbstractHPolygonThis interface defines the following functions:an_element(::AbstractHPolygon{N}) where {N<:Real}\n∈(::AbstractVector{Real}, ::AbstractHPolygon{Real})\nvertices_list(::AbstractHPolygon{Real})\ntohrep(::AbstractHPolygon{Real})\ntovrep(::AbstractHPolygon{Real})\naddconstraint!(::AbstractHPolygon{Real}, ::LinearConstraint{Real})\nconstraints_list(::AbstractHPolygon{Real})"
 },
 
 {
@@ -785,11 +897,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.dim-Tuple{LazySets.AbstractPointSymmetricPolytope}",
+    "page": "Set Interfaces",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{LazySets.AbstractPointSymmetricPolytope{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Point-symmetric-polytope-1",
     "page": "Set Interfaces",
     "title": "Point symmetric polytope",
     "category": "section",
-    "text": "A point symmetric polytope is a combination of two other interfaces: Point symmetric set and Polytope.AbstractPointSymmetricPolytope"
+    "text": "A point symmetric polytope is a combination of two other interfaces: Point symmetric set and Polytope.AbstractPointSymmetricPolytopeThis interface defines the following functions:dim(::AbstractPointSymmetricPolytope)\nan_element(::AbstractPointSymmetricPolytope{N}) where {N<:Real}"
 },
 
 {
@@ -801,11 +929,51 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#Base.LinAlg.norm-Tuple{LazySets.AbstractHyperrectangle,Real}",
+    "page": "Set Interfaces",
+    "title": "Base.LinAlg.norm",
+    "category": "method",
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume that is centered in the origin.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.radius-Tuple{LazySets.AbstractHyperrectangle,Real}",
+    "page": "Set Interfaces",
+    "title": "LazySets.radius",
+    "category": "method",
+    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\nradius(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center. It is the same for all corners of a hyperrectangular set.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.AbstractHyperrectangle{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.AbstractHyperrectangle{Real}}",
+    "page": "Set Interfaces",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(x::AbstractVector{N}, H::AbstractHyperrectangle{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a hyperrectangular set.\n\nInput\n\nx – point/vector\nH – hyperrectangular set\n\nOutput\n\ntrue iff x  H.\n\nAlgorithm\n\nLet H be an n-dimensional hyperrectangular set, c_i and r_i be the box\'s center and radius and x_i be the vector x in dimension i, respectively. Then x  H iff c_i - x_i  r_i for all i=1n.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.vertices_list-Tuple{LazySets.AbstractHyperrectangle{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(H::AbstractHyperrectangle{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA list of vertices.\n\nNotes\n\nFor high dimensions, it is preferable to develop a vertex_iterator approach.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Hyperrectangle-1",
     "page": "Set Interfaces",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "A hyperrectangle is a special point symmetric polytope with axis-aligned facets.AbstractHyperrectangle"
+    "text": "A hyperrectangle is a special point symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real)\nradius(::AbstractHyperrectangle, ::Real)\nσ(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\n∈(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\nvertices_list(::AbstractHyperrectangle{Real})"
 },
 
 {
@@ -817,11 +985,67 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.linear_map-Tuple{AbstractArray{T,2} where T,LazySets.AbstractSingleton{Float64}}",
+    "location": "lib/interfaces.html#LazySets.σ-Union{Tuple{AbstractArray{N,1},LazySets.AbstractSingleton{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{N}, S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a set with a single value.\n\nInput\n\nd – direction\nS – set with a single value\n\nOutput\n\nThe support vector, which is the set\'s vector itself, irrespective of the given direction.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Base.:∈-Union{Tuple{AbstractArray{N,1},LazySets.AbstractSingleton{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(x::AbstractVector{N}, S::AbstractSingleton{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a set with a single value.\n\nInput\n\nx – point/vector\nS – set with a single value\n\nOutput\n\ntrue iff x  S.\n\nNotes\n\nThis implementation performs an exact comparison, which may be insufficient with floating point computations.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{LazySets.AbstractSingleton{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.center-Tuple{LazySets.AbstractSingleton{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.center",
+    "category": "method",
+    "text": "center(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the center of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe only element of the set.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.vertices_list-Union{Tuple{LazySets.AbstractSingleton{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(S::AbstractSingleton{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nA list containing only a single vertex.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.radius_hyperrectangle-Tuple{LazySets.AbstractSingleton{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.radius_hyperrectangle",
+    "category": "method",
+    "text": "radius_hyperrectangle(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the box radius of a set with a single value in every dimension.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe zero vector.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.radius_hyperrectangle-Tuple{LazySets.AbstractSingleton{Real},Int64}",
+    "page": "Set Interfaces",
+    "title": "LazySets.radius_hyperrectangle",
+    "category": "method",
+    "text": "radius_hyperrectangle(S::AbstractSingleton{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of a set with a single value in a given dimension.\n\nInput\n\nS – set with a single value\n\nOutput\n\nZero.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.linear_map-Union{Tuple{AbstractArray{T,2} where T,LazySets.AbstractSingleton{N}}, Tuple{N}} where N<:Real",
     "page": "Set Interfaces",
     "title": "LazySets.linear_map",
     "category": "method",
-    "text": "linear_map(M::AbstractMatrix, P::AbstractPolytope{N}) where {N<:Real}\n\nConcrete linear map of an abstract polytype.\n\nInput\n\nM – matrix\nP – abstract polytype\n\nOutput\n\nThe polytope in V-representation obtained by applying the linear map M to the set P. If the given polytope is two-dimensional, a polygon instead of a general polytope is returned. \n\n\n\nlinear_map(M::AbstractMatrix, S::AbstractSingleton{N}) where {N<:Real}\n\nConcrete linear map of an abstract singleton.\n\nInput\n\nM – matrix\nS – abstract singleton\n\nOutput\n\nThe abstract singleton of the same type of S obtained by applying the linear map to the element in S.\n\n\n\n"
+    "text": "linear_map(M::AbstractMatrix, S::AbstractSingleton{N}) where {N<:Real}\n\nConcrete linear map of an abstract singleton.\n\nInput\n\nM – matrix\nS – abstract singleton\n\nOutput\n\nThe abstract singleton of the same type of S obtained by applying the linear map to the element in S.\n\n\n\n"
 },
 
 {
@@ -829,7 +1053,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Singleton",
     "category": "section",
-    "text": "A singleton is a special hyperrectangle consisting of only one point.AbstractSingletonThis interface defines the following functions:linear_map(M::AbstractMatrix, S::AbstractSingleton{Float64})"
+    "text": "A singleton is a special hyperrectangle consisting of only one point.AbstractSingletonThis interface defines the following functions:σ(::AbstractVector{N}, ::AbstractSingleton{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::AbstractSingleton{N}) where {N<:Real}\nan_element(::AbstractSingleton{N}) where {N<:Real}\ncenter(::AbstractSingleton{Real})\nvertices_list(::AbstractSingleton{N}) where {N<:Real}\nradius_hyperrectangle(::AbstractSingleton{Real})\nradius_hyperrectangle(::AbstractSingleton{Real}, ::Int)\nlinear_map(::AbstractMatrix, ::AbstractSingleton{N}) where {N<:Real}"
 },
 
 {
@@ -865,15 +1089,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Ball2{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(S::AbstractPointSymmetric)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nS – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Ball2{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{AbstractFloat,1},LazySets.Ball2{AbstractFloat}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -881,7 +1097,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Ball2{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{AbstractFloat,1},LazySets.Ball2{AbstractFloat}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -889,15 +1105,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.Ball2{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(S::AbstractPointSymmetric{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric set.\n\nInput\n\nS – point symmetric set\n\nOutput\n\nThe center of the point symmetric set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ball2{Float64}}",
+    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ball2}",
     "page": "Common Set Representations",
     "title": "LazySets.center",
     "category": "method",
@@ -909,7 +1117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\ndim(::Ball2{Float64})\nσ(::AbstractVector{Float64}, ::Ball2{Float64})\n∈(::AbstractVector{Float64}, ::Ball2{Float64})\nan_element(::Ball2{Float64})\ncenter(::Ball2{Float64})"
+    "text": "Ball2\nσ(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\ncenter(::Ball2)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPointSymmetric:dim\nan_element"
 },
 
 {
@@ -921,79 +1129,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.BallInf{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.BallInf{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.σ",
-    "category": "method",
-    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.BallInf{Float64}}",
-    "page": "Common Set Representations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(x::AbstractVector{N}, H::AbstractHyperrectangle{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a hyperrectangular set.\n\nInput\n\nx – point/vector\nH – hyperrectangular set\n\nOutput\n\ntrue iff x  H.\n\nAlgorithm\n\nLet H be an n-dimensional hyperrectangular set, c_i and r_i be the box\'s center and radius and x_i be the vector x in dimension i, respectively. Then x  H iff c_i - x_i  r_i for all i=1n.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.BallInf{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.LinAlg.norm-Tuple{LazySets.BallInf{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "Base.LinAlg.norm",
-    "category": "method",
-    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume that is centered in the origin.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.radius-Tuple{LazySets.BallInf{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "LazySets.radius",
-    "category": "method",
-    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\nradius(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center. It is the same for all corners of a hyperrectangular set.\n\n\n\nradius(B::BallInf, [p]::Real=Inf)::Real\n\nReturn the radius of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.diameter-Tuple{LazySets.BallInf{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "LazySets.diameter",
-    "category": "method",
-    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.BallInf{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.vertices_list",
-    "category": "method",
-    "text": "vertices_list(H::AbstractHyperrectangle{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA list of vertices.\n\nNotes\n\nFor high dimensions, it is preferable to develop a vertex_iterator approach.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.BallInf{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.singleton_list",
-    "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.BallInf{Float64}}",
+    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.BallInf}",
     "page": "Common Set Representations",
     "title": "LazySets.center",
     "category": "method",
@@ -1001,7 +1137,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.BallInf{Float64}}",
+    "location": "lib/representations.html#LazySets.radius-Tuple{LazySets.BallInf,Real}",
+    "page": "Common Set Representations",
+    "title": "LazySets.radius",
+    "category": "method",
+    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\nradius(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center. It is the same for all corners of a hyperrectangular set.\n\n\n\nradius(B::BallInf, [p]::Real=Inf)::Real\n\nReturn the radius of a ball in the infinity norm.\n\nInput\n\nB – ball in the infinity norm\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.BallInf}",
     "page": "Common Set Representations",
     "title": "LazySets.radius_hyperrectangle",
     "category": "method",
@@ -1009,7 +1153,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.BallInf{Float64},Int64}",
+    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.BallInf,Int64}",
     "page": "Common Set Representations",
     "title": "LazySets.radius_hyperrectangle",
     "category": "method",
@@ -1021,7 +1165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ndim(::BallInf{Float64})\nσ(::AbstractVector{Float64}, ::BallInf{Float64})\n∈(::AbstractVector{Float64}, ::BallInf{Float64})\nan_element(::BallInf{Float64})\nnorm(::BallInf{Float64}, ::Real)\nradius(::BallInf{Float64}, ::Real)\ndiameter(::BallInf{Float64}, ::Real)\nvertices_list(::BallInf{Float64})\nsingleton_list(::BallInf{Float64})\ncenter(::BallInf{Float64})\nradius_hyperrectangle(::BallInf{Float64})\nradius_hyperrectangle(::BallInf{Float64}, ::Int)"
+    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPointSymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list"
 },
 
 {
@@ -1033,15 +1177,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Ball1{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Ball1{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.Ball1{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1049,7 +1185,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Ball1{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.Ball1{Real}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -1057,15 +1193,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.Ball1{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Ball1{Float64}}",
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Ball1}",
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "method",
@@ -1073,15 +1201,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.Ball1{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.singleton_list",
-    "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ball1{Float64}}",
+    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ball1}",
     "page": "Common Set Representations",
     "title": "LazySets.center",
     "category": "method",
@@ -1093,7 +1213,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\ndim(::Ball1{Float64})\nσ(::AbstractVector{Float64}, ::Ball1{Float64})\n∈(::AbstractVector{Float64}, ::Ball1{Float64})\nan_element(::Ball1{Float64})\nvertices_list(::Ball1{Float64})\nsingleton_list(::Ball1{Float64})\ncenter(::Ball1{Float64})"
+    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPointSymmetricPolytope:dim\nan_element"
 },
 
 {
@@ -1105,15 +1225,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Ballp{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(S::AbstractPointSymmetric)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nS – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Ballp{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{AbstractFloat,1},LazySets.Ballp{AbstractFloat}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1121,7 +1233,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Ballp{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{AbstractFloat,1},LazySets.Ballp{AbstractFloat}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -1129,15 +1241,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.Ballp{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(S::AbstractPointSymmetric{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric set.\n\nInput\n\nS – point symmetric set\n\nOutput\n\nThe center of the point symmetric set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ballp{Float64}}",
+    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ballp}",
     "page": "Common Set Representations",
     "title": "LazySets.center",
     "category": "method",
@@ -1149,7 +1253,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "p-norm ball",
     "category": "section",
-    "text": "Ballp\ndim(::Ballp{Float64})\nσ(::AbstractVector{Float64}, ::Ballp{Float64})\n∈(::AbstractVector{Float64}, ::Ballp{Float64})\nan_element(::Ballp{Float64})\ncenter(::Ballp{Float64})"
+    "text": "Ballp\nσ(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\ncenter(::Ballp)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPointSymmetric:dim\nan_element"
 },
 
 {
@@ -1161,7 +1265,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Ellipsoid{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{AbstractFloat,1},LazySets.Ellipsoid{AbstractFloat}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1169,15 +1273,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ellipsoid{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.center",
-    "category": "method",
-    "text": "center(E::Ellipsoid{N})::Vector{N} where {N<:AbstractFloat}\n\nReturn the center of the ellipsoid.\n\nInput\n\nE – ellipsoid\n\nOutput\n\nThe center of the ellipsoid.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Ellipsoid{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{AbstractFloat,1},LazySets.Ellipsoid{AbstractFloat}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -1185,11 +1281,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Ellipsoid}",
+    "page": "Common Set Representations",
+    "title": "LazySets.center",
+    "category": "method",
+    "text": "center(E::Ellipsoid{N})::Vector{N} where {N<:AbstractFloat}\n\nReturn the center of the ellipsoid.\n\nInput\n\nE – ellipsoid\n\nOutput\n\nThe center of the ellipsoid.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Ellipsoid-1",
     "page": "Common Set Representations",
     "title": "Ellipsoid",
     "category": "section",
-    "text": "Ellipsoid\nσ(::AbstractVector{Float64}, ::Ellipsoid{Float64})\ncenter(::Ellipsoid{Float64})\n∈(::AbstractVector{Float64}, ::Ellipsoid{Float64})"
+    "text": "Ellipsoid\nσ(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\ncenter(::Ellipsoid)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPointSymmetric:dim\nan_element"
 },
 
 {
@@ -1209,7 +1313,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.EmptySet{Float64}}",
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.EmptySet}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
@@ -1217,7 +1321,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.EmptySet{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.EmptySet{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1225,7 +1329,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.EmptySet{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.EmptySet{Real}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -1233,19 +1337,43 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.EmptySet{Float64}}",
+    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.EmptySet}",
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(∅::EmptySet)\n\nReturn some element of an empty set.\n\nInput\n\n∅ – empty set\n\nOutput\n\nAn error.\n\n\n\n"
+    "text": "an_element(∅::EmptySet)\n\nReturn some element of an empty set.\n\nInput\n\n∅ – empty set\n\nOutput\n\nAn error.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#EmptySet-1",
+    "location": "lib/representations.html#Base.LinAlg.norm-Tuple{LazySets.EmptySet,Real}",
     "page": "Common Set Representations",
-    "title": "EmptySet",
+    "title": "Base.LinAlg.norm",
+    "category": "method",
+    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(S::EmptySet, [p]::Real=Inf)\n\nReturn the norm of an empty set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – empty set\np – (optional, default: Inf) norm\n\nOutput\n\nAn error.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.radius-Tuple{LazySets.EmptySet,Real}",
+    "page": "Common Set Representations",
+    "title": "LazySets.radius",
+    "category": "method",
+    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\nradius(S::EmptySet, [p]::Real=Inf)\n\nReturn the radius of an empty set. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – empty set\np – (optional, default: Inf) norm\n\nOutput\n\nAn error.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.diameter-Tuple{LazySets.EmptySet,Real}",
+    "page": "Common Set Representations",
+    "title": "LazySets.diameter",
+    "category": "method",
+    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\ndiameter(S::EmptySet, [p]::Real=Inf)\n\nReturn the diameter of an empty set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – empty set\np – (optional, default: Inf) norm\n\nOutput\n\nAn error.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Empty-set-1",
+    "page": "Common Set Representations",
+    "title": "Empty set",
     "category": "section",
-    "text": "EmptySet\n∅\ndim(::EmptySet{Float64})\nσ(::AbstractVector{Float64}, ::EmptySet{Float64})\n∈(::AbstractVector{Float64}, ::EmptySet{Float64})\nan_element(::EmptySet{Float64})"
+    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{Real}, ::EmptySet{Real})\n∈(::AbstractVector{Real}, ::EmptySet{Real})\nan_element(::EmptySet)\nnorm(::EmptySet, ::Real)\nradius(::EmptySet, ::Real)\ndiameter(::EmptySet, ::Real)Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1265,7 +1393,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.HalfSpace{Float64}}",
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.HalfSpace}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
@@ -1273,7 +1401,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.HalfSpace{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.HalfSpace{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1281,15 +1409,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.HalfSpace{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(hs::HalfSpace{N})::Vector{N} where {N<:Real}\n\nReturn some element of a half-space.\n\nInput\n\nhs – half-space\n\nOutput\n\nAn element on the defining hyperplane.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.HalfSpace{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.HalfSpace{Real}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -1297,7 +1417,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.halfspace_left-Tuple{AbstractArray{Float64,1},AbstractArray{Float64,1}}",
+    "location": "lib/representations.html#LazySets.an_element-Union{Tuple{LazySets.HalfSpace{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(hs::HalfSpace{N})::Vector{N} where {N<:Real}\n\nReturn some element of a half-space.\n\nInput\n\nhs – half-space\n\nOutput\n\nAn element on the defining hyperplane.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.halfspace_left-Tuple{AbstractArray{Real,1},AbstractArray{Real,1}}",
     "page": "Common Set Representations",
     "title": "LazySets.halfspace_left",
     "category": "method",
@@ -1305,7 +1433,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.halfspace_right-Tuple{AbstractArray{Float64,1},AbstractArray{Float64,1}}",
+    "location": "lib/representations.html#LazySets.halfspace_right-Tuple{AbstractArray{Real,1},AbstractArray{Real,1}}",
     "page": "Common Set Representations",
     "title": "LazySets.halfspace_right",
     "category": "method",
@@ -1317,7 +1445,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace{Float64})\nσ(::AbstractVector{Float64}, ::HalfSpace{Float64})\nan_element(::HalfSpace{Float64})\n∈(::AbstractVector{Float64}, ::HalfSpace{Float64})\nLazySets.halfspace_left(::AbstractVector{Float64}, ::AbstractVector{Float64})\nLazySets.halfspace_right(::AbstractVector{Float64}, ::AbstractVector{Float64})"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{Real}, ::HalfSpace{Real})\n∈(::AbstractVector{Real}, ::HalfSpace{Real})\nan_element(::HalfSpace{N}) where {N<:Real}\nLazySets.halfspace_left(::AbstractVector{Real}, ::AbstractVector{Real})\nLazySets.halfspace_right(::AbstractVector{Real}, ::AbstractVector{Real})Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1329,7 +1457,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Hyperplane{Float64}}",
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Hyperplane}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
@@ -1337,7 +1465,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Hyperplane{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.Hyperplane{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1345,15 +1473,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.Hyperplane{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(hp::Hyperplane{N})::Vector{N} where {N<:Real}\n\nReturn some element of a hyperplane.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nAn element in the hyperplane.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Hyperplane{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.Hyperplane{Real}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -1361,11 +1481,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.an_element-Union{Tuple{LazySets.Hyperplane{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(hp::Hyperplane{N})::Vector{N} where {N<:Real}\n\nReturn some element of a hyperplane.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nAn element in the hyperplane.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Hyperplane-1",
     "page": "Common Set Representations",
     "title": "Hyperplane",
     "category": "section",
-    "text": "Hyperplane\ndim(::Hyperplane{Float64})\nσ(::AbstractVector{Float64}, ::Hyperplane{Float64})\nan_element(::Hyperplane{Float64})\n∈(::AbstractVector{Float64}, ::Hyperplane{Float64})"
+    "text": "Hyperplane\ndim(::Hyperplane)\nσ(::AbstractVector{Real}, ::Hyperplane{Real})\n∈(::AbstractVector{Real}, ::Hyperplane{Real})\nan_element(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1385,79 +1513,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Hyperrectangle{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Hyperrectangle{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.σ",
-    "category": "method",
-    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Hyperrectangle{Float64}}",
-    "page": "Common Set Representations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(x::AbstractVector{N}, H::AbstractHyperrectangle{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a hyperrectangular set.\n\nInput\n\nx – point/vector\nH – hyperrectangular set\n\nOutput\n\ntrue iff x  H.\n\nAlgorithm\n\nLet H be an n-dimensional hyperrectangular set, c_i and r_i be the box\'s center and radius and x_i be the vector x in dimension i, respectively. Then x  H iff c_i - x_i  r_i for all i=1n.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.Hyperrectangle{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.LinAlg.norm-Tuple{LazySets.Hyperrectangle{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "Base.LinAlg.norm",
-    "category": "method",
-    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume that is centered in the origin.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.radius-Tuple{LazySets.Hyperrectangle{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "LazySets.radius",
-    "category": "method",
-    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\nradius(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the radius of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\nNotes\n\nThe radius is defined as the radius of the enclosing ball of the given p-norm of minimal volume with the same center. It is the same for all corners of a hyperrectangular set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.diameter-Tuple{LazySets.Hyperrectangle{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "LazySets.diameter",
-    "category": "method",
-    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Hyperrectangle{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.vertices_list",
-    "category": "method",
-    "text": "vertices_list(H::AbstractHyperrectangle{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA list of vertices.\n\nNotes\n\nFor high dimensions, it is preferable to develop a vertex_iterator approach.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.Hyperrectangle{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.singleton_list",
-    "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Hyperrectangle{Float64}}",
+    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Hyperrectangle}",
     "page": "Common Set Representations",
     "title": "LazySets.center",
     "category": "method",
@@ -1465,7 +1521,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Hyperrectangle{Float64}}",
+    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Hyperrectangle}",
     "page": "Common Set Representations",
     "title": "LazySets.radius_hyperrectangle",
     "category": "method",
@@ -1473,7 +1529,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Hyperrectangle{Float64},Int64}",
+    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Hyperrectangle,Int64}",
     "page": "Common Set Representations",
     "title": "LazySets.radius_hyperrectangle",
     "category": "method",
@@ -1481,7 +1537,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.high-Tuple{LazySets.Hyperrectangle{Float64}}",
+    "location": "lib/representations.html#LazySets.high-Tuple{LazySets.Hyperrectangle}",
     "page": "Common Set Representations",
     "title": "LazySets.high",
     "category": "method",
@@ -1489,7 +1545,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.low-Tuple{LazySets.Hyperrectangle{Float64}}",
+    "location": "lib/representations.html#LazySets.low-Tuple{LazySets.Hyperrectangle}",
     "page": "Common Set Representations",
     "title": "LazySets.low",
     "category": "method",
@@ -1497,11 +1553,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Hyperrectangles-1",
+    "location": "lib/representations.html#Hyperrectangle-1",
     "page": "Common Set Representations",
-    "title": "Hyperrectangles",
+    "title": "Hyperrectangle",
     "category": "section",
-    "text": "Hyperrectangle\nHyperrectangle(;kwargs...)\ndim(::Hyperrectangle{Float64})\nσ(::AbstractVector{Float64}, ::Hyperrectangle{Float64})\n∈(::AbstractVector{Float64}, ::Hyperrectangle{Float64})\nan_element(::Hyperrectangle{Float64})\nnorm(::Hyperrectangle{Float64}, ::Real)\nradius(::Hyperrectangle{Float64}, ::Real)\ndiameter(::Hyperrectangle{Float64}, ::Real)\nvertices_list(::Hyperrectangle{Float64})\nsingleton_list(::Hyperrectangle{Float64})\ncenter(::Hyperrectangle{Float64})\nradius_hyperrectangle(::Hyperrectangle{Float64})\nradius_hyperrectangle(::Hyperrectangle{Float64}, ::Int)\nhigh(::Hyperrectangle{Float64})\nlow(::Hyperrectangle{Float64})"
+    "text": "Hyperrectangle\nHyperrectangle(;kwargs...)\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)\nhigh(::Hyperrectangle)\nlow(::Hyperrectangle)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPointSymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list"
 },
 
 {
@@ -1521,11 +1577,43 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Interval{Float64,IntervalArithmetic.AbstractInterval{Float64}}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.Interval{Real,IntervalArithmetic.AbstractInterval{Real}}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
     "text": "σ(d::V, x::Interval{N, IN})::V where {N, IN <: AbstractInterval{N}, V<:AbstractVector{N}}\n\nReturn the support vector of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nx – interval\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{T,1} where T,LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(v::AbstractVector, x::Interval)\n\nReturn whether a vector is contained in the interval.\n\nInput\n\nv – one-dimensional vector\nx – interval\n\nOutput\n\ntrue iff x contains v\'s first component.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{Real,LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(v::N, x::Interval) where {N}\n\nReturn whether a number is contained in the interval.\n\nInput\n\nv – scalar\nx – interval\n\nOutput\n\ntrue iff x contains v.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\nan_element(x::Interval{N})::Vector{N} where {N<:Real}\n\nReturn some element of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe left border (low(x)) of the interval.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(x::Interval)\n\nReturn the list of vertices of this interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe list of vertices of the interval represented as two one-dimensional vectors.\n\n\n\n"
 },
 
 {
@@ -1553,14 +1641,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Interval}",
-    "page": "Common Set Representations",
-    "title": "LazySets.vertices_list",
-    "category": "method",
-    "text": "vertices_list(x::Interval)\n\nReturn the list of vertices of this interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe list of vertices of the interval represented as two one-dimensional vectors.\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#Base.:+-Tuple{LazySets.Interval,LazySets.Interval}",
     "page": "Common Set Representations",
     "title": "Base.:+",
@@ -1585,27 +1665,51 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{T,1} where T,LazySets.Interval}",
+    "location": "lib/representations.html#Interval-1",
     "page": "Common Set Representations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(v::AbstractVector, x::Interval)\n\nReturn whether a vector is contained in the interval.\n\nInput\n\nv – one-dimensional vector\nx – interval\n\nOutput\n\ntrue iff x contains v\'s first component.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.:∈-Tuple{Float64,LazySets.Interval}",
-    "page": "Common Set Representations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(v::N, x::Interval) where {N}\n\nReturn whether a number is contained in the interval.\n\nInput\n\nv – scalar\nx – interval\n\nOutput\n\ntrue iff x contains v.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Intervals-1",
-    "page": "Common Set Representations",
-    "title": "Intervals",
+    "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Float64}, ::Interval{Float64, IntervalArithmetic.AbstractInterval{Float64}})\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\nvertices_list(::Interval)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)\n∈(::AbstractVector, ::Interval)\n∈(::Float64, ::Interval)"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Real}, ::Interval{Real, IntervalArithmetic.AbstractInterval{Real}})\n∈(::AbstractVector, ::Interval)\n∈(::Real, ::Interval)\nan_element(::Interval)\nvertices_list(::Interval)\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractHyperrectangle:norm\nradius"
+},
+
+{
+    "location": "lib/representations.html#LazySets.Line",
+    "page": "Common Set Representations",
+    "title": "LazySets.Line",
+    "category": "type",
+    "text": "Line{N<:Real} <: LazySet{N}\n\nType that represents a line in 2D of the form ax = b (i.e., a special case of a Hyperplane).\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLazySets.Line{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Line}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(L::Line)::Int\n\nReturn the ambient dimension of a line.\n\nInput\n\nL – line\n\nOutput\n\nThe ambient dimension of the line, which is 2.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.Line{Real,V} where V<:AbstractArray{Real,1}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::V, L::Line) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a line in a given direction.\n\nInput\n\nd – direction\nL – line\n\nOutput\n\nThe support vector in the given direction, which is defined the same way as for the more general Hyperplane.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.Line{Real,V} where V<:AbstractArray{Real,1}}",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(x::AbstractVector{N}, L::Line{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a line.\n\nInput\n\nx – point/vector\nL – line\n\nOutput\n\ntrue iff x ∈ L.\n\nAlgorithm\n\nThe point x belongs to the line if and only if ax = b holds.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.an_element-Union{Tuple{LazySets.Line{N,V} where V<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(L::Line{N})::Vector{N} where N<:Real\n\nReturn some element of a line.\n\nInput\n\nL – line\n\nOutput\n\nAn element on the line.\n\nAlgorithm\n\nIf the b value of the line is zero, the result is the origin. Otherwise the result is some x = x1 x2 such that ax1 x2 = b. We first find out in which dimension a is nonzero, say, dimension 1, and then choose x1 = 1 and accordingly x2 = fracb - a1a2.\n\n\n\n"
 },
 
 {
@@ -1613,7 +1717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line",
     "category": "section",
-    "text": "Line\ndim(::Line{Float64})\nσ(::AbstractVector{Float64}, ::Line{Float64})\n∈(::AbstractVector, ::Line)\nan_element(::Line)"
+    "text": "Line\ndim(::Line)\nσ(::AbstractVector{Real}, ::Line{Real})\n∈(::AbstractVector{Real}, ::Line{Real})\nan_element(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1625,15 +1729,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.LineSegment{Float64}}",
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.LineSegment}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
-    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\ndim(L::LineSegment)::Int\n\nReturn the ambient dimension of a line segment.\n\nInput\n\nL – line segment\n\nOutput\n\nThe ambient dimension of the line segment, which is 2.\n\n\n\n"
+    "text": "dim(L::LineSegment)::Int\n\nReturn the ambient dimension of a line segment.\n\nInput\n\nL – line segment\n\nOutput\n\nThe ambient dimension of the line segment, which is 2.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.LineSegment{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.LineSegment{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1641,7 +1745,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.LineSegment{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.LineSegment{Real}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -1669,7 +1773,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line segment",
     "category": "section",
-    "text": "LineSegment\ndim(::LineSegment{Float64})\nσ(::AbstractVector{Float64}, ::LineSegment{Float64})\n∈(::AbstractVector{Float64}, ::LineSegment{Float64})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)"
+    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{Real}, ::LineSegment{Real})\n∈(::AbstractVector{Real}, ::LineSegment{Real})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1689,15 +1793,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.HPolygon{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPolygon)::Int\n\nReturn the ambient dimension of a polygon.\n\nInput\n\nP – polygon\n\nOutput\n\nThe ambient dimension of the polygon, which is 2.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.HPolygon{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.HPolygon{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1705,67 +1801,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.HPolygon{Float64}}",
-    "page": "Common Set Representations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(x::AbstractVector{N}, P::AbstractHPolygon{N})::Bool where {N<:Real}\n\nCheck whether a given 2D point is contained in a polygon in constraint representation.\n\nInput\n\nx – two-dimensional point/vector\nP – polygon in constraint representation\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation checks if the point lies on the outside of each edge.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.HPolygon{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractHPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nA vertex of the polygon in constraint representation (the first one in the order of the constraints).\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.HPolygon{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.vertices_list",
-    "category": "method",
-    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=false\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) to post process or not the                        intersection of constraints with a convex hull\n\nOutput\n\nList of vertices.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.HPolygon{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.singleton_list",
-    "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.tohrep-Tuple{LazySets.HPolygon{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.tohrep",
-    "category": "method",
-    "text": "tohrep(P::AbstractHPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a contraint representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\ntohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.tovrep-Tuple{LazySets.HPolygon{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.tovrep",
-    "category": "method",
-    "text": "tovrep(P::AbstractHPolygon{N})::VPolygon{N} where {N<:Real}\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe same polygon but in vertex representation, a VPolygon.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygon{Float64},LazySets.HalfSpace{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.addconstraint!",
-    "category": "method",
-    "text": "addconstraint!(P::AbstractHPolygon{N},\n               constraint::LinearConstraint{N})::Void where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon in constraint representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#Constraint-representation-1",
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "HPolygon\ndim(::HPolygon{Float64})\nσ(::AbstractVector{Float64}, ::HPolygon{Float64})\n∈(::AbstractVector{Float64}, ::HPolygon{Float64})\nan_element(::HPolygon{Float64})\nvertices_list(::HPolygon{Float64})\nsingleton_list(::HPolygon{Float64})\ntohrep(::HPolygon{Float64})\ntovrep(::HPolygon{Float64})\naddconstraint!(::HPolygon{Float64}, ::LinearConstraint{Float64})"
+    "text": "HPolygon\nσ(::AbstractVector{Real}, ::HPolygon{Real})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
 },
 
 {
@@ -1777,15 +1817,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.HPolygonOpt{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPolygon)::Int\n\nReturn the ambient dimension of a polygon.\n\nInput\n\nP – polygon\n\nOutput\n\nThe ambient dimension of the polygon, which is 2.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.HPolygonOpt{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1793,67 +1825,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.HPolygonOpt{Float64}}",
-    "page": "Common Set Representations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(x::AbstractVector{N}, P::AbstractHPolygon{N})::Bool where {N<:Real}\n\nCheck whether a given 2D point is contained in a polygon in constraint representation.\n\nInput\n\nx – two-dimensional point/vector\nP – polygon in constraint representation\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation checks if the point lies on the outside of each edge.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.HPolygonOpt{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractHPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in constraint representation.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nA vertex of the polygon in constraint representation (the first one in the order of the constraints).\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.HPolygonOpt{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.vertices_list",
-    "category": "method",
-    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=false\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) to post process or not the                        intersection of constraints with a convex hull\n\nOutput\n\nList of vertices.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.HPolygonOpt{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.singleton_list",
-    "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.tohrep-Tuple{LazySets.HPolygonOpt{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.tohrep",
-    "category": "method",
-    "text": "tohrep(P::AbstractHPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a contraint representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\ntohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.tovrep-Tuple{LazySets.HPolygonOpt{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.tovrep",
-    "category": "method",
-    "text": "tovrep(P::AbstractHPolygon{N})::VPolygon{N} where {N<:Real}\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe same polygon but in vertex representation, a VPolygon.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolygonOpt{Float64},LazySets.HalfSpace{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.addconstraint!",
-    "category": "method",
-    "text": "addconstraint!(P::AbstractHPolygon{N},\n               constraint::LinearConstraint{N})::Void where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon in constraint representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#Optimized-constraint-representation-1",
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\ndim(::HPolygonOpt{Float64})\nσ(::AbstractVector{Float64}, ::HPolygonOpt{Float64})\n∈(::AbstractVector{Float64}, ::HPolygonOpt{Float64})\nan_element(::HPolygonOpt{Float64})\nvertices_list(::HPolygonOpt{Float64})\nsingleton_list(::HPolygonOpt{Float64})\ntohrep(::HPolygonOpt{Float64})\ntovrep(::HPolygonOpt{Float64})\naddconstraint!(::HPolygonOpt{Float64}, ::LinearConstraint{Float64})"
+    "text": "HPolygonOpt\nσ(::AbstractVector{Real}, ::HPolygonOpt{Real})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
 },
 
 {
@@ -1865,15 +1841,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.VPolygon{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPolygon)::Int\n\nReturn the ambient dimension of a polygon.\n\nInput\n\nP – polygon\n\nOutput\n\nThe ambient dimension of the polygon, which is 2.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.VPolygon{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.VPolygon{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -1881,7 +1849,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.VPolygon{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.VPolygon{Real}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -1889,15 +1857,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.VPolygon{Float64}}",
+    "location": "lib/representations.html#LazySets.an_element-Union{Tuple{LazySets.VPolygon{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::VPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in vertex representation.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe first vertex of the polygon in vertex representation.\n\n\n\n"
+    "text": "an_element(P::VPolygon{N})::Vector{N} where {N<:Real}\n\nReturn some element of a polygon in vertex representation.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe first vertex of the polygon in vertex representation.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.VPolygon{Float64}}",
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.VPolygon}",
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "method",
@@ -1905,15 +1873,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.VPolygon{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.singleton_list",
-    "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.tohrep-Tuple{LazySets.VPolygon{Float64}}",
+    "location": "lib/representations.html#LazySets.tohrep-Tuple{LazySets.VPolygon}",
     "page": "Common Set Representations",
     "title": "LazySets.tohrep",
     "category": "method",
@@ -1921,7 +1881,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.tovrep-Tuple{LazySets.VPolygon{Float64}}",
+    "location": "lib/representations.html#LazySets.tovrep-Tuple{LazySets.VPolygon}",
     "page": "Common Set Representations",
     "title": "LazySets.tovrep",
     "category": "method",
@@ -1933,7 +1893,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\ndim(::VPolygon{Float64})\nσ(::AbstractVector{Float64}, ::VPolygon{Float64})\n∈(::AbstractVector{Float64}, ::VPolygon{Float64})\nan_element(::VPolygon{Float64})\nvertices_list(::VPolygon{Float64})\nsingleton_list(::VPolygon{Float64})\ntohrep(::VPolygon{Float64})\ntovrep(::VPolygon{Float64})"
+    "text": "VPolygon\nσ(::AbstractVector{Real}, ::VPolygon{Real})\n∈(::AbstractVector{Real}, ::VPolygon{Real})\nan_element(::VPolygon{N}) where {N<:Real}\nvertices_list(::VPolygon)\ntohrep(::VPolygon)\ntovrep(::VPolygon)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPolygon:dim"
 },
 
 {
@@ -1945,7 +1905,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:<=-Tuple{AbstractArray{Float64,1},AbstractArray{Float64,1}}",
+    "location": "lib/representations.html#Base.:<=-Tuple{AbstractArray{AbstractFloat,1},AbstractArray{AbstractFloat,1}}",
     "page": "Common Set Representations",
     "title": "Base.:<=",
     "category": "method",
@@ -1953,7 +1913,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.quadrant-Tuple{AbstractArray{Float64,1}}",
+    "location": "lib/representations.html#LazySets.quadrant-Tuple{AbstractArray{Real,1}}",
     "page": "Common Set Representations",
     "title": "LazySets.quadrant",
     "category": "method",
@@ -1965,7 +1925,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Sorting directions",
     "category": "section",
-    "text": "LazySets.jump2pi\n<=(::AbstractVector{Float64}, ::AbstractVector{Float64})\nLazySets.quadrant(w::AbstractVector{Float64})"
+    "text": "LazySets.jump2pi\n<=(::AbstractVector{AbstractFloat}, ::AbstractVector{AbstractFloat})\nLazySets.quadrant(::AbstractVector{Real})"
+},
+
+{
+    "location": "lib/representations.html#Polytopes-1",
+    "page": "Common Set Representations",
+    "title": "Polytopes",
+    "category": "section",
+    "text": ""
 },
 
 {
@@ -1985,23 +1953,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolytope{Float64},LazySets.HalfSpace{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.addconstraint!",
-    "category": "method",
-    "text": "addconstraint!(P::HPolytope{N},\n               constraint::LinearConstraint{N})::Void where {N<:Real}\n\nAdd a linear constraint to a polyhedron in H-representation.\n\nInput\n\nP          – polyhedron in H-representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\nNotes\n\nIt is left to the user to guarantee that the dimension of all linear constraints is the same.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.constraints_list-Tuple{LazySets.HPolytope{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.constraints_list",
-    "category": "method",
-    "text": "constraints_list(P::HPolytope{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a polyhedron in H-representation.\n\nInput\n\nP – polytope in H-representation\n\nOutput\n\nThe list of constraints of the polyhedron.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.HPolytope}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.HPolytope{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2009,7 +1961,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.HPolytope{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.HPolytope{Real}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -2017,11 +1969,75 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Polytopes-1",
+    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolytope{Real},LazySets.HalfSpace{Real}}",
     "page": "Common Set Representations",
-    "title": "Polytopes",
+    "title": "LazySets.addconstraint!",
+    "category": "method",
+    "text": "addconstraint!(P::HPolytope{N},\n               constraint::LinearConstraint{N})::Void where {N<:Real}\n\nAdd a linear constraint to a polyhedron in H-representation.\n\nInput\n\nP          – polyhedron in H-representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\nNotes\n\nIt is left to the user to guarantee that the dimension of all linear constraints is the same.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.constraints_list-Tuple{LazySets.HPolytope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(P::HPolytope{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a polyhedron in H-representation.\n\nInput\n\nP – polytope in H-representation\n\nOutput\n\nThe list of constraints of the polyhedron.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.tosimplehrep-Tuple{LazySets.HPolytope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.tosimplehrep",
+    "category": "method",
+    "text": "tosimplehrep(P::HPolytope)\n\nReturn the simple H-representation Ax  b of a polytope.\n\nInput\n\nP – polytope\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b are the offsets.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Constraint-representation-2",
+    "page": "Common Set Representations",
+    "title": "Constraint representation",
     "category": "section",
-    "text": "HPolytope\ndim(P::HPolytope)\naddconstraint!(P::HPolytope{Float64}, constraint::LinearConstraint{Float64})\nconstraints_list(P::HPolytope{Float64})\nσ(d::AbstractVector{Float64}, P::HPolytope)\n∈(::AbstractVector{Float64}, ::HPolytope{Float64})"
+    "text": "HPolytope\ndim(::HPolytope)\nσ(::AbstractVector{Real}, ::HPolytope{Real})\n∈(::AbstractVector{Real}, ::HPolytope{Real})\naddconstraint!(::HPolytope{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPolytope)\ntosimplehrep(::HPolytope)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_map"
+},
+
+{
+    "location": "lib/representations.html#LazySets.VPolytope",
+    "page": "Common Set Representations",
+    "title": "LazySets.VPolytope",
+    "category": "type",
+    "text": "VPolytope{N<:Real} <: AbstractPolytope{N}\n\nType that represents a convex polytope in V-representation.\n\nFields\n\nvertices – the list of vertices\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.VPolytope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(P::VPolytope)::Int\n\nReturn the dimension of a polytope in V-representation.\n\nInput\n\nP  – polytope in V-representation\n\nOutput\n\nThe ambient dimension of the polytope in V-representation. If it is empty, the result is -1.\n\nExamples\n\njulia> v = VPolytope();\n\njulia> dim(v) > 0\nfalse\n\njulia> v = VPolytope([ones(3)])\nLazySets.VPolytope{Float64}(Array{Float64,1}[[1.0, 1.0, 1.0]])\n\njulia> dim(v) == 3\ntrue\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.VPolytope{Real}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{<:Real}, P::VPolytope; algorithm=\"hrep\")::Vector{<:Real}\n\nReturn the support vector of a polyhedron (in V-representation) in a given direction.\n\nInput\n\nd         – direction\nP         – polyhedron in V-representation\nalgorithm – (optional, default: \'hrep\') method to compute the support vector\n\nOutput\n\nThe support vector in the given direction.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.VPolytope}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(P::VPolytope{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polytope in V-representation.\n\nInput\n\nP – polytope in vertex representation\n\nOutput\n\nList of vertices.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Vertex-representation-2",
+    "page": "Common Set Representations",
+    "title": "Vertex representation",
+    "category": "section",
+    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{Real}, ::VPolytope{Real})\nvertices_list(::VPolytope)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_map"
 },
 
 {
@@ -2033,95 +2049,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Singleton{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Singleton{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.σ",
-    "category": "method",
-    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::AbstractVector{N}, S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a set with a single value.\n\nInput\n\nd – direction\nS – set with a single value\n\nOutput\n\nThe support vector, which is the set\'s vector itself, irrespective of the given direction.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Singleton{Float64}}",
-    "page": "Common Set Representations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(x::AbstractVector{N}, H::AbstractHyperrectangle{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a hyperrectangular set.\n\nInput\n\nx – point/vector\nH – hyperrectangular set\n\nOutput\n\ntrue iff x  H.\n\nAlgorithm\n\nLet H be an n-dimensional hyperrectangular set, c_i and r_i be the box\'s center and radius and x_i be the vector x in dimension i, respectively. Then x  H iff c_i - x_i  r_i for all i=1n.\n\n\n\n∈(x::AbstractVector{N}, S::AbstractSingleton{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a set with a single value.\n\nInput\n\nx – point/vector\nS – set with a single value\n\nOutput\n\ntrue iff x  S.\n\nNotes\n\nThis implementation performs an exact comparison, which may be insufficient with floating point computations.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.LinAlg.norm-Tuple{LazySets.Singleton{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "Base.LinAlg.norm",
-    "category": "method",
-    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume that is centered in the origin.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.diameter-Tuple{LazySets.Singleton{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "LazySets.diameter",
-    "category": "method",
-    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Singleton{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.vertices_list",
-    "category": "method",
-    "text": "vertices_list(H::AbstractHyperrectangle{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA list of vertices.\n\nNotes\n\nFor high dimensions, it is preferable to develop a vertex_iterator approach.\n\n\n\nvertices_list(S::AbstractSingleton{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nA list containing only a single vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.Singleton{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.singleton_list",
-    "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Singleton{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.center",
-    "category": "method",
-    "text": "center(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the center of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe only element of the set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Singleton{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.radius_hyperrectangle",
-    "category": "method",
-    "text": "radius_hyperrectangle(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the box radius of a set with a single value in every dimension.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe zero vector.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Singleton{Float64},Int64}",
-    "page": "Common Set Representations",
-    "title": "LazySets.radius_hyperrectangle",
-    "category": "method",
-    "text": "radius_hyperrectangle(S::AbstractSingleton{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of a set with a single value in a given dimension.\n\nInput\n\nS – set with a single value\n\nOutput\n\nZero.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.Singleton{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.element-Tuple{LazySets.Singleton{Float64}}",
+    "location": "lib/representations.html#LazySets.element-Tuple{LazySets.Singleton}",
     "page": "Common Set Representations",
     "title": "LazySets.element",
     "category": "method",
@@ -2129,7 +2057,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.element-Tuple{LazySets.Singleton{Float64},Int64}",
+    "location": "lib/representations.html#LazySets.element-Tuple{LazySets.Singleton,Int64}",
     "page": "Common Set Representations",
     "title": "LazySets.element",
     "category": "method",
@@ -2137,11 +2065,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Singletons-1",
+    "location": "lib/representations.html#Singleton-1",
     "page": "Common Set Representations",
-    "title": "Singletons",
+    "title": "Singleton",
     "category": "section",
-    "text": "Singleton\ndim(::Singleton{Float64})\nσ(::AbstractVector{Float64}, ::Singleton{Float64})\n∈(::AbstractVector{Float64}, ::Singleton{Float64})\nnorm(::Singleton{Float64}, ::Real)\ndiameter(::Singleton{Float64}, ::Real)\nvertices_list(::Singleton{Float64})\nsingleton_list(::Singleton{Float64})\ncenter(::Singleton{Float64})\nradius_hyperrectangle(::Singleton{Float64})\nradius_hyperrectangle(::Singleton{Float64}, ::Int)\nan_element(::Singleton{Float64})\nelement(::Singleton{Float64})\nelement(::Singleton{Float64}, ::Int)"
+    "text": "Singleton\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractPointSymmetricPolytope:dimInherited from AbstractHyperrectangle:norm\nradiusInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
 },
 
 {
@@ -2153,95 +2081,31 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.ZeroSet{Float64}}",
+    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.ZeroSet}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
-    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\ndim(Z::ZeroSet)::Int\n\nReturn the ambient dimension of this zero set.\n\nInput\n\nZ – a zero set, i.e., a set that only contains the origin\n\nOutput\n\nThe ambient dimension of the zero set.\n\n\n\n"
+    "text": "dim(Z::ZeroSet)::Int\n\nReturn the ambient dimension of this zero set.\n\nInput\n\nZ – a zero set, i.e., a set that only contains the origin\n\nOutput\n\nThe ambient dimension of the zero set.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ZeroSet{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Union{Tuple{AbstractArray{N,1},LazySets.ZeroSet}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::AbstractVector{N}, S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the support vector of a set with a single value.\n\nInput\n\nd – direction\nS – set with a single value\n\nOutput\n\nThe support vector, which is the set\'s vector itself, irrespective of the given direction.\n\n\n\nσ(d::AbstractVector{N}, Z::ZeroSet)::Vector{N} where {N<:Real}\n\nReturn the support vector of a zero set.\n\nInput\n\nZ – a zero set, i.e., a set that only contains the origin\n\nOutput\n\nThe returned value is the origin since it is the only point that belongs to this set.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, Z::ZeroSet)::Vector{N} where {N<:Real}\n\nReturn the support vector of a zero set.\n\nInput\n\nZ – a zero set, i.e., a set that only contains the origin\n\nOutput\n\nThe returned value is the origin since it is the only point that belongs to this set.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.ZeroSet{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Union{Tuple{AbstractArray{N,1},LazySets.ZeroSet{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
-    "text": "∈(x::AbstractVector{N}, H::AbstractHyperrectangle{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a hyperrectangular set.\n\nInput\n\nx – point/vector\nH – hyperrectangular set\n\nOutput\n\ntrue iff x  H.\n\nAlgorithm\n\nLet H be an n-dimensional hyperrectangular set, c_i and r_i be the box\'s center and radius and x_i be the vector x in dimension i, respectively. Then x  H iff c_i - x_i  r_i for all i=1n.\n\n\n\n∈(x::AbstractVector{N}, S::AbstractSingleton{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a set with a single value.\n\nInput\n\nx – point/vector\nS – set with a single value\n\nOutput\n\ntrue iff x  S.\n\nNotes\n\nThis implementation performs an exact comparison, which may be insufficient with floating point computations.\n\n\n\n∈(x::AbstractVector{N}, Z::ZeroSet{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a zero set.\n\nInput\n\nx – point/vector\nZ – zero set\n\nOutput\n\ntrue iff x  Z.\n\nExamples\n\njulia> Z = ZeroSet(2);\n\njulia> ∈([1.0, 0.0], Z)\nfalse\njulia> ∈([0.0, 0.0], Z)\ntrue\n\n\n\n"
+    "text": "∈(x::AbstractVector{N}, Z::ZeroSet{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a zero set.\n\nInput\n\nx – point/vector\nZ – zero set\n\nOutput\n\ntrue iff x  Z.\n\nExamples\n\njulia> Z = ZeroSet(2);\n\njulia> ∈([1.0, 0.0], Z)\nfalse\njulia> ∈([0.0, 0.0], Z)\ntrue\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#Base.LinAlg.norm-Tuple{LazySets.ZeroSet{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "Base.LinAlg.norm",
-    "category": "method",
-    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\nnorm(H::AbstractHyperrectangle, [p]::Real=Inf)::Real\n\nReturn the norm of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\nNotes\n\nThe norm of a hyperrectangular set is defined as the norm of the enclosing ball, of the given p-norm, of minimal volume that is centered in the origin.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.diameter-Tuple{LazySets.ZeroSet{Float64},Real}",
-    "page": "Common Set Representations",
-    "title": "LazySets.diameter",
-    "category": "method",
-    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.ZeroSet{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.vertices_list",
-    "category": "method",
-    "text": "vertices_list(H::AbstractHyperrectangle{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA list of vertices.\n\nNotes\n\nFor high dimensions, it is preferable to develop a vertex_iterator approach.\n\n\n\nvertices_list(S::AbstractSingleton{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nA list containing only a single vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.ZeroSet{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.singleton_list",
-    "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.ZeroSet{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.center",
-    "category": "method",
-    "text": "center(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the center of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe only element of the set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.ZeroSet{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.radius_hyperrectangle",
-    "category": "method",
-    "text": "radius_hyperrectangle(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the box radius of a set with a single value in every dimension.\n\nInput\n\nS – set with a single value\n\nOutput\n\nThe zero vector.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.ZeroSet{Float64},Int64}",
-    "page": "Common Set Representations",
-    "title": "LazySets.radius_hyperrectangle",
-    "category": "method",
-    "text": "radius_hyperrectangle(S::AbstractSingleton{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of a set with a single value in a given dimension.\n\nInput\n\nS – set with a single value\n\nOutput\n\nZero.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.ZeroSet{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.element-Tuple{LazySets.ZeroSet{Float64}}",
+    "location": "lib/representations.html#LazySets.element-Tuple{LazySets.ZeroSet}",
     "page": "Common Set Representations",
     "title": "LazySets.element",
     "category": "method",
@@ -2249,7 +2113,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.element-Tuple{LazySets.ZeroSet{Float64},Int64}",
+    "location": "lib/representations.html#LazySets.element-Tuple{LazySets.ZeroSet,Int64}",
     "page": "Common Set Representations",
     "title": "LazySets.element",
     "category": "method",
@@ -2257,19 +2121,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.linear_map-Tuple{AbstractArray{T,2} where T,LazySets.ZeroSet{Float64}}",
+    "location": "lib/representations.html#LazySets.linear_map-Union{Tuple{AbstractArray{T,2} where T,LazySets.ZeroSet{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.linear_map",
     "category": "method",
-    "text": "linear_map(M::AbstractMatrix, P::AbstractPolytope{N}) where {N<:Real}\n\nConcrete linear map of an abstract polytype.\n\nInput\n\nM – matrix\nP – abstract polytype\n\nOutput\n\nThe polytope in V-representation obtained by applying the linear map M to the set P. If the given polytope is two-dimensional, a polygon instead of a general polytope is returned. \n\n\n\nlinear_map(M::AbstractMatrix, S::AbstractSingleton{N}) where {N<:Real}\n\nConcrete linear map of an abstract singleton.\n\nInput\n\nM – matrix\nS – abstract singleton\n\nOutput\n\nThe abstract singleton of the same type of S obtained by applying the linear map to the element in S.\n\n\n\nlinear_map(M::AbstractMatrix, Z::ZeroSet{N}) where {N<:Real}\n\nConcrete linear map of a zero set.\n\nInput\n\nM – matrix\nZ – zero set\n\nOutput\n\nThe zero set whose dimension matches the output dimension of the given matrix.\n\n\n\n"
+    "text": "linear_map(M::AbstractMatrix, Z::ZeroSet{N}) where {N<:Real}\n\nConcrete linear map of a zero set.\n\nInput\n\nM – matrix\nZ – zero set\n\nOutput\n\nThe zero set whose dimension matches the output dimension of the given matrix.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#ZeroSet-1",
+    "location": "lib/representations.html#Zero-set-1",
     "page": "Common Set Representations",
-    "title": "ZeroSet",
+    "title": "Zero set",
     "category": "section",
-    "text": "ZeroSet\ndim(::ZeroSet{Float64})\nσ(::AbstractVector{Float64}, ::ZeroSet{Float64})\n∈(::AbstractVector{Float64}, ::ZeroSet{Float64})\nnorm(::ZeroSet{Float64}, ::Real)\ndiameter(::ZeroSet{Float64}, ::Real)\nvertices_list(::ZeroSet{Float64})\nsingleton_list(::ZeroSet{Float64})\ncenter(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64})\nradius_hyperrectangle(::ZeroSet{Float64}, ::Int)\nan_element(::ZeroSet{Float64})\nelement(::ZeroSet{Float64})\nelement(::ZeroSet{Float64}, ::Int)\nlinear_map(M::AbstractMatrix, Z::ZeroSet{Float64})"
+    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet)\nelement(::ZeroSet, ::Int)\nlinear_map(::AbstractMatrix, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractHyperrectangle:norm\nradiusInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
 },
 
 {
@@ -2281,15 +2145,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Zonotope{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Zonotope{Float64}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.Zonotope{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2297,7 +2153,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Zonotope{Float64}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.Zonotope{Real}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -2305,23 +2161,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.an_element-Tuple{LazySets.Zonotope{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Zonotope{Float64}}",
-    "page": "Common Set Representations",
-    "title": "LazySets.center",
-    "category": "method",
-    "text": "center(Z::Zonotope{N})::Vector{N} where {N<:Real}\n\nReturn the center of a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe center of the zonotope.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Zonotope{Float64}}",
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{LazySets.Zonotope}",
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
     "category": "method",
@@ -2329,15 +2169,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.singleton_list-Tuple{LazySets.Zonotope{Float64}}",
+    "location": "lib/representations.html#LazySets.center-Tuple{LazySets.Zonotope}",
     "page": "Common Set Representations",
-    "title": "LazySets.singleton_list",
+    "title": "LazySets.center",
     "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
+    "text": "center(Z::Zonotope{N})::Vector{N} where {N<:Real}\n\nReturn the center of a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe center of the zonotope.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.order-Tuple{LazySets.Zonotope{Float64}}",
+    "location": "lib/representations.html#LazySets.order-Tuple{LazySets.Zonotope}",
     "page": "Common Set Representations",
     "title": "LazySets.order",
     "category": "method",
@@ -2377,7 +2217,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.reduce_order-Tuple{LazySets.Zonotope{Float64},Any}",
+    "location": "lib/representations.html#LazySets.reduce_order-Tuple{LazySets.Zonotope,Any}",
     "page": "Common Set Representations",
     "title": "LazySets.reduce_order",
     "category": "method",
@@ -2385,11 +2225,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Zonotopes-1",
+    "location": "lib/representations.html#Zonotope-1",
     "page": "Common Set Representations",
-    "title": "Zonotopes",
+    "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\ndim(::Zonotope{Float64})\nσ(::AbstractVector{Float64}, ::Zonotope{Float64})\n∈(::AbstractVector{Float64}, ::Zonotope{Float64})\nan_element(::Zonotope{Float64})\ncenter(::Zonotope{Float64})\nvertices_list(::Zonotope{Float64})\nsingleton_list(::Zonotope{Float64})\norder(::Zonotope{Float64})\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope{Float64}, r)"
+    "text": "Zonotope\nσ(::AbstractVector{Real}, ::Zonotope{Real})\n∈(::AbstractVector{Real}, ::Zonotope{Real})\nvertices_list(::Zonotope)\ncenter(::Zonotope)\norder(::Zonotope)\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractPointSymmetricPolytope:dim\nan_element"
 },
 
 {
@@ -2425,15 +2265,23 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:*-Tuple{LazySets.LazySet{Float64},LazySets.LazySet{Float64}}",
+    "location": "lib/operations.html#Base.:×-Tuple{LazySets.LazySet,LazySets.LazySet}",
     "page": "Common Set Operations",
-    "title": "Base.:*",
+    "title": "Base.:×",
     "category": "method",
-    "text": "    *(X::LazySet, Y::LazySet)\n\nAlias for the binary Cartesian product.\n\n\n\n    *(a::N, X::LazySet) where {N}\n\nReturn a linear map of a convex set by a scalar value.\n\nInput\n\na – scalar\nX – convex set\n\nOutput\n\nThe linear map of the convex set.\n\n\n\n"
+    "text": "×\n\nAlias for the binary Cartesian product.\n\n\n\n"
 },
 
 {
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CartesianProduct{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#Base.:*-Tuple{LazySets.LazySet,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:*",
+    "category": "method",
+    "text": "    *(X::LazySet, Y::LazySet)\n\nAlias for the binary Cartesian product.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CartesianProduct}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2441,7 +2289,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.CartesianProduct{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.CartesianProduct{Real,S1,S2} where S2<:LazySets.LazySet{Real} where S1<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2449,7 +2297,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.CartesianProduct{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.CartesianProduct{Real,S1,S2} where S2<:LazySets.LazySet{Real} where S1<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "method",
@@ -2461,7 +2309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Cartesian Product",
     "category": "section",
-    "text": "CartesianProduct\nBase.:*(::LazySet{Float64}, ::LazySet{Float64})\ndim(::CartesianProduct{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::CartesianProduct{Float64, LazySet{Float64}, LazySet{Float64}})\n∈(::AbstractVector{Float64}, ::CartesianProduct{Float64, LazySet{Float64}, LazySet{Float64}})"
+    "text": "CartesianProduct\n×(::LazySet, ::LazySet)\n*(::LazySet, ::LazySet)\ndim(::CartesianProduct)\nσ(::AbstractVector{Real}, ::CartesianProduct{Real})\n∈(::AbstractVector{Real}, ::CartesianProduct{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2473,15 +2321,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.CartesianProductArray{Float64,LazySets.LazySet{Float64}}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.array",
-    "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CartesianProductArray{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CartesianProductArray}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2489,7 +2329,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.CartesianProductArray{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.CartesianProductArray{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2497,7 +2337,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.CartesianProductArray{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.CartesianProductArray{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "method",
@@ -2505,11 +2345,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.CartesianProductArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "method",
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#n-ary-Cartesian-Product-1",
     "page": "Common Set Operations",
     "title": "n-ary Cartesian Product",
     "category": "section",
-    "text": "CartesianProductArray{Float64, LazySet{Float64}}\narray(::CartesianProductArray{Float64, LazySet{Float64}})\ndim(::CartesianProductArray{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::CartesianProductArray{Float64, LazySet{Float64}})\n∈(::AbstractVector{Float64}, ::CartesianProductArray{Float64, LazySet{Float64}})"
+    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Real}, ::CartesianProductArray{Real})\n∈(::AbstractVector{Real}, ::CartesianProductArray{Real})\narray(::CartesianProductArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2537,7 +2385,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ConvexHull{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ConvexHull}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2545,7 +2393,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ConvexHull{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.ConvexHull{Real,S1,S2} where S2<:LazySets.LazySet{Real} where S1<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2557,7 +2405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Convex Hull",
     "category": "section",
-    "text": "ConvexHull\nCH\ndim(::ConvexHull{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::ConvexHull{Float64, LazySet{Float64}, LazySet{Float64}})"
+    "text": "ConvexHull\nCH\ndim(::ConvexHull)\nσ(::AbstractVector{Real}, ::ConvexHull{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2577,14 +2425,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.ConvexHullArray{Float64,LazySets.LazySet{Float64}}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.array",
-    "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
-},
-
-{
     "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ConvexHullArray}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
@@ -2593,7 +2433,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ConvexHullArray}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.ConvexHullArray{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2601,11 +2441,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.ConvexHullArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "method",
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#n-ary-Convex-Hull-1",
     "page": "Common Set Operations",
     "title": "n-ary Convex Hull",
     "category": "section",
-    "text": "ConvexHullArray\nCHArray\narray(::ConvexHullArray{Float64, LazySet{Float64}})\ndim(cha::ConvexHullArray)\nσ(d::AbstractVector{Float64}, cha::ConvexHullArray)"
+    "text": "ConvexHullArray\nCHArray\ndim(::ConvexHullArray)\nσ(::AbstractVector{Real}, ::ConvexHullArray{Real})\narray(::ConvexHullArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2673,7 +2521,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.Intersection{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.Intersection}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2681,7 +2529,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.Intersection{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.Intersection{Real,S1,S2} where S2<:LazySets.LazySet{Real} where S1<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2689,7 +2537,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.Intersection{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.Intersection{Real,S1,S2} where S2<:LazySets.LazySet{Real} where S1<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "method",
@@ -2697,7 +2545,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.Intersection{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.Intersection}",
     "page": "Common Set Operations",
     "title": "Base.isempty",
     "category": "method",
@@ -2709,7 +2557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\n∈(::AbstractVector{Float64}, ::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})\nisempty(::Intersection{Float64, LazySet{Float64}, LazySet{Float64}})"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty(::Intersection)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2721,15 +2569,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.IntersectionArray{Float64,LazySets.LazySet{Float64}}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.array",
-    "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.IntersectionArray{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.IntersectionArray}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2737,7 +2577,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.IntersectionArray{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.IntersectionArray{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2745,11 +2585,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.IntersectionArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "method",
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#n-ary-Intersection-1",
     "page": "Common Set Operations",
     "title": "n-ary Intersection",
     "category": "section",
-    "text": "IntersectionArray\narray(::IntersectionArray{Float64, LazySet{Float64}})\ndim(::IntersectionArray{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::IntersectionArray{Float64, LazySet{Float64}})"
+    "text": "IntersectionArray\ndim(::IntersectionArray)\nσ(::AbstractVector{Real}, ::IntersectionArray{Real})\narray(::IntersectionArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2769,7 +2617,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:+-Tuple{LazySets.LazySet{Float64},LazySets.LazySet{Float64}}",
+    "location": "lib/operations.html#LazySets.:⊕-Tuple{LazySets.LazySet,LazySets.LazySet}",
+    "page": "Common Set Operations",
+    "title": "LazySets.:⊕",
+    "category": "method",
+    "text": "⊕(X::LazySet, Y::LazySet)\n\nUnicode alias constructor ⊕ (oplus) for the lazy Minkowski sum operator.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:+-Tuple{LazySets.LazySet,LazySets.LazySet}",
     "page": "Common Set Operations",
     "title": "Base.:+",
     "category": "method",
@@ -2777,15 +2633,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.:⊕",
-    "page": "Common Set Operations",
-    "title": "LazySets.:⊕",
-    "category": "function",
-    "text": "⊕(X::LazySet, Y::LazySet)\n\nUnicode alias constructor ⊕ (oplus) for the lazy Minkowski sum operator.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.MinkowskiSum{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.MinkowskiSum}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2793,7 +2641,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.MinkowskiSum{Float64,LazySets.LazySet{Float64},LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.MinkowskiSum{Real,S1,S2} where S2<:LazySets.LazySet{Real} where S1<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2805,7 +2653,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSum\nBase.:+(::LazySet{Float64}, ::LazySet{Float64})\n⊕\ndim(::MinkowskiSum{Float64, LazySet{Float64}, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::MinkowskiSum{Float64, LazySet{Float64}, LazySet{Float64}})"
+    "text": "MinkowskiSum\n⊕(::LazySet, ::LazySet)\n+(::LazySet, ::LazySet)\ndim(::MinkowskiSum)\nσ(::AbstractVector{Real}, ::MinkowskiSum{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2817,15 +2665,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.MinkowskiSumArray{Float64,LazySets.LazySet{Float64}}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.array",
-    "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.MinkowskiSumArray{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.MinkowskiSumArray}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2833,7 +2673,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.MinkowskiSumArray{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.MinkowskiSumArray{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2841,11 +2681,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.MinkowskiSumArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "method",
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#n-ary-Minkowski-Sum-1",
     "page": "Common Set Operations",
     "title": "n-ary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSumArray\narray(::MinkowskiSumArray{Float64, LazySet{Float64}})\ndim(::MinkowskiSumArray{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::MinkowskiSumArray{Float64, LazySet{Float64}})"
+    "text": "MinkowskiSumArray\ndim(::MinkowskiSumArray)\nσ(::AbstractVector{Real}, ::MinkowskiSumArray{Real})\narray(::MinkowskiSumArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2857,15 +2705,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.CacheMinkowskiSum{Float64,LazySets.LazySet{Float64}}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.array",
-    "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CacheMinkowskiSum{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.CacheMinkowskiSum}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2873,11 +2713,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.CacheMinkowskiSum{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.CacheMinkowskiSum{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
     "text": "σ(d::AbstractVector{<:Real}, cms::CacheMinkowskiSum)::Vector{<:Real}\n\nReturn the support vector of a caching Minkowski sum in a given direction.\n\nInput\n\nd   – direction\ncms – caching Minkowski sum\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the summand sets.\n\nNotes\n\nThe result is cached, i.e., any further query with the same direction runs in constant time. When sets are added to the caching Minkowski sum, the query is only performed for the new sets.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.array-Tuple{LazySets.CacheMinkowskiSum}",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "method",
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n"
 },
 
 {
@@ -2893,7 +2741,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Minkowski Sum with cache",
     "category": "section",
-    "text": "CacheMinkowskiSum\narray(::CacheMinkowskiSum{Float64, LazySet{Float64}})\ndim(::CacheMinkowskiSum{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::CacheMinkowskiSum{Float64, LazySet{Float64}})\nforget_sets!(::CacheMinkowskiSum)"
+    "text": "CacheMinkowskiSum\ndim(::CacheMinkowskiSum)\nσ(::AbstractVector{Real}, ::CacheMinkowskiSum{Real})\narray(::CacheMinkowskiSum)\nforget_sets!(::CacheMinkowskiSum)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2913,22 +2761,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.LinearMap{Float64,Float64}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(lm::LinearMap)::Int\n\nReturn the dimension of a linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nThe ambient dimension of the linear map.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.LinearMap{Float64,Float64}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.σ",
-    "category": "method",
-    "text": "σ(d::AbstractVector{<:Real}, lm::LinearMap)::AbstractVector{<:Real}\n\nReturn the support vector of the linear map.\n\nInput\n\nd  – direction\nlm – linear map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf L = MS, where M is a matrix and S is a convex set, it follows that (d L) = M(M^T d S) for any direction d.\n\n\n\n"
-},
-
-{
     "location": "lib/operations.html#Base.:*-Tuple{AbstractArray{T,2} where T,LazySets.LazySet}",
     "page": "Common Set Operations",
     "title": "Base.:*",
@@ -2937,7 +2769,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:*-Tuple{Float64,LazySets.LazySet}",
+    "location": "lib/operations.html#Base.:*-Tuple{Real,LazySets.LazySet}",
     "page": "Common Set Operations",
     "title": "Base.:*",
     "category": "method",
@@ -2945,7 +2777,23 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.LinearMap{Float64,Float64}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.LinearMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(lm::LinearMap)::Int\n\nReturn the dimension of a linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nThe ambient dimension of the linear map.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.LinearMap{Real,Real}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{<:Real}, lm::LinearMap)::AbstractVector{<:Real}\n\nReturn the support vector of the linear map.\n\nInput\n\nd  – direction\nlm – linear map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf L = MS, where M is a matrix and S is a convex set, it follows that (d L) = M(M^T d S) for any direction d.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.LinearMap{Real,Real}}",
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "method",
@@ -2965,7 +2813,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Linear Map",
     "category": "section",
-    "text": "LinearMap\ndim(::LinearMap{Float64, Float64})\nσ(::AbstractVector{Float64}, ::LinearMap{Float64, Float64})\n*(::AbstractMatrix, ::LazySet)\n*(::Float64, ::LazySet)\n∈(x::AbstractVector{Float64}, ::LinearMap{Float64, Float64})\nan_element(lm::LinearMap)"
+    "text": "LinearMap\n*(::AbstractMatrix, ::LazySet)\n*(::Real, ::LazySet)\ndim(::LinearMap)\nσ(::AbstractVector{Real}, ::LinearMap{Real, Real})\n∈(::AbstractVector{Real}, ::LinearMap{Real, Real})\nan_element(::LinearMap)Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -2977,7 +2825,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ExponentialMap{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ExponentialMap}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2985,7 +2833,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ExponentialMap{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.ExponentialMap{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2993,7 +2841,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Float64,1},LazySets.ExponentialMap{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.ExponentialMap{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "method",
@@ -3009,7 +2857,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ExponentialProjectionMap{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.ExponentialProjectionMap}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
@@ -3017,7 +2865,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.ExponentialProjectionMap{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.ExponentialProjectionMap{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
@@ -3033,11 +2881,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:*-Tuple{LazySets.SparseMatrixExp{Float64},LazySets.LazySet{Float64}}",
+    "location": "lib/operations.html#Base.:*-Tuple{LazySets.SparseMatrixExp,LazySets.LazySet}",
     "page": "Common Set Operations",
     "title": "Base.:*",
     "category": "method",
-    "text": "    *(spmexp::SparseMatrixExp, X::LazySet)::ExponentialMap\n\nReturn the exponential map of a convex set from a sparse matrix exponential.\n\nInput\n\nspmexp – sparse matrix exponential\nX      – convex set\n\nOutput\n\nThe exponential map of the convex set.\n\n\n\n    *(M::AbstractMatrix, X::LazySet)\n\nReturn the linear map of a convex set.\n\nInput\n\nM – matrix/linear map\nX – convex set\n\nOutput\n\nA lazy linear map, i.e. a LinearMap instance.\n\n\n\n    *(a::N, X::LazySet) where {N}\n\nReturn a linear map of a convex set by a scalar value.\n\nInput\n\na – scalar\nX – convex set\n\nOutput\n\nThe linear map of the convex set.\n\n\n\n"
+    "text": "    *(spmexp::SparseMatrixExp, X::LazySet)::ExponentialMap\n\nReturn the exponential map of a convex set from a sparse matrix exponential.\n\nInput\n\nspmexp – sparse matrix exponential\nX      – convex set\n\nOutput\n\nThe exponential map of the convex set.\n\n\n\n"
 },
 
 {
@@ -3049,11 +2897,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.:*-Tuple{LazySets.ProjectionSparseMatrixExp{Float64},LazySets.LazySet{Float64}}",
+    "location": "lib/operations.html#Base.:*-Tuple{LazySets.ProjectionSparseMatrixExp,LazySets.LazySet}",
     "page": "Common Set Operations",
     "title": "Base.:*",
     "category": "method",
-    "text": "    *(projspmexp::ProjectionSparseMatrixExp,\n      X::LazySet)::ExponentialProjectionMap\n\nReturn the application of a projection of a sparse matrix exponential to a convex set.\n\nInput\n\nprojspmexp – projection of a sparse matrix exponential\nX          – convex set\n\nOutput\n\nThe application of the projection of a sparse matrix exponential to the convex set.\n\n\n\n    *(a::N, X::LazySet) where {N}\n\nReturn a linear map of a convex set by a scalar value.\n\nInput\n\na – scalar\nX – convex set\n\nOutput\n\nThe linear map of the convex set.\n\n\n\n"
+    "text": "    *(projspmexp::ProjectionSparseMatrixExp,\n      X::LazySet)::ExponentialProjectionMap\n\nReturn the application of a projection of a sparse matrix exponential to a convex set.\n\nInput\n\nprojspmexp – projection of a sparse matrix exponential\nX          – convex set\n\nOutput\n\nThe application of the projection of a sparse matrix exponential to the convex set.\n\n\n\n"
 },
 
 {
@@ -3061,7 +2909,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Exponential Map",
     "category": "section",
-    "text": "ExponentialMap\ndim(::ExponentialMap{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::ExponentialMap{Float64, LazySet{Float64}})\n∈(::AbstractVector{Float64}, ::ExponentialMap{Float64, LazySet{Float64}})ExponentialProjectionMap\ndim(::ExponentialProjectionMap{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::ExponentialProjectionMap{Float64, LazySet{Float64}})SparseMatrixExp\n*(::SparseMatrixExp{Float64}, ::LazySet{Float64})ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp{Float64}, ::LazySet{Float64})"
+    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Real}, ::ExponentialMap{Real})\n∈(::AbstractVector{Real}, ::ExponentialMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Real}, ::ExponentialProjectionMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementSparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)Inherited from LazySet:norm\nradius\ndiameter\nan_elementProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3073,27 +2921,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.dim-Tuple{LazySets.SymmetricIntervalHull{Float64,LazySets.LazySet{Float64}}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\ndim(sih::SymmetricIntervalHull)::Int\n\nReturn the dimension of a symmetric interval hull of a convex set.\n\nInput\n\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe ambient dimension of the symmetric interval hull of a convex set.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Float64,1},LazySets.SymmetricIntervalHull{Float64,LazySets.LazySet{Float64}}}",
+    "location": "lib/operations.html#LazySets.σ-Union{Tuple{N}, Tuple{V,LazySets.SymmetricIntervalHull{N,S} where S<:LazySets.LazySet{N}}, Tuple{V}} where V<:AbstractArray{N,1} where N<:Real",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::V, H::AbstractHyperrectangle{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::V, sih::SymmetricIntervalHull{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a symmetric interval hull of a convex set in a given direction.\n\nInput\n\nd   – direction\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe support vector of the symmetric interval hull of a convex set in the given direction. If the direction has norm zero, the origin is returned.\n\nAlgorithm\n\nFor each non-zero entry in d we need to either look up the bound (if it has been computed before) or compute it, in which case we store it for future queries. One such computation just asks for the support vector of the underlying set for both the positive and negative unit vector in the respective dimension.\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.an_element-Tuple{LazySets.SymmetricIntervalHull{Float64,LazySets.LazySet{Float64}}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.an_element",
-    "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+    "text": "σ(d::V, sih::SymmetricIntervalHull{N}) where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a symmetric interval hull of a convex set in a given direction.\n\nInput\n\nd   – direction\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe support vector of the symmetric interval hull of a convex set in the given direction. If the direction has norm zero, the origin is returned.\n\nAlgorithm\n\nFor each non-zero entry in d we need to either look up the bound (if it has been computed before) or compute it, in which case we store it for future queries. One such computation just asks for the support vector of the underlying set for both the positive and negative unit vector in the respective dimension.\n\n\n\n"
 },
 
 {
@@ -3101,7 +2933,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Symmetric Interval Hull",
     "category": "section",
-    "text": "SymmetricIntervalHull\ndim(::SymmetricIntervalHull{Float64, LazySet{Float64}})\nσ(::AbstractVector{Float64}, ::SymmetricIntervalHull{Float64, LazySet{Float64}})\nan_element(::SymmetricIntervalHull{Float64, LazySet{Float64}})"
+    "text": "SymmetricIntervalHull\nσ(::V, ::SymmetricIntervalHull{N}) where {N<:Real, V<:AbstractVector{N}}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPointSymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list"
 },
 
 {
@@ -3177,7 +3009,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.LazySet{Float64},LazySets.AbstractHyperrectangle{Float64}}",
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.LazySet{N},LazySets.AbstractHyperrectangle{N},Bool}, Tuple{LazySets.LazySet{N},LazySets.AbstractHyperrectangle{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "method",
@@ -3185,23 +3017,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.AbstractPolytope{Float64},LazySets.AbstractHyperrectangle{Float64}}",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(S::LazySet{N}, H::AbstractHyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner convex set\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nAlgorithm\n\nS  H iff operatornameihull(S)  H, where  operatornameihull is the interval hull operator.\n\n\n\n⊆(P::AbstractPolytope{N}, H::AbstractHyperrectangle, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  H\nIf witness option is activated:\n(true, []) iff P  H\n(false, v) iff P notsubseteq H and v  P setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, P  H iff v_i  H for all vertices v_i of P.\n\n\n\n⊆(P::AbstractPolytope{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  S\nIf witness option is activated:\n(true, []) iff P  S\n(false, v) iff P notsubseteq S and v  P setminus S\n\nAlgorithm\n\nSince S is convex, P  S iff v_i  S for all vertices v_i of P.\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.AbstractHyperrectangle{Float64},LazySets.AbstractHyperrectangle{Float64}}",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(S::LazySet{N}, H::AbstractHyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner convex set\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nAlgorithm\n\nS  H iff operatornameihull(S)  H, where  operatornameihull is the interval hull operator.\n\n\n\n⊆(P::AbstractPolytope{N}, H::AbstractHyperrectangle, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  H\nIf witness option is activated:\n(true, []) iff P  H\n(false, v) iff P notsubseteq H and v  P setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, P  H iff v_i  H for all vertices v_i of P.\n\n\n\n⊆(H1::AbstractHyperrectangle{N},\n  H2::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given hyperrectangle is contained in another hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nH1 – inner hyperrectangle\nH2 – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2\nIf witness option is activated:\n(true, []) iff H1  H2\n(false, v) iff H1 notsubseteq H2 and v  H1 setminus H2\n\nAlgorithm\n\nH1  H2 iff c_1 + r_1  c_2 + r_2  c_1 - r_1  c_2 - r_2 iff r_1 - r_2  c_1 - c_2  -(r_1 - r_2), where  is taken component-wise.\n\n\n\n⊆(P::AbstractPolytope{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  S\nIf witness option is activated:\n(true, []) iff P  S\n(false, v) iff P notsubseteq S and v  P setminus S\n\nAlgorithm\n\nSince S is convex, P  S iff v_i  S for all vertices v_i of P.\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.AbstractPolytope{Float64},LazySets.LazySet{Float64}}",
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.AbstractPolytope{N},LazySets.LazySet{N},Bool}, Tuple{LazySets.AbstractPolytope{N},LazySets.LazySet{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "method",
@@ -3209,31 +3025,47 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.AbstractSingleton{Float64},LazySets.LazySet{Float64}}",
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.AbstractPolytope{N},LazySets.AbstractHyperrectangle,Bool}, Tuple{LazySets.AbstractPolytope{N},LazySets.AbstractHyperrectangle}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "method",
-    "text": "⊆(P::AbstractPolytope{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  S\nIf witness option is activated:\n(true, []) iff P  S\n(false, v) iff P notsubseteq S and v  P setminus S\n\nAlgorithm\n\nSince S is convex, P  S iff v_i  S for all vertices v_i of P.\n\n\n\n⊆(S::AbstractSingleton{N}, set::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nS   – inner set with a single value\nset – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  textset\nIf witness option is activated:\n(true, []) iff S  textset\n(false, v) iff S notsubseteq textset and v  S setminus textset\n\n\n\n"
+    "text": "⊆(P::AbstractPolytope{N}, H::AbstractHyperrectangle, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  H\nIf witness option is activated:\n(true, []) iff P  H\n(false, v) iff P notsubseteq H and v  P setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, P  H iff v_i  H for all vertices v_i of P.\n\n\n\n"
 },
 
 {
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.AbstractSingleton{Float64},LazySets.AbstractHyperrectangle{Float64}}",
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.AbstractHyperrectangle{N},LazySets.AbstractHyperrectangle{N},Bool}, Tuple{LazySets.AbstractHyperrectangle{N},LazySets.AbstractHyperrectangle{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "method",
-    "text": "⊆(S::LazySet{N}, H::AbstractHyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner convex set\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nAlgorithm\n\nS  H iff operatornameihull(S)  H, where  operatornameihull is the interval hull operator.\n\n\n\n⊆(P::AbstractPolytope{N}, H::AbstractHyperrectangle, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  H\nIf witness option is activated:\n(true, []) iff P  H\n(false, v) iff P notsubseteq H and v  P setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, P  H iff v_i  H for all vertices v_i of P.\n\n\n\n⊆(H1::AbstractHyperrectangle{N},\n  H2::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given hyperrectangle is contained in another hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nH1 – inner hyperrectangle\nH2 – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2\nIf witness option is activated:\n(true, []) iff H1  H2\n(false, v) iff H1 notsubseteq H2 and v  H1 setminus H2\n\nAlgorithm\n\nH1  H2 iff c_1 + r_1  c_2 + r_2  c_1 - r_1  c_2 - r_2 iff r_1 - r_2  c_1 - c_2  -(r_1 - r_2), where  is taken component-wise.\n\n\n\n⊆(P::AbstractPolytope{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  S\nIf witness option is activated:\n(true, []) iff P  S\n(false, v) iff P notsubseteq S and v  P setminus S\n\nAlgorithm\n\nSince S is convex, P  S iff v_i  S for all vertices v_i of P.\n\n\n\n⊆(S::AbstractSingleton{N}, set::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nS   – inner set with a single value\nset – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  textset\nIf witness option is activated:\n(true, []) iff S  textset\n(false, v) iff S notsubseteq textset and v  S setminus textset\n\n\n\n⊆(S::AbstractSingleton{N},\n  H::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner set with a single value\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\n\n\n"
+    "text": "⊆(H1::AbstractHyperrectangle{N},\n  H2::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given hyperrectangle is contained in another hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nH1 – inner hyperrectangle\nH2 – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2\nIf witness option is activated:\n(true, []) iff H1  H2\n(false, v) iff H1 notsubseteq H2 and v  H1 setminus H2\n\nAlgorithm\n\nH1  H2 iff c_1 + r_1  c_2 + r_2  c_1 - r_1  c_2 - r_2 iff r_1 - r_2  c_1 - c_2  -(r_1 - r_2), where  is taken component-wise.\n\n\n\n"
 },
 
 {
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.AbstractSingleton{Float64},LazySets.AbstractSingleton{Float64}}",
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.AbstractSingleton{N},LazySets.LazySet{N},Bool}, Tuple{LazySets.AbstractSingleton{N},LazySets.LazySet{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "method",
-    "text": "⊆(S::LazySet{N}, H::AbstractHyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner convex set\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nAlgorithm\n\nS  H iff operatornameihull(S)  H, where  operatornameihull is the interval hull operator.\n\n\n\n⊆(P::AbstractPolytope{N}, H::AbstractHyperrectangle, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  H\nIf witness option is activated:\n(true, []) iff P  H\n(false, v) iff P notsubseteq H and v  P setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, P  H iff v_i  H for all vertices v_i of P.\n\n\n\n⊆(H1::AbstractHyperrectangle{N},\n  H2::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given hyperrectangle is contained in another hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nH1 – inner hyperrectangle\nH2 – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2\nIf witness option is activated:\n(true, []) iff H1  H2\n(false, v) iff H1 notsubseteq H2 and v  H1 setminus H2\n\nAlgorithm\n\nH1  H2 iff c_1 + r_1  c_2 + r_2  c_1 - r_1  c_2 - r_2 iff r_1 - r_2  c_1 - c_2  -(r_1 - r_2), where  is taken component-wise.\n\n\n\n⊆(P::AbstractPolytope{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  S\nIf witness option is activated:\n(true, []) iff P  S\n(false, v) iff P notsubseteq S and v  P setminus S\n\nAlgorithm\n\nSince S is convex, P  S iff v_i  S for all vertices v_i of P.\n\n\n\n⊆(S::AbstractSingleton{N}, set::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nS   – inner set with a single value\nset – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  textset\nIf witness option is activated:\n(true, []) iff S  textset\n(false, v) iff S notsubseteq textset and v  S setminus textset\n\n\n\n⊆(S::AbstractSingleton{N},\n  H::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner set with a single value\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\n\n\n⊆(S1::AbstractSingleton{N},\n  S2::AbstractSingleton{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in another set with a single value, and if not, optionally compute a witness.\n\nInput\n\nS1 – inner set with a single value\nS2 – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2 iff S1 == S2\nIf witness option is activated:\n(true, []) iff S1  S2\n(false, v) iff S1 notsubseteq S2 and v  S1 setminus S2\n\n\n\n"
+    "text": "⊆(S::AbstractSingleton{N}, set::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nS   – inner set with a single value\nset – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  textset\nIf witness option is activated:\n(true, []) iff S  textset\n(false, v) iff S notsubseteq textset and v  S setminus textset\n\n\n\n"
 },
 
 {
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.Ball2{Float64},LazySets.Ball2{Float64}}",
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractHyperrectangle{N},Bool}, Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractHyperrectangle{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(S::AbstractSingleton{N},\n  H::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner set with a single value\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractSingleton{N},Bool}, Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractSingleton{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(S1::AbstractSingleton{N},\n  S2::AbstractSingleton{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in another set with a single value, and if not, optionally compute a witness.\n\nInput\n\nS1 – inner set with a single value\nS2 – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2 iff S1 == S2\nIf witness option is activated:\n(true, []) iff S1  S2\n(false, v) iff S1 notsubseteq S2 and v  S1 setminus S2\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.Ball2{AbstractFloat},LazySets.Ball2{AbstractFloat},Bool}, Tuple{LazySets.Ball2{AbstractFloat},LazySets.Ball2{AbstractFloat}}, Tuple{N}} where N<:AbstractFloat",
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "method",
@@ -3241,11 +3073,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.Ball2{Float64},LazySets.AbstractSingleton{Float64}}",
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{Union{LazySets.Ball2{N}, LazySets.Ballp{N}},LazySets.AbstractSingleton{N},Bool}, Tuple{Union{LazySets.Ball2{N}, LazySets.Ballp{N}},LazySets.AbstractSingleton{N}}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "method",
-    "text": "⊆(S::LazySet{N}, H::AbstractHyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nS – inner convex set\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nAlgorithm\n\nS  H iff operatornameihull(S)  H, where  operatornameihull is the interval hull operator.\n\n\n\n⊆(B::Union{Ball2{N}, Ballp{N}},\n  S::AbstractSingleton{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a ball in the 2-norm or p-norm is contained in a set with a single value, and if not, optionally compute a witness.\n\nInput\n\nB – inner ball in the 2-norm or p-norm\nS – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B  S\nIf witness option is activated:\n(true, []) iff B  S\n(false, v) iff B notsubseteq S and v  B setminus S\n\n\n\n"
+    "text": "⊆(B::Union{Ball2{N}, Ballp{N}},\n  S::AbstractSingleton{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a ball in the 2-norm or p-norm is contained in a set with a single value, and if not, optionally compute a witness.\n\nInput\n\nB – inner ball in the 2-norm or p-norm\nS – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B  S\nIf witness option is activated:\n(true, []) iff B  S\n(false, v) iff B notsubseteq S and v  B setminus S\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.LineSegment{N},LazySets.LazySet{N},Bool}, Tuple{LazySets.LineSegment{N},LazySets.LazySet{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(L::LineSegment{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a line segment is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nL – inner line segment\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff L  S\nIf witness option is activated:\n(true, []) iff L  S\n(false, v) iff L notsubseteq S and v  L setminus S\n\nAlgorithm\n\nSince S is convex, L  S iff p  S and q  S, where p q are the end points of L.\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{LazySets.LineSegment{N},LazySets.Hyperrectangle{N},Bool}, Tuple{LazySets.LineSegment{N},LazySets.Hyperrectangle{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(L::LineSegment{N}, H::Hyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a line segment is contained in a hyperrectangle, and if not, optionally compute a witness.\n\nInput\n\nL – inner line segment\nH – outer hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff L  H\nIf witness option is activated:\n(true, []) iff L  H\n(false, v) iff L notsubseteq H and v  L setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, L  H iff p  H and q  H, where p q are the end points of L.\n\n\n\n"
 },
 
 {
@@ -3261,11 +3109,11 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Subset check",
     "category": "section",
-    "text": "⊆(::LazySet{Float64}, ::AbstractHyperrectangle{Float64})\n⊆(::AbstractPolytope{Float64}, ::AbstractHyperrectangle{Float64})\n⊆(::AbstractHyperrectangle{Float64}, ::AbstractHyperrectangle{Float64})\n⊆(::AbstractPolytope{Float64}, ::LazySet{Float64})\n⊆(::AbstractSingleton{Float64}, ::LazySet{Float64})\n⊆(::AbstractSingleton{Float64}, ::AbstractHyperrectangle{Float64})\n⊆(::AbstractSingleton{Float64}, ::AbstractSingleton{Float64})\n⊆(::Ball2{Float64}, ::Ball2{Float64})\n⊆(::Ball2{Float64}, ::AbstractSingleton{Float64})\n⊆(::Interval, ::Interval)"
+    "text": "⊆(::LazySet{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::AbstractHyperrectangle, ::Bool=false) where {N<:Real}\n⊆(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::Ball2{AbstractFloat}, ::Ball2{AbstractFloat}, ::Bool=false) where {N<:AbstractFloat}\n	⊆(::Union{Ball2{N}, Ballp{N}}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::Hyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::Interval, ::Interval)"
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.AbstractHyperrectangle{Float64},LazySets.AbstractHyperrectangle{Float64}}",
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.AbstractHyperrectangle{N},LazySets.AbstractHyperrectangle{N},Bool}, Tuple{LazySets.AbstractHyperrectangle{N},LazySets.AbstractHyperrectangle{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_intersection_empty",
     "category": "method",
@@ -3273,23 +3121,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.AbstractSingleton{Float64},LazySets.AbstractHyperrectangle{Float64}}",
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.AbstractHyperrectangle{N},LazySets.AbstractSingleton{N},Bool}, Tuple{LazySets.AbstractHyperrectangle{N},LazySets.AbstractSingleton{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_intersection_empty",
     "category": "method",
-    "text": "is_intersection_empty(H1::AbstractHyperrectangle{N},\n                      H2::AbstractHyperrectangle{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two hyperrectangles do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2 = \nIf witness option is activated:\n(true, []) iff H1  H2 = \n(false, v) iff H1  H2   and v  H1  H2\n\nAlgorithm\n\nH1  H2   iff c_2 - c_1  r_1 + r_2, where  is taken component-wise.\n\nA witness is computed by starting in one center and moving toward the other center for as long as the minimum of the radius and the center distance. In other words, the witness is the point in H1 that is closest to the center of H2.\n\n\n\nis_intersection_empty(S::AbstractSingleton{N},\n                      set::LazySet{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a convex set do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS   – singleton\nset – convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset = \nIf witness option is activated:\n(true, []) iff S  operatornameset = \n(false, v) iff S  operatornameset   and v = element(S)  S  operatornameset\n\nAlgorithm\n\nS  operatornameset =  iff element(S)  operatornameset.\n\n\n\nis_intersection_empty(S::AbstractSingleton{N},\n                      H::AbstractHyperrectangle{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a hyperrectangle do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS – singleton\nH – hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H  S = \nIf witness option is activated:\n(true, []) iff H  S = \n(false, v) iff H  S   and v = element(S)  H  S\n\nAlgorithm\n\nS  H =  iff element(S)  H.\n\n\n\n"
+    "text": "is_intersection_empty(H::AbstractHyperrectangle{N},\n                      S::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a hyperrectangle and a singleton do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH – hyperrectangle\nS – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H  S = \nIf witness option is activated:\n(true, []) iff H  S = \n(false, v) iff H  S   and v = element(S)  H  S\n\nAlgorithm\n\nH  S =  iff element(S)  H.\n\n\n\n"
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.AbstractHyperrectangle{Float64},LazySets.AbstractSingleton{Float64}}",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(H1::AbstractHyperrectangle{N},\n                      H2::AbstractHyperrectangle{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two hyperrectangles do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2 = \nIf witness option is activated:\n(true, []) iff H1  H2 = \n(false, v) iff H1  H2   and v  H1  H2\n\nAlgorithm\n\nH1  H2   iff c_2 - c_1  r_1 + r_2, where  is taken component-wise.\n\nA witness is computed by starting in one center and moving toward the other center for as long as the minimum of the radius and the center distance. In other words, the witness is the point in H1 that is closest to the center of H2.\n\n\n\nis_intersection_empty(set::LazySet{N},\n                      S::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a convex set and a singleton do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nset – convex set\nS   – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset = \nIf witness option is activated:\n(true, []) iff S  operatornameset = \n(false, v) iff S  operatornameset   and v = element(S)  S  operatornameset\n\nAlgorithm\n\nS  operatornameset =  iff element(S)  operatornameset.\n\n\n\nis_intersection_empty(H::AbstractHyperrectangle{N},\n                      S::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a hyperrectangle and a singleton do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH – hyperrectangle\nS – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H  S = \nIf witness option is activated:\n(true, []) iff H  S = \n(false, v) iff H  S   and v = element(S)  H  S\n\nAlgorithm\n\nH  S =  iff element(S)  H.\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.AbstractSingleton{Float64},LazySets.LazySet{Float64}}",
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.AbstractSingleton{N},LazySets.LazySet{N},Bool}, Tuple{LazySets.AbstractSingleton{N},LazySets.LazySet{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_intersection_empty",
     "category": "method",
@@ -3297,7 +3137,23 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.LazySet{Float64},LazySets.AbstractSingleton{Float64}}",
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractHyperrectangle{N},Bool}, Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractHyperrectangle{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(S::AbstractSingleton{N},\n                      H::AbstractHyperrectangle{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a hyperrectangle do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS – singleton\nH – hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H  S = \nIf witness option is activated:\n(true, []) iff H  S = \n(false, v) iff H  S   and v = element(S)  H  S\n\nAlgorithm\n\nS  H =  iff element(S)  H.\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractSingleton{N},Bool}, Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractSingleton{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(S1::AbstractSingleton{N},\n                      S2::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two singletons do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS1 – first singleton\nS2 – second singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2 = \nIf witness option is activated:\n(true, []) iff S1  S2 = \n(false, v) iff S1  S2   and v = element(S1)  S1  S2\n\nAlgorithm\n\nS1  S2 =  iff S1  S2.\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.LazySet{N},LazySets.AbstractSingleton{N},Bool}, Tuple{LazySets.LazySet{N},LazySets.AbstractSingleton{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_intersection_empty",
     "category": "method",
@@ -3305,15 +3161,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.AbstractSingleton{Float64},LazySets.AbstractSingleton{Float64}}",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(H1::AbstractHyperrectangle{N},\n                      H2::AbstractHyperrectangle{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two hyperrectangles do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2 = \nIf witness option is activated:\n(true, []) iff H1  H2 = \n(false, v) iff H1  H2   and v  H1  H2\n\nAlgorithm\n\nH1  H2   iff c_2 - c_1  r_1 + r_2, where  is taken component-wise.\n\nA witness is computed by starting in one center and moving toward the other center for as long as the minimum of the radius and the center distance. In other words, the witness is the point in H1 that is closest to the center of H2.\n\n\n\nis_intersection_empty(S::AbstractSingleton{N},\n                      set::LazySet{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a convex set do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS   – singleton\nset – convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset = \nIf witness option is activated:\n(true, []) iff S  operatornameset = \n(false, v) iff S  operatornameset   and v = element(S)  S  operatornameset\n\nAlgorithm\n\nS  operatornameset =  iff element(S)  operatornameset.\n\n\n\nis_intersection_empty(set::LazySet{N},\n                      S::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a convex set and a singleton do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nset – convex set\nS   – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset = \nIf witness option is activated:\n(true, []) iff S  operatornameset = \n(false, v) iff S  operatornameset   and v = element(S)  S  operatornameset\n\nAlgorithm\n\nS  operatornameset =  iff element(S)  operatornameset.\n\n\n\nis_intersection_empty(S1::AbstractSingleton{N},\n                      S2::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether two singletons do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS1 – first singleton\nS2 – second singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2 = \nIf witness option is activated:\n(true, []) iff S1  S2 = \n(false, v) iff S1  S2   and v = element(S1)  S1  S2\n\nAlgorithm\n\nS1  S2 =  iff S1  S2.\n\n\n\nis_intersection_empty(H::AbstractHyperrectangle{N},\n                      S::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a hyperrectangle and a singleton do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH – hyperrectangle\nS – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H  S = \nIf witness option is activated:\n(true, []) iff H  S = \n(false, v) iff H  S   and v = element(S)  H  S\n\nAlgorithm\n\nH  S =  iff element(S)  H.\n\n\n\nis_intersection_empty(S::AbstractSingleton{N},\n                      H::AbstractHyperrectangle{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a hyperrectangle do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS – singleton\nH – hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H  S = \nIf witness option is activated:\n(true, []) iff H  S = \n(false, v) iff H  S   and v = element(S)  H  S\n\nAlgorithm\n\nS  H =  iff element(S)  H.\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.Zonotope{Float64},LazySets.Hyperplane{Float64}}",
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.Zonotope{N},LazySets.Hyperplane{N},Bool}, Tuple{LazySets.Zonotope{N},LazySets.Hyperplane{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_intersection_empty",
     "category": "method",
@@ -3321,7 +3169,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.Hyperplane{Float64},LazySets.Zonotope{Float64}}",
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.Hyperplane{N},LazySets.Zonotope{N},Bool}, Tuple{LazySets.Hyperplane{N},LazySets.Zonotope{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_intersection_empty",
     "category": "method",
@@ -3329,7 +3177,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.Ball2{Float64},LazySets.Ball2{Float64}}",
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.Ball2{N},LazySets.Ball2{N},Bool}, Tuple{LazySets.Ball2{N},LazySets.Ball2{N}}, Tuple{N}} where N<:AbstractFloat",
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_intersection_empty",
     "category": "method",
@@ -3337,7 +3185,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Tuple{LazySets.LineSegment{Float64},LazySets.LineSegment{Float64}}",
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.LineSegment{N},LazySets.LineSegment{N},Bool}, Tuple{LazySets.LineSegment{N},LazySets.LineSegment{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_intersection_empty",
     "category": "method",
@@ -3349,11 +3197,11 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Check for emptiness of intersection",
     "category": "section",
-    "text": "is_intersection_empty(::AbstractHyperrectangle{Float64}, ::AbstractHyperrectangle{Float64})\nis_intersection_empty(::AbstractSingleton{Float64}, ::AbstractHyperrectangle{Float64})\nis_intersection_empty(::AbstractHyperrectangle{Float64}, ::AbstractSingleton{Float64})\nis_intersection_empty(::AbstractSingleton{Float64}, ::LazySet{Float64})\nis_intersection_empty(::LazySet{Float64}, ::AbstractSingleton{Float64})\nis_intersection_empty(::AbstractSingleton{Float64}, ::AbstractSingleton{Float64})\nis_intersection_empty(::Zonotope{Float64}, ::Hyperplane{Float64})\nis_intersection_empty(::Hyperplane{Float64}, ::Zonotope{Float64})\nis_intersection_empty(::Ball2{Float64}, ::Ball2{Float64})\nis_intersection_empty(::LineSegment{Float64}, ::LineSegment{Float64})"
+    "text": "is_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Hyperplane{N}, ::Zonotope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}"
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.intersection-Tuple{LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1},LazySets.Line{Float64,V} where V<:AbstractArray{Float64,1}}",
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{LazySets.Line{N,V} where V<:AbstractArray{N,1},LazySets.Line{N,V} where V<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
     "category": "method",
@@ -3361,7 +3209,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.intersection-Tuple{LazySets.Hyperrectangle{Float64},LazySets.Hyperrectangle{Float64}}",
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{LazySets.Hyperrectangle{N},LazySets.Hyperrectangle{N}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
     "category": "method",
@@ -3373,7 +3221,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Intersection of two sets",
     "category": "section",
-    "text": "intersection(::Line{Float64}, ::Line{Float64})\nintersection(::Hyperrectangle{Float64}, ::Hyperrectangle{Float64})"
+    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::Hyperrectangle{N}, ::Hyperrectangle{N}) where {N<:Real}"
 },
 
 {
@@ -3502,38 +3350,6 @@ var documenterSearchIndex = {"docs": [
     "title": "Box Approximations",
     "category": "section",
     "text": "ballinf_approximation\nbox_approximation\ninterval_hull\nbox_approximation_symmetric\nsymmetric_interval_hull\nbox_approximation_helper"
-},
-
-{
-    "location": "lib/approximations.html#Base.LinAlg.norm-Tuple{LazySets.LazySet,Real}",
-    "page": "Approximations",
-    "title": "Base.LinAlg.norm",
-    "category": "method",
-    "text": "norm(S::LazySet, [p]::Real=Inf)\n\nReturn the norm of a convex set. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the norm.\n\n\n\n"
-},
-
-{
-    "location": "lib/approximations.html#LazySets.radius-Tuple{LazySets.LazySet,Real}",
-    "page": "Approximations",
-    "title": "LazySets.radius",
-    "category": "method",
-    "text": "radius(S::LazySet, [p]::Real=Inf)\n\nReturn the radius of a convex set. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the radius.\n\n\n\n"
-},
-
-{
-    "location": "lib/approximations.html#LazySets.diameter-Tuple{LazySets.LazySet,Real}",
-    "page": "Approximations",
-    "title": "LazySets.diameter",
-    "category": "method",
-    "text": "diameter(S::LazySet, [p]::Real=Inf)\n\nReturn the diameter of a convex set. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nS – convex set\np – (optional, default: Inf) norm\n\nOutput\n\nA real number representing the diameter.\n\n\n\n"
-},
-
-{
-    "location": "lib/approximations.html#Metric-properties-of-sets-1",
-    "page": "Approximations",
-    "title": "Metric properties of sets",
-    "category": "section",
-    "text": "norm(::LazySet, ::Real)\nradius(::LazySet, ::Real)\ndiameter(::LazySet, ::Real)"
 },
 
 {
@@ -3689,6 +3505,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#Helpers-for-internal-use-only-1",
+    "page": "Utility Functions",
+    "title": "Helpers for internal use only",
+    "category": "section",
+    "text": ""
+},
+
+{
     "location": "lib/utils.html#LazySets.@neutral_absorbing",
     "page": "Utility Functions",
     "title": "LazySets.@neutral_absorbing",
@@ -3713,11 +3537,59 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/utils.html#Helper-functions-for-internal-use-only-1",
+    "location": "lib/utils.html#LazySets.get_radius!",
     "page": "Utility Functions",
-    "title": "Helper functions for internal use only",
+    "title": "LazySets.get_radius!",
+    "category": "function",
+    "text": "get_radius!(sih::SymmetricIntervalHull{N},\n            i::Int,\n            n::Int=dim(sih))::N where {N<:Real}\n\nCompute the radius of a symmetric interval hull of a convex set in a given dimension.\n\nInput\n\nsih – symmetric interval hull of a convex set\ni   – dimension in which the radius should be computed\nn   – (optional, default: dim(sih)) set dimension\n\nOutput\n\nThe radius of a symmetric interval hull of a convex set in a given dimension.\n\nAlgorithm\n\nWe ask for the support vector of the underlying set for both the positive and negative unit vector in the dimension i.\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.an_element_helper",
+    "page": "Utility Functions",
+    "title": "LazySets.an_element_helper",
+    "category": "function",
+    "text": "an_element_helper(hp::Hyperplane{N},\n                  first_nonzero_entry_a::Int)::Vector{N} where {N<:Real}\n\nHelper function that computes an element on a hyperplane\'s hyperplane.\n\nInput\n\nhp – hyperplane\nfirst_nonzero_entry_a – index such that hp.a is different from 0\n\nOutput\n\nAn element on a hyperplane\'s hyperplane.\n\nAlgorithm\n\nWe compute the point on the hyperplane as follows:\n\nWe already found a nonzero entry of a in dimension, say, i.\nWe set xj = 0 for j  i.\nWe set xi = b  ai.\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.σ_helper",
+    "page": "Utility Functions",
+    "title": "LazySets.σ_helper",
+    "category": "function",
+    "text": "    σ_helper(d::V,\n             hp::Hyperplane,\n             [name]::String=\"hyperplane\") where {N<:Real, V<:AbstractVector{N}}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd  – direction\nhp – hyperplane\nname – (optional, default: \"hyperplane\") name for error messages\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\n\nIn both cases the result is any point on the hyperplane. Otherwise this function throws an error.\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#Functions-and-Macros-1",
+    "page": "Utility Functions",
+    "title": "Functions and Macros",
     "category": "section",
-    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing"
+    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\n\nget_radius!\nan_element_helper\nσ_helper"
+},
+
+{
+    "location": "lib/utils.html#LazySets.CachedPair",
+    "page": "Utility Functions",
+    "title": "LazySets.CachedPair",
+    "category": "type",
+    "text": "CachedPair{N} where N\n\nA mutable pair of an index and a vector.\n\nFields\n\nidx – index\nvec – vector\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.Approximations.UnitVector",
+    "page": "Utility Functions",
+    "title": "LazySets.Approximations.UnitVector",
+    "category": "type",
+    "text": "UnitVector{T} <: AbstractVector{T}\n\nA lazy unit vector with arbitrary one-element.\n\nFields\n\ni – index of non-zero entry\nn – vector length\nv – non-zero entry\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#Types-1",
+    "page": "Utility Functions",
+    "title": "Types",
+    "category": "section",
+    "text": "CachedPair\nApproximations.UnitVector"
 },
 
 {
