@@ -2909,7 +2909,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Exponential Map",
     "category": "section",
-    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Real}, ::ExponentialMap{Real})\n∈(::AbstractVector{Real}, ::ExponentialMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Real}, ::ExponentialProjectionMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementSparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)Inherited from LazySet:norm\nradius\ndiameter\nan_elementProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Real}, ::ExponentialMap{Real})\n∈(::AbstractVector{Real}, ::ExponentialMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Real}, ::ExponentialProjectionMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementSparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
 },
 
 {
