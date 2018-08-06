@@ -869,7 +869,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.addconstraint!",
     "category": "method",
-    "text": "addconstraint!(P::AbstractHPolygon{N},\n               constraint::LinearConstraint{N})::Void where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon in constraint representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n"
+    "text": "addconstraint!(P::AbstractHPolygon{N},\n               constraint::LinearConstraint{N};\n               [linear_search]::Bool=(\n                length(P.constraints) < BINARY_SEARCH_THRESHOLD)\n              )::Void where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon in constraint representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n"
 },
 
 {
@@ -1797,7 +1797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, P::HPolygon{N}) where {N<:Real}\n\nReturn the support vector of a polygon in a given direction.\n\nInput\n\nd – direction\nP – polygon in constraint representation\n\nOutput\n\nThe support vector in the given direction. The result is always one of the vertices; in particular, if the direction has norm zero, any vertex is returned.\n\nAlgorithm\n\nComparison of directions is performed using polar angles; see the overload of <= for two-dimensional vectors.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, P::HPolygon{N};\n  [linear_search]::Bool=(length(P.constraints) < BINARY_SEARCH_THRESHOLD)\n ) where {N<:Real}\n\nReturn the support vector of a polygon in a given direction.\n\nInput\n\nd             – direction\nP             – polygon in constraint representation\nlinear_search – (optional, default: see below) flag for controlling whether                    to perform a linear search or a binary search\n\nOutput\n\nThe support vector in the given direction. The result is always one of the vertices; in particular, if the direction has norm zero, any vertex is returned.\n\nAlgorithm\n\nComparison of directions is performed using polar angles; see the overload of <= for two-dimensional vectors.\n\nFor polygons with BINARY_SEARCH_THRESHOLD = 10 or more constraints we use a binary search by default.\n\n\n\n"
 },
 
 {
@@ -1821,7 +1821,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, P::HPolygonOpt{N}) where {N<:Real}\n\nReturn the support vector of an optimized polygon in a given direction.\n\nInput\n\nd – direction\nP – optimized polygon in constraint representation\n\nOutput\n\nThe support vector in the given direction. The result is always one of the vertices; in particular, if the direction has norm zero, any vertex is returned.\n\nAlgorithm\n\nComparison of directions is performed using polar angles; see the overload of <= for two-dimensional vectors.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, P::HPolygonOpt{N};\n  [linear_search]::Bool=(length(P.constraints) < BINARY_SEARCH_THRESHOLD)\n ) where {N<:Real}\n\nReturn the support vector of an optimized polygon in a given direction.\n\nInput\n\nd             – direction\nP             – optimized polygon in constraint representation\nlinear_search – (optional, default: see below) flag for controlling whether                    to perform a linear search or a binary search\n\nOutput\n\nThe support vector in the given direction. The result is always one of the vertices; in particular, if the direction has norm zero, any vertex is returned.\n\nAlgorithm\n\nComparison of directions is performed using polar angles; see the overload of <= for two-dimensional vectors.\n\nFor polygons with BINARY_SEARCH_THRESHOLD = 10 or more constraints we use a binary search by default.\n\n\n\n"
 },
 
 {
@@ -3561,11 +3561,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.binary_search_constraints",
+    "page": "Utility Functions",
+    "title": "LazySets.binary_search_constraints",
+    "category": "function",
+    "text": "binary_search_constraints(d::AbstractVector{N},\n                          constraints::Vector{LinearConstraint{N}},\n                          n::Int,\n                          k::Int;\n                          [choose_lower]::Bool=false\n                         )::Int where {N<:Real}\n\nPerforms a binary search in the constraints.\n\nInput\n\nd            – direction\nconstraints  – constraints\nn            – number of constraints\nk            – start index\nchoose_lower – (optional, default: false) flag for choosing the lower                   index (see the \'Output\' section)\n\nOutput\n\nIn the default setting, the result is the smallest index k such that d <= constraints[k], or n+1 if no such k exists. If the choose_lower flag is set, the result is the largest index k such that constraints[k] < d, which is equivalent to being k-1 in the normal setting.\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#Functions-and-Macros-1",
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\n\nget_radius!\nan_element_helper\nσ_helper"
+    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\n\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints"
 },
 
 {
