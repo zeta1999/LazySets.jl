@@ -1485,7 +1485,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(hp::Hyperplane{N})::Vector{N} where {N<:Real}\n\nReturn some element of a hyperplane.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nAn element in the hyperplane.\n\n\n\n"
+    "text": "an_element(hp::Hyperplane{N})::Vector{N} where {N<:Real}\n\nReturn some element of a hyperplane.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nAn element on the hyperplane.\n\n\n\n"
 },
 
 {
@@ -3549,7 +3549,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.an_element_helper",
     "category": "function",
-    "text": "an_element_helper(hp::Hyperplane{N},\n                  first_nonzero_entry_a::Int)::Vector{N} where {N<:Real}\n\nHelper function that computes an element on a hyperplane\'s hyperplane.\n\nInput\n\nhp – hyperplane\nfirst_nonzero_entry_a – index such that hp.a is different from 0\n\nOutput\n\nAn element on a hyperplane\'s hyperplane.\n\nAlgorithm\n\nWe compute the point on the hyperplane as follows:\n\nWe already found a nonzero entry of a in dimension, say, i.\nWe set xj = 0 for j  i.\nWe set xi = b  ai.\n\n\n\n"
+    "text": "an_element_helper(hp::Hyperplane{N},\n                  [nonzero_entry_a]::Int)::Vector{N} where {N<:Real}\n\nHelper function that computes an element on a hyperplane\'s hyperplane.\n\nInput\n\nhp – hyperplane\nnonzero_entry_a – (optional, default: computes the first index) index i                      such that hp.a[i] is different from 0\n\nOutput\n\nAn element on a hyperplane.\n\nAlgorithm\n\nWe compute the point on the hyperplane as follows:\n\nWe already found a nonzero entry of a in dimension, say, i.\nWe set xi = b  ai.\nWe set xj = 0 for all j  i.\n\n\n\n"
 },
 
 {
