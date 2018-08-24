@@ -405,7 +405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Operations on Sets",
     "title": "Unary operations",
     "category": "section",
-    "text": "The following table lists all operations (apart from dim and σ, which must be supported by all types) that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.An \"x\" indicates that the operation is implemented for the respective set.\n\"(⋅)\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → radius diameter norm an_element ∈\nInterfaces     \nLazySet     \nAHPolygon    x x\nAHyperrectangle x x x (x) x\nAPointSymmetric    x \nAPointSymmetricPolytope    x \nAPolygon     \nAPolytope     \nASingleton (x) (x) (x) x x\n     \nBasic set types     \nBall1    (x) x\nBall2    (x) x\nBallInf x (x) (x) (x) (x)\nBallp    (x) x\nEllipsoid    (x) x\nEmptySet    x x\nHPolygon/HPolygonOpt    (x) (x)\nHPolytope     x\nHyperrectangle (x) (x) (x) (x) (x)\nSingleton (x) (x) (x) (x) (x)\nVPolygon    x x\nZeroSet (x) (x) (x) (x) x\nZonotope    (x) x\n     \nLazy set operation types     \nCartesianProduct     x\nCartesianProductArray     x\nConvexHull     \nConvexHullArray     \nExponentialMap     x\nExponentialProjectionMap     \nHalfSpace    x x\nHyperplane    x x\nIntersection     x\nLinearMap     x\nMinkowskiSum     \nMinkowskiSumArray     \nSymmetricIntervalHull (x) (x) (x) (x) (x)"
+    "text": "The following table lists all operations (apart from dim and σ, which must be supported by all types) that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.An \"x\" indicates that the operation is implemented for the respective set.\n\"(⋅)\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → radius diameter norm an_element ∈\nInterfaces     \nLazySet     \nAHPolygon    x x\nAHyperrectangle x x x (x) x\nACentrallySymmetric    x \nACentrallySymmetricPolytope    x \nAPolygon     \nAPolytope     \nASingleton (x) (x) (x) x x\n     \nBasic set types     \nBall1    (x) x\nBall2    (x) x\nBallInf x (x) (x) (x) (x)\nBallp    (x) x\nEllipsoid    (x) x\nEmptySet    x x\nHPolygon/HPolygonOpt    (x) (x)\nHPolytope     x\nHyperrectangle (x) (x) (x) (x) (x)\nSingleton (x) (x) (x) (x) (x)\nVPolygon    x x\nZeroSet (x) (x) (x) (x) x\nZonotope    (x) x\n     \nLazy set operation types     \nCartesianProduct     x\nCartesianProductArray     x\nConvexHull     \nConvexHullArray     \nExponentialMap     x\nExponentialProjectionMap     \nHalfSpace    x x\nHyperplane    x x\nIntersection     x\nLinearMap     x\nMinkowskiSum     \nMinkowskiSumArray     \nSymmetricIntervalHull (x) (x) (x) (x) (x)"
 },
 
 {
@@ -453,7 +453,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Operations on Sets",
     "title": "Binary operations",
     "category": "section",
-    "text": "The following table lists all operations that take two convex set as argument in the entries. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. In the columns we also list the operations, but abbreviated. The table entries consist of subsets of the following list of operations.\"⊆\" stands for the subset check operation.\n\"∩=∅\" stands for the intersection emptiness check operation.\n\"(⋅)\" indicates that the operation is inherited from a supertype.\n\"[⋅]\" indicates that a possible type ambiguity can occur but is resolved.\n\"{⋅}\" indicates that a more efficient implementation is used instead of the inherited one.type ↓ \\ type → LazyS AHPon AHrec APSym APSPol APgon APtop ASingle B1 B2 BInf Bp Ellip EmpSt HPgon HPtop Hrect Single VPgon ZeroSet Zonot CP CPA CH CHA EMap EPM HalfS HypPl Inter LMap MSum MSA SIH\nInterfaces                                  \nLazySet   ⊆     (⊆),∩=∅   (⊆)      (⊆) (⊆)  (⊆)              (⊆)\nAHPolygon (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nAHyperrectangle (⊆) (⊆) {⊆},∩=∅ (⊆) (⊆) (⊆) (⊆) [⊆,∩=∅] (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nAPointSymmetric   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nAPointSymmetricPolytope (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nAPolygon (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nAPolytope ⊆ (⊆) [⊆] (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nASingleton {⊆},∩=∅ (⊆,∩=∅) [⊆,∩=∅] (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) [⊆,∩=∅] (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) ((⊆,∩=∅)) (⊆,∩=∅) ((⊆,∩=∅)) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅)\n                                  \nBasic set types                                  \nBall1 (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nBall2   (⊆)     {⊆},(∩=∅)  ⊆,∩=∅        (⊆,∩=∅)  (⊆,∩=∅)              \nBallInf (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nBallp   (⊆)     {⊆},(∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nEllipsoid   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nEmptySet   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nHPolygon/HPolygonOpt (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nHPolytope (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nHyperrectangle (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nSingleton (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅)\nVPolygon (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nZeroSet (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅)\nZonotope (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\n                                  \nLazy set operation types                                  \nCartesianProduct   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nCartesianProductArray   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nConvexHull   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nConvexHullArray   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nExponentialMap   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nExponentialProjectionMap   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nHalfSpace   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nHyperplane   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nIntersection   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nLinearMap   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nMinkowskiSum   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nMinkowskiSumArray   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nSymmetricIntervalHull (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)"
+    "text": "The following table lists all operations that take two convex set as argument in the entries. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. In the columns we also list the operations, but abbreviated. The table entries consist of subsets of the following list of operations.\"⊆\" stands for the subset check operation.\n\"∩=∅\" stands for the intersection emptiness check operation.\n\"(⋅)\" indicates that the operation is inherited from a supertype.\n\"[⋅]\" indicates that a possible type ambiguity can occur but is resolved.\n\"{⋅}\" indicates that a more efficient implementation is used instead of the inherited one.type ↓ \\ type → LazyS AHPon AHrec APSym APSPol APgon APtop ASingle B1 B2 BInf Bp Ellip EmpSt HPgon HPtop Hrect Single VPgon ZeroSet Zonot CP CPA CH CHA EMap EPM HalfS HypPl Inter LMap MSum MSA SIH\nInterfaces                                  \nLazySet   ⊆     (⊆),∩=∅   (⊆)      (⊆) (⊆)  (⊆)              (⊆)\nAHPolygon (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nAHyperrectangle (⊆) (⊆) {⊆},∩=∅ (⊆) (⊆) (⊆) (⊆) [⊆,∩=∅] (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nACentrallySymmetric   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nACentrallySymmetricPolytope (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nAPolygon (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nAPolytope ⊆ (⊆) [⊆] (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nASingleton {⊆},∩=∅ (⊆,∩=∅) [⊆,∩=∅] (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) [⊆,∩=∅] (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) ((⊆,∩=∅)) (⊆,∩=∅) ((⊆,∩=∅)) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅)\n                                  \nBasic set types                                  \nBall1 (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nBall2   (⊆)     {⊆},(∩=∅)  ⊆,∩=∅        (⊆,∩=∅)  (⊆,∩=∅)              \nBallInf (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nBallp   (⊆)     {⊆},(∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nEllipsoid   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nEmptySet   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nHPolygon/HPolygonOpt (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nHPolytope (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nHyperrectangle (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nSingleton (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅)\nVPolygon (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\nZeroSet (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅) (⊆,∩=∅)\nZonotope (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)\n                                  \nLazy set operation types                                  \nCartesianProduct   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nCartesianProductArray   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nConvexHull   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nConvexHullArray   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nExponentialMap   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nExponentialProjectionMap   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nHalfSpace   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nHyperplane   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nIntersection   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nLinearMap   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nMinkowskiSum   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nMinkowskiSumArray   (⊆)     (⊆,∩=∅)          (⊆,∩=∅)  (⊆,∩=∅)              \nSymmetricIntervalHull (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆,∩=∅) (⊆) (⊆,∩=∅) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆) (⊆)"
 },
 
 {
@@ -645,7 +645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that x + (1-)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n18-element Array{Any,1}:\n AbstractPointSymmetric\n AbstractPolytope\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n HalfSpace\n Hyperplane\n Intersection\n IntersectionArray\n Line\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0    1 it holds that x + (1-)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n18-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolytope\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n HalfSpace\n Hyperplane\n Intersection\n IntersectionArray\n Line\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n\n\n\n"
 },
 
 {
@@ -729,35 +729,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.AbstractPointSymmetric",
+    "location": "lib/interfaces.html#LazySets.AbstractCentrallySymmetric",
     "page": "Set Interfaces",
-    "title": "LazySets.AbstractPointSymmetric",
+    "title": "LazySets.AbstractCentrallySymmetric",
     "category": "type",
-    "text": "AbstractPointSymmetric{N<:Real} <: LazySet{N}\n\nAbstract type for point symmetric sets.\n\nNotes\n\nEvery concrete AbstractPointSymmetric must define the following functions:\n\ncenter(::AbstractPointSymmetric{N})::Vector{N} – return the center point\n\njulia> subtypes(AbstractPointSymmetric)\n3-element Array{Any,1}:\n Ball2\n Ballp\n Ellipsoid\n\n\n\n"
+    "text": "AbstractCentrallySymmetric{N<:Real} <: LazySet{N}\n\nAbstract type for centrally symmetric sets.\n\nNotes\n\nEvery concrete AbstractCentrallySymmetric must define the following functions:\n\ncenter(::AbstractCentrallySymmetric{N})::Vector{N} – return the center   point\n\njulia> subtypes(AbstractCentrallySymmetric)\n3-element Array{Any,1}:\n Ball2\n Ballp\n Ellipsoid\n\n\n\n"
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.dim-Tuple{LazySets.AbstractPointSymmetric}",
+    "location": "lib/interfaces.html#LazySets.dim-Tuple{LazySets.AbstractCentrallySymmetric}",
     "page": "Set Interfaces",
     "title": "LazySets.dim",
     "category": "method",
-    "text": "dim(S::AbstractPointSymmetric)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nS – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
+    "text": "dim(S::AbstractCentrallySymmetric)::Int\n\nReturn the ambient dimension of a centrally symmetric set.\n\nInput\n\nS – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{LazySets.AbstractPointSymmetric{N}}, Tuple{N}} where N<:Real",
+    "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{LazySets.AbstractCentrallySymmetric{N}}, Tuple{N}} where N<:Real",
     "page": "Set Interfaces",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::AbstractPointSymmetric{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric set.\n\nInput\n\nS – point symmetric set\n\nOutput\n\nThe center of the point symmetric set.\n\n\n\n"
+    "text": "an_element(S::AbstractCentrallySymmetric{N})::Vector{N} where {N<:Real}\n\nReturn some element of a centrally symmetric set.\n\nInput\n\nS – centrally symmetric set\n\nOutput\n\nThe center of the centrally symmetric set.\n\n\n\n"
 },
 
 {
-    "location": "lib/interfaces.html#Point-symmetric-set-1",
+    "location": "lib/interfaces.html#Centrally-symmetric-set-1",
     "page": "Set Interfaces",
-    "title": "Point symmetric set",
+    "title": "Centrally symmetric set",
     "category": "section",
-    "text": "Point symmetric sets such as balls of different norms are characterized by a center. Note that there is a special interface combination Point symmetric polytope.AbstractPointSymmetricThis interface defines the following functions:dim(::AbstractPointSymmetric)\nan_element(::AbstractPointSymmetric{N}) where {N<:Real}"
+    "text": "Centrally symmetric sets such as balls of different norms are characterized by a center. Note that there is a special interface combination Centrally symmetric polytope.AbstractCentrallySymmetricThis interface defines the following functions:dim(::AbstractCentrallySymmetric)\nan_element(::AbstractCentrallySymmetric{N}) where {N<:Real}"
 },
 
 {
@@ -765,7 +765,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractPolytope",
     "category": "type",
-    "text": "AbstractPolytope{N<:Real} <: LazySet{N}\n\nAbstract type for polytopic sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of halfspaces, or equivalently, sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n4-element Array{Any,1}:\n AbstractPointSymmetricPolytope\n AbstractPolygon\n HPolytope\n VPolytope\n\n\n\n"
+    "text": "AbstractPolytope{N<:Real} <: LazySet{N}\n\nAbstract type for polytopic sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of halfspaces, or equivalently, sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n4-element Array{Any,1}:\n AbstractCentrallySymmetricPolytope\n AbstractPolygon\n HPolytope\n VPolytope\n\n\n\n"
 },
 
 {
@@ -789,7 +789,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Polytope",
     "category": "section",
-    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Point symmetric polytope.AbstractPolytopeThis interface defines the following functions:singleton_list(::AbstractPolytope)\nlinear_map(::AbstractMatrix, ::AbstractPolytope)"
+    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Centrally symmetric polytope.AbstractPolytopeThis interface defines the following functions:singleton_list(::AbstractPolytope)\nlinear_map(::AbstractMatrix, ::AbstractPolytope)"
 },
 
 {
@@ -889,35 +889,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.AbstractPointSymmetricPolytope",
+    "location": "lib/interfaces.html#LazySets.AbstractCentrallySymmetricPolytope",
     "page": "Set Interfaces",
-    "title": "LazySets.AbstractPointSymmetricPolytope",
+    "title": "LazySets.AbstractCentrallySymmetricPolytope",
     "category": "type",
-    "text": "AbstractPointSymmetricPolytope{N<:Real} <: AbstractPolytope{N}\n\nAbstract type for point symmetric, polytopic sets. It combines the AbstractPointSymmetric and AbstractPolytope interfaces. Such a type combination is necessary as long as Julia does not support multiple inheritance.\n\nNotes\n\nEvery concrete AbstractPointSymmetricPolytope must define the following functions:\n\nfrom AbstractPointSymmetric:\ncenter(::AbstractPointSymmetricPolytope{N})::Vector{N} – return the  center point\nfrom AbstractPolytope:\nvertices_list(::AbstractPointSymmetricPolytope{N})::Vector{Vector{N}}  – return a list of all vertices\n\njulia> subtypes(AbstractPointSymmetricPolytope)\n5-element Array{Any,1}:\n AbstractHyperrectangle\n Ball1\n Interval\n LineSegment\n Zonotope\n\n\n\n"
+    "text": "AbstractCentrallySymmetricPolytope{N<:Real} <: AbstractPolytope{N}\n\nAbstract type for centrally symmetric, polytopic sets. It combines the AbstractCentrallySymmetric and AbstractPolytope interfaces. Such a type combination is necessary as long as Julia does not support multiple inheritance.\n\nNotes\n\nEvery concrete AbstractCentrallySymmetricPolytope must define the following functions:\n\nfrom AbstractCentrallySymmetric:\ncenter(::AbstractCentrallySymmetricPolytope{N})::Vector{N} – return the  center point\nfrom AbstractPolytope:\nvertices_list(::AbstractCentrallySymmetricPolytope{N})::Vector{Vector{N}}  – return a list of all vertices\n\njulia> subtypes(AbstractCentrallySymmetricPolytope)\n5-element Array{Any,1}:\n AbstractHyperrectangle\n Ball1\n Interval\n LineSegment\n Zonotope\n\n\n\n"
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.dim-Tuple{LazySets.AbstractPointSymmetricPolytope}",
+    "location": "lib/interfaces.html#LazySets.dim-Tuple{LazySets.AbstractCentrallySymmetricPolytope}",
     "page": "Set Interfaces",
     "title": "LazySets.dim",
     "category": "method",
-    "text": "dim(P::AbstractPointSymmetricPolytope)::Int\n\nReturn the ambient dimension of a point symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
+    "text": "dim(P::AbstractCentrallySymmetricPolytope)::Int\n\nReturn the ambient dimension of a centrally symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{LazySets.AbstractPointSymmetricPolytope{N}}, Tuple{N}} where N<:Real",
+    "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{LazySets.AbstractCentrallySymmetricPolytope{N}}, Tuple{N}} where N<:Real",
     "page": "Set Interfaces",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+    "text": "an_element(P::AbstractCentrallySymmetricPolytope{N})::Vector{N}\n    where {N<:Real}\n\nReturn some element of a centrally symmetric polytope.\n\nInput\n\nP – centrally symmetric polytope\n\nOutput\n\nThe center of the centrally symmetric polytope.\n\n\n\n"
 },
 
 {
-    "location": "lib/interfaces.html#Point-symmetric-polytope-1",
+    "location": "lib/interfaces.html#Centrally-symmetric-polytope-1",
     "page": "Set Interfaces",
-    "title": "Point symmetric polytope",
+    "title": "Centrally symmetric polytope",
     "category": "section",
-    "text": "A point symmetric polytope is a combination of two other interfaces: Point symmetric set and Polytope.AbstractPointSymmetricPolytopeThis interface defines the following functions:dim(::AbstractPointSymmetricPolytope)\nan_element(::AbstractPointSymmetricPolytope{N}) where {N<:Real}"
+    "text": "A centrally symmetric polytope is a combination of two other interfaces: Centrally symmetric set and Polytope.AbstractCentrallySymmetricPolytopeThis interface defines the following functions:dim(::AbstractCentrallySymmetricPolytope)\nan_element(::AbstractCentrallySymmetricPolytope{N}) where {N<:Real}"
 },
 
 {
@@ -925,7 +925,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractHyperrectangle",
     "category": "type",
-    "text": "AbstractHyperrectangle{N<:Real} <: AbstractPointSymmetricPolytope{N}\n\nAbstract type for hyperrectangular sets.\n\nNotes\n\nEvery concrete AbstractHyperrectangle must define the following functions:\n\nradius_hyperrectangle(::AbstractHyperrectangle{N})::Vector{N} – return the   hyperrectangle\'s radius, which is a full-dimensional vector\nradius_hyperrectangle(::AbstractHyperrectangle{N}, i::Int)::N – return the   hyperrectangle\'s radius in the i-th dimension\n\njulia> subtypes(AbstractHyperrectangle)\n4-element Array{Any,1}:\n AbstractSingleton\n BallInf\n Hyperrectangle\n SymmetricIntervalHull\n\n\n\n"
+    "text": "AbstractHyperrectangle{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nAbstract type for hyperrectangular sets.\n\nNotes\n\nEvery concrete AbstractHyperrectangle must define the following functions:\n\nradius_hyperrectangle(::AbstractHyperrectangle{N})::Vector{N} – return the   hyperrectangle\'s radius, which is a full-dimensional vector\nradius_hyperrectangle(::AbstractHyperrectangle{N}, i::Int)::N – return the   hyperrectangle\'s radius in the i-th dimension\n\njulia> subtypes(AbstractHyperrectangle)\n4-element Array{Any,1}:\n AbstractSingleton\n BallInf\n Hyperrectangle\n SymmetricIntervalHull\n\n\n\n"
 },
 
 {
@@ -973,7 +973,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "A hyperrectangle is a special point symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real)\nradius(::AbstractHyperrectangle, ::Real)\nσ(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\n∈(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\nvertices_list(::AbstractHyperrectangle{Real})"
+    "text": "A hyperrectangle is a special centrally symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real)\nradius(::AbstractHyperrectangle, ::Real)\nσ(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\n∈(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\nvertices_list(::AbstractHyperrectangle{Real})"
 },
 
 {
@@ -1005,7 +1005,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractCentrallySymmetricPolytope{N})::Vector{N}\n    where {N<:Real}\n\nReturn some element of a centrally symmetric polytope.\n\nInput\n\nP – centrally symmetric polytope\n\nOutput\n\nThe center of the centrally symmetric polytope.\n\n\n\n"
 },
 
 {
@@ -1085,7 +1085,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ball2",
     "category": "type",
-    "text": "Ball2{N<:AbstractFloat} <: AbstractPointSymmetric{N}\n\nType that represents a ball in the 2-norm.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a real scalar ( 0)\n\nNotes\n\nMathematically, a ball in the 2-norm is defined as the set\n\nmathcalB_2^n(c r) =  x  mathbbR^n   x - c _2  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _2 denotes the Euclidean norm (also known as 2-norm), defined as  x _2 = left( sumlimits_i=1^n x_i^2 right)^12 for any x  mathbbR^n.\n\nExamples\n\nCreate a five-dimensional ball B in the 2-norm centered at the origin with radius 0.5:\n\njulia> B = Ball2(zeros(5), 0.5)\nBall2{Float64}([0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nEvaluate B\'s support vector in the direction 12345:\n\njulia> σ([1.,2.,3.,4.,5.], B)\n5-element Array{Float64,1}:\n 0.06741998624632421\n 0.13483997249264842\n 0.20225995873897262\n 0.26967994498529685\n 0.3370999312316211\n\n\n\n"
+    "text": "Ball2{N<:AbstractFloat} <: AbstractCentrallySymmetric{N}\n\nType that represents a ball in the 2-norm.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a real scalar ( 0)\n\nNotes\n\nMathematically, a ball in the 2-norm is defined as the set\n\nmathcalB_2^n(c r) =  x  mathbbR^n   x - c _2  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _2 denotes the Euclidean norm (also known as 2-norm), defined as  x _2 = left( sumlimits_i=1^n x_i^2 right)^12 for any x  mathbbR^n.\n\nExamples\n\nCreate a five-dimensional ball B in the 2-norm centered at the origin with radius 0.5:\n\njulia> B = Ball2(zeros(5), 0.5)\nBall2{Float64}([0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nEvaluate B\'s support vector in the direction 12345:\n\njulia> σ([1.,2.,3.,4.,5.], B)\n5-element Array{Float64,1}:\n 0.06741998624632421\n 0.13483997249264842\n 0.20225995873897262\n 0.26967994498529685\n 0.3370999312316211\n\n\n\n"
 },
 
 {
@@ -1117,7 +1117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\nσ(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\ncenter(::Ball2)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPointSymmetric:dim\nan_element"
+    "text": "Ball2\nσ(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\ncenter(::Ball2)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nan_element"
 },
 
 {
@@ -1165,7 +1165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPointSymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list"
+    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list"
 },
 
 {
@@ -1173,7 +1173,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ball1",
     "category": "type",
-    "text": "Ball1{N<:Real} <: AbstractPointSymmetricPolytope{N}\n\nType that represents a ball in the 1-norm, also known as Manhattan or Taxicab norm.\n\nIt is defined as the set\n\nmathcalB_1^n(c r) =  x  mathbbR^n  _i=1^n c_i - x_i  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nUnit ball in the 1-norm in the plane:\n\njulia> B = Ball1(zeros(2), 1.)\nBall1{Float64}([0.0, 0.0], 1.0)\njulia> dim(B)\n2\n\nWe evaluate the support vector in the East direction:\n\njulia> σ([0.,1], B)\n2-element Array{Float64,1}:\n 0.0\n 1.0\n\n\n\n"
+    "text": "Ball1{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nType that represents a ball in the 1-norm, also known as Manhattan or Taxicab norm.\n\nIt is defined as the set\n\nmathcalB_1^n(c r) =  x  mathbbR^n  _i=1^n c_i - x_i  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius.\n\nFields\n\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nExamples\n\nUnit ball in the 1-norm in the plane:\n\njulia> B = Ball1(zeros(2), 1.)\nBall1{Float64}([0.0, 0.0], 1.0)\njulia> dim(B)\n2\n\nWe evaluate the support vector in the East direction:\n\njulia> σ([0.,1], B)\n2-element Array{Float64,1}:\n 0.0\n 1.0\n\n\n\n"
 },
 
 {
@@ -1213,7 +1213,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPointSymmetricPolytope:dim\nan_element"
+    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_element"
 },
 
 {
@@ -1221,7 +1221,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ballp",
     "category": "type",
-    "text": "Ballp{N<:AbstractFloat} <: AbstractPointSymmetric{N}\n\nType that represents a ball in the p-norm, for 1  p  .\n\nIt is defined as the set\n\nmathcalB_p^n(c r) =  x  mathbbR^n   x - c _p  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _p for 1  p   denotes the vector p-norm, defined as  x _p = left( sumlimits_i=1^n x_i^p right)^1p for any x  mathbbR^n.\n\nFields\n\np      – norm as a real scalar\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nNotes\n\nThe special cases p=1, p=2 and p= fall back to the specialized types Ball1, Ball2 and BallInf, respectively.\n\nExamples\n\nA five-dimensional ball in the p=32 norm centered at the origin of radius 0.5:\n\njulia> B = Ballp(3/2, zeros(5), 0.5)\nBallp{Float64}(1.5, [0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nWe evaluate the support vector in direction 125:\n\njulia> σ([1., 2, 3, 4, 5], B)\n5-element Array{Float64,1}:\n 0.013516004434607558\n 0.05406401773843023\n 0.12164403991146802\n 0.21625607095372093\n 0.33790011086518895\n\n\n\n"
+    "text": "Ballp{N<:AbstractFloat} <: AbstractCentrallySymmetric{N}\n\nType that represents a ball in the p-norm, for 1  p  .\n\nIt is defined as the set\n\nmathcalB_p^n(c r) =  x  mathbbR^n   x - c _p  r \n\nwhere c  mathbbR^n is its center and r  mathbbR_+ its radius. Here   _p for 1  p   denotes the vector p-norm, defined as  x _p = left( sumlimits_i=1^n x_i^p right)^1p for any x  mathbbR^n.\n\nFields\n\np      – norm as a real scalar\ncenter – center of the ball as a real vector\nradius – radius of the ball as a scalar ( 0)\n\nNotes\n\nThe special cases p=1, p=2 and p= fall back to the specialized types Ball1, Ball2 and BallInf, respectively.\n\nExamples\n\nA five-dimensional ball in the p=32 norm centered at the origin of radius 0.5:\n\njulia> B = Ballp(3/2, zeros(5), 0.5)\nBallp{Float64}(1.5, [0.0, 0.0, 0.0, 0.0, 0.0], 0.5)\njulia> dim(B)\n5\n\nWe evaluate the support vector in direction 125:\n\njulia> σ([1., 2, 3, 4, 5], B)\n5-element Array{Float64,1}:\n 0.013516004434607558\n 0.05406401773843023\n 0.12164403991146802\n 0.21625607095372093\n 0.33790011086518895\n\n\n\n"
 },
 
 {
@@ -1253,7 +1253,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "p-norm ball",
     "category": "section",
-    "text": "Ballp\nσ(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\ncenter(::Ballp)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPointSymmetric:dim\nan_element"
+    "text": "Ballp\nσ(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\ncenter(::Ballp)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nan_element"
 },
 
 {
@@ -1261,7 +1261,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Ellipsoid",
     "category": "type",
-    "text": "Ellipsoid{N<:AbstractFloat} <:  AbstractPointSymmetric{N}\n\nType that represents an ellipsoid.\n\nIt is defined as the set\n\nE = left x  mathbbR^n  (x-c)Q^-1(x-c)  1 right\n\nwhere c in mathbbR^n is its center and Q in mathbbR^nn its shape matrix, which should be a positive definite matrix. An ellipsoid can also be characterized as the image of a Euclidean ball by an invertible linear transformation. It is the higher-dimensional generalization of an ellipse.\n\nFields\n\ncenter       – center of the ellipsoid\nshape matrix – real positive definite matrix, i.e. it is equal to its transpose                   and x^mathrmTQx  0 for all nonzero x\n\nExamples\n\nIf the center is not specified, it is assumed that the center is the origin. For instance, a 3D ellipsoid with center at the origin and the shape matrix being the identity can be created with:\n\njulia> E = Ellipsoid(Matrix{Float64}(I, 3, 3))\nEllipsoid{Float64}([0.0, 0.0, 0.0], [1.0 0.0 0.0; 0.0 1.0 0.0; 0.0 0.0 1.0])\n\njulia> dim(E)\n3\n\njulia> an_element(E)\n3-element Array{Float64,1}:\n 0.0\n 0.0\n 0.0\n\nThis ellipsoid corresponds to the unit Euclidean ball. Let\'s evaluate its support vector in a given direction:\n\njulia> σ(ones(3), E)\n3-element Array{Float64,1}:\n 0.5773502691896258\n 0.5773502691896258\n 0.5773502691896258\n\nA two-dimensional ellipsoid with given center and shape matrix:\n\njulia> E = Ellipsoid(ones(2), Diagonal([2.0, 0.5]))\nEllipsoid{Float64}([1.0, 1.0], [2.0 0.0; 0.0 0.5])\n\n\n\n"
+    "text": "Ellipsoid{N<:AbstractFloat} <:  AbstractCentrallySymmetric{N}\n\nType that represents an ellipsoid.\n\nIt is defined as the set\n\nE = left x  mathbbR^n  (x-c)Q^-1(x-c)  1 right\n\nwhere c in mathbbR^n is its center and Q in mathbbR^nn its shape matrix, which should be a positive definite matrix. An ellipsoid can also be characterized as the image of a Euclidean ball by an invertible linear transformation. It is the higher-dimensional generalization of an ellipse.\n\nFields\n\ncenter       – center of the ellipsoid\nshape matrix – real positive definite matrix, i.e. it is equal to its transpose                   and x^mathrmTQx  0 for all nonzero x\n\nExamples\n\nIf the center is not specified, it is assumed that the center is the origin. For instance, a 3D ellipsoid with center at the origin and the shape matrix being the identity can be created with:\n\njulia> E = Ellipsoid(Matrix{Float64}(I, 3, 3))\nEllipsoid{Float64}([0.0, 0.0, 0.0], [1.0 0.0 0.0; 0.0 1.0 0.0; 0.0 0.0 1.0])\n\njulia> dim(E)\n3\n\njulia> an_element(E)\n3-element Array{Float64,1}:\n 0.0\n 0.0\n 0.0\n\nThis ellipsoid corresponds to the unit Euclidean ball. Let\'s evaluate its support vector in a given direction:\n\njulia> σ(ones(3), E)\n3-element Array{Float64,1}:\n 0.5773502691896258\n 0.5773502691896258\n 0.5773502691896258\n\nA two-dimensional ellipsoid with given center and shape matrix:\n\njulia> E = Ellipsoid(ones(2), Diagonal([2.0, 0.5]))\nEllipsoid{Float64}([1.0, 1.0], [2.0 0.0; 0.0 0.5])\n\n\n\n"
 },
 
 {
@@ -1293,7 +1293,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Ellipsoid",
     "category": "section",
-    "text": "Ellipsoid\nσ(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\ncenter(::Ellipsoid)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPointSymmetric:dim\nan_element"
+    "text": "Ellipsoid\nσ(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\ncenter(::Ellipsoid)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nan_element"
 },
 
 {
@@ -1549,7 +1549,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "Hyperrectangle\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)\nhigh(::Hyperrectangle)\nlow(::Hyperrectangle)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPointSymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list"
+    "text": "Hyperrectangle\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)\nhigh(::Hyperrectangle)\nlow(::Hyperrectangle)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list"
 },
 
 {
@@ -1557,7 +1557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Interval",
     "category": "type",
-    "text": "Interval{N<:Real, IN <: AbstractInterval{N}} <: AbstractPointSymmetricPolytope{N}\n\nType representing an interval on the real line. Mathematically, it is of the form\n\na b =  a  x  b   mathbbR\n\nFields\n\ndat – data container for the given interval\n\nNotes\n\nThis type relies on the IntervalArithmetic.jl library for representation of intervals and arithmetic operations.\n\nExamples\n\nUnidimensional intervals are symbolic representations of a real closed interval.\n\nWe can create intervals in different ways, the simpler way is to pass a pair of numbers:\n\njulia> x = Interval(0.0, 1.0)\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nor a 2-vector:\n\njulia> x = Interval([0.0, 1.0])\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nNote that if the package IntervalArithmetic is loaded in the current scope, you have to prepend the LazySets to the interval type, since there is a name conflict otherwise.\n\njulia> using IntervalArithmetic\nWARNING: using IntervalArithmetic.Interval in module Main conflicts with an existing identifier.\n\njulia> x = Interval(IntervalArithmetic.Interval(0.0, 1.0))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\njulia> dim(x)\n1\n\njulia> center(x)\n1-element Array{Float64,1}:\n 0.5\n\nThis type is such that the usual pairwise arithmetic operators +, -, * trigger the corresponding interval arithmetic backend method, and return a new Interval object. For the symbolic Minkowksi sum, use MinkowskiSum or ⊕.\n\nInterval of other numeric types can be created as well, eg. a rational interval:\n\njulia> Interval(0//1, 2//1)\nInterval{Rational{Int64},IntervalArithmetic.AbstractInterval{Rational{Int64}}}([0//1, 2//1])\n\n\n\n"
+    "text": "Interval{N<:Real, IN <: AbstractInterval{N}}\n    <: AbstractCentrallySymmetricPolytope{N}\n\nType representing an interval on the real line. Mathematically, it is of the form\n\na b =  a  x  b   mathbbR\n\nFields\n\ndat – data container for the given interval\n\nNotes\n\nThis type relies on the IntervalArithmetic.jl library for representation of intervals and arithmetic operations.\n\nExamples\n\nUnidimensional intervals are symbolic representations of a real closed interval.\n\nWe can create intervals in different ways, the simpler way is to pass a pair of numbers:\n\njulia> x = Interval(0.0, 1.0)\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nor a 2-vector:\n\njulia> x = Interval([0.0, 1.0])\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nNote that if the package IntervalArithmetic is loaded in the current scope, you have to prepend the LazySets to the interval type, since there is a name conflict otherwise.\n\njulia> using IntervalArithmetic\nWARNING: using IntervalArithmetic.Interval in module Main conflicts with an existing identifier.\n\njulia> x = Interval(IntervalArithmetic.Interval(0.0, 1.0))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\njulia> dim(x)\n1\n\njulia> center(x)\n1-element Array{Float64,1}:\n 0.5\n\nThis type is such that the usual pairwise arithmetic operators +, -, * trigger the corresponding interval arithmetic backend method, and return a new Interval object. For the symbolic Minkowksi sum, use MinkowskiSum or ⊕.\n\nInterval of other numeric types can be created as well, eg. a rational interval:\n\njulia> Interval(0//1, 2//1)\nInterval{Rational{Int64},IntervalArithmetic.AbstractInterval{Rational{Int64}}}([0//1, 2//1])\n\n\n\n"
 },
 
 {
@@ -1597,7 +1597,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractPointSymmetricPolytope{N})::Vector{N} where {N<:Real}\n\nReturn some element of a point symmetric polytope.\n\nInput\n\nP – point symmetric polytope\n\nOutput\n\nThe center of the point symmetric polytope.\n\n\n\nan_element(x::Interval{N})::Vector{N} where {N<:Real}\n\nReturn some element of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe left border (low(x)) of the interval.\n\n\n\n"
+    "text": "an_element(S::LazySet{N}) where {N<:Real}\n\nReturn some element of a convex set.\n\nInput\n\nS – convex set\n\nOutput\n\nAn element of a convex set.\n\n\n\nan_element(P::AbstractCentrallySymmetricPolytope{N})::Vector{N}\n    where {N<:Real}\n\nReturn some element of a centrally symmetric polytope.\n\nInput\n\nP – centrally symmetric polytope\n\nOutput\n\nThe center of the centrally symmetric polytope.\n\n\n\nan_element(x::Interval{N})::Vector{N} where {N<:Real}\n\nReturn some element of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe left border (low(x)) of the interval.\n\n\n\n"
 },
 
 {
@@ -1717,7 +1717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.LineSegment",
     "category": "type",
-    "text": "LineSegment{N<:Real} <: AbstractPointSymmetricPolytope{N}\n\nType that represents a line segment in 2D between two points p and q.\n\nFields\n\np – first point\nq – second point\n\nExamples\n\nA line segment along the x = y diagonal:\n\njulia> s = LineSegment([0., 0], [1., 1.])\nLineSegment{Float64}([0.0, 0.0], [1.0, 1.0])\njulia> dim(s)\n2\n\nUse plot(s) to plot the extreme points of s and the line segment joining them. Membership test is computed with ∈ (in):\n\njulia> [0., 0] ∈ s && [.25, .25] ∈ s && [1., 1] ∈ s && !([.5, .25] ∈ s)\ntrue\n\nWe can check the intersection with another line segment, and optionally compute a witness (which is just the common point in this case):\n\njulia> sn = LineSegment([1., 0], [0., 1.])\nLineSegment{Float64}([1.0, 0.0], [0.0, 1.0])\njulia> isempty(s ∩ sn)\nfalse\njulia> is_intersection_empty(s, sn, true)\n(false, [0.5, 0.5])\n\n\n\n"
+    "text": "LineSegment{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nType that represents a line segment in 2D between two points p and q.\n\nFields\n\np – first point\nq – second point\n\nExamples\n\nA line segment along the x = y diagonal:\n\njulia> s = LineSegment([0., 0], [1., 1.])\nLineSegment{Float64}([0.0, 0.0], [1.0, 1.0])\njulia> dim(s)\n2\n\nUse plot(s) to plot the extreme points of s and the line segment joining them. Membership test is computed with ∈ (in):\n\njulia> [0., 0] ∈ s && [.25, .25] ∈ s && [1., 1] ∈ s && !([.5, .25] ∈ s)\ntrue\n\nWe can check the intersection with another line segment, and optionally compute a witness (which is just the common point in this case):\n\njulia> sn = LineSegment([1., 0], [0., 1.])\nLineSegment{Float64}([1.0, 0.0], [0.0, 1.0])\njulia> isempty(s ∩ sn)\nfalse\njulia> is_intersection_empty(s, sn, true)\n(false, [0.5, 0.5])\n\n\n\n"
 },
 
 {
@@ -2061,7 +2061,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Singleton",
     "category": "section",
-    "text": "Singleton\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractPointSymmetricPolytope:dimInherited from AbstractHyperrectangle:norm\nradiusInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
+    "text": "Singleton\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dimInherited from AbstractHyperrectangle:norm\nradiusInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
 },
 
 {
@@ -2133,7 +2133,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Zonotope",
     "category": "type",
-    "text": "Zonotope{N<:Real} <: AbstractPointSymmetricPolytope{N}\n\nType that represents a zonotope.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – matrix; each column is a generator of the zonotope\n\nNotes\n\nMathematically, a zonotope is defined as the set\n\nZ = left c + _i=1^p _i g_i _i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line elements. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nZonotope(center::AbstractVector{N},           generators::AbstractMatrix{N}) where {N<:Real}\nZonotope(center::AbstractVector{N},           generators_list::AbstractVector{T}          ) where {N<:Real, T<:AbstractVector{N}}\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> Z = Zonotope([1.0, 0.0], [0.1 0.0; 0.0 0.1])\nZonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(Z)\n2\n\nCompute its vertices:\n\njulia> vertices_list(Z)\n4-element Array{Array{Float64,1},1}:\n [0.9, -0.1]\n [1.1, -0.1]\n [1.1, 0.1]\n [0.9, 0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], Z)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\nAlternative constructor: A zonotope in two dimensions with three generators:\n\njulia> Z = Zonotope(ones(2), [[1., 0.], [0., 1.], [1., 1.]])\nZonotope{Float64}([1.0, 1.0], [1.0 0.0 1.0; 0.0 1.0 1.0])\njulia> Z.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n"
+    "text": "Zonotope{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nType that represents a zonotope.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – matrix; each column is a generator of the zonotope\n\nNotes\n\nMathematically, a zonotope is defined as the set\n\nZ = left c + _i=1^p _i g_i _i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line elements. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nZonotope(center::AbstractVector{N},           generators::AbstractMatrix{N}) where {N<:Real}\nZonotope(center::AbstractVector{N},           generators_list::AbstractVector{T}          ) where {N<:Real, T<:AbstractVector{N}}\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> Z = Zonotope([1.0, 0.0], [0.1 0.0; 0.0 0.1])\nZonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(Z)\n2\n\nCompute its vertices:\n\njulia> vertices_list(Z)\n4-element Array{Array{Float64,1},1}:\n [0.9, -0.1]\n [1.1, -0.1]\n [1.1, 0.1]\n [0.9, 0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], Z)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\nAlternative constructor: A zonotope in two dimensions with three generators:\n\njulia> Z = Zonotope(ones(2), [[1., 0.], [0., 1.], [1., 1.]])\nZonotope{Float64}([1.0, 1.0], [1.0 0.0 1.0; 0.0 1.0 1.0])\njulia> Z.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n"
 },
 
 {
@@ -2221,7 +2221,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{Real}, ::Zonotope{Real})\n∈(::AbstractVector{Real}, ::Zonotope{Real})\nvertices_list(::Zonotope)\ncenter(::Zonotope)\norder(::Zonotope)\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractPointSymmetricPolytope:dim\nan_element"
+    "text": "Zonotope\nσ(::AbstractVector{Real}, ::Zonotope{Real})\n∈(::AbstractVector{Real}, ::Zonotope{Real})\nvertices_list(::Zonotope)\ncenter(::Zonotope)\norder(::Zonotope)\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nan_element"
 },
 
 {
@@ -2933,7 +2933,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Symmetric Interval Hull",
     "category": "section",
-    "text": "SymmetricIntervalHull\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPointSymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list"
+    "text": "SymmetricIntervalHull\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list"
 },
 
 {
