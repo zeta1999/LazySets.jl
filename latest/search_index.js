@@ -721,11 +721,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#Base.:==-Tuple{LazySets.LazySet,LazySets.LazySet}",
+    "page": "Set Interfaces",
+    "title": "Base.:==",
+    "category": "method",
+    "text": "==(X::LazySet, Y::LazySet)\n\nReturn whether two LazySets of the same type are exactly equal by recursively comparing their fields until a mismatch is found.\n\nInput\n\nX – any LazySet\nY – another LazySet of the same type as X\n\nOutput\n\ntrue iff X is equal to Y.\n\nNotes\n\nThe check is purely syntactic and the sets need to have the same base type. I.e. X::VPolytope == Y::HPolytope returns false even if X and Y represent the same polytope. However X::HPolytope{Int64} == Y::HPolytope{Float64} is a valid comparison.\n\nExamples\n\njulia> HalfSpace([1], 1) == HalfSpace([1], 1)\ntrue\n\njulia> HalfSpace([1], 1) == HalfSpace([1.0], 1.0)\ntrue\n\njulia> Ball1([0.], 1.) == Ball2([0.], 1.)\nfalse\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Other-globally-defined-set-functions-1",
     "page": "Set Interfaces",
     "title": "Other globally defined set functions",
     "category": "section",
-    "text": "norm(::LazySet, ::Real)\nradius(::LazySet, ::Real)\ndiameter(::LazySet, ::Real)\nan_element(::LazySet{Real})"
+    "text": "norm(::LazySet, ::Real)\nradius(::LazySet, ::Real)\ndiameter(::LazySet, ::Real)\nan_element(::LazySet{Real})\n==(::LazySet, ::LazySet)"
 },
 
 {
