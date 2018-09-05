@@ -3669,7 +3669,7 @@ var documenterSearchIndex = {"docs": [
     "page": "About",
     "title": "Credits",
     "category": "section",
-    "text": "These persons have contributed to LazySets.jl (in alphabetic order):Marcelo Forets\nChristian Schilling\nFrédéric ViryWe are also grateful to Goran Frehse for enlightening discussions."
+    "text": "These persons have contributed to LazySets.jl (in alphabetic order):Tomer Arnon\nMarcelo Forets\nChristian Schilling\nFrédéric ViryWe are also grateful to Goran Frehse for enlightening discussions."
 },
 
 ]}
