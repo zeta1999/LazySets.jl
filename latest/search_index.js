@@ -2509,7 +2509,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.Intersection",
     "category": "type",
-    "text": "Intersection{N<:Real, S1<:LazySet{N}, S2<:LazySet{N}} <: LazySet{N}\n\nType that represents the intersection of two convex sets.\n\nFields\n\nX – convex set\nY – convex set\n\n\n\n"
+    "text": "Intersection{N<:Real, S1<:LazySet{N}, S2<:LazySet{N}} <: LazySet{N}\n\nType that represents the intersection of two convex sets.\n\nFields\n\nX – convex set\nY – convex set\n\nExamples\n\nCreate an expression, Z, that lazily represents the intersection of two squares X and Y:\n\njulia> X, Y = BallInf([0,0.], 0.5), BallInf([1,0.], 0.65);\n\njulia> Z = X ∩ Y;\n\njulia> typeof(Z)\nIntersection{Float64,BallInf{Float64},BallInf{Float64}}\n\njulia> dim(Z)\n2\n\nWe can check if the intersection is empty with isempty:\n\n````jldoctest lazy_intersection julia> isempty(Z) false\n\n\nDo not confuse `Intersection` with the concrete operation, that is computed with\nthe lowercase `intersection`:\n\n\njldoctest lazy_intersection julia> W = intersection(X, Y) Hyperrectangle{Float64}([0.425, 0.0], [0.075, 0.5]) ```\n\n\n\n"
 },
 
 {
