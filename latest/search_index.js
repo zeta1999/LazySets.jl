@@ -977,11 +977,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.constraints_list-Tuple{LazySets.AbstractHyperrectangle{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(H::AbstractHyperrectangle{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of constraints of an axis-aligned hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA list of linear constraints.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Hyperrectangle-1",
     "page": "Set Interfaces",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "A hyperrectangle is a special centrally symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real)\nradius(::AbstractHyperrectangle, ::Real)\nσ(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\n∈(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\nvertices_list(::AbstractHyperrectangle{Real})"
+    "text": "A hyperrectangle is a special centrally symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real)\nradius(::AbstractHyperrectangle, ::Real)\nσ(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\n∈(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\nvertices_list(::AbstractHyperrectangle{Real})\nconstraints_list(::AbstractHyperrectangle{Real})"
 },
 
 {
@@ -2993,11 +3001,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolytope},LazySets.AbstractHyperrectangle}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPolytope}, H::AbstractHyperrectangle{N}) where {N}\n\nConverts a hyperrectangular set to a polytope in constraint representation.\n\nInput\n\nHPolytope – type used for dispatch\nH         – hyperrectangular set\n\nOutput\n\nA polytope in constraint representation.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolygon},LazySets.AbstractHyperrectangle}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPOLYGON}, H::AbstractHyperrectangle{N}) where {N, HPOLYGON<:AbstractHPolygon}\n\nConverts a hyperrectangular set to a polygon in constraint representation.\n\nInput\n\nHPOLYGON  – type used for dispatch\nH         – hyperrectangular set\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n"
+},
+
+{
     "location": "lib/conversion.html#Conversion-between-set-representations-1",
     "page": "Conversion between set representations",
     "title": "Conversion between set representations",
     "category": "section",
-    "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert(::Type{HPolygonOpt}, ::HPolygon)\nconvert(::Type{HPolytope}, ::HPolygon)\nconvert(::Type{HPolygon}, ::HPolytope)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle)\nconvert(::Type{Hyperrectangle}, ::Interval)"
+    "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert(::Type{HPolygonOpt}, ::HPolygon)\nconvert(::Type{HPolytope}, ::HPolygon)\nconvert(::Type{HPolygon}, ::HPolytope)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle)\nconvert(::Type{Hyperrectangle}, ::Interval)\nconvert(::Type{HPolytope}, ::AbstractHyperrectangle)\nconvert(::Type{HPolygon}, ::AbstractHyperrectangle)"
 },
 
 {
