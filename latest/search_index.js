@@ -985,11 +985,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.high-Tuple{LazySets.AbstractHyperrectangle{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.high",
+    "category": "method",
+    "text": "high(H::AbstractHyperrectangle{N})::Vector{N} where {N<:Real}\n\nReturn the higher coordinates of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA vector with the higher coordinates of the hyperrectangular set.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.low-Tuple{LazySets.AbstractHyperrectangle{Real}}",
+    "page": "Set Interfaces",
+    "title": "LazySets.low",
+    "category": "method",
+    "text": "low(H::AbstractHyperrectangle{N})::Vector{N} where {N<:Real}\n\nReturn the lower coordinates of a hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA vector with the lower coordinates of the hyperrectangular set.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Hyperrectangle-1",
     "page": "Set Interfaces",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "A hyperrectangle is a special centrally symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real)\nradius(::AbstractHyperrectangle, ::Real)\nσ(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\n∈(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\nvertices_list(::AbstractHyperrectangle{Real})\nconstraints_list(::AbstractHyperrectangle{Real})"
+    "text": "A hyperrectangle is a special centrally symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real)\nradius(::AbstractHyperrectangle, ::Real)\nσ(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\n∈(::AbstractVector{Real}, ::AbstractHyperrectangle{Real})\nvertices_list(::AbstractHyperrectangle{Real})\nconstraints_list(::AbstractHyperrectangle{Real})\nhigh(::AbstractHyperrectangle{Real})\nlow(::AbstractHyperrectangle{Real})"
 },
 
 {
@@ -1181,7 +1197,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list"
+    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1545,27 +1561,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.high-Tuple{LazySets.Hyperrectangle}",
-    "page": "Common Set Representations",
-    "title": "LazySets.high",
-    "category": "method",
-    "text": "high(H::Hyperrectangle{N})::Vector{N} where {N<:Real}\n\nReturn the higher coordinates of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nA vector with the higher coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#LazySets.low-Tuple{LazySets.Hyperrectangle}",
-    "page": "Common Set Representations",
-    "title": "LazySets.low",
-    "category": "method",
-    "text": "low(H::Hyperrectangle{N})::Vector{N} where {N<:Real}\n\nReturn the lower coordinates of a hyperrectangle.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nA vector with the lower coordinates of the hyperrectangle, one entry per dimension.\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#Hyperrectangle-1",
     "page": "Common Set Representations",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "Hyperrectangle\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)\nhigh(::Hyperrectangle)\nlow(::Hyperrectangle)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list"
+    "text": "Hyperrectangle\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -2077,7 +2077,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Singleton",
     "category": "section",
-    "text": "Singleton\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dimInherited from AbstractHyperrectangle:norm\nradiusInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
+    "text": "Singleton\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dimInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
 },
 
 {
@@ -2141,7 +2141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zero set",
     "category": "section",
-    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet)\nelement(::ZeroSet, ::Int)\nlinear_map(::AbstractMatrix, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractHyperrectangle:norm\nradiusInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
+    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet)\nelement(::ZeroSet, ::Int)\nlinear_map(::AbstractMatrix, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
 },
 
 {
@@ -2949,7 +2949,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Symmetric Interval Hull",
     "category": "section",
-    "text": "SymmetricIntervalHull\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list"
+    "text": "SymmetricIntervalHull\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
