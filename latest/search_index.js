@@ -793,11 +793,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#Base.isempty-Union{Tuple{LazySets.AbstractPolytope{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(P::AbstractPolytope{N})::Bool where {N<:Real}\n\nDetermine whether a polytope is empty.\n\nInput\n\nP – abstract polytope\n\nOutput\n\ntrue if the given polytope contains no vertices, and false otherwise.\n\nAlgorithm\n\nThis algorithm checks whether the vertices_list of the given polytope is empty or not.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Polytope-1",
     "page": "Set Interfaces",
     "title": "Polytope",
     "category": "section",
-    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Centrally symmetric polytope.AbstractPolytopeThis interface defines the following functions:singleton_list(::AbstractPolytope)\nlinear_map(::AbstractMatrix, ::AbstractPolytope)"
+    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Centrally symmetric polytope.AbstractPolytopeThis interface defines the following functions:singleton_list(::AbstractPolytope)\nlinear_map(::AbstractMatrix, ::AbstractPolytope)\nisempty(::AbstractPolytope{N}) where {N<:Real}"
 },
 
 {
@@ -3225,11 +3233,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.AbstractPolytope{N},LazySets.AbstractPolytope{N},Bool}, Tuple{LazySets.AbstractPolytope{N},LazySets.AbstractPolytope{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(P::AbstractPolytope{N},\n                      Q::AbstractPolytope{N},\n                      witness::Bool=false\n                      )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether two polytopes do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nP       – polytope\nQ       – another polytope\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  Q = \nIf witness option is activated:\n(true, []) iff P  Q = \n(false, v) iff P  Q   and v  P  Q\n\nAlgorithm\n\nThis is a fallback implementation of the AbstractPolytope interface that computes the concrete intersection, intersection, of the given pair of polytopes. If a witness is required, the first vertex of the resulting intersection polytope is returned.\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#Check-for-emptiness-of-intersection-1",
     "page": "Binary Functions on Sets",
     "title": "Check for emptiness of intersection",
     "category": "section",
-    "text": "is_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Hyperplane{N}, ::Zonotope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}"
+    "text": "is_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Hyperplane{N}, ::Zonotope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractPolytope{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}"
 },
 
 {
