@@ -3521,6 +3521,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.ispermutation",
+    "page": "Utility Functions",
+    "title": "LazySets.ispermutation",
+    "category": "function",
+    "text": "ispermutation(u::AbstractVector{T}, v::AbstractVector{T})::Bool where T\n\nCheck that two vectors contain the same elements up to reordering.\n\nInput\n\nu – first vector\nv – second vector\n\nOutput\n\ntrue iff the vectors are identical up to reordering.\n\nExamples\n\njulia> LazySets.ispermutation([1, 2, 2], [2, 2, 1])\ntrue\n\njulia> LazySets.ispermutation([1, 2, 2], [1, 1, 2])\nfalse\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#LazySets.@neutral",
     "page": "Utility Functions",
     "title": "LazySets.@neutral",
@@ -3549,7 +3557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Utility functions",
     "category": "section",
-    "text": "sign_cadlag\n@neutral\n@absorbing\n@declare_array_version"
+    "text": "sign_cadlag\nispermutation\n@neutral\n@absorbing\n@declare_array_version"
 },
 
 {
