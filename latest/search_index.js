@@ -737,6 +737,30 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.CompactSet",
+    "page": "Set Interfaces",
+    "title": "LazySets.CompactSet",
+    "category": "constant",
+    "text": "CompactSet\n\nAn alias for compact set types.\n\nNotes\n\nMost lazy operations are not captured by this alias because whether their result is compact or not depends on the argument(s).\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.NonCompactSet",
+    "page": "Set Interfaces",
+    "title": "LazySets.NonCompactSet",
+    "category": "constant",
+    "text": "NonCompactSet\n\nAn alias for non-compact set types.\n\nNotes\n\nMost lazy operations are not captured by this alias because whether their result is non-compact or not depends on the argument(s).\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Aliases-for-set-types-1",
+    "page": "Set Interfaces",
+    "title": "Aliases for set types",
+    "category": "section",
+    "text": "CompactSet\nNonCompactSet"
+},
+
+{
     "location": "lib/interfaces.html#LazySets.AbstractCentrallySymmetric",
     "page": "Set Interfaces",
     "title": "LazySets.AbstractCentrallySymmetric",
