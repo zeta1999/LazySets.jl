@@ -3265,11 +3265,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractPolytope{N},Bool}, Tuple{LazySets.AbstractSingleton{N},LazySets.AbstractPolytope{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(S::AbstractSingleton{N},\n                      set::LazySet{N},\n                      witness::Bool=false\n                     )::Union{Bool,Tuple{Bool,Vector{N}}} where {N<:Real}\n\nCheck whether a singleton and a convex set do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS   – singleton\nset – convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  operatornameset = \nIf witness option is activated:\n(true, []) iff S  operatornameset = \n(false, v) iff S  operatornameset   and v = element(S)  S  operatornameset\n\nAlgorithm\n\nS  operatornameset =  iff element(S)  operatornameset.\n\n\n\nis_intersection_empty(P::AbstractPolytope{N},\n                      Q::AbstractPolytope{N},\n                      witness::Bool=false\n                      )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether two polytopes do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nP       – polytope\nQ       – another polytope\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  Q = \nIf witness option is activated:\n(true, []) iff P  Q = \n(false, v) iff P  Q   and v  P  Q\n\nAlgorithm\n\nThis is a fallback implementation of the AbstractPolytope interface that computes the concrete intersection, intersection, of the given pair of polytopes. If a witness is required, the first vertex of the resulting intersection polytope is returned.\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.LazySet{N},Union{LazySets.Hyperplane{N}, LazySets.Line{N,V} where V<:AbstractArray{N,1}},Bool}, Tuple{LazySets.LazySet{N},Union{LazySets.Hyperplane{N}, LazySets.Line{N,V} where V<:AbstractArray{N,1}}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(X::LazySet{N},\n                      hp::Union{Hyperplane{N}, Line{N}},\n                      [witness]::Bool=false\n                     )::Union{Bool, Tuple{Bool,Vector{N}}} where N<:Real\n\nCheck whether a compact set an a hyperplane do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – compact set\nhp      – hyperplane\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff X  hp = \nIf witness option is activated:\n(true, []) iff X  hp = \n(false, v) iff X  hp   and v  X  hp\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail.\n\nAlgorithm\n\nA compact convex set intersects with a hyperplane iff the support function in the negative resp. positive direction of the hyperplane\'s normal vector a is to the left resp. right of the hyperplane\'s constraint b:\n\n-(-a)  b  (a)\n\nFor witness generation, we compute a line connecting the support vectors to the left and right, and then take the intersection of the line with the hyperplane. We follow this algorithm for the line-hyperplane intersection.\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#Check-for-emptiness-of-intersection-1",
     "page": "Binary Functions on Sets",
     "title": "Check for emptiness of intersection",
     "category": "section",
-    "text": "is_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Hyperplane{N}, ::Zonotope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractPolytope{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}"
+    "text": "is_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Hyperplane{N}, ::Zonotope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractPolytope{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{Hyperplane{N}, Line{N}}, ::Bool=false) where {N<:Real}"
 },
 
 {
@@ -3289,11 +3305,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{LazySets.AbstractHPolygon{N},LazySets.AbstractHPolygon{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(P1::AbstractHPolygon{N},\n             P2::AbstractHPolygon{N}\n            )::Union{HPolygon{N}, EmptySet{N}} where N<:Real\n\nReturn the intersection of two polygons in constraint representation.\n\nInput\n\nP1 – first polygon\nP2 – second polygon\n\nOutput\n\nIf the polygons do not intersect, the result is the empty set. Otherwise the result is the polygon that describes the intersection.\n\nAlgorithm\n\nWe just combine the constraints of both polygons. To obtain a linear-time algorithm, we interleave the constraints. If there are two constraints with the same normal vector, we choose the tighter one.\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#Intersection-of-two-sets-1",
     "page": "Binary Functions on Sets",
     "title": "Intersection of two sets",
     "category": "section",
-    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::Hyperrectangle{N}, ::Hyperrectangle{N}) where {N<:Real}"
+    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::Hyperrectangle{N}, ::Hyperrectangle{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}"
 },
 
 {
