@@ -841,11 +841,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.dim-Tuple{LazySets.AbstractPolygon}",
+    "page": "Set Interfaces",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(P::AbstractPolygon)::Int\n\nReturn the ambient dimension of a polygon.\n\nInput\n\nP – polygon\n\nOutput\n\nThe ambient dimension of the polygon, which is 2.\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.linear_map-Union{Tuple{AbstractArray{T,2} where T,LazySets.AbstractPolygon{N}}, Tuple{N}} where N",
+    "page": "Set Interfaces",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix, P::AbstractPolygon{N};\n           output_type::Type{<:LazySet}=typeof(P)) where {N}\n\nConcrete linear map of an abstract polygon.\n\nInput\n\nM           – matrix\nP           – abstract polygon\noutput_type – (optional, default: type of P) type of the result\n\nOutput\n\nA set of type output_type.\n\nAlgorithm\n\nThe linear map M is applied to each vertex of the given set P, obtaining a polygon in V-representation. Since polygons are closed under linear map, by default MP is converted to the concrete type of P. If an output_type is given, the corresponding convert method is invoked.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Polygon-1",
     "page": "Set Interfaces",
     "title": "Polygon",
     "category": "section",
-    "text": "A polygon is a two-dimensional polytope.AbstractPolygonThis interface defines the following functions:dim(P::AbstractPolygon)\nlinear_map(::AbstractMatrix, P::AbstractPolygon{N}, ::Type{<:LazySet}=typeof(P)) where {N}"
+    "text": "A polygon is a two-dimensional polytope.AbstractPolygonThis interface defines the following functions:dim(P::AbstractPolygon)\nlinear_map(::AbstractMatrix, P::AbstractPolygon{N}) where N"
 },
 
 {
