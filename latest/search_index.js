@@ -813,7 +813,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.linear_map",
     "category": "method",
-    "text": "linear_map(M::AbstractMatrix, P::AbstractPolytope{N}) where {N<:Real}\n\nConcrete linear map of an abstract polytype.\n\nInput\n\nM – matrix\nP – abstract polytype\n\nOutput\n\nThe polytope in V-representation obtained by applying the linear map M to the set P. If the given polytope is two-dimensional, a polygon instead of a general polytope is returned. \n\n\n\n"
+    "text": "linear_map(M::AbstractMatrix, P::AbstractPolytope{N};\n           output_type::Type{<:LazySet}=VPolytope{N}) where {N<:Real}\n\nConcrete linear map of an abstract polytype.\n\nInput\n\nM           – matrix\nP           – abstract polytype\noutput_type – (optional, default: VPolytope) type of the result\n\nOutput\n\nA set of type output_type.\n\nAlgorithm\n\nThe linear map M is applied to each vertex of the given set P, obtaining a polytope in V-representation. Since some set representations (e.g. axis-aligned hyperrectangles) are not closed under linear maps, the default output is a VPolytope. If an output_type is given, the corresponding convert method is invoked.\n\n\n\n"
 },
 
 {
@@ -841,19 +841,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.dim-Tuple{LazySets.AbstractPolygon}",
-    "page": "Set Interfaces",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(P::AbstractPolygon)::Int\n\nReturn the ambient dimension of a polygon.\n\nInput\n\nP – polygon\n\nOutput\n\nThe ambient dimension of the polygon, which is 2.\n\n\n\n"
-},
-
-{
     "location": "lib/interfaces.html#Polygon-1",
     "page": "Set Interfaces",
     "title": "Polygon",
     "category": "section",
-    "text": "A polygon is a two-dimensional polytope.AbstractPolygonThis interface defines the following functions:dim(P::AbstractPolygon)"
+    "text": "A polygon is a two-dimensional polytope.AbstractPolygonThis interface defines the following functions:dim(P::AbstractPolygon)\nlinear_map(::AbstractMatrix, P::AbstractPolygon{N}, ::Type{<:LazySet}=typeof(P)) where {N}"
 },
 
 {
@@ -2993,35 +2985,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolygonOpt},LazySets.HPolygon}",
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{#s70} where #s70<:LazySets.AbstractHPolygon,LazySets.VPolygon}",
     "page": "Conversion between set representations",
     "title": "Base.convert",
     "category": "method",
-    "text": "convert(::Type{HPOLYGON1}, P::HPOLYGON2) where\n    {HPOLYGON1<:Union{HPolygon, HPolygonOpt}, HPOLYGON2<:AbstractHPolygon}\n\nConvert between polygon types in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as the target type.\n\nNotes\n\nWe need the Union type for HPOLYGON1 because the target type must be concrete.\n\n\n\n"
-},
-
-{
-    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolytope},LazySets.HPolygon}",
-    "page": "Conversion between set representations",
-    "title": "Base.convert",
-    "category": "method",
-    "text": "convert(::Type{HPolytope}, P::AbstractHPolygon)\n\nConvert from polygon in H-representation to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as 2D polytope.\n\n\n\n"
-},
-
-{
-    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolygon},LazySets.HPolytope}",
-    "page": "Conversion between set representations",
-    "title": "Base.convert",
-    "category": "method",
-    "text": "convert(::Type{HPOLYGON}, P::HPolytope) where {HPOLYGON<:AbstractHPolygon}\n\nConvert from 2D polytope in H-representation to polygon in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope (must be 2D)\n\nOutput\n\nThe 2D polytope represented as polygon.\n\n\n\n"
-},
-
-{
-    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.Zonotope},LazySets.AbstractHyperrectangle}",
-    "page": "Conversion between set representations",
-    "title": "Base.convert",
-    "category": "method",
-    "text": "convert(::Type{Zonotope}, H::AbstractHyperrectangle{N}) where {N}\n\nConverts a hyperrectangular set to a zonotope.\n\nInput\n\nZonotope\nH – hyperrectangular set\n\nOutput\n\nA zonotope.\n\n\n\n"
+    "text": "convert(T::Type{<:AbstractHPolygon}, P::VPolygon)\n\nConverts a polygon in vertex representation to a polygon in constraint representation.\n\nInput\n\nHPOLYGON – type used for dispatch\nP        – polygon in vertex representation\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n"
 },
 
 {
@@ -3033,14 +3001,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolytope},LazySets.AbstractHyperrectangle}",
-    "page": "Conversion between set representations",
-    "title": "Base.convert",
-    "category": "method",
-    "text": "convert(::Type{HPolytope}, H::AbstractHyperrectangle{N}) where {N}\n\nConverts a hyperrectangular set to a polytope in constraint representation.\n\nInput\n\nHPolytope – type used for dispatch\nH         – hyperrectangular set\n\nOutput\n\nA polytope in constraint representation.\n\n\n\n"
-},
-
-{
     "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolygon},LazySets.AbstractHyperrectangle}",
     "page": "Conversion between set representations",
     "title": "Base.convert",
@@ -3049,11 +3009,99 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolygon},LazySets.HPolytope}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPOLYGON}, P::HPolytope) where {HPOLYGON<:AbstractHPolygon}\n\nConvert from 2D polytope in H-representation to polygon in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope (must be 2D)\n\nOutput\n\nThe 2D polytope represented as polygon.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolygonOpt},LazySets.HPolygon}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPOLYGON1},\n        P::HPOLYGON2) where {HPOLYGON1<:Union{HPolygon, HPolygonOpt},\n                             HPOLYGON2<:AbstractHPolygon}\n\nConvert between polygon types in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as the target type.\n\nNotes\n\nWe need the Union type for HPOLYGON1 because the target type must be concrete.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolytope},LazySets.AbstractHPolygon}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPolytope}, P::AbstractHPolygon)\n\nConvert from polygon in H-representation to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as 2D polytope.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolytope},LazySets.AbstractHyperrectangle}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPolytope}, P::AbstractPolytope)\n\nConvert polytopic set to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe given polytope represented as a polytope in constraint representation.\n\nAlgorithm\n\nP is first converted to a polytope in V-representation. Then, the conversion method to a polytope in H-representation is invoked. This conversion may require the Polyhedra library.\n\n\n\nconvert(::Type{HPolytope}, H::AbstractHyperrectangle{N}) where {N}\n\nConverts a hyperrectangular set to a polytope in constraint representation.\n\nInput\n\nHPolytope – type used for dispatch\nH         – hyperrectangular set\n\nOutput\n\nA polytope in constraint representation.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolytope},LazySets.AbstractPolytope}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPolytope}, P::AbstractPolytope)\n\nConvert polytopic set to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe given polytope represented as a polytope in constraint representation.\n\nAlgorithm\n\nP is first converted to a polytope in V-representation. Then, the conversion method to a polytope in H-representation is invoked. This conversion may require the Polyhedra library.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.HPolytope},LazySets.VPolytope}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{HPolytope}, P::VPolytope)\n\nConvert from polytope in V-representation to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe polytope in the dual representation.\n\nAlgorithm\n\nThe tohrep function is invoked. It requires the Polyhedra package.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.VPolygon},LazySets.AbstractHPolygon}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{VPolygon}, P::AbstractHPolygon)\n\nConverts a polygon in constraint representation to a polygon in vertex representation.\n\nInput\n\nVPolygon – type used for dispatch\nP        – polygon in constraint representation\n\nOutput\n\nA polygon in vertex representation.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.VPolygon},LazySets.AbstractPolytope}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{VPolygon}, P::AbstractPolytope)\n\nConvert polytopic set to polygon in V-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe 2D polytope represented as a polygon.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.VPolytope},LazySets.AbstractPolytope}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{VPolytope}, P::AbstractPolytope)\n\nConvert polytopic type to polytope in V-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe set P represented as a VPolytope.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.VPolytope},LazySets.HPolytope}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{VPolytope}, P::HPolytope)\n\nConvert from polytope in H-representation to polytope in V-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe polytope in the dual representation.\n\nAlgorithm\n\nThe tovrep function is invoked. It requires the Polyhedra package.\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.Zonotope},LazySets.AbstractHyperrectangle}",
+    "page": "Conversion between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{Zonotope}, H::AbstractHyperrectangle{N}) where {N}\n\nConverts a hyperrectangular set to a zonotope.\n\nInput\n\nZonotope\nH – hyperrectangular set\n\nOutput\n\nA zonotope.\n\n\n\n"
+},
+
+{
     "location": "lib/conversion.html#Conversion-between-set-representations-1",
     "page": "Conversion between set representations",
     "title": "Conversion between set representations",
     "category": "section",
-    "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert(::Type{HPolygonOpt}, ::HPolygon)\nconvert(::Type{HPolytope}, ::HPolygon)\nconvert(::Type{HPolygon}, ::HPolytope)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle)\nconvert(::Type{Hyperrectangle}, ::Interval)\nconvert(::Type{HPolytope}, ::AbstractHyperrectangle)\nconvert(::Type{HPolygon}, ::AbstractHyperrectangle)"
+    "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert(T::Type{<:AbstractHPolygon}, P::VPolygon)\nconvert(::Type{Hyperrectangle}, ::Interval)\nconvert(::Type{HPolygon}, ::AbstractHyperrectangle)\nconvert(::Type{HPolygon}, ::HPolytope)\nconvert(::Type{HPolygonOpt}, ::HPolygon)\nconvert(::Type{HPolytope}, P::AbstractHPolygon)\nconvert(::Type{HPolytope}, ::AbstractHyperrectangle)\nconvert(::Type{HPolytope}, P::AbstractPolytope)\nconvert(::Type{HPolytope}, P::VPolytope)\nconvert(::Type{VPolygon}, P::AbstractHPolygon)\nconvert(::Type{VPolygon}, P::AbstractPolytope)\nconvert(::Type{VPolytope}, P::AbstractPolytope)\nconvert(::Type{VPolytope}, P::HPolytope)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle)"
 },
 
 {
