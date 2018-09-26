@@ -2353,11 +2353,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.vertices_list-Tuple{LazySets.CartesianProduct{Real,S1,S2} where S2<:LazySets.LazySet{Real} where S1<:LazySets.LazySet{Real}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(cp::CartesianProduct{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying sets are polytopic. Then the high-dimensional set of vertices is just the Cartesian product of the low-dimensional sets of vertices.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Binary-Cartesian-Product-1",
     "page": "Common Set Operations",
     "title": "Binary Cartesian Product",
     "category": "section",
-    "text": "CartesianProduct\n×(::LazySet, ::LazySet)\n*(::LazySet, ::LazySet)\ndim(::CartesianProduct)\nσ(::AbstractVector{Real}, ::CartesianProduct{Real})\n∈(::AbstractVector{Real}, ::CartesianProduct{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CartesianProduct\n×(::LazySet, ::LazySet)\n*(::LazySet, ::LazySet)\ndim(::CartesianProduct)\nσ(::AbstractVector{Real}, ::CartesianProduct{Real})\n∈(::AbstractVector{Real}, ::CartesianProduct{Real})\nvertices_list(::CartesianProduct{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2393,6 +2401,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.vertices_list-Tuple{LazySets.CartesianProductArray{Real,S} where S<:LazySets.LazySet{Real}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(cpa::CartesianProductArray{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) Cartesian product.\n\nInput\n\ncpa – Cartesian product\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying sets are polytopic. Then the high-dimensional set of vertices is just the Cartesian product of the low-dimensional sets of vertices.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.array-Tuple{LazySets.CartesianProductArray}",
     "page": "Common Set Operations",
     "title": "LazySets.array",
@@ -2405,7 +2421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Cartesian Product",
     "category": "section",
-    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Real}, ::CartesianProductArray{Real})\n∈(::AbstractVector{Real}, ::CartesianProductArray{Real})\narray(::CartesianProductArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Real}, ::CartesianProductArray{Real})\n∈(::AbstractVector{Real}, ::CartesianProductArray{Real})\nvertices_list(::CartesianProductArray{Real})\narray(::CartesianProductArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2857,11 +2873,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.vertices_list-Tuple{LazySets.LinearMap{Real,S,NM,MAT} where MAT<:AbstractArray{NM,2} where NM where S<:LazySets.LazySet{Real}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(lm::LinearMap{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying set X is polytopic. Then the result is just the linear map applied to the vertices of X.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Linear-Map-1",
     "page": "Common Set Operations",
     "title": "Linear Map",
     "category": "section",
-    "text": "LinearMap\n*(::AbstractMatrix{Real}, ::LazySet{Real})\n*(::Real, ::LazySet{Real})\ndim(::LinearMap)\nσ(::AbstractVector{Real}, ::LinearMap{Real})\n∈(::AbstractVector{Real}, ::LinearMap{Real, LazySet{Real}, Real, Matrix{Real}})\nan_element(::LinearMap)Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "LinearMap\n*(::AbstractMatrix{Real}, ::LazySet{Real})\n*(::Real, ::LazySet{Real})\ndim(::LinearMap)\nσ(::AbstractVector{Real}, ::LinearMap{Real})\n∈(::AbstractVector{Real}, ::LinearMap{Real, LazySet{Real}, Real, Matrix{Real}})\nan_element(::LinearMap)\nvertices_list(::LinearMap{Real})Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -2894,6 +2918,14 @@ var documenterSearchIndex = {"docs": [
     "title": "Base.:∈",
     "category": "method",
     "text": "∈(x::AbstractVector{N}, em::ExponentialMap{<:LazySet{N}})::Bool where {N<:Real}\n\nCheck whether a given point is contained in an exponential map of a convex set.\n\nInput\n\nx  – point/vector\nem – exponential map of a convex set\n\nOutput\n\ntrue iff x  em.\n\nAlgorithm\n\nThis implementation exploits that x  exp(M)S iff exp(-M)x  S. This follows from exp(-M)exp(M) = I for any M.\n\nExamples\n\njulia> using Compat.SparseArrays: SparseMatrixCSC;\n\njulia> em = ExponentialMap(SparseMatrixExp(SparseMatrixCSC([2.0 0.0; 0.0 1.0])),\n                           BallInf([1., 1.], 1.));\n\njulia> ∈([-1.0, 1.0], em)\nfalse\njulia> ∈([1.0, 1.0], em)\ntrue\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.vertices_list-Tuple{LazySets.ExponentialMap{Real,S} where S<:LazySets.LazySet{Real}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(em::ExponentialMap{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) exponential map.\n\nInput\n\nem – exponential map\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying set X is polytopic. Then the result is just the exponential map applied to the vertices of X.\n\n\n\n"
 },
 
 {
@@ -2965,7 +2997,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Exponential Map",
     "category": "section",
-    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Real}, ::ExponentialMap{Real})\n∈(::AbstractVector{Real}, ::ExponentialMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Real}, ::ExponentialProjectionMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementSparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)\nget_row(::SparseMatrixExp, ::Int)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
+    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Real}, ::ExponentialMap{Real})\n∈(::AbstractVector{Real}, ::ExponentialMap{Real})\nvertices_list(::ExponentialMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Real}, ::ExponentialProjectionMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementSparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)\nget_row(::SparseMatrixExp, ::Int)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
 },
 
 {
