@@ -2617,11 +2617,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{AbstractArray{N,1},LazySets.Intersection{N,#s4,#s3} where #s3<:LazySets.HalfSpace where #s4<:LazySets.LazySet}, Tuple{N}} where N<:AbstractFloat",
+    "page": "Common Set Operations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N},\n  cap::Intersection{N, <:LazySet, <:HalfSpace};\n  algorithm::String=\"line_search\", kwargs...) where {N<:AbstractFloat}\n\nReturn the support function of the intersection of a compact set and a half-space in a given direction.\n\nInput\n\nd         – direction\ncap       – lazy intersection of a compact set and a half-space \nalgorithm – (optional, default: \"line_search\"): the algorithm to calculate                the support function, valid options are:\n\"line_search\" – solve the associated univariate optimization problem                    using a line search method (either Brent or the                    Golden Section method) \ncheck_intersection – (optional, default: true) if true, check if the                          intersection is empty before actually calculating the                         support function\n\nOutput\n\nThe scalar value of the support function of the set cap in the given direction.\n\nNotes\n\nThe check_intersection flag can be useful if you know in advance that the intersection is non-empty.\n\nAny additional number of arguments to the algorithm backend can be passed as keyword arguments.\n\nAlgorithm\n\nThe algorithms are based on solving the associated optimization problem\n\nmin_   0  ( - a X) + b\n\nFor additional information we refer to:\n\nG. Frehse, R. Ray. Flowpipe-Guard Intersection for Reachability Computations with Support Functions.\nC. Le Guernic. Reachability Analysis of Hybrid Systems with Linear Continuous Dynamics, PhD thesis.\nT. Rockafellar, R. Wets. Variational Analysis.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Binary-Intersection-1",
     "page": "Common Set Operations",
     "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty(::Intersection)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet, <:HalfSpace}) where {N<:AbstractFloat}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
