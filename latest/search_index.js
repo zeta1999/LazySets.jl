@@ -941,7 +941,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractCentrallySymmetricPolytope",
     "category": "type",
-    "text": "AbstractCentrallySymmetricPolytope{N<:Real} <: AbstractPolytope{N}\n\nAbstract type for centrally symmetric, polytopic sets. It combines the AbstractCentrallySymmetric and AbstractPolytope interfaces. Such a type combination is necessary as long as Julia does not support multiple inheritance.\n\nNotes\n\nEvery concrete AbstractCentrallySymmetricPolytope must define the following functions:\n\nfrom AbstractCentrallySymmetric:\ncenter(::AbstractCentrallySymmetricPolytope{N})::Vector{N} – return the  center point\nfrom AbstractPolytope:\nvertices_list(::AbstractCentrallySymmetricPolytope{N})::Vector{Vector{N}}  – return a list of all vertices\n\njulia> subtypes(AbstractCentrallySymmetricPolytope)\n5-element Array{Any,1}:\n AbstractHyperrectangle\n Ball1\n Interval\n LineSegment\n Zonotope\n\n\n\n"
+    "text": "AbstractCentrallySymmetricPolytope{N<:Real} <: AbstractPolytope{N}\n\nAbstract type for centrally symmetric, polytopic sets. It combines the AbstractCentrallySymmetric and AbstractPolytope interfaces. Such a type combination is necessary as long as Julia does not support multiple inheritance.\n\nNotes\n\nEvery concrete AbstractCentrallySymmetricPolytope must define the following functions:\n\nfrom AbstractCentrallySymmetric:\ncenter(::AbstractCentrallySymmetricPolytope{N})::Vector{N} – return the  center point\nfrom AbstractPolytope:\nvertices_list(::AbstractCentrallySymmetricPolytope{N})::Vector{Vector{N}}  – return a list of all vertices\n\njulia> subtypes(AbstractCentrallySymmetricPolytope)\n4-element Array{Any,1}:\n AbstractHyperrectangle\n Ball1\n LineSegment\n Zonotope\n\n\n\n"
 },
 
 {
@@ -973,7 +973,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractHyperrectangle",
     "category": "type",
-    "text": "AbstractHyperrectangle{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nAbstract type for hyperrectangular sets.\n\nNotes\n\nEvery concrete AbstractHyperrectangle must define the following functions:\n\nradius_hyperrectangle(::AbstractHyperrectangle{N})::Vector{N} – return the   hyperrectangle\'s radius, which is a full-dimensional vector\nradius_hyperrectangle(::AbstractHyperrectangle{N}, i::Int)::N – return the   hyperrectangle\'s radius in the i-th dimension\n\njulia> subtypes(AbstractHyperrectangle)\n4-element Array{Any,1}:\n AbstractSingleton\n BallInf\n Hyperrectangle\n SymmetricIntervalHull\n\n\n\n"
+    "text": "AbstractHyperrectangle{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nAbstract type for hyperrectangular sets.\n\nNotes\n\nEvery concrete AbstractHyperrectangle must define the following functions:\n\nradius_hyperrectangle(::AbstractHyperrectangle{N})::Vector{N} – return the   hyperrectangle\'s radius, which is a full-dimensional vector\nradius_hyperrectangle(::AbstractHyperrectangle{N}, i::Int)::N – return the   hyperrectangle\'s radius in the i-th dimension\n\njulia> subtypes(AbstractHyperrectangle)\n5-element Array{Any,1}:\n AbstractSingleton\n BallInf\n Hyperrectangle\n Interval\n SymmetricIntervalHull\n\n\n\n"
 },
 
 {
@@ -1613,7 +1613,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Interval",
     "category": "type",
-    "text": "Interval{N<:Real, IN <: AbstractInterval{N}}\n    <: AbstractCentrallySymmetricPolytope{N}\n\nType representing an interval on the real line. Mathematically, it is of the form\n\na b =  a  x  b   mathbbR\n\nFields\n\ndat – data container for the given interval\n\nNotes\n\nThis type relies on the IntervalArithmetic.jl library for representation of intervals and arithmetic operations.\n\nExamples\n\nUnidimensional intervals are symbolic representations of a real closed interval.\n\nWe can create intervals in different ways, the simpler way is to pass a pair of numbers:\n\njulia> x = Interval(0.0, 1.0)\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nor a 2-vector:\n\njulia> x = Interval([0.0, 1.0])\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nNote that if the package IntervalArithmetic is loaded in the current scope, you have to prepend the LazySets to the interval type, since there is a name conflict otherwise.\n\njulia> using IntervalArithmetic\nWARNING: using IntervalArithmetic.Interval in module Main conflicts with an existing identifier.\n\njulia> x = Interval(IntervalArithmetic.Interval(0.0, 1.0))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\njulia> dim(x)\n1\n\njulia> center(x)\n1-element Array{Float64,1}:\n 0.5\n\nThis type is such that the usual pairwise arithmetic operators +, -, * trigger the corresponding interval arithmetic backend method, and return a new Interval object. For the symbolic Minkowksi sum, use MinkowskiSum or ⊕.\n\nInterval of other numeric types can be created as well, eg. a rational interval:\n\njulia> Interval(0//1, 2//1)\nInterval{Rational{Int64},IntervalArithmetic.AbstractInterval{Rational{Int64}}}([0//1, 2//1])\n\n\n\n"
+    "text": "Interval{N<:Real, IN <: AbstractInterval{N}} <: AbstractHyperrectangle{N}\n\nType representing an interval on the real line. Mathematically, it is of the form\n\na b =  a  x  b   mathbbR\n\nFields\n\ndat – data container for the given interval\n\nNotes\n\nThis type relies on the IntervalArithmetic.jl library for representation of intervals and arithmetic operations.\n\nExamples\n\nUnidimensional intervals are symbolic representations of a real closed interval.\n\nWe can create intervals in different ways, the simpler way is to pass a pair of numbers:\n\njulia> x = Interval(0.0, 1.0)\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nor a 2-vector:\n\njulia> x = Interval([0.0, 1.0])\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nNote that if the package IntervalArithmetic is loaded in the current scope, you have to prepend the LazySets to the interval type, since there is a name conflict otherwise.\n\njulia> using IntervalArithmetic\nWARNING: using IntervalArithmetic.Interval in module Main conflicts with an existing identifier.\n\njulia> x = Interval(IntervalArithmetic.Interval(0.0, 1.0))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\njulia> dim(x)\n1\n\njulia> center(x)\n1-element Array{Float64,1}:\n 0.5\n\nThis type is such that the usual pairwise arithmetic operators +, -, * trigger the corresponding interval arithmetic backend method, and return a new Interval object. For the symbolic Minkowksi sum, use MinkowskiSum or ⊕.\n\nInterval of other numeric types can be created as well, eg. a rational interval:\n\njulia> Interval(0//1, 2//1)\nInterval{Rational{Int64},IntervalArithmetic.AbstractInterval{Rational{Int64}}}([0//1, 2//1])\n\n\n\n"
 },
 
 {
@@ -1629,7 +1629,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, x::Interval{N}) where {N<:Real}\n\nReturn the support vector of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nx – interval\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, H::AbstractHyperrectangle{N}) where {N<:Real}\n\nReturn the support vector of a hyperrectangular set in a given direction.\n\nInput\n\nd – direction\nH – hyperrectangular set\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the vertex with biggest values is returned.\n\n\n\nσ(d::AbstractVector{N}, x::Interval{N}) where {N<:Real}\n\nReturn the support vector of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nx – interval\n\nOutput\n\nSupport vector in the given direction.\n\n\n\n"
 },
 
 {
@@ -1637,7 +1637,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
-    "text": "∈(v::AbstractVector, x::Interval)\n\nReturn whether a vector is contained in the interval.\n\nInput\n\nv – one-dimensional vector\nx – interval\n\nOutput\n\ntrue iff x contains v\'s first component.\n\n\n\n"
+    "text": "∈(v::N, x::Interval) where {N}\n\nReturn whether a number is contained in the interval.\n\nInput\n\nv – scalar\nx – interval\n\nOutput\n\ntrue iff x contains v.\n\n\n\n"
 },
 
 {
