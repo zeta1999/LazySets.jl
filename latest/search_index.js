@@ -665,7 +665,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.ρ-Tuple{AbstractArray{Real,1},LazySets.LazySet{Real}}",
+    "location": "lib/interfaces.html#LazySets.ρ-Union{Tuple{AbstractArray{N,1},LazySets.LazySet{N}}, Tuple{N}} where N<:Real",
     "page": "Set Interfaces",
     "title": "LazySets.ρ",
     "category": "method",
@@ -685,7 +685,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Support function and support vector",
     "category": "section",
-    "text": "Every LazySet type must define a function σ to compute the support vector.support_vector\nρ(::AbstractVector{Real}, ::LazySet{Real})\nsupport_function"
+    "text": "Every LazySet type must define a function σ to compute the support vector.support_vector\nρ(::AbstractVector{N}, ::LazySet{N}) where {N<:Real}\nsupport_function"
 },
 
 {
@@ -805,7 +805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.singleton_list",
     "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
+    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic set as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n"
 },
 
 {
