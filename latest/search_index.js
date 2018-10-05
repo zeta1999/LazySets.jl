@@ -3401,11 +3401,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.LazySet{N},Union{LazySets.AbstractHPolygon{N}, LazySets.HPolytope{N}}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(X::LazySet{N},\n                      P::Union{HPolytope{N}, AbstractHPolygon{N}}\n                     )::Bool where {N<:Real}\n\nCheck whether a compact set and a polytope do not intersect.\n\nInput\n\nX  – compact set\nP  – polytope or polygon in constraint-representation\n\nOutput\n\ntrue iff X  P = .\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail. Witness production is not supported.\n\nAlgorithm\n\nThe algorithm relies on the intersection check between the set X and each constraint in P. It costs m support vector evaluations of X, where m is the number of constraints in P.\n\nNote that this method can be used with any set P whose constraints are known.\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#Check-for-emptiness-of-intersection-1",
     "page": "Binary Functions on Sets",
     "title": "Check for emptiness of intersection",
     "category": "section",
-    "text": "isdisjoint\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Hyperplane{N}, ::Zonotope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractPolytope{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{Hyperplane{N}, Line{N}}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::HalfSpace{N}, ::Bool=false) where {N<:Real}"
+    "text": "isdisjoint\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Hyperplane{N}, ::Zonotope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractPolytope{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{Hyperplane{N}, Line{N}}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::HalfSpace{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{HPolytope{N}, AbstractHPolygon{N}}) where {N<:Real}"
 },
 
 {
