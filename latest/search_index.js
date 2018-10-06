@@ -2461,7 +2461,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, ch::ConvexHull{N}) where {N<:Real}\n\nReturn the support vector of a convex hull of two convex sets in a given direction.\n\nInput\n\nd  – direction\nch – convex hull of two convex sets\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, ch::ConvexHull{N}) where {N<:Real}\n\nReturn the support vector of a convex hull of two convex sets in a given direction.\n\nInput\n\nd  – direction\nch – convex hull of two convex sets\n\nOutput\n\nThe support vector of the convex hull in the given direction.\n\n\n\n"
 },
 
 {
@@ -2717,7 +2717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, ms::MinkowskiSum{N}) where {N<:Real}\n\nReturn the support vector of a Minkowski sum.\n\nInput\n\nd  – direction\nms – Minkowski sum\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the summand sets.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, ms::MinkowskiSum{N}) where {N<:Real}\n\nReturn the support vector of a Minkowski sum.\n\nInput\n\nd  – direction\nms – Minkowski sum\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the summand sets.\n\nAlgorithm\n\nThe support vector in direction d of the Minkowski sum of two sets X and Y is the sum of the support vectors of X and Y in direction d.\n\n\n\n"
 },
 
 {
