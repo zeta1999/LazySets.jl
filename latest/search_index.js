@@ -1817,11 +1817,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.constraints_list-Tuple{LazySets.LineSegment}",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(L::LineSegment{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a line segment in 2D.\n\nInput\n\nL – line segment\n\nOutput\n\nA vector of constraints that define the line segment.\n\nAlgorithm\n\nL is defined by 4 constraints. In this algorithm, the first two constraints are returned by halfspace_right and halfspace_left, and the other two are obtained by considering the vector normal to the line segment that passes through each opposite vertex.\n\nNotes\n\nThis function returns a vector of halfspaces. It does not return equality constraints.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Line-segment-1",
     "page": "Common Set Representations",
     "title": "Line segment",
     "category": "section",
-    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{Real}, ::LineSegment{Real})\n∈(::AbstractVector{Real}, ::LineSegment{Real})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{Real}, ::LineSegment{Real})\n∈(::AbstractVector{Real}, ::LineSegment{Real})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)\nLazySets.constraints_list(::LineSegment)Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
