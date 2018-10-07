@@ -1281,11 +1281,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.constraints_list-Tuple{LazySets.Ball1}",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(P::Ball1{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a ball in the 1-norm.\n\nInput\n\nB – ball in the 1-norm\n\nOutput\n\nThe list of constraints of the ball.\n\nAlgorithm\n\nThe constraints can be defined as d_i^T (x-c)  r for all d_i, where d_i is a vector with elements 1 or -1 in n dimensions. To span all possible d_i, the function Iterators.product is used.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Manhattan-norm-ball-1",
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_element"
+    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)\nconstraints_list(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_element"
 },
 
 {
