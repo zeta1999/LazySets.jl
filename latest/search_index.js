@@ -797,7 +797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractPolytope",
     "category": "type",
-    "text": "AbstractPolytope{N<:Real} <: LazySet{N}\n\nAbstract type for polytopic sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of halfspaces, or equivalently, sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n4-element Array{Any,1}:\n AbstractCentrallySymmetricPolytope\n AbstractPolygon\n HPolytope\n VPolytope\n\n\n\n"
+    "text": "AbstractPolytope{N<:Real} <: LazySet{N}\n\nAbstract type for polytopic sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of halfspaces, or equivalently, sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nconstraints_list(::AbstractPolytope{N})::Vector{LinearConstraint{N}} –   return a list of all facet constraints\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n4-element Array{Any,1}:\n AbstractCentrallySymmetricPolytope\n AbstractPolygon\n HPolytope\n VPolytope\n\n\n\n"
 },
 
 {
