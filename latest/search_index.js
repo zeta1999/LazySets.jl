@@ -1937,11 +1937,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.constraints_list-Tuple{LazySets.VPolygon}",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(P::VPolygon{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a polygon in V-representation.\n\nInput\n\nP – polygon in V-representation\n\nOutput\n\nThe list of constraints of the polygon.\n\nAlgorithm\n\nFirst the H-representation of P is computed, then its list of constraints is returned. \n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Vertex-representation-1",
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\nσ(::AbstractVector{Real}, ::VPolygon{Real})\n∈(::AbstractVector{Real}, ::VPolygon{Real})\nan_element(::VPolygon{N}) where {N<:Real}\nvertices_list(::VPolygon)\ntohrep(::VPolygon)\ntovrep(::VPolygon)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPolygon:dim"
+    "text": "VPolygon\nσ(::AbstractVector{Real}, ::VPolygon{Real})\n∈(::AbstractVector{Real}, ::VPolygon{Real})\nan_element(::VPolygon{N}) where {N<:Real}\nvertices_list(::VPolygon)\ntohrep(::VPolygon)\ntovrep(::VPolygon)\nconstraints_list(::VPolygon)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPolygon:dim"
 },
 
 {
