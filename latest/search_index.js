@@ -3837,7 +3837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.σ_helper",
     "category": "function",
-    "text": "    σ_helper(d::AbstractVector{N},\n             hp::Hyperplane{N},\n             [name]::String=\"hyperplane\") where {N<:Real}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd  – direction\nhp – hyperplane\nname – (optional, default: \"hyperplane\") name for error messages\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\n\nIn both cases the result is any point on the hyperplane. Otherwise this function throws an error.\n\n\n\n"
+    "text": "    σ_helper(d::AbstractVector{N},\n             hp::Hyperplane{N},\n             [halfspace]::Bool=false) where {N<:Real}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd         – direction\nhp        – hyperplane\nhalfspace – (optional, default: false) true if the support vector should                be computed for a half-space\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\n\nIn both cases the result is any point on the hyperplane. Otherwise this function throws an error.\n\n\n\n"
 },
 
 {
