@@ -2417,6 +2417,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.constraints_list-Tuple{LazySets.CartesianProduct{Real,S1,S2} where S2<:LazySets.LazySet{Real} where S1<:LazySets.LazySet{Real}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(cp::CartesianProduct{N, <:LazySet{N}})::Vector{LinearConstraint{N}} where N<:Real\n\nReturn the list of constraints of a (polytopic) Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nA list of constraints.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.vertices_list-Tuple{LazySets.CartesianProduct{Real,S1,S2} where S2<:LazySets.LazySet{Real} where S1<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.vertices_list",
@@ -2429,7 +2437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Cartesian Product",
     "category": "section",
-    "text": "CartesianProduct\n×(::LazySet, ::LazySet)\n*(::LazySet, ::LazySet)\ndim(::CartesianProduct)\nσ(::AbstractVector{Real}, ::CartesianProduct{Real})\n∈(::AbstractVector{Real}, ::CartesianProduct{Real})\nvertices_list(::CartesianProduct{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CartesianProduct\n×(::LazySet, ::LazySet)\n*(::LazySet, ::LazySet)\ndim(::CartesianProduct)\nσ(::AbstractVector{Real}, ::CartesianProduct{Real})\n∈(::AbstractVector{Real}, ::CartesianProduct{Real})\nconstraints_list(::CartesianProduct{Real})\nvertices_list(::CartesianProduct{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2465,11 +2473,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.constraints_list-Tuple{LazySets.CartesianProductArray{Real,S} where S<:LazySets.LazySet{Real}}",
+    "page": "Common Set Operations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(cpa::CartesianProductArray{N, <:LazySet{N}}\n                )::Vector{LinearConstraint{N}} where N<:Real\n\nReturn the list of constraints of a (polytopic) Cartesian product of a finite number of sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nA list of constraints.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.vertices_list-Tuple{LazySets.CartesianProductArray{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(cpa::CartesianProductArray{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) Cartesian product.\n\nInput\n\ncpa – Cartesian product\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying sets are polytopic. Then the high-dimensional set of vertices is just the Cartesian product of the low-dimensional sets of vertices.\n\n\n\n"
+    "text": "vertices_list(cpa::CartesianProductArray{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) Cartesian product of a finite number of sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying sets are polytopic. Then the high-dimensional set of vertices is just the Cartesian product of the low-dimensional sets of vertices.\n\n\n\n"
 },
 
 {
@@ -2485,7 +2501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Cartesian Product",
     "category": "section",
-    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Real}, ::CartesianProductArray{Real})\n∈(::AbstractVector{Real}, ::CartesianProductArray{Real})\nvertices_list(::CartesianProductArray{Real})\narray(::CartesianProductArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Real}, ::CartesianProductArray{Real})\n∈(::AbstractVector{Real}, ::CartesianProductArray{Real})\nconstraints_list(::CartesianProductArray{Real})\nvertices_list(::CartesianProductArray{Real})\narray(::CartesianProductArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
