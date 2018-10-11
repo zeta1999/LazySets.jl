@@ -1021,7 +1021,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.constraints_list",
     "category": "method",
-    "text": "constraints_list(H::AbstractHyperrectangle{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of constraints of an axis-aligned hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA list of linear constraints.\n\n\n\n"
+    "text": "constraints_list(H::AbstractHyperrectangle{N})::Vector{LinearConstraint{N}}\n    where {N<:Real}\n\nReturn the list of constraints of an axis-aligned hyperrectangular set.\n\nInput\n\nH – hyperrectangular set\n\nOutput\n\nA list of linear constraints.\n\n\n\n"
 },
 
 {
@@ -1513,6 +1513,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{LazySets.HalfSpace{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(hs::HalfSpace{N})::Vector{LinearConstraint{N}}\n    where {N<:Real}\n\nReturn the list of constraints of a half-space.\n\nInput\n\nhs – half-space\n\nOutput\n\nA singleton list containing the half-space.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.constrained_dimensions-Union{Tuple{LazySets.HalfSpace{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
@@ -1541,7 +1549,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{Real}, ::HalfSpace{Real})\n∈(::AbstractVector{Real}, ::HalfSpace{Real})\nan_element(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nLazySets.halfspace_left(::AbstractVector{Real}, ::AbstractVector{Real})\nLazySets.halfspace_right(::AbstractVector{Real}, ::AbstractVector{Real})Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{Real}, ::HalfSpace{Real})\n∈(::AbstractVector{Real}, ::HalfSpace{Real})\nan_element(::HalfSpace{N}) where {N<:Real}\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nLazySets.halfspace_left(::AbstractVector{Real}, ::AbstractVector{Real})\nLazySets.halfspace_right(::AbstractVector{Real}, ::AbstractVector{Real})Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
