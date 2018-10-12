@@ -3521,11 +3521,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{LazySets.HPolyhedron{N},LazySets.AbstractPolytope{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(P1::HPoly{N},\n             P2::AbstractPolytope{N};\n             backend=default_polyhedra_backend(N),\n             prunefunc=removehredundancy!) where N\n\nCompute the intersection of a polyhedron and a polytope.\n\nInput\n\nP1        – polyhedron\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the output of intersect\n\nOutput\n\nThe polytope in H-representation obtained by the intersection of P1 and P2.\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#Intersection-of-two-sets-1",
     "page": "Binary Functions on Sets",
     "title": "Intersection of two sets",
     "category": "section",
-    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::Hyperrectangle{N}, ::Hyperrectangle{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}\nintersection(::HPolytope{N}, ::HalfSpace{N}) where {N<:Real}"
+    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::Hyperrectangle{N}, ::Hyperrectangle{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}\nintersection(::HPolytope{N}, ::HalfSpace{N}) where {N<:Real}\nintersection(::HPolyhedron{N}, ::AbstractPolytope{N}) where {N<:Real}"
 },
 
 {
