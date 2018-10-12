@@ -901,7 +901,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.tohrep",
     "category": "method",
-    "text": "tohrep(P::AbstractHPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a contraint representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\ntohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\ntohrep(P::VPolytope{N}; [backend]=default_polyhedra_backend(N)) where {N}\n\nTransform a polytope in V-representation to a polytope in H-representation.\n\nInput\n\nP          – polytope in vertex representation\nbackend    – (optional, default: default_polyhedra_backend(N)) the polyhedral                 computations backend,                 see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe HPolytope which is the constraint representation of the given polytope in vertex representation.\n\n\n\n"
+    "text": "tohrep(P::AbstractHPolygon{N})::AbstractHPolygon{N} where {N<:Real}\n\nBuild a contraint representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\ntohrep(P::HPoly{N}) where {N}\n\nReturn a constraint representation of the given polyhedron in constraint representation (no-op).\n\nInput\n\nP – polyhedron in constraint representation\n\nOutput\n\nThe same polyhedron instance.\n\n\n\ntohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\ntohrep(P::VPolytope{N}; [backend]=default_polyhedra_backend(N)) where {N}\n\nTransform a polytope in V-representation to a polytope in H-representation.\n\nInput\n\nP          – polytope in vertex representation\nbackend    – (optional, default: default_polyhedra_backend(N)) the polyhedral                 computations backend,                 see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe HPolytope which is the constraint representation of the given polytope in vertex representation.\n\n\n\n"
 },
 
 {
@@ -909,7 +909,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.tovrep",
     "category": "method",
-    "text": "tovrep(P::AbstractHPolygon{N})::VPolygon{N} where {N<:Real}\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe same polygon but in vertex representation, a VPolygon.\n\n\n\ntovrep(P::HPolytope{N}; [backend]=default_polyhedra_backend(N)) where {N}\n\nTransform a polytope in H-representation to a polytope in V-representation.\n\nInput\n\nP          – polytope in constraint representation\nbackend    – (optional, default: default_polyhedra_backend(N)) the polyhedral                 computations backend,                 see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe VPolytope which is the vertex representation of the given polytope in constraint representation.\n\n\n\n"
+    "text": "tovrep(P::AbstractHPolygon{N})::VPolygon{N} where {N<:Real}\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in constraint representation\n\nOutput\n\nThe same polygon but in vertex representation, a VPolygon.\n\n\n\ntovrep(P::HPoly{N};\n      [backend]=default_polyhedra_backend(N)) where {N}\n\nTransform a polyhedron in H-representation to a polytope in V-representation.\n\nInput\n\nP          – polyhedron in constraint representation\nbackend    – (optional, default: default_polyhedra_backend(N))                 the polyhedral computations backend\n\nOutput\n\nThe VPolytope which is the vertex representation of the given polyhedron in constraint representation.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n"
 },
 
 {
@@ -1981,7 +1981,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tohrep",
     "category": "method",
-    "text": "tohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\n"
+    "text": "tohrep(P::HPoly{N}) where {N}\n\nReturn a constraint representation of the given polyhedron in constraint representation (no-op).\n\nInput\n\nP – polyhedron in constraint representation\n\nOutput\n\nThe same polyhedron instance.\n\n\n\ntohrep(P::VPolygon{N}, ::Type{HPOLYGON}=HPolygon\n      )::AbstractHPolygon{N} where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nBuild a constraint representation of the given polygon.\n\nInput\n\nP        – polygon in vertex representation\nHPOLYGON – (optional, default: HPolygon) type of target polygon\n\nOutput\n\nThe same polygon but in constraint representation, an AbstractHPolygon.\n\nAlgorithm\n\nThe algorithms consists of adding an edge for each consecutive pair of vertices. Since the vertices are already ordered in counter-clockwise fashion (CWW), the constraints will be sorted automatically (CCW) if we start with the first edge between the first and second vertex.\n\n\n\n"
 },
 
 {
@@ -1989,7 +1989,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tovrep",
     "category": "method",
-    "text": "tovrep(P::VPolygon{N})::VPolygon{N} where {N<:Real}\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\n"
+    "text": "tovrep(P::HPoly{N};\n      [backend]=default_polyhedra_backend(N)) where {N}\n\nTransform a polyhedron in H-representation to a polytope in V-representation.\n\nInput\n\nP          – polyhedron in constraint representation\nbackend    – (optional, default: default_polyhedra_backend(N))                 the polyhedral computations backend\n\nOutput\n\nThe VPolytope which is the vertex representation of the given polyhedron in constraint representation.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\ntovrep(P::VPolygon{N})::VPolygon{N} where {N<:Real}\n\nBuild a vertex representation of the given polygon.\n\nInput\n\nP – polygon in vertex representation\n\nOutput\n\nThe identity, i.e., the same polygon instance.\n\n\n\n"
 },
 
 {
@@ -2041,9 +2041,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Polytopes-1",
+    "location": "lib/representations.html#Polyhedra-and-Polytopes-1",
     "page": "Common Set Representations",
-    "title": "Polytopes",
+    "title": "Polyhedra and Polytopes",
     "category": "section",
     "text": ""
 },
@@ -2053,55 +2053,103 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolytope",
     "category": "type",
-    "text": "HPolytope{N<:Real} <: AbstractPolytope{N}\n\nType that represents a convex polytope in H-representation.\n\nFields\n\nconstraints – vector of linear constraints\n\nNote\n\nThis type is more appropriately a polyhedron, because no check in the constructor is made that the constraints determine a bounded set from the finite intersection of half-spaces. This is a running assumption in this type.\n\n\n\n"
+    "text": "HPolytope{N<:Real} <: AbstractPolytope{N}\n\nType that represents a convex polytope in H-representation.\n\nFields\n\nconstraints – vector of linear constraints\n\nNote\n\nRecall that a polytope is a bounded polyhedron. Boundedness is a running assumption in this type.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.HPolytope}",
+    "location": "lib/representations.html#LazySets.HPolyhedron",
+    "page": "Common Set Representations",
+    "title": "LazySets.HPolyhedron",
+    "category": "type",
+    "text": "HPolyhedron{N<:Real} <: LazySet{N}\n\nType that represents a convex polyhedron in H-representation.\n\nFields\n\nconstraints – vector of linear constraints\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
-    "text": "dim(P::HPolytope)::Int\n\nReturn the dimension of a polytope in H-representation.\n\nInput\n\nP  – polytope in H-representation\n\nOutput\n\nThe ambient dimension of the polytope in H-representation. If it has no constraints, the result is -1.\n\n\n\n"
+    "text": "dim(P::HPoly{N})::Int where {N<:Real}\n\nReturn the dimension of a polyhedron in H-representation.\n\nInput\n\nP  – polyhedron in H-representation\n\nOutput\n\nThe ambient dimension of the polyhedron in H-representation. If it has no constraints, the result is -1.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},LazySets.HPolytope{Real}}",
+    "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, P::HPolytope{N}) where {N<:Real}\n\nReturn the support vector of a polyhedron (in H-representation) in a given direction.\n\nInput\n\nd – direction\nP – polyhedron in H-representation\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThis implementation uses GLPKSolverLP as linear programming backend.\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, P::HPoly{N}) where {N<:Real}\n\nReturn the support vector of a polyhedron (in H-representation) in a given direction.\n\nInput\n\nd – direction\nP – polyhedron in H-representation\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThis implementation uses GLPKSolverLP as linear programming backend.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},LazySets.HPolytope{Real}}",
+    "location": "lib/representations.html#Base.:∈-Tuple{AbstractArray{Real,1},Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
-    "text": "∈(x::AbstractVector{N}, P::HPolytope{N})::Bool where {N<:Real}\n\nCheck whether a given 2D point is contained in a polytope in constraint representation.\n\nInput\n\nx – two-dimensional point/vector\nP – polytope in constraint representation\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation checks if the point lies on the outside of each hyperplane. This is equivalent to checking if the point lies in each half-space.\n\n\n\n"
+    "text": "∈(x::AbstractVector{N}, P::HPoly{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a polyhedron in constraint representation.\n\nInput\n\nx – vector with the coordinates of the point\nP – polyhedron in constraint representation\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation checks if the point lies on the outside of each hyperplane. This is equivalent to checking if the point lies in each half-space.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{LazySets.HPolytope{Real},LazySets.HalfSpace{Real}}",
+    "location": "lib/representations.html#LazySets.addconstraint!-Tuple{Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}},LazySets.HalfSpace{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.addconstraint!",
     "category": "method",
-    "text": "addconstraint!(P::HPolytope{N},\n               constraint::LinearConstraint{N})::Nothing where {N<:Real}\n\nAdd a linear constraint to a polyhedron in H-representation.\n\nInput\n\nP          – polyhedron in H-representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\nNotes\n\nIt is left to the user to guarantee that the dimension of all linear constraints is the same.\n\n\n\n"
+    "text": "addconstraint!(P::HPoly{N},\n               constraint::LinearConstraint{N})::Nothing where {N<:Real}\n\nAdd a linear constraint to a polyhedron in H-representation.\n\nInput\n\nP          – polyhedron in H-representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\nNotes\n\nIt is left to the user to guarantee that the dimension of all linear constraints is the same.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.constraints_list-Tuple{LazySets.HPolytope}",
+    "location": "lib/representations.html#LazySets.constraints_list-Tuple{Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
     "category": "method",
-    "text": "constraints_list(P::HPolytope{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a polyhedron in H-representation.\n\nInput\n\nP – polytope in H-representation\n\nOutput\n\nThe list of constraints of the polyhedron.\n\n\n\n"
+    "text": "constraints_list(P::HPoly{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a polyhedron in H-representation.\n\nInput\n\nP – polyhedron in H-representation\n\nOutput\n\nThe list of constraints of the polyhedron.\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.tosimplehrep-Tuple{LazySets.HPolytope}",
+    "location": "lib/representations.html#LazySets.tosimplehrep-Tuple{Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
     "page": "Common Set Representations",
     "title": "LazySets.tosimplehrep",
     "category": "method",
-    "text": "tosimplehrep(P::HPolytope)\n\nReturn the simple H-representation Ax  b of a polytope.\n\nInput\n\nP – polytope\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b are the offsets.\n\n\n\n"
+    "text": "tosimplehrep(P::HPoly{N}) where {N}\n\nReturn the simple H-representation Ax  b of a polyhedron.\n\nInput\n\nP – polyhedron\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b are the offsets.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.tohrep-Tuple{Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.tohrep",
+    "category": "method",
+    "text": "tohrep(P::HPoly{N}) where {N}\n\nReturn a constraint representation of the given polyhedron in constraint representation (no-op).\n\nInput\n\nP – polyhedron in constraint representation\n\nOutput\n\nThe same polyhedron instance.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.convex_hull-Tuple{Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}},Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.convex_hull",
+    "category": "method",
+    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.cartesian_product-Tuple{Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}},Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.cartesian_product",
+    "category": "method",
+    "text": "cartesian_product(P1::HPOLY, P2::HPOLY;\n                  [backend]=default_polyhedra_backend(N)\n                 ) where {N, HPOLY<:HPolytope{N}}\n\nCompute the Cartesian product of two polyhedra in H-representaion.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(N))                 the polyhedral computations backend\n\nOutput\n\nThe polyhedron obtained by the concrete cartesian product of P1 and P2.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.tovrep-Tuple{Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.tovrep",
+    "category": "method",
+    "text": "tovrep(P::HPoly{N};\n      [backend]=default_polyhedra_backend(N)) where {N}\n\nTransform a polyhedron in H-representation to a polytope in V-representation.\n\nInput\n\nP          – polyhedron in constraint representation\nbackend    – (optional, default: default_polyhedra_backend(N))                 the polyhedral computations backend\n\nOutput\n\nThe VPolytope which is the vertex representation of the given polyhedron in constraint representation.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(P::HPoly{N};\n              [backend]=default_polyhedra_backend(N),\n              [prunefunc]=removevredundancy!)::Vector{Vector{N}} where\n              {N<:Real}\n\nReturn the list of vertices of a polytope in constraint representation.\n\nInput\n\nP         – polytope in constraint representation\nbackend   – (optional, default: default_polyhedra_backend(N))                 the polyhedral computations backend\nprunefunc – (optional, default: removevredundancy!) function to                post-process the output of vreps\n\nOutput\n\nList of vertices.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\nExamples\n\njulia> using Polyhedra\n\njulia> P = HPolytope([1.0 0.0; 0.0 1.0; -1.0 0.0; 0.0 -1.0], fill(1., 4));\n\njulia> constraints_list(P)\n4-element Array{HalfSpace{Float64},1}:\n HalfSpace{Float64}([1.0, 0.0], 1.0)\n HalfSpace{Float64}([0.0, 1.0], 1.0)\n HalfSpace{Float64}([-1.0, 0.0], 1.0)\n HalfSpace{Float64}([0.0, -1.0], 1.0)\n\njulia> vertices_list(P)\n4-element Array{Array{Float64,1},1}:\n [1.0, -1.0]\n [1.0, 1.0]\n [-1.0, 1.0]\n [-1.0, -1.0]\n\n\n\n"
 },
 
 {
@@ -2109,7 +2157,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "HPolytope\ndim(::HPolytope)\nσ(::AbstractVector{Real}, ::HPolytope{Real})\n∈(::AbstractVector{Real}, ::HPolytope{Real})\naddconstraint!(::HPolytope{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPolytope)\ntosimplehrep(::HPolytope)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_map"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between polyhedra and polytopes. dim(P::HPoly{Real})\nσ(d::AbstractVector{Real}, P::HPoly{Real})\n∈(x::AbstractVector{Real}, P::HPoly{Real})\naddconstraint!(::HPoly{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPoly{Real})\ntosimplehrep(P::HPoly{Real})\ntohrep(P::HPoly{Real}) \nconvex_hull(P1::HPoly{Real}, P2::HPoly{Real})\ncartesian_product(P1::HPoly{Real}, P2::HPoly{Real})\ntovrep(P::HPoly{Real})\nvertices_list(P::HPoly{Real})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_map"
 },
 
 {
@@ -2605,7 +2653,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull",
     "category": "function",
-    "text": "convex_hull(points::Vector{S}; [algorithm]::String=\"monotone_chain\"\n           )::Vector{S} where {N<:Real, S<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – list of 2D vectors\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\"monotone_chain_sorted\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\n\njulia> hull = convex_hull(points);\n\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nPlot both the random points and the computed convex hull polygon:\n\njulia> using Plots;\n\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter);\n\njulia> plot!(VPolygon(hull), alpha=0.2);\n\n\n\n"
+    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\nconvex_hull(points::Vector{S}; [algorithm]::String=\"monotone_chain\"\n           )::Vector{S} where {N<:Real, S<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – list of 2D vectors\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\"monotone_chain_sorted\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\n\njulia> hull = convex_hull(points);\n\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nPlot both the random points and the computed convex hull polygon:\n\njulia> using Plots;\n\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter);\n\njulia> plot!(VPolygon(hull), alpha=0.2);\n\n\n\n"
 },
 
 {
@@ -3065,7 +3113,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/conversion.html#Base.convert-Tuple{Type{#s70} where #s70<:LazySets.AbstractHPolygon,LazySets.VPolygon}",
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{#s63} where #s63<:LazySets.AbstractHPolygon,LazySets.VPolygon}",
     "page": "Conversion between set representations",
     "title": "Base.convert",
     "category": "method",
@@ -3453,7 +3501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
     "category": "method",
-    "text": "intersection(H1::AbstractHyperrectangle{N},\n             H2::AbstractHyperrectangle{N}\n            )::Union{<:Hyperrectangle{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two hyperrectangles.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\n\nOutput\n\nIf the hyperrectangles do not intersect, the result is the empty set. Otherwise the result is the hyperrectangle that describes the intersection.\n\nAlgorithm\n\nIn each isolated direction i we compute the rightmost left border and the leftmost right border of the hyperrectangles. If these borders contradict, then the intersection is empty. Otherwise the result uses these borders in each dimension.\n\n\n\n"
+    "text": "intersection(H1::AbstractHyperrectangle{N},\n             H2::AbstractHyperrectangle{N}\n            )::Union{<:Hyperrectangle{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two hyperrectangles.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\n\nOutput\n\nIf the hyperrectangles do not intersect, the result is the empty set. Otherwise the result is the hyperrectangle that describes the intersection.\n\nAlgorithm\n\nIn each isolated direction i we compute the rightmost left border and the leftmost right border of the hyperrectangles. If these borders contradict, then the intersection is empty. Otherwise the result uses these borders in each dimension.\n\n\n\nintersection(P1::S1, P2::S2) where {S1<:AbstractPolytope{N},\n                                    S2<:AbstractPolytope{N}} where N\n\nCompute the intersection of two polytopic sets.\n\nInput\n\nP1 – polytope\nP2 – another polytope\n\nOutput\n\nThe polytope obtained by the intersection of P1 and P2. Usually the V-representation is used.\n\nNotes\n\nThis fallback implementation requires Polyhedra to evaluate the concrete intersection. Inputs that are not of type HPolytope or VPolytope are converted to a VPolytope through the vertices_list function.\n\n\n\n"
 },
 
 {
@@ -3469,7 +3517,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
     "category": "method",
-    "text": "intersection(P::HPolytope{N},\n             hs::HalfSpace{N},\n             prunefunc=removehredundancy!) where N<:Real\n\nCompute the intersection of a polytope in H-representation and a half-space.\n\nInput\n\nP         – polytope\nhs        – half-space\nprunefunc – (optional, default: removehredundancy!) function to                post-process the polytope after adding the additional                constraint\n\nOutput\n\nThe same polytope in H-representation with just one more constraint.\n\n\n\n"
+    "text": "intersection(P::HPoly{N},\n             hs::HalfSpace{N};\n             backend=default_polyhedra_backend(N),\n             prunefunc=removehredundancy!) where N<:Real\n\nCompute the intersection of a polytope in H-representation and a half-space.\n\nInput\n\nP         – polytope\nhs        – half-space\nbackend   – (optional, default: default_polyhedra_backend(N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the polytope after adding the additional                constraint\n\nOutput\n\nThe same polytope in H-representation with just one more constraint.\n\n\n\n"
 },
 
 {
