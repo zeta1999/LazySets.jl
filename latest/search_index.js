@@ -2701,7 +2701,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet, S}) where {N<:AbstractFloat, S<:Union{HalfSpace, Hyperplane, Line}}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:AbstractPolytope{N}}) where {N<:Real}\nisempty(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\n_line_search\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
+},
+
+{
+    "location": "lib/operations.html#LazySets.IntersectionCache",
+    "page": "Common Set Operations",
+    "title": "LazySets.IntersectionCache",
+    "category": "type",
+    "text": "IntersectionCache\n\nContainer for information cached by a lazy Intersection object.\n\nFields\n\nisempty – is the intersection empty? There are three possible states,              encoded as Int8 values -1, 0, 1:\n-1 - it is currently unknown whether the intersection is empty or not\n0 - intersection is not empty\n1 - intersection is empty\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Intersection-cache-1",
+    "page": "Common Set Operations",
+    "title": "Intersection cache",
+    "category": "section",
+    "text": "IntersectionCache"
 },
 
 {
@@ -3473,6 +3489,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.HalfSpace{N},LazySets.HalfSpace{N},Bool}, Tuple{LazySets.HalfSpace{N},LazySets.HalfSpace{N}}, Tuple{N}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(hs1::HalfSpace{N},\n                      hs2::HalfSpace{N},\n                      [witness]::Bool=false\n                     )::Union{Bool, Tuple{Bool,Vector{N}}} where N<:Real\n\nCheck whether two half-spaces do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nhs1     – half-space\nhs2     – half-space\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff hs1  hs2 = \nIf witness option is activated:\n(true, []) iff hs1  hs2 = \n(false, v) iff hs1  hs2   and v  hs1  hs2\n\nAlgorithm\n\nTwo half-spaces do not intersect if and only if their normal vectors point in the opposite direction and there is a gap between the two defining hyperplanes.\n\nThe latter can be checked as follows: Let hs_1  a_1x = b_1 and hs2  a_2x = b_2. Then we already know that a_2 = -ka_1 for some positive scaling factor k. Let x_1 be a point on the defining hyperplane of hs_1. We construct a line segment from x_1 to the point x_2 on the defining hyperplane of hs_2 by shooting a ray from x_1 with direction a_1. Thus we look for a factor s such that (x_1 + sa_1)a_2 = b_2. This gives us s = (b_2 - x_1a_2)  (-k a_1a_1). The gap exists if and only if s is positive.\n\nIf the normal vectors do not point in opposite directions, then the defining hyperplanes intersect and we can produce a witness as follows. All points x in this intersection satisfy a_1x = b_1 and a_2x = b_2. Thus we have (a_1 + a_2)x = b_1+b_2. We now find a dimension where a_1 + a_2 is non-zero, say, i. Then the result is a vector with one non-zero entry in dimension i, defined as 0  0 (b_1 + b_2)(a_1i + a_2i) 0  0. Such a dimension i always exists.\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{LazySets.LazySet{N},Union{LazySets.AbstractHPolygon{N}, LazySets.HPolytope{N}}}, Tuple{N}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.is_intersection_empty",
@@ -3485,7 +3509,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Check for emptiness of intersection",
     "category": "section",
-    "text": "isdisjoint\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Hyperplane{N}, ::Zonotope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractPolytope{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{Hyperplane{N}, Line{N}}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::HalfSpace{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{HPolytope{N}, AbstractHPolygon{N}}) where {N<:Real}"
+    "text": "isdisjoint\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Hyperplane{N}, ::Zonotope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractPolytope{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractPolytope{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{Hyperplane{N}, Line{N}}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::HalfSpace{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::HalfSpace{N}, ::HalfSpace{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{HPolytope{N}, AbstractHPolygon{N}}) where {N<:Real}"
 },
 
 {
