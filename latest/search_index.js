@@ -2073,6 +2073,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.ρ-Tuple{AbstractArray{Real,1},Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, S::LazySet{N})::N where {N<:Real}\n\nEvaluate the support function of a set in a given direction.\n\nInput\n\nd – direction\nS – convex set\n\nOutput\n\nThe support function of the set S for the direction d.\n\nNotes\n\nThe numeric type of the direction and the set must be identical.\n\n\n\nρ(d::AbstractVector{N}, P::HPoly{N})::N where {N<:Real}\n\nEvaluate the support function of a polyhedron (in H-representation) in a given direction.\n\nInput\n\nd – direction\nP – polyhedron in H-representation\n\nOutput\n\nThe support function of the polyhedron. If a polytope is unbounded in the given direction, we throw an error. If a polyhedron is unbounded in the given direction, the result is Inf.\n\nAlgorithm\n\nThis implementation uses GLPKSolverLP as linear programming backend.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.σ-Tuple{AbstractArray{Real,1},Union{LazySets.HPolyhedron{Real}, LazySets.HPolytope{Real}}}",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
@@ -2173,7 +2181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between polyhedra and polytopes. dim(::HPoly{Real})\nσ(::AbstractVector{Real}, ::HPoly{Real})\n∈(::AbstractVector{Real}, ::HPoly{Real})\naddconstraint!(::HPoly{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPoly{Real})\ntosimplehrep(::HPoly{Real})\ntohrep(::HPoly{Real})\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(P1::HPoly{Real}, P2::HPoly{Real})\ncartesian_product(P1::HPoly{Real}, P2::HPoly{Real})\ntovrep(::HPoly{Real})\nvertices_list(::HPoly{Real})\nsingleton_list(::HPolyhedron{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_map"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between polyhedra and polytopes. dim(::HPoly{Real})\nρ(::AbstractVector{Real}, ::HPoly{Real})\nσ(::AbstractVector{Real}, ::HPoly{Real})\n∈(::AbstractVector{Real}, ::HPoly{Real})\naddconstraint!(::HPoly{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPoly{Real})\ntosimplehrep(::HPoly{Real})\ntohrep(::HPoly{Real})\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(P1::HPoly{Real}, P2::HPoly{Real})\ncartesian_product(P1::HPoly{Real}, P2::HPoly{Real})\ntovrep(::HPoly{Real})\nvertices_list(::HPoly{Real})\nsingleton_list(::HPolyhedron{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_map"
 },
 
 {
