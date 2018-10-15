@@ -2809,6 +2809,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.swap-Tuple{LazySets.Intersection}",
+    "page": "Common Set Operations",
+    "title": "LazySets.swap",
+    "category": "method",
+    "text": "swap(cap::Intersection{N, S1, S2})::Intersection{N} where {N<:Real, S1, S2}\n\nReturn a new Intersection object with the arguments swapped.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\nA new Intersection object with the arguments swapped. The old cache is shared between the old and new objects.\n\nNotes\n\nThe advantage of using this function instead of manually swapping the arguments is that the cache is shared.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.use_precise_ρ",
     "page": "Common Set Operations",
     "title": "LazySets.use_precise_ρ",
@@ -2829,7 +2837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:AbstractPolytope{N}}) where {N<:Real}\nisempty(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nuse_precise_ρ\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:AbstractPolytope{N}}) where {N<:Real}\nisempty(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
