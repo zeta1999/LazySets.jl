@@ -3265,7 +3265,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/conversion.html#Base.convert-Tuple{Type{#s63} where #s63<:LazySets.AbstractHPolygon,LazySets.VPolygon}",
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{#s62} where #s62<:LazySets.AbstractHPolygon,LazySets.VPolygon}",
     "page": "Conversion between set representations",
     "title": "Base.convert",
     "category": "method",
