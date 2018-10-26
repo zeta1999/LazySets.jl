@@ -405,7 +405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Operations on Sets",
     "title": "Unary operations",
     "category": "section",
-    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty linear_map norm radius diameter\nInterfaces          \nLazySet  x  x      x\nAPolytope  i  i  x x   i\nACentrallySymmetric x i  x      i\nACentrallySymmetricPolytope i i  i  i i   i\nAPolygon x i  i  i i   i\nAHyperrectangle i i x i x i i x x i\nAHPolygon i i  x x i i   i\nASingleton i i x i x i x i i i\n          \nBasic set types          \nBall1 i i x i x i i   i\nBall2 i i x i x     i\nBallInf i i i i i i i i x i\nBallp i i x i x     i\nEllipsoid i i x i x     i\nEmptySet x i x x x x  x x x\nHalfSpace x i x x x     i\nHPolygon/HPolygonOpt i i x i i i i   i\nHPolyhedron x x x i x x    i\nHPolytope x x x i x x i   i\nHyperplane x i x x x     i\nHyperrectangle i i i i i i i i i i\nInterval x i x x x i i i i i\nLine x i x x x     i\nLineSegment x i x x x i i   i\nSingleton i i i i i i i i i i\nVPolygon i i x x x x x   i\nVPolytope x i x i  x x   i\nZeroSet x i x i x i x i i i\nZonotope i i x i x x x   i\n          \nLazy set operation types          \nCartesianProduct x x x i x     i\nCartesianProductArray x x x i x     i\nConvexHull x x x i      i\nConvexHullArray x x x i      i\nExponentialMap x x x i x     i\nExponentialProjectionMap x i x i      i\nIntersection x x  i x x    i\nIntersectionArray x i  i x     i\nLinearMap x x x x x     i\nMinkowskiSum x x x i      i\nMinkowskiSumArray x x x i      i\nCacheMinkowskiSum x i x i      i\nSymmetricIntervalHull x i x i i i i i i i"
+    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty linear_map norm radius diameter\nInterfaces          \nLazySet  x  x      x\nAPolytope  i  i  x x   i\nACentrallySymmetric x i  x  x    i\nACentrallySymmetricPolytope i i  i  x i   i\nAPolygon x i  i  i i   i\nAHyperrectangle i i x i x i i x x i\nAHPolygon i i  x x i i   i\nASingleton i i x i x i x i i i\n          \nBasic set types          \nBall1 i i x i x i i   i\nBall2 i i x i x i    i\nBallInf i i i i i i i i x i\nBallp i i x i x i    i\nEllipsoid i i x i x i    i\nEmptySet x i x x x x  x x x\nHalfSpace x i x x x x    i\nHPolygon/HPolygonOpt i i x i i i i   i\nHPolyhedron x x x i x x    i\nHPolytope x x x i x x i   i\nHyperplane x i x x x x    i\nHyperrectangle i i i i i i i i i i\nInterval x i x x x i i i i i\nLine x i x x x x    i\nLineSegment x i x x x i i   i\nSingleton i i i i i i i i i i\nVPolygon i i x x x i x   i\nVPolytope x i x i  i x   i\nZeroSet x i x i x i x i i i\nZonotope i i x i x i x   i\n          \nLazy set operation types          \nCartesianProduct x x x i x x    i\nCartesianProductArray x x x i x x    i\nConvexHull x x x i  x    i\nConvexHullArray x x x i  x    i\nExponentialMap x x x i x x    i\nExponentialProjectionMap x i x i  x    i\nIntersection x x  i x x    i\nIntersectionArray x i  i x     i\nLinearMap x x x x x x    i\nMinkowskiSum x x x i  x    i\nMinkowskiSumArray x x x i  x    i\nCacheMinkowskiSum x i x i  x    i\nSymmetricIntervalHull x i x i i i i i i i"
 },
 
 {
@@ -817,11 +817,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#Base.isempty-Tuple{LazySets.AbstractCentrallySymmetric}",
+    "page": "Set Interfaces",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(S::AbstractCentrallySymmetric)::Bool\n\nReturn if a centrally symmetric set is empty or not.\n\nInput\n\nS – centrally symmetric set\n\nOutput\n\nfalse.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Centrally-symmetric-set-1",
     "page": "Set Interfaces",
     "title": "Centrally symmetric set",
     "category": "section",
-    "text": "Centrally symmetric sets such as balls of different norms are characterized by a center. Note that there is a special interface combination Centrally symmetric polytope.AbstractCentrallySymmetricThis interface defines the following functions:dim(::AbstractCentrallySymmetric)\nan_element(::AbstractCentrallySymmetric{N}) where {N<:Real}"
+    "text": "Centrally symmetric sets such as balls of different norms are characterized by a center. Note that there is a special interface combination Centrally symmetric polytope.AbstractCentrallySymmetricThis interface defines the following functions:dim(::AbstractCentrallySymmetric)\nan_element(::AbstractCentrallySymmetric{N}) where {N<:Real}\nisempty(::AbstractCentrallySymmetric)"
 },
 
 {
@@ -981,7 +989,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.dim",
     "category": "method",
-    "text": "dim(P::AbstractCentrallySymmetricPolytope)::Int\n\nReturn the ambient dimension of a centrally symmetric set.\n\nInput\n\nP – set\n\nOutput\n\nThe ambient dimension of the set.\n\n\n\n"
+    "text": "dim(P::AbstractCentrallySymmetricPolytope)::Int\n\nReturn the ambient dimension of a centrally symmetric, polytopic set.\n\nInput\n\nP – centrally symmetric, polytopic set\n\nOutput\n\nThe ambient dimension of the polytopic set.\n\n\n\n"
 },
 
 {
@@ -993,11 +1001,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#Base.isempty-Tuple{LazySets.AbstractCentrallySymmetricPolytope}",
+    "page": "Set Interfaces",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(P::AbstractCentrallySymmetricPolytope)::Bool\n\nReturn if a centrally symmetric, polytopic set is empty or not.\n\nInput\n\nP – centrally symmetric, polytopic set\n\nOutput\n\nfalse.\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Centrally-symmetric-polytope-1",
     "page": "Set Interfaces",
     "title": "Centrally symmetric polytope",
     "category": "section",
-    "text": "A centrally symmetric polytope is a combination of two other interfaces: Centrally symmetric set and Polytope.AbstractCentrallySymmetricPolytopeThis interface defines the following functions:dim(::AbstractCentrallySymmetricPolytope)\nan_element(::AbstractCentrallySymmetricPolytope{N}) where {N<:Real}"
+    "text": "A centrally symmetric polytope is a combination of two other interfaces: Centrally symmetric set and Polytope.AbstractCentrallySymmetricPolytopeThis interface defines the following functions:dim(::AbstractCentrallySymmetricPolytope)\nan_element(::AbstractCentrallySymmetricPolytope{N}) where {N<:Real}\nisempty(::AbstractCentrallySymmetricPolytope)"
 },
 
 {
@@ -1221,7 +1237,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\nσ(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\ncenter(::Ball2)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nan_element"
+    "text": "Ball2\nσ(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\ncenter(::Ball2)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
 },
 
 {
@@ -1269,7 +1285,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
+    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1325,7 +1341,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)\nconstraints_list(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_element"
+    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)\nconstraints_list(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -1365,7 +1381,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "p-norm ball",
     "category": "section",
-    "text": "Ballp\nσ(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\ncenter(::Ballp)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nan_element"
+    "text": "Ballp\nσ(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\ncenter(::Ballp)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
 },
 
 {
@@ -1405,7 +1421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Ellipsoid",
     "category": "section",
-    "text": "Ellipsoid\nσ(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\ncenter(::Ellipsoid)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nan_element"
+    "text": "Ellipsoid\nσ(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\ncenter(::Ellipsoid)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
 },
 
 {
@@ -1461,7 +1477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.isempty",
     "category": "method",
-    "text": "isempty(∅::EmptySet)\n\nReturn if the empty set is empty or not.\n\nInput\n\n∅ – empty set\n\nOutput\n\ntrue.\n\n\n\n"
+    "text": "isempty(∅::EmptySet)::Bool\n\nReturn if the empty set is empty or not.\n\nInput\n\n∅ – empty set\n\nOutput\n\ntrue.\n\n\n\n"
 },
 
 {
@@ -1545,6 +1561,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.isempty-Tuple{LazySets.HalfSpace}",
+    "page": "Common Set Representations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(hs::HalfSpace)::Bool\n\nReturn if a half-space is empty or not.\n\nInput\n\nhs – half-space\n\nOutput\n\nfalse.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{LazySets.HalfSpace{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
@@ -1581,7 +1605,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{Real}, ::HalfSpace{Real})\n∈(::AbstractVector{Real}, ::HalfSpace{Real})\nan_element(::HalfSpace{N}) where {N<:Real}\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nLazySets.halfspace_left(::AbstractVector{Real}, ::AbstractVector{Real})\nLazySets.halfspace_right(::AbstractVector{Real}, ::AbstractVector{Real})Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{Real}, ::HalfSpace{Real})\n∈(::AbstractVector{Real}, ::HalfSpace{Real})\nan_element(::HalfSpace{N}) where {N<:Real}\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nLazySets.halfspace_left(::AbstractVector{Real}, ::AbstractVector{Real})\nLazySets.halfspace_right(::AbstractVector{Real}, ::AbstractVector{Real})Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1625,6 +1649,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.isempty-Tuple{LazySets.Hyperplane}",
+    "page": "Common Set Representations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(hp::Hyperplane)::Bool\n\nReturn if a hyperplane is empty or not.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nfalse.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.constrained_dimensions-Union{Tuple{LazySets.Hyperplane{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
@@ -1637,7 +1669,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperplane",
     "category": "section",
-    "text": "Hyperplane\ndim(::Hyperplane)\nσ(::AbstractVector{Real}, ::Hyperplane{Real})\n∈(::AbstractVector{Real}, ::Hyperplane{Real})\nan_element(::Hyperplane{N}) where {N<:Real}\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Hyperplane\ndim(::Hyperplane)\nσ(::AbstractVector{Real}, ::Hyperplane{Real})\n∈(::AbstractVector{Real}, ::Hyperplane{Real})\nan_element(::Hyperplane{N}) where {N<:Real}\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1677,7 +1709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "Hyperrectangle\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+    "text": "Hyperrectangle\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1789,7 +1821,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Real}, ::Interval{Real})\n∈(::AbstractVector, ::Interval)\n∈(::Real, ::Interval)\nan_element(::Interval)\nvertices_list(::Interval)\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractHyperrectangle:norm\nradius"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Real}, ::Interval{Real})\n∈(::AbstractVector, ::Interval)\n∈(::Real, ::Interval)\nan_element(::Interval)\nvertices_list(::Interval)\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
 },
 
 {
@@ -1833,6 +1865,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.isempty-Tuple{LazySets.Line}",
+    "page": "Common Set Representations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(L::Line)::Bool\n\nReturn if a line is empty or not.\n\nInput\n\nL – line\n\nOutput\n\nfalse.\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.constrained_dimensions-Union{Tuple{LazySets.Line{N,V} where V<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
@@ -1845,7 +1885,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line",
     "category": "section",
-    "text": "Line\ndim(::Line)\nσ(::AbstractVector{Real}, ::Line{Real})\n∈(::AbstractVector{Real}, ::Line{Real})\nan_element(::Line{N}) where {N<:Real}\nconstrained_dimensions(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Line\ndim(::Line)\nσ(::AbstractVector{Real}, ::Line{Real})\n∈(::AbstractVector{Real}, ::Line{Real})\nan_element(::Line{N}) where {N<:Real}\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1909,7 +1949,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line segment",
     "category": "section",
-    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{Real}, ::LineSegment{Real})\n∈(::AbstractVector{Real}, ::LineSegment{Real})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)\nLazySets.constraints_list(::LineSegment)Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{Real}, ::LineSegment{Real})\n∈(::AbstractVector{Real}, ::LineSegment{Real})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)\nLazySets.constraints_list(::LineSegment)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetricPolytope:isempty"
 },
 
 {
@@ -1941,7 +1981,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "HPolygon\nσ(::AbstractVector{Real}, ::HPolygon{Real})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
+    "text": "HPolygon\nσ(::AbstractVector{Real}, ::HPolygon{Real})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
 },
 
 {
@@ -1965,7 +2005,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\nσ(::AbstractVector{Real}, ::HPolygonOpt{Real})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
+    "text": "HPolygonOpt\nσ(::AbstractVector{Real}, ::HPolygonOpt{Real})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
 },
 
 {
@@ -2037,7 +2077,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\nσ(::AbstractVector{Real}, ::VPolygon{Real})\n∈(::AbstractVector{Real}, ::VPolygon{Real})\nan_element(::VPolygon{N}) where {N<:Real}\nvertices_list(::VPolygon)\ntohrep(::VPolygon)\ntovrep(::VPolygon)\nconstraints_list(::VPolygon)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractPolygon:dim"
+    "text": "VPolygon\nσ(::AbstractVector{Real}, ::VPolygon{Real})\n∈(::AbstractVector{Real}, ::VPolygon{Real})\nan_element(::VPolygon{N}) where {N<:Real}\nvertices_list(::VPolygon)\ntohrep(::VPolygon)\ntovrep(::VPolygon)\nconstraints_list(::VPolygon)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
 },
 
 {
@@ -2141,7 +2181,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{Real}, ::VPolytope{Real})\nvertices_list(::VPolytope)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_map"
+    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{Real}, ::VPolytope{Real})\nvertices_list(::VPolytope)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_map"
 },
 
 {
@@ -2173,7 +2213,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Singleton",
     "category": "section",
-    "text": "Singleton\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dimInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
+    "text": "Singleton\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
 },
 
 {
@@ -2237,7 +2277,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zero set",
     "category": "section",
-    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet)\nelement(::ZeroSet, ::Int)\nlinear_map(::AbstractMatrix, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
+    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet)\nelement(::ZeroSet, ::Int)\nlinear_map(::AbstractMatrix, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
 },
 
 {
@@ -2333,7 +2373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{Real}, ::Zonotope{Real})\n∈(::AbstractVector{Real}, ::Zonotope{Real})\nvertices_list(::Zonotope)\ncenter(::Zonotope)\norder(::Zonotope)\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nan_element"
+    "text": "Zonotope\nσ(::AbstractVector{Real}, ::Zonotope{Real})\n∈(::AbstractVector{Real}, ::Zonotope{Real})\nvertices_list(::Zonotope)\ncenter(::Zonotope)\norder(::Zonotope)\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -2405,7 +2445,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Base.:∈",
     "category": "method",
-    "text": "∈(x::AbstractVector{<:Real}, cp::CartesianProduct)::Bool\n\nCheck whether a given point is contained in a Cartesian product set.\n\nInput\n\nx  – point/vector\ncp – Cartesian product\n\nOutput\n\ntrue iff x  cp.\n\n\n\n"
+    "text": "∈(x::AbstractVector{<:Real}, cp::CartesianProduct)::Bool\n\nCheck whether a given point is contained in a Cartesian product.\n\nInput\n\nx  – point/vector\ncp – Cartesian product\n\nOutput\n\ntrue iff x  cp.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.CartesianProduct}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(cp::CartesianProduct)::Bool\n\nReturn if a Cartesian product is empty or not.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\ntrue iff any of the sub-blocks is empty.\n\n\n\n"
 },
 
 {
@@ -2413,7 +2461,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.constraints_list",
     "category": "method",
-    "text": "constraints_list(cp::CartesianProduct{N, <:LazySet{N}})::Vector{LinearConstraint{N}} where N<:Real\n\nReturn the list of constraints of a (polytopic) Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nA list of constraints.\n\n\n\n"
+    "text": "constraints_list(cp::CartesianProduct{N, <:LazySet{N}}\n                )::Vector{LinearConstraint{N}} where N<:Real\n\nReturn the list of constraints of a (polytopic) Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nA list of constraints.\n\n\n\n"
 },
 
 {
@@ -2429,7 +2477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Cartesian Product",
     "category": "section",
-    "text": "CartesianProduct\n×(::LazySet, ::LazySet)\n*(::LazySet, ::LazySet)\ndim(::CartesianProduct)\nσ(::AbstractVector{Real}, ::CartesianProduct{Real})\n∈(::AbstractVector{Real}, ::CartesianProduct{Real})\nconstraints_list(::CartesianProduct{Real})\nvertices_list(::CartesianProduct{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CartesianProduct\n×(::LazySet, ::LazySet)\n*(::LazySet, ::LazySet)\ndim(::CartesianProduct)\nσ(::AbstractVector{Real}, ::CartesianProduct{Real})\n∈(::AbstractVector{Real}, ::CartesianProduct{Real})\nisempty(::CartesianProduct)\nconstraints_list(::CartesianProduct{Real})\nvertices_list(::CartesianProduct{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2465,6 +2513,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.CartesianProductArray}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(cpa::CartesianProductArray)::Bool\n\nReturn if a Cartesian product is empty or not.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\ntrue iff any of the sub-blocks is empty.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.constraints_list-Tuple{LazySets.CartesianProductArray{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.constraints_list",
@@ -2493,7 +2549,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Cartesian Product",
     "category": "section",
-    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Real}, ::CartesianProductArray{Real})\n∈(::AbstractVector{Real}, ::CartesianProductArray{Real})\nconstraints_list(::CartesianProductArray{Real})\nvertices_list(::CartesianProductArray{Real})\narray(::CartesianProductArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nσ(::AbstractVector{Real}, ::CartesianProductArray{Real})\n∈(::AbstractVector{Real}, ::CartesianProductArray{Real})\nisempty(::CartesianProductArray)\nconstraints_list(::CartesianProductArray{Real})\nvertices_list(::CartesianProductArray{Real})\narray(::CartesianProductArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2537,11 +2593,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.ConvexHull}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(ch::ConvexHull)::Bool\n\nReturn if a convex hull of two convex sets is empty or not.\n\nInput\n\nch – convex hull\n\nOutput\n\ntrue iff both wrapped sets are empty.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Binary-Convex-Hull-1",
     "page": "Common Set Operations",
     "title": "Binary Convex Hull",
     "category": "section",
-    "text": "ConvexHull\nCH\ndim(::ConvexHull)\nσ(::AbstractVector{Real}, ::ConvexHull{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "ConvexHull\nCH\ndim(::ConvexHull)\nσ(::AbstractVector{Real}, ::ConvexHull{Real})\nisempty(::ConvexHull)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2585,11 +2649,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.ConvexHullArray}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(cha::ConvexHullArray)::Bool\n\nReturn if a convex hull array is empty or not.\n\nInput\n\ncha – convex hull array\n\nOutput\n\ntrue iff all wrapped sets are empty.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#n-ary-Convex-Hull-1",
     "page": "Common Set Operations",
     "title": "n-ary Convex Hull",
     "category": "section",
-    "text": "ConvexHullArray\nCHArray\ndim(::ConvexHullArray)\nσ(::AbstractVector{Real}, ::ConvexHullArray{Real})\narray(::ConvexHullArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "ConvexHullArray\nCHArray\ndim(::ConvexHullArray)\nσ(::AbstractVector{Real}, ::ConvexHullArray{Real})\narray(::ConvexHullArray)\nisempty(::ConvexHullArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2865,11 +2937,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.MinkowskiSum}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(ms::MinkowskiSum)::Bool\n\nReturn if a Minkowski sum is empty or not.\n\nInput\n\nms – Minkowski sum\n\nOutput\n\ntrue iff any of the wrapped sets are empty.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Binary-Minkowski-Sum-1",
     "page": "Common Set Operations",
     "title": "Binary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSum\n⊕(::LazySet, ::LazySet)\n+(::LazySet, ::LazySet)\ndim(::MinkowskiSum)\nσ(::AbstractVector{Real}, ::MinkowskiSum{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "MinkowskiSum\n⊕(::LazySet, ::LazySet)\n+(::LazySet, ::LazySet)\ndim(::MinkowskiSum)\nσ(::AbstractVector{Real}, ::MinkowskiSum{Real})\nisempty(::MinkowskiSum)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2897,6 +2977,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.MinkowskiSumArray}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(msa::MinkowskiSumArray)::Bool\n\nReturn if a Minkowski sum array is empty or not.\n\nInput\n\ncp – Minkowski sum array\n\nOutput\n\ntrue iff any of the wrapped sets are empty.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.array-Tuple{LazySets.MinkowskiSumArray}",
     "page": "Common Set Operations",
     "title": "LazySets.array",
@@ -2909,7 +2997,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSumArray\ndim(::MinkowskiSumArray)\nσ(::AbstractVector{Real}, ::MinkowskiSumArray{Real})\narray(::MinkowskiSumArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "MinkowskiSumArray\ndim(::MinkowskiSumArray)\nσ(::AbstractVector{Real}, ::MinkowskiSumArray{Real})\nisempty(::MinkowskiSumArray)\narray(::MinkowskiSumArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -2937,6 +3025,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.CacheMinkowskiSum}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(cms::CacheMinkowskiSum)::Bool\n\nReturn if a caching Minkowski sum array is empty or not.\n\nInput\n\ncp – caching Minkowski sum\n\nOutput\n\ntrue iff any of the wrapped sets are empty.\n\nNotes\n\nForgotten sets cannot be checked anymore. Usually they have been empty because otherwise the support vector query should have crashed before. In that case, the caching Minkowski sum should not be used further.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.array-Tuple{LazySets.CacheMinkowskiSum}",
     "page": "Common Set Operations",
     "title": "LazySets.array",
@@ -2957,7 +3053,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Minkowski Sum with cache",
     "category": "section",
-    "text": "CacheMinkowskiSum\ndim(::CacheMinkowskiSum)\nσ(::AbstractVector{Real}, ::CacheMinkowskiSum{Real})\narray(::CacheMinkowskiSum)\nforget_sets!(::CacheMinkowskiSum)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CacheMinkowskiSum\ndim(::CacheMinkowskiSum)\nσ(::AbstractVector{Real}, ::CacheMinkowskiSum{Real})\nisempty(::CacheMinkowskiSum)\narray(::CacheMinkowskiSum)\nforget_sets!(::CacheMinkowskiSum)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3025,6 +3121,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.LinearMap}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(lm::LinearMap)::Bool\n\nReturn if a linear map is empty or not.\n\nInput\n\nlm – linear map\n\nOutput\n\ntrue iff the wrapped set is empty.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.vertices_list-Tuple{LazySets.LinearMap{Real,S,NM,MAT} where MAT<:AbstractArray{NM,2} where NM where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.vertices_list",
@@ -3037,7 +3141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Linear Map",
     "category": "section",
-    "text": "LinearMap\n*(::AbstractMatrix{Real}, ::LazySet{Real})\n*(::Real, ::LazySet{Real})\ndim(::LinearMap)\nσ(::AbstractVector{Real}, ::LinearMap{Real})\n∈(::AbstractVector{Real}, ::LinearMap{Real, LazySet{Real}, Real, Matrix{Real}})\nan_element(::LinearMap)\nvertices_list(::LinearMap{Real})Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "LinearMap\n*(::AbstractMatrix{Real}, ::LazySet{Real})\n*(::Real, ::LazySet{Real})\ndim(::LinearMap)\nσ(::AbstractVector{Real}, ::LinearMap{Real})\n∈(::AbstractVector{Real}, ::LinearMap{Real, LazySet{Real}, Real, Matrix{Real}})\nan_element(::LinearMap)\nisempty(::LinearMap)\nvertices_list(::LinearMap{Real})Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -3073,6 +3177,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.ExponentialMap}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(em::ExponentialMap)::Bool\n\nReturn if an exponential map is empty or not.\n\nInput\n\nem – exponential map\n\nOutput\n\ntrue iff the wrapped set is empty.\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.vertices_list-Tuple{LazySets.ExponentialMap{Real,S} where S<:LazySets.LazySet{Real}}",
     "page": "Common Set Operations",
     "title": "LazySets.vertices_list",
@@ -3102,6 +3214,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.σ",
     "category": "method",
     "text": "σ(d::AbstractVector{N},\n  eprojmap::ExponentialProjectionMap{N}) where {N<:Real}\n\nReturn the support vector of a projection of an exponential map.\n\nInput\n\nd        – direction\neprojmap – projection of an exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf S = (LMR)X, where L and R are matrices, M is a matrix exponential, and X is a set, it follows that (d S) = LMR(R^TM^TL^Td X) for any direction d.\n\nWe allow sparse direction vectors, but will convert them to dense vectors to be able to use expmv.\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.isempty-Tuple{LazySets.ExponentialProjectionMap}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(eprojmap::ExponentialProjectionMap)::Bool\n\nReturn if an exponential projection map is empty or not.\n\nInput\n\neprojmap – exponential projection map\n\nOutput\n\ntrue iff the wrapped set is empty.\n\n\n\n"
 },
 
 {
@@ -3149,7 +3269,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Exponential Map",
     "category": "section",
-    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Real}, ::ExponentialMap{Real})\n∈(::AbstractVector{Real}, ::ExponentialMap{Real})\nvertices_list(::ExponentialMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Real}, ::ExponentialProjectionMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementSparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)\nget_row(::SparseMatrixExp, ::Int)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
+    "text": "ExponentialMap\ndim(::ExponentialMap)\nσ(::AbstractVector{Real}, ::ExponentialMap{Real})\n∈(::AbstractVector{Real}, ::ExponentialMap{Real})\nisempty(::ExponentialMap)\nvertices_list(::ExponentialMap{Real})Inherited from LazySet:norm\nradius\ndiameter\nan_elementExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{Real}, ::ExponentialProjectionMap{Real})\nisempty(::ExponentialProjectionMap)Inherited from LazySet:norm\nradius\ndiameter\nan_elementSparseMatrixExp\n*(::SparseMatrixExp, ::LazySet)\nget_row(::SparseMatrixExp, ::Int)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
 },
 
 {
@@ -3173,7 +3293,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Symmetric Interval Hull",
     "category": "section",
-    "text": "SymmetricIntervalHull\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+    "text": "SymmetricIntervalHull\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
