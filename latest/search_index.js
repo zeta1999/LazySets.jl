@@ -3969,11 +3969,67 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/approximations.html#LazySets.Approximations.LocalApproximation",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.LocalApproximation",
+    "category": "type",
+    "text": "LocalApproximation{N<:Real}\n\nType that represents a local approximation in 2D.\n\nFields\n\np1        – first inner point\nd1        – first direction\np2        – second inner point\nd2        – second direction\nq         – intersection of the lines l1 ⟂ d1 at p1 and l2 ⟂ d2 at p2\nrefinable – states if this approximation is refinable\nerr       – error upper bound\n\nNotes\n\nThe criteria for being refinable are determined in the method new_approx.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.PolygonalOverapproximation",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.PolygonalOverapproximation",
+    "category": "type",
+    "text": "PolygonalOverapproximation{N<:Real}\n\nType that represents the polygonal approximation of a convex set.\n\nFields\n\nS            – convex set\napprox_stack – stack of local approximations that still need to be examined\nconstraints  – vector of linear constraints that are already finalized                   (i.e., they satisfy the given error bound)\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.new_approx-Tuple{LazySet,Array{Float64,1},Array{Float64,1},Array{Float64,1},Array{Float64,1}}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.new_approx",
+    "category": "method",
+    "text": "new_approx(S::LazySet, p1::Vector{N}, d1::Vector{N}, p2::Vector{N},\n           d2::Vector{N}) where N<:Real\n\nCreate a LocalApproximation instance for the given excerpt of a polygonal approximation.\n\nInput\n\nS  – convex set\np1 – first inner point\nd1 – first direction\np2 – second inner point\nd2 – second direction\n\nOutput\n\nA local approximation of S in the given directions.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.addapproximation!-Tuple{LazySets.Approximations.PolygonalOverapproximation,Array{Float64,1},Array{Float64,1},Array{Float64,1},Array{Float64,1}}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.addapproximation!",
+    "category": "method",
+    "text": "addapproximation!(Ω::PolygonalOverapproximation, p1::Vector{N},\n    d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where N<:Real\n\nInput\n\nΩ  – polygonal overapproximation of a convex set\np1 – first inner point\nd1 – first direction\np2 – second inner point\nd2 – second direction\n\nOutput\n\nThe list of local approximations in Ω of the set Ω.S is updated in-place and the new approximation is returned by this function.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.refine-Tuple{LazySets.Approximations.LocalApproximation,LazySet}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.refine",
+    "category": "method",
+    "text": "refine(approx::LocalApproximation, S::LazySet\n      )::Tuple{LocalApproximation, LocalApproximation}\n\nRefine a given local approximation of the polygonal approximation of a convex set by splitting along the normal direction of the approximation.\n\nInput\n\napprox – local approximation to be refined\nS      – 2D convex set\n\nOutput\n\nThe tuple consisting of the refined right and left local approximations.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.tohrep-Tuple{LazySets.Approximations.PolygonalOverapproximation}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.tohrep",
+    "category": "method",
+    "text": "tohrep(Ω::PolygonalOverapproximation{N})::AbstractHPolygon{N} where N<:Real\n\nConvert a polygonal overapproximation into a concrete polygon.\n\nInput\n\nΩ – polygonal overapproximation of a convex set\n\nOutput\n\nA polygon in constraint representation.\n\nAlgorithm\n\nInternally we keep the constraints sorted. Hence we do not need to use addconstraint! when creating the HPolygon.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.approximate-Tuple{LazySet{Float64},Float64}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.approximate",
+    "category": "method",
+    "text": "approximate(S::LazySet{N},\n            ε::N)::PolygonalOverapproximation{N} where N<:Real\n\nReturn an ε-close approximation of the given 2D convex set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nS – 2D convex set\nε – error bound\n\nOutput\n\nAn ε-close approximation of the given 2D convex set.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/approximations.html#Iterative-refinement-1",
     "page": "Approximations",
     "title": "Iterative refinement",
     "category": "section",
-    "text": "LocalApproximation\nPolygonalOverapproximation\nnew_approx(::LazySet, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\naddapproximation!(::PolygonalOverapproximation, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\nrefine(::PolygonalOverapproximation, ::Int)\ntohrep(::PolygonalOverapproximation)\napproximate(::LazySet{Float64}, ::Float64)"
+    "text": "LocalApproximation\nPolygonalOverapproximation\nnew_approx(::LazySet, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\naddapproximation!(::PolygonalOverapproximation, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\nrefine(::LocalApproximation, ::LazySet)\ntohrep(::PolygonalOverapproximation)\napproximate(::LazySet{Float64}, ::Float64)"
 },
 
 {
