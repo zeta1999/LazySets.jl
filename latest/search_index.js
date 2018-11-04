@@ -677,7 +677,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n19-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolytope\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n HPolyhedron\n Hyperplane\n Intersection\n IntersectionArray\n HalfSpace\n Line\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n\n\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n19-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolytope\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n HPolyhedron\n HalfSpace\n Hyperplane\n Intersection\n IntersectionArray\n Line\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n\n\n\n\n\n"
 },
 
 {
@@ -2849,123 +2849,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.Intersection",
-    "page": "Common Set Operations",
-    "title": "LazySets.Intersection",
-    "category": "type",
-    "text": "Intersection{N<:Real, S1<:LazySet{N}, S2<:LazySet{N}} <: LazySet{N}\n\nType that represents the intersection of two convex sets.\n\nFields\n\nX     – convex set\nY     – convex set\ncache – internal cache for avoiding recomputation; see            IntersectionCache\n\nExamples\n\nCreate an expression, Z, which lazily represents the intersection of two squares X and Y:\n\njulia> X, Y = BallInf([0,0.], 0.5), BallInf([1,0.], 0.65);\n\njulia> Z = X ∩ Y;\n\njulia> typeof(Z)\nIntersection{Float64,BallInf{Float64},BallInf{Float64}}\n\njulia> dim(Z)\n2\n\nWe can check if the intersection is empty with isempty:\n\njulia> isempty(Z)\nfalse\n\nDo not confuse Intersection with the concrete operation, which is computed with the lowercase intersection function:\n\njulia> W = intersection(X, Y)\nHyperrectangle{Float64}([0.425, 0.0], [0.075, 0.5])\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Base.:∩-Tuple{LazySet,LazySet}",
-    "page": "Common Set Operations",
-    "title": "Base.:∩",
-    "category": "method",
-    "text": "∩\n\nAlias for Intersection.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{Intersection}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(cap::Intersection)::Int\n\nReturn the dimension of an intersection of two convex sets.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\nThe ambient dimension of the intersection of two convex sets.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Intersection{N,S1,S2} where S2<:LazySet{N} where S1<:LazySet{N}}} where N<:Real",
-    "page": "Common Set Operations",
-    "title": "LazySets.ρ",
-    "category": "method",
-    "text": "ρ(d::AbstractVector{N}, cap::Intersection{N}) where {N<:Real}\n\nReturn an upper bound on the support function of the intersection of two convex sets in a given direction.\n\nInput\n\nd    – direction\ncap  – intersection of two convex sets\n\nOutput\n\nAn uper bound on the support function in the given direction.\n\nAlgorithm\n\nThe support function of an intersection of X and Y is upper bounded by the minimum of the support functions of X and Y.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Intersection{N,#s269,#s268} where #s268<:Union{HalfSpace{N}, Hyperplane{N}, Line{N,V} where V<:AbstractArray{N,1}} where #s269<:LazySet{N}}} where N<:Real",
-    "page": "Common Set Operations",
-    "title": "LazySets.ρ",
-    "category": "method",
-    "text": "ρ(d::AbstractVector{N},\n  cap::Intersection{N,\n                    <:LazySet{N},\n                    <:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}};\n  [algorithm]::String=\"line_search\",\n  [kwargs...]) where N<:Real\n\nReturn the support function of the intersection of a compact set and a half-space/hyperplane/line in a given direction.\n\nInput\n\nd         – direction\ncap       – lazy intersection of a compact set and a half-space/hyperplane/                line\nalgorithm – (optional, default: \"line_search\"): the algorithm to                calculate the support function; valid options are:\n\"line_search\" – solve the associated univariate optimization problem                    using a line search method (either Brent or the                    Golden Section method)\n\"projection\"  – only valid for intersection with a hyperplane;                    evaluates the support function by reducing the problem                    to the 2D intersection of a rank 2 linear                    transformation of the given compact set in the plane                    generated by the given direction d and the                    hyperplane\'s normal vector n\n\"simple\"      – take the min of the support function evaluation                    of each operand\n\nOutput\n\nThe scalar value of the support function of the set cap in the given direction.\n\nNotes\n\nIt is assumed that the set cap.X is compact.\n\nAny additional number of arguments to the algorithm backend can be passed as keyword arguments.\n\nAlgorithm\n\nThe algorithms are based on solving the associated optimization problem\n\nmin_ λ  D_h  ρ(ℓ - λa X) + λb\n\nwhere D_h =  λ  λ  0  if H is a half-space or D_h =  λ  λ  mathbbR  if H is a hyperplane.\n\nFor additional information we refer to:\n\nG. Frehse, R. Ray. Flowpipe-Guard Intersection for Reachability Computations with Support Functions.\nC. Le Guernic. Reachability Analysis of Hybrid Systems with Linear Continuous Dynamics, PhD thesis.\nT. Rockafellar, R. Wets. Variational Analysis.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Intersection{N,#s269,#s268} where #s268<:AbstractPolytope{N} where #s269<:LazySet{N}}} where N<:Real",
-    "page": "Common Set Operations",
-    "title": "LazySets.ρ",
-    "category": "method",
-    "text": "ρ(d::AbstractVector{N},\n  cap::Intersection{N, <:LazySet{N}, <:AbstractPolytope{N}};\n  kwargs...) where {N<:Real}\n\nReturn an upper bound of the intersection between a compact set and a polytope along a given direction.\n\nInput\n\nd      – direction\ncap    – intersection of a compact set and a polytope\nkwargs – additional arguments that are passed to the support function algorithm\n\nOutput\n\nAn upper bound of the support function of the given intersection.\n\nAlgorithm\n\nThe idea is to solve the univariate optimization problem ρ(di, X ∩ Hi) for each half-space in the set P and then take the minimum. This gives an overapproximation of the exact support function.\n\nThis algorithm is inspired from G. Frehse, R. Ray. Flowpipe-Guard Intersection for Reachability Computations with Support Functions.\n\nNotes\n\nThis method relies on having available the constraints_list of the polytope P.\n\nThis method of overapproximation can return a non-empty set even if the original intersection is empty.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Base.isempty-Tuple{Intersection}",
-    "page": "Common Set Operations",
-    "title": "Base.isempty",
-    "category": "method",
-    "text": "isempty(cap::Intersection)::Bool\n\nReturn if the intersection is empty or not.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff the intersection is empty.\n\nNotes\n\nThe result will be cached, so a second query will be fast.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Tuple{AbstractArray{Real,1},Intersection{Real,S1,S2} where S2<:LazySet{Real} where S1<:LazySet{Real}}",
-    "page": "Common Set Operations",
-    "title": "LazySets.σ",
-    "category": "method",
-    "text": "σ(d::AbstractVector{N}, cap::Intersection{N}) where {N<:Real}\n\nReturn the support vector of an intersection of two convex sets in a given direction.\n\nInput\n\nd   – direction\ncap – intersection of two convex sets\n\nOutput\n\nThe support vector in the given direction.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Base.:∈-Tuple{AbstractArray{Real,1},Intersection{Real,S1,S2} where S2<:LazySet{Real} where S1<:LazySet{Real}}",
-    "page": "Common Set Operations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(x::AbstractVector{N}, cap::Intersection{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in an intersection of two convex sets.\n\nInput\n\nx   – point/vector\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff x  cap.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.isempty_known-Tuple{Intersection}",
-    "page": "Common Set Operations",
-    "title": "LazySets.isempty_known",
-    "category": "method",
-    "text": "isempty_known(cap::Intersection)\n\nAsk whether the status of emptiness is known.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff the emptiness status is known. In this case, isempty(cap) can be used to obtain the status.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.set_isempty!-Tuple{Intersection,Bool}",
-    "page": "Common Set Operations",
-    "title": "LazySets.set_isempty!",
-    "category": "method",
-    "text": "set_isempty!(cap::Intersection, isempty::Bool)\n\nSet the status of emptiness in the cache.\n\nInput\n\ncap     – intersection of two convex sets\nisempty – new status of emptiness\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.swap-Tuple{Intersection}",
-    "page": "Common Set Operations",
-    "title": "LazySets.swap",
-    "category": "method",
-    "text": "swap(cap::Intersection{N, S1, S2})::Intersection{N} where {N<:Real, S1, S2}\n\nReturn a new Intersection object with the arguments swapped.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\nA new Intersection object with the arguments swapped. The old cache is shared between the old and new objects.\n\nNotes\n\nThe advantage of using this function instead of manually swapping the arguments is that the cache is shared.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.use_precise_ρ",
-    "page": "Common Set Operations",
-    "title": "LazySets.use_precise_ρ",
-    "category": "function",
-    "text": "use_precise_ρ(cap::Intersection{N})::Bool where N<:Real\n\nDetermine whether a precise algorithm for computing ρ shall be applied.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\ntrue if a precise algorithm shall be applied.\n\nNotes\n\nThe default implementation always returns true.\n\nIf the result is false, a coarse approximation of the support function is returned.\n\nThis function can be overwritten by the user to control the policy.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets._projection",
-    "page": "Common Set Operations",
-    "title": "LazySets._projection",
-    "category": "function",
-    "text": "_projection(ℓ, X, H::Union{Hyperplane{N}, Line{N}};\n            [lazy_linear_map]=false,\n            [lazy_2d_intersection]=true,\n            [algorithm_2d_intersection]=nothing,\n            [kwargs...]) where {N}\n\nGiven a compact and convex set X and a hyperplane H = x n  x = γ , calculate the support function of the intersection between the rank-2 projection Π_nℓ X and the line Lγ = (x y) x = γ .\n\nInput\n\nℓ                    – direction\nX                    – set\nH                    – hyperplane\nlazy_linear_map      – (optional, default: false) to perform the projection                           lazily or concretely\nlazy_2d_intersection – (optional, default: true) to perform the 2D                           intersection between the projected set and the line                           lazily or concretely\nalgorithm_2d_intersection – (optional, default: nothing) if given, fixes the                                support function algorithm used for the intersection                                in 2D; otherwise the default is implied\n\nOutput\n\nThe support function of X  H along direction ℓ.\n\nAlgorithm\n\nThis projection method is based on Prop. 8.2, page 103, C. Le Guernic. Reachability Analysis of Hybrid Systems with Linear Continuous Dynamics, PhD thesis.\n\nIn the original algorithm, Section 8.2 of Le Guernic\'s thesis, the linear map is performed concretely and the intersection is performed lazily (these are the default options in this algorithm, but here the four combinations are available). If the set X is a zonotope, its concrete projection is again a zonotope (sometimes called \"zonogon\"). The intersection between this zonogon and the line can be taken efficiently in a lazy way (see Section 8.2.2 of Le Guernic\'s thesis), if one uses dispatch on ρ(y_dir, Sℓ⋂Lγ; kwargs...) given that Sℓ is itself a zonotope.\n\nNotes\n\nThis function depends itself on the calculation of the support function of another set in two dimensions. Obviously one doesn\'t want to use again algorithm=\"projection\" for this second calculation. The option algorithm_2d_intersection is such that, if it is not given, the default support function algorithm is used (e.g. \"line_search\"). You can still pass additional arguments to the \"line_search\" backend through the kwargs.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/operations.html#Binary-Intersection-1",
     "page": "Common Set Operations",
     "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:AbstractPolytope{N}}) where {N<:Real}\nisempty(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:AbstractPolytope{N}}) where {N<:Real}\nisempty(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_line_search\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
