@@ -1793,6 +1793,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "LazySets.radius_hyperrectangle",
+    "category": "method",
+    "text": "radius_hyperrectangle(x::Interval{N})::Vector{N} where {N<:Real}\n\nReturn the box radius of an interval in every dimension.\n\nInput\n\nx – interval\n\nOutput\n\nThe box radius of the interval (a one-dimensional vector).\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Interval,Int64}",
+    "page": "Common Set Representations",
+    "title": "LazySets.radius_hyperrectangle",
+    "category": "method",
+    "text": "radius_hyperrectangle(x::Interval{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of an interval in a given dimension.\n\nInput\n\nx – interval\ni – dimension index (must be 1)\n\nOutput\n\nThe box radius in the given dimension.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.:+-Tuple{LazySets.Interval,LazySets.Interval}",
     "page": "Common Set Representations",
     "title": "Base.:+",
@@ -1821,7 +1837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Real}, ::Interval{Real})\n∈(::AbstractVector, ::Interval)\n∈(::Real, ::Interval)\nan_element(::Interval)\nvertices_list(::Interval)\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Real}, ::Interval{Real})\n∈(::AbstractVector, ::Interval)\n∈(::Real, ::Interval)\nan_element(::Interval)\nvertices_list(::Interval)\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\nradius_hyperrectangle(::Interval)\nradius_hyperrectangle(::Interval, ::Int)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
 },
 
 {
