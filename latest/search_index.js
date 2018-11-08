@@ -957,7 +957,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.addconstraint!",
     "category": "method",
-    "text": "addconstraint!(P::AbstractHPolygon{N},\n               constraint::LinearConstraint{N};\n               [linear_search]::Bool=(\n                length(P.constraints) < BINARY_SEARCH_THRESHOLD)\n              )::Nothing where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon in constraint representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n\n\n"
+    "text": "addconstraint!(P::AbstractHPolygon{N},\n               constraint::LinearConstraint{N};\n               linear_search::Bool=(length(P.constraints) < BINARY_SEARCH_THRESHOLD)\n              )::Nothing where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon in constraint representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n\n\n"
 },
 
 {
