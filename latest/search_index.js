@@ -3713,6 +3713,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Interval{N,IN} where IN<:AbstractInterval{N},Interval{N,IN} where IN<:AbstractInterval{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(x::Interval{N},\n             y::Interval{N}\n             )::Union{Interval{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two intervals.\n\nInput\n\nx – first interval\ny – second interval\n\nOutput\n\nIf the intervals do not intersect, the result is the empty set. Otherwise the result is the interval that describes the intersection.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{AbstractHPolygon{N},AbstractHPolygon{N}}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
@@ -3741,7 +3749,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Intersection of two sets",
     "category": "section",
-    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::Hyperrectangle{N}, ::Hyperrectangle{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}\nintersection(::HPolytope{N}, ::HalfSpace{N}) where {N<:Real}\nintersection(::HPolyhedron{N}, ::AbstractPolytope{N}) where {N<:Real}"
+    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::Hyperrectangle{N}, ::Hyperrectangle{N}) where {N<:Real}\nintersection(::Interval{N}, ::Interval{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}\nintersection(::HPolytope{N}, ::HalfSpace{N}) where {N<:Real}\nintersection(::HPolyhedron{N}, ::AbstractPolytope{N}) where {N<:Real}"
 },
 
 {
