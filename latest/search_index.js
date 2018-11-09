@@ -929,6 +929,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#Base.rand-Union{Tuple{Type{HPOLYGON}}, Tuple{HPOLYGON}} where HPOLYGON<:AbstractHPolygon",
+    "page": "Set Interfaces",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{HPOLYGON}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing,\n     [num_constraints]::Int=-1\n    )::HPOLYGON{N} where {HPOLYGON<:AbstractHPolygon}\n\nCreate a random polygon in constraint representation.\n\nInput\n\nHPOLYGON        – type for dispatch\nN               – (optional, default: Float64) numeric type\ndim             – (optional, default: 2) dimension\nrng             – (optional, default: GLOBAL_RNG) random number generator\nseed            – (optional, default: nothing) seed for reseeding\nnum_constraints – (optional, default: -1) number of constraints of the                      polygon (must be 3 or bigger; see comment below)\n\nOutput\n\nA random polygon in constraint representation.\n\nAlgorithm\n\nWe create a random polygon in vertex representation and convert it to constraint representation. See rand(::Type{VPolygon}). For non-flat polygons the number of vertices and the number of constraints are identical.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#LazySets.vertices_list-Tuple{AbstractHPolygon{Real}}",
     "page": "Set Interfaces",
     "title": "LazySets.vertices_list",
@@ -973,7 +981,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "HPolygon",
     "category": "section",
-    "text": "An HPolygon is a polygon in H-representation (or constraint representation).AbstractHPolygonThis interface defines the following functions:an_element(::AbstractHPolygon{N}) where {N<:Real}\n∈(::AbstractVector{Real}, ::AbstractHPolygon{Real})\nvertices_list(::AbstractHPolygon{Real})\ntohrep(::AbstractHPolygon{Real})\ntovrep(::AbstractHPolygon{Real})\naddconstraint!(::AbstractHPolygon{Real}, ::LinearConstraint{Real})\nconstraints_list(::AbstractHPolygon{Real})"
+    "text": "An HPolygon is a polygon in H-representation (or constraint representation).AbstractHPolygonThis interface defines the following functions:an_element(::AbstractHPolygon{N}) where {N<:Real}\n∈(::AbstractVector{Real}, ::AbstractHPolygon{Real})\nrand(::Type{HPOLYGON}) where {HPOLYGON<:AbstractHPolygon}\nvertices_list(::AbstractHPolygon{Real})\ntohrep(::AbstractHPolygon{Real})\ntovrep(::AbstractHPolygon{Real})\naddconstraint!(::AbstractHPolygon{Real}, ::LinearConstraint{Real})\nconstraints_list(::AbstractHPolygon{Real})"
 },
 
 {
@@ -1233,11 +1241,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Ball2}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Ball2}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ball2{N}\n\nCreate a random ball in the 2-norm.\n\nInput\n\nBall2 – type for dispatch\nN     – (optional, default: Float64) numeric type\ndim   – (optional, default: 2) dimension\nrng   – (optional, default: GLOBAL_RNG) random number generator\nseed  – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ball in the 2-norm.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Euclidean-norm-ball-1",
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\nσ(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\ncenter(::Ball2)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
+    "text": "Ball2\nσ(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\ncenter(::Ball2)\nrand(::Type{Ball2})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
 },
 
 {
@@ -1281,11 +1297,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{BallInf}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{BallInf}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::BallInf{N}\n\nCreate a random ball in the infinity norm.\n\nInput\n\nBallInf – type for dispatch\nN       – (optional, default: Float64) numeric type\ndim     – (optional, default: 2) dimension\nrng     – (optional, default: GLOBAL_RNG) random number generator\nseed    – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ball in the infinity norm.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Infinity-norm-ball-1",
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
+    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)\nrand(::Type{BallInf})Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1329,6 +1353,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Ball1}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Ball1}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ball1{N}\n\nCreate a random ball in the 1-norm.\n\nInput\n\nBall1 – type for dispatch\nN     – (optional, default: Float64) numeric type\ndim   – (optional, default: 2) dimension\nrng   – (optional, default: GLOBAL_RNG) random number generator\nseed  – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ball in the 1-norm.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.constraints_list-Tuple{Ball1}",
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
@@ -1341,7 +1373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)\nconstraints_list(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)\nrand(::Type{Ball1})\nconstraints_list(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -1377,11 +1409,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Ballp}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Ballp}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ballp{N}\n\nCreate a random ball in the p-norm.\n\nInput\n\nBallp – type for dispatch\nN     – (optional, default: Float64) numeric type\ndim   – (optional, default: 2) dimension\nrng   – (optional, default: GLOBAL_RNG) random number generator\nseed  – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ball in the p-norm.\n\nAlgorithm\n\nThe center and radius are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative. The p-norm is a normally distributed number ≥ 1 with mean 1 and standard deviation 1.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#p-norm-ball-1",
     "page": "Common Set Representations",
     "title": "p-norm ball",
     "category": "section",
-    "text": "Ballp\nσ(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\ncenter(::Ballp)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
+    "text": "Ballp\nσ(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\ncenter(::Ballp)\nrand(::Type{Ballp})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
 },
 
 {
@@ -1409,6 +1449,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Ellipsoid}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Ellipsoid}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ellipsoid{N}\n\nCreate a random ellipsoid.\n\nInput\n\nEllipsoid – type for dispatch\nN         – (optional, default: Float64) numeric type\ndim       – (optional, default: 2) dimension\nrng       – (optional, default: GLOBAL_RNG) random number generator\nseed      – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ellipsoid.\n\nAlgorithm\n\nThe center is a normally distributed vector with entries of mean 0 and standard deviation 1.\n\nThe idea for the shape matrix comes from here. The matrix is symmetric positive definite, but also diagonally dominant.\n\nQ =  rac12(S + S^T) + nI\n\nwhere n = dim (defaults to 2), and S is a n times n random matrix whose coefficients are uniformly distributed in the interval -1 1.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.center-Tuple{Ellipsoid}",
     "page": "Common Set Representations",
     "title": "LazySets.center",
@@ -1421,7 +1469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Ellipsoid",
     "category": "section",
-    "text": "Ellipsoid\nσ(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\ncenter(::Ellipsoid)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
+    "text": "Ellipsoid\nσ(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\nrand(::Type{Ellipsoid})\ncenter(::Ellipsoid)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
 },
 
 {
@@ -1473,6 +1521,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{EmptySet}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{EmptySet}; [N]::Type{<:Real}=Float64, [dim]::Int=0,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::EmptySet{N}\n\nCreate an empty set (note that there is nothing to randomize).\n\nInput\n\nEmptySet – type for dispatch\nN        – (optional, default: Float64) numeric type\ndim      – (optional, default: 0) dimension (is ignored)\nrng      – (optional, default: GLOBAL_RNG) random number generator\nseed     – (optional, default: nothing) seed for reseeding\n\nOutput\n\nThe (only) empty set of the given numeric type.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{EmptySet}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1509,7 +1565,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Empty set",
     "category": "section",
-    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{Real}, ::EmptySet{Real})\n∈(::AbstractVector{Real}, ::EmptySet{Real})\nan_element(::EmptySet)\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real)\nradius(::EmptySet, ::Real)\ndiameter(::EmptySet, ::Real)Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{Real}, ::EmptySet{Real})\n∈(::AbstractVector{Real}, ::EmptySet{Real})\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real)\nradius(::EmptySet, ::Real)\ndiameter(::EmptySet, ::Real)Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1561,6 +1617,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{LazySets.HalfSpace}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{HalfSpace}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::HalfSpace{N}\n\nCreate a random half-space.\n\nInput\n\nHalfSpace – type for dispatch\nN         – (optional, default: Float64) numeric type\ndim       – (optional, default: 2) dimension\nrng       – (optional, default: GLOBAL_RNG) random number generator\nseed      – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random half-space.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the constraint a is nonzero.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{LazySets.HalfSpace}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1605,7 +1669,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{Real}, ::HalfSpace{Real})\n∈(::AbstractVector{Real}, ::HalfSpace{Real})\nan_element(::HalfSpace{N}) where {N<:Real}\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nLazySets.halfspace_left(::AbstractVector{Real}, ::AbstractVector{Real})\nLazySets.halfspace_right(::AbstractVector{Real}, ::AbstractVector{Real})Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{Real}, ::HalfSpace{Real})\n∈(::AbstractVector{Real}, ::HalfSpace{Real})\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nLazySets.halfspace_left(::AbstractVector{Real}, ::AbstractVector{Real})\nLazySets.halfspace_right(::AbstractVector{Real}, ::AbstractVector{Real})Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1649,6 +1713,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Hyperplane}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Hyperplane}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Hyperplane{N}\n\nCreate a random hyperplane.\n\nInput\n\nHyperplane – type for dispatch\nN          – (optional, default: Float64) numeric type\ndim        – (optional, default: 2) dimension\nrng        – (optional, default: GLOBAL_RNG) random number generator\nseed       – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random hyperplane.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the constraint a is nonzero.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{Hyperplane}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1669,7 +1741,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperplane",
     "category": "section",
-    "text": "Hyperplane\ndim(::Hyperplane)\nσ(::AbstractVector{Real}, ::Hyperplane{Real})\n∈(::AbstractVector{Real}, ::Hyperplane{Real})\nan_element(::Hyperplane{N}) where {N<:Real}\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Hyperplane\ndim(::Hyperplane)\nσ(::AbstractVector{Real}, ::Hyperplane{Real})\n∈(::AbstractVector{Real}, ::Hyperplane{Real})\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1678,6 +1750,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.Hyperrectangle",
     "category": "type",
     "text": "Hyperrectangle{N<:Real} <: AbstractHyperrectangle{N}\n\nType that represents a hyperrectangle.\n\nA hyperrectangle is the Cartesian product of one-dimensional intervals.\n\nFields\n\ncenter – center of the hyperrectangle as a real vector\nradius – radius of the ball as a real vector, i.e., half of its width along             each coordinate direction\n\nExamples\n\nThere is also a constructor from lower and upper bounds with keyword arguments high and low. The following two constructions are equivalent:\n\njulia> c = ones(2);\n\njulia> r = [0.1, 0.2];\n\njulia> l = [0.9, 0.8];\n\njulia> h = [1.1, 1.2];\n\njulia> Hyperrectangle(c, r)\nHyperrectangle{Float64}([1.0, 1.0], [0.1, 0.2])\njulia> Hyperrectangle(low=l, high=h)\nHyperrectangle{Float64}([1.0, 1.0], [0.1, 0.2])\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Hyperrectangle}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Hyperrectangle}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Hyperrectangle{N}\n\nCreate a random hyperrectangle.\n\nInput\n\nHyperrectangle – type for dispatch\nN              – (optional, default: Float64) numeric type\ndim            – (optional, default: 2) dimension\nrng            – (optional, default: GLOBAL_RNG) random number generator\nseed           – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random hyperrectangle.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative.\n\n\n\n\n\n"
 },
 
 {
@@ -1709,7 +1789,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "Hyperrectangle\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+    "text": "Hyperrectangle\nrand(::Type{Hyperrectangle})\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1833,11 +1913,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{LazySets.Interval}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Interval}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Interval{N}\n\nCreate a random interval.\n\nInput\n\nInterval – type for dispatch\nN        – (optional, default: Float64) numeric type\ndim      – (optional, default: 1) dimension\nrng      – (optional, default: GLOBAL_RNG) random number generator\nseed     – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random interval.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Interval-1",
     "page": "Common Set Representations",
     "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Real}, ::Interval{Real})\n∈(::AbstractVector, ::Interval)\n∈(::Real, ::Interval)\nan_element(::Interval)\nvertices_list(::Interval)\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\nradius_hyperrectangle(::Interval)\nradius_hyperrectangle(::Interval, ::Int)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Real}, ::Interval{Real})\n∈(::AbstractVector, ::Interval)\n∈(::Real, ::Interval)\nan_element(::Interval)\nvertices_list(::Interval)\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\nradius_hyperrectangle(::Interval)\nradius_hyperrectangle(::Interval, ::Int)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)\nrand(::Type{Interval})Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
 },
 
 {
@@ -1881,6 +1969,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{LazySets.Line}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Line}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Line{N}\n\nCreate a random line.\n\nInput\n\nLine – type for dispatch\nN    – (optional, default: Float64) numeric type\ndim  – (optional, default: 2) dimension\nrng  – (optional, default: GLOBAL_RNG) random number generator\nseed – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random line.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the constraint a is nonzero.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{LazySets.Line}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1901,7 +1997,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line",
     "category": "section",
-    "text": "Line\ndim(::Line)\nσ(::AbstractVector{Real}, ::Line{Real})\n∈(::AbstractVector{Real}, ::Line{Real})\nan_element(::Line{N}) where {N<:Real}\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Line\ndim(::Line)\nσ(::AbstractVector{Real}, ::Line{Real})\n∈(::AbstractVector{Real}, ::Line{Real})\nan_element(::Line{N}) where {N<:Real}\nrand(::Type{Line})\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1937,6 +2033,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{LineSegment}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{LineSegment}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::LineSegment{N}\n\nCreate a random line segment.\n\nInput\n\nLineSegment – type for dispatch\nN           – (optional, default: Float64) numeric type\ndim         – (optional, default: 2) dimension\nrng         – (optional, default: GLOBAL_RNG) random number generator\nseed        – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random line segment.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.halfspace_left-Tuple{LineSegment}",
     "page": "Common Set Representations",
     "title": "LazySets.halfspace_left",
@@ -1965,7 +2069,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line segment",
     "category": "section",
-    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{Real}, ::LineSegment{Real})\n∈(::AbstractVector{Real}, ::LineSegment{Real})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)\nLazySets.constraints_list(::LineSegment)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetricPolytope:isempty"
+    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{Real}, ::LineSegment{Real})\n∈(::AbstractVector{Real}, ::LineSegment{Real})\nrand(::Type{LineSegment})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)\nLazySets.constraints_list(::LineSegment)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetricPolytope:isempty"
 },
 
 {
@@ -2057,6 +2161,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{VPolygon}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{VPolygon}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::VPolygon{N}\n\nCreate a random polygon in vertex representation.\n\nInput\n\nVPolygon     – type for dispatch\nN            – (optional, default: Float64) numeric type\ndim          – (optional, default: 2) dimension\nrng          – (optional, default: GLOBAL_RNG) random number generator\nseed         – (optional, default: nothing) seed for reseeding\nnum_vertices – (optional, default: -1) number of vertices of the                   polygon (see comment below)\n\nOutput\n\nA random polygon in vertex representation.\n\nAlgorithm\n\nWe follow the idea here based on P. Valtr. Probability that n random points are in convex position. There is also a nice video available here.\n\nThe number of vertices can be controlled with the argument num_vertices. For a negative value we choose a random number in the range 3:10.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.vertices_list-Tuple{VPolygon}",
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
@@ -2093,7 +2205,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\nσ(::AbstractVector{Real}, ::VPolygon{Real})\n∈(::AbstractVector{Real}, ::VPolygon{Real})\nan_element(::VPolygon{N}) where {N<:Real}\nvertices_list(::VPolygon)\ntohrep(::VPolygon)\ntovrep(::VPolygon)\nconstraints_list(::VPolygon)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
+    "text": "VPolygon\nσ(::AbstractVector{Real}, ::VPolygon{Real})\n∈(::AbstractVector{Real}, ::VPolygon{Real})\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon)\ntohrep(::VPolygon)\ntovrep(::VPolygon)\nconstraints_list(::VPolygon)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
 },
 
 {
@@ -2249,6 +2361,54 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Polyhedra.polyhedron-Tuple{Union{HPolyhedron{N}, HPolytope{N}} where N}",
+    "page": "Common Set Representations",
+    "title": "Polyhedra.polyhedron",
+    "category": "method",
+    "text": "polyhedron(P::HPoly{N}, [backend]=default_polyhedra_backend(P, N)) where {N}\n\nReturn an HRep polyhedron from Polyhedra.jl given a polytope in H-representation.\n\nInput\n\nP       – polytope\nbackend – (optional, default: call default_polyhedra_backend(P, N))               the polyhedral computations backend\n\nOutput\n\nAn HRep polyhedron.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\npolyhedron(P::VPolytope{N}, [backend]=default_polyhedra_backend(P, N)) where {N}\n\nReturn an VRep polyhedron from Polyhedra.jl given a polytope in V-representation.\n\nInput\n\nP       – polytope\nbackend – (optional, default: default_polyhedra_backend(P, N)) the polyhedral              computations backend, see Polyhedra\'s documentation              for further information\n\nOutput\n\nA VRep polyhedron.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Constraint-representation-2",
+    "page": "Common Set Representations",
+    "title": "Constraint representation",
+    "category": "section",
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{Real})\nρ(::AbstractVector{Real}, ::HPoly{Real})\nσ(::AbstractVector{Real}, ::HPoly{Real})\n∈(::AbstractVector{Real}, ::HPoly{Real})\naddconstraint!(::HPoly{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPoly{Real})\ntosimplehrep(::HPoly{Real})\ntohrep(::HPoly{Real})\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{Real}, ::HPoly{Real})\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{Real})\npolyhedron(::HPoly)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{HPolytope}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{HPolytope}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::HPolytope{N}\n\nCreate a random polytope in constraint representation.\n\nInput\n\nHPolytope    – type for dispatch\nN            – (optional, default: Float64) numeric type\ndim          – (optional, default: 2) dimension\nrng          – (optional, default: GLOBAL_RNG) random number generator\nseed         – (optional, default: nothing) seed for reseeding\nnum_vertices – (optional, default: -1) upper bound on the number of                   vertices of the polytope (see comment below)\n\nOutput\n\nA random polytope in constraint representation.\n\nAlgorithm\n\nWe create a random polytope in vertex representation and convert it to constraint representation (hence the argument num_vertices). See rand(::Type{VPolytope}).\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{HPolytope{Real}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(P::HPolytope{N};\n              [backend]=default_polyhedra_backend(P, N),\n              [prunefunc]=removevredundancy!)::Vector{Vector{N}} where\n              {N<:Real}\n\nReturn the list of vertices of a polytope in constraint representation.\n\nInput\n\nP         – polytope in constraint representation\nbackend   – (optional, default: default_polyhedra_backend(P, N))                 the polyhedral computations backend\nprunefunc – (optional, default: removevredundancy!) function to                post-process the output of vreps\n\nOutput\n\nList of vertices.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Polytopes-in-constraint-representation-1",
+    "page": "Common Set Representations",
+    "title": "Polytopes in constraint representation",
+    "category": "section",
+    "text": "The following methods are specific for HPolytope.rand(::Type{HPolytope})\nvertices_list(::HPolytope{Real})Inherited from AbstractPolytope:singleton_listThe following methods are specific for polytopes."
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{HPolyhedron}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{HPolyhedron}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::HPolyhedron{N}\n\nCreate a polyhedron.\n\nInput\n\nHPolyhedron – type for dispatch\nN           – (optional, default: Float64) numeric type\ndim         – (optional, default: 2) dimension (is ignored)\nrng         – (optional, default: GLOBAL_RNG) random number generator\nseed        – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA polyhedron.\n\nAlgorithm\n\nWe first create a random polytope and then randomly remove some of the constraints.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.vertices_list-Tuple{HPolyhedron{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
@@ -2265,19 +2425,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Polyhedra.polyhedron-Tuple{Union{HPolyhedron{N}, HPolytope{N}} where N}",
+    "location": "lib/representations.html#Polyhedra-1",
     "page": "Common Set Representations",
-    "title": "Polyhedra.polyhedron",
-    "category": "method",
-    "text": "polyhedron(P::HPoly{N}, [backend]=default_polyhedra_backend(P, N)) where {N}\n\nReturn an HRep polyhedron from Polyhedra.jl given a polytope in H-representation.\n\nInput\n\nP       – polytope\nbackend – (optional, default: call default_polyhedra_backend(P, N))               the polyhedral computations backend\n\nOutput\n\nAn HRep polyhedron.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\npolyhedron(P::VPolytope{N}, [backend]=default_polyhedra_backend(P, N)) where {N}\n\nReturn an VRep polyhedron from Polyhedra.jl given a polytope in V-representation.\n\nInput\n\nP       – polytope\nbackend – (optional, default: default_polyhedra_backend(P, N)) the polyhedral              computations backend, see Polyhedra\'s documentation              for further information\n\nOutput\n\nA VRep polyhedron.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Constraint-representation-2",
-    "page": "Common Set Representations",
-    "title": "Constraint representation",
+    "title": "Polyhedra",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between polyhedra and polytopes. dim(::HPoly{Real})\nρ(::AbstractVector{Real}, ::HPoly{Real})\nσ(::AbstractVector{Real}, ::HPoly{Real})\n∈(::AbstractVector{Real}, ::HPoly{Real})\naddconstraint!(::HPoly{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPoly{Real})\ntosimplehrep(::HPoly{Real})\ntohrep(::HPoly{Real})\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{Real}, ::HPoly{Real})\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{Real})\nvertices_list(::HPolyhedron{Real})\nsingleton_list(::HPolyhedron{N}) where {N<:Real}\npolyhedron(::HPoly)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_map"
+    "text": "The following methods are specific for HPolyhedron.rand(::Type{HPolyhedron})\nvertices_list(::HPolyhedron{Real})\nsingleton_list(::HPolyhedron{N}) where {N<:Real}"
 },
 
 {
@@ -2302,6 +2454,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.σ",
     "category": "method",
     "text": "σ(d::AbstractVector{N}, P::VPolytope{N}; algorithm=\"hrep\") where {N<:Real}\n\nReturn the support vector of a polyhedron (in V-representation) in a given direction.\n\nInput\n\nd         – direction\nP         – polyhedron in V-representation\nalgorithm – (optional, default: \'hrep\') method to compute the support vector\n\nOutput\n\nThe support vector in the given direction.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{VPolytope}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{VPolytope}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::VPolytope{N}\n\nCreate a random polytope in vertex representation.\n\nInput\n\nVPolytope    – type for dispatch\nN            – (optional, default: Float64) numeric type\ndim          – (optional, default: 2) dimension\nrng          – (optional, default: GLOBAL_RNG) random number generator\nseed         – (optional, default: nothing) seed for reseeding\nnum_vertices – (optional, default: -1) upper bound on the number of                   vertices of the polytope (see comment below)\n\nOutput\n\nA random polytope in vertex representation.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1.\n\nThe number of vertices can be controlled with the argument num_vertices. For a negative value we choose a random number in the range dim:5*dim (except if dim == 1, in which case we choose in the range 1:2). Note that we do not guarantee that the vertices are not redundant.\n\n\n\n\n\n"
 },
 
 {
@@ -2333,7 +2493,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{Real}, ::VPolytope{Real})\nvertices_list(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_map"
+    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{Real}, ::VPolytope{Real})\nrand(::Type{VPolytope})\nvertices_list(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_map"
 },
 
 {
@@ -2342,6 +2502,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.Singleton",
     "category": "type",
     "text": "Singleton{N<:Real} <: AbstractSingleton{N}\n\nType that represents a singleton, that is, a set with a unique element.\n\nFields\n\nelement – the only element of the set\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Singleton}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Singleton}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Singleton{N}\n\nCreate a random singleton.\n\nInput\n\nSingleton – type for dispatch\nN         – (optional, default: Float64) numeric type\ndim       – (optional, default: 2) dimension\nrng       – (optional, default: GLOBAL_RNG) random number generator\nseed      – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random singleton.\n\nAlgorithm\n\nThe element is a normally distributed vector with entries of mean 0 and standard deviation 1.\n\n\n\n\n\n"
 },
 
 {
@@ -2365,7 +2533,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Singleton",
     "category": "section",
-    "text": "Singleton\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
+    "text": "Singleton\nrand(::Type{Singleton})\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
 },
 
 {
@@ -2401,6 +2569,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{ZeroSet}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{ZeroSet}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::ZeroSet{N}\n\nCreate a zero set (note that there is nothing to randomize).\n\nInput\n\nZeroSet – type for dispatch\nN       – (optional, default: Float64) numeric type\ndim     – (optional, default: 2) dimension\nrng     – (optional, default: GLOBAL_RNG) random number generator\nseed    – (optional, default: nothing) seed for reseeding\n\nOutput\n\nThe (only) zero set of the given numeric type and dimension.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.element-Tuple{ZeroSet}",
     "page": "Common Set Representations",
     "title": "LazySets.element",
@@ -2429,7 +2605,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zero set",
     "category": "section",
-    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet)\nelement(::ZeroSet, ::Int)\nlinear_map(::AbstractMatrix, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
+    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nrand(::Type{ZeroSet})\nelement(::ZeroSet)\nelement(::ZeroSet, ::Int)\nlinear_map(::AbstractMatrix, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
 },
 
 {
@@ -2454,6 +2630,14 @@ var documenterSearchIndex = {"docs": [
     "title": "Base.:∈",
     "category": "method",
     "text": "∈(x::AbstractVector{N}, Z::Zonotope{N};\n  solver=GLPKSolverLP(method=:Simplex))::Bool where {N<:Real}\n\nCheck whether a given point is contained in a zonotope.\n\nInput\n\nx      – point/vector\nZ      – zonotope\nsolver – (optional, default: GLPKSolverLP(method=:Simplex)) the backend             used to solve the linear program\n\nOutput\n\ntrue iff x  Z.\n\nExamples\n\njulia> Z = Zonotope([1.0, 0.0], [0.1 0.0; 0.0 0.1]);\n\njulia> ∈([1.0, 0.2], Z)\nfalse\njulia> ∈([1.0, 0.1], Z)\ntrue\n\nAlgorithm\n\nThe membership problem is computed by stating and solving the following linear program with the simplex method. Let p and n be the number of generators and ambient dimension, respectively. We consider the minimization of x_0 in the p+1-dimensional space of elements (x_0 ξ_1  ξ_p) constrained to 0  x_0  , ξ_i  -1 1 for all i = 1  p, and such that x-c = Gξ holds. If a feasible solution exists, the optimal value x_0 = 0 is achieved.\n\nNotes\n\nThis function is parametric in the number type N. For exact arithmetic use an appropriate backend, e.g. solver=GLPKSolverLP(method=:Exact).\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Zonotope}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Zonotope}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Zonotope{N}\n\nCreate a random zonotope.\n\nInput\n\nZonotope       – type for dispatch\nN              – (optional, default: Float64) numeric type\ndim            – (optional, default: 2) dimension\nrng            – (optional, default: GLOBAL_RNG) random number generator\nseed           – (optional, default: nothing) seed for reseeding\nnum_generators – (optional, default: -1) number of generators of the                     zonotope (see comment below)\n\nOutput\n\nA random zonotope.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1.\n\nThe number of generators can be controlled with the argument num_generators. For a negative value we choose a random number in the range dim:2*dim (except if dim == 1, in which case we only create a single generator).\n\n\n\n\n\n"
 },
 
 {
@@ -2525,7 +2709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{Real}, ::Zonotope{Real})\n∈(::AbstractVector{Real}, ::Zonotope{Real})\nvertices_list(::Zonotope)\ncenter(::Zonotope)\norder(::Zonotope)\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Zonotope\nσ(::AbstractVector{Real}, ::Zonotope{Real})\n∈(::AbstractVector{Real}, ::Zonotope{Real})\nrand(::Type{Zonotope})\nvertices_list(::Zonotope)\ncenter(::Zonotope)\norder(::Zonotope)\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -4129,11 +4313,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets._random_zero_sum_vector",
+    "page": "Utility Functions",
+    "title": "LazySets._random_zero_sum_vector",
+    "category": "function",
+    "text": "_random_zero_sum_vector(rng::AbstractRNG, N::Type{<:Real}, n::Int)\n\nCreate a random vector with entries whose sum is zero.\n\nInput\n\nrng – random number generator\nN   – numeric type\nn   – length of vector\n\nOutput\n\nA random vector of random numbers such that all positive entries come first and all negative entries come last, and such that the total sum is zero.\n\nAlgorithm\n\nThis is a preprocessing step of the algorithm here based on P. Valtr. Probability that n random points are in convex position.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.remove_duplicates_sorted!",
+    "page": "Utility Functions",
+    "title": "LazySets.remove_duplicates_sorted!",
+    "category": "function",
+    "text": "remove_duplicates_sorted!(v::AbstractVector)\n\nRemove duplicate entries in a sorted vector.\n\nInput\n\nv – sorted vector\n\nOutput\n\nThe input vector without duplicates.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.reseed",
+    "page": "Utility Functions",
+    "title": "LazySets.reseed",
+    "category": "function",
+    "text": "reseed(rng::AbstractRNG, seed::Union{Int, Nothing})::AbstractRNG\n\nReset the RNG seed if the seed argument is a number.\n\nInput\n\nrng  – random number generator\nseed – seed for reseeding\n\nOutput\n\nThe input RNG if the seed is nothing, and a reseeded RNG otherwise.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#Functions-and-Macros-1",
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints\nnonzero_indices\nsamedir"
+    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints\nnonzero_indices\nsamedir\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed"
 },
 
 {
