@@ -2313,6 +2313,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.copy-Union{Tuple{PT}, Tuple{PT}, Tuple{N}} where PT<:Union{HPolyhedron{N}, HPolytope{N}} where N",
+    "page": "Common Set Representations",
+    "title": "Base.copy",
+    "category": "method",
+    "text": "copy(P::PT) where {N, PT<:HPoly{N}}\n\nCreate a copy of a polyhedron.\n\nInput\n\nP – polyhedron\n\nOutput\n\nThe polyhedron obtained by copying the constraints in P using Base.copy.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.tosimplehrep-Tuple{Union{HPolyhedron{Real}, HPolytope{Real}}}",
     "page": "Common Set Representations",
     "title": "LazySets.tosimplehrep",
@@ -2369,11 +2377,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.remove_redundant_constraints",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_constraints",
+    "category": "function",
+    "text": "remove_redundant_constraints(P::PT;\n                             backend=GLPKSolverLP()) where {N, PT<:HPoly{N}}\n\nGiven a polyhedron in H-representation, return a new polyhedron with no reundant constraints.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nA new polyhedron obtained by removing the redundant constraints in P.\n\nAlgorithm\n\nSee remove_redundant_constraints!. \n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.remove_redundant_constraints!",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_constraints!",
+    "category": "function",
+    "text": "remove_redundant_constraints!(P::PT;\n                              backend=GLPKSolverLP()) where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation; the polyhedron is updated inplace.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nThe polyhedron obtained by removing the redundant constraints in P.\n\nAlgorithm\n\nIf the polyhedron P has m constraints and its dimension is n, this function checks one by one if each of the m constraints is implied by the remaining ones. To check if the k-th constraint is redundant, an LP is formulated.\n\nFor details, see Fukuda\'s Polyhedra FAQ.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Constraint-representation-2",
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{Real})\nρ(::AbstractVector{Real}, ::HPoly{Real})\nσ(::AbstractVector{Real}, ::HPoly{Real})\n∈(::AbstractVector{Real}, ::HPoly{Real})\naddconstraint!(::HPoly{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPoly{Real})\ntosimplehrep(::HPoly{Real})\ntohrep(::HPoly{Real})\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{Real}, ::HPoly{Real})\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{Real})\npolyhedron(::HPoly)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{Real})\nρ(::AbstractVector{Real}, ::HPoly{Real})\nσ(::AbstractVector{Real}, ::HPoly{Real})\n∈(::AbstractVector{Real}, ::HPoly{Real})\naddconstraint!(::HPoly{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPoly{Real})\ncopy(P::PT) where {N, PT<:HPoly{N}}\ntosimplehrep(::HPoly{Real})\ntohrep(::HPoly{Real})\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{Real}, ::HPoly{Real})\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{Real})\npolyhedron(::HPoly)\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
 },
 
 {
