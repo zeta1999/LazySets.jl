@@ -941,7 +941,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=false\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) to post process or not the                        intersection of constraints with a convex hull\n\nOutput\n\nList of vertices.\n\n\n\n\n\n"
+    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=false,\n              check_feasibility::Bool=true\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) flag to post-process the                        intersection of constraints with a convex hull\ncheck_feasibility – (optional, default: true) flag to check whether the                        polygon was empty (required for correctness in case of                        empty polygons)\n\nOutput\n\nList of vertices.\n\nAlgorithm\n\nWe compute each vertex as the intersection of consecutive lines defined by the half-spaces. If check_feasibility is active, we then check if the constraints of the polygon were actually feasible (i.e., they pointed in the right direction). For this we compute the average of all vertices and check membership in each constraint.\n\n\n\n\n\n"
 },
 
 {
