@@ -253,7 +253,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Iterative Refinement",
     "title": "Iterative Refinement",
     "category": "section",
-    "text": "This section of the manual describes an approximation method for an arbitrary two-dimensional convex set S and a given error bound ε using support vectors. The basic idea is to add new supporting directions whenever the approximation error is still bigger than ε.Pages = [\"iterative_refinement.md\"]\nDepth = 3CurrentModule = LazySets.Approximations\nDocTestSetup = quote\n    using LazySets, Plots, LazySets.Approximations\nend"
+    "text": "This section of the manual describes an approximation method for an arbitrary two-dimensional convex set S and a given error bound ε using support vectors. The basic idea is to add new supporting directions whenever the approximation error is still bigger than ε.Pages = [\"iterative_refinement.md\"]\nDepth = 3CurrentModule = LazySets.Approximations\nDocTestSetup = quote\n    using Plots, LazySets, LazySets.Approximations\nend"
 },
 
 {
@@ -261,7 +261,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Iterative Refinement",
     "title": "Local approximations",
     "category": "section",
-    "text": "The polygonal approximation of an arbitrary lazy convex set S is represented by a list of local approximations or refinements. More precisely, a local approximation is a triple (p_1 p_2 q), where:p_1 and p_2 belong to S\nthe segments (p_1 q) and (p_2 q) belong to support lines of SSince S is assumed to be convex, the segment (p_1 p_2) is inside S. Taking each support line (p_1 q) of a given list of local approximations of S, we can build a polygon in constraint representation that overapproximates S.The type LocalApproximation{N} implements a local approximation; it is parametric in the numeric type N, and also contains additional information regarding the quality of the approximation: The refinable field is a boolean that is true whenever the approximation can be improved, and err is an upper bound on the exact Hausdorff distance of the approximation with respect to the exact set S.Given the unit ball in the 2-norm, below we plot the local approximation along the East and North directions.using LazySets, Plots, LazySets.Approximations\n\nb = Ball2(zeros(2), 1.)\n\nplot(b, 1e-3, aspectratio=1, alpha=0.3)\n\nplot!(Singleton([1.0, 0.0]), annotations=(1.1, 0.1, text(\"p1\")), color=\"green\")\nplot!(Singleton([0.0, 1.0]), annotations=(0.1, 1.1, text(\"p2\")), color=\"green\")\nplot!(Singleton([1.0, 1.0]), annotations=(1.09, 1.1, text(\"q\")))\nplot!(Singleton([0.0, 0.0]), annotations=(0.1, 0.0, text(\"0\")), color=\"green\")\nplot!(annotations=(1.4, 0.1, text(\"d1\")))\nplot!(annotations=(0.1, 1.4, text(\"d2\")))\nplot!(annotations=(0.75, 0.8, text(\"ndir\")))\n\nplot!(x->x, x->1., -0.8, 1.3, line=1, color=\"black\", linestyle=:dash)\nplot!(x->1., x->x, -0.8, 1.3, line=1, color=\"black\", linestyle=:dash)\nplot!(x->x+1, x->0., 0.0, 0.4, line=1, color=\"red\", linestyle=:solid, arrow=true)\nplot!(x->0., x->x+1, 0.0, 0.4, line=1, color=\"red\", linestyle=:solid, arrow=true)\nplot!(x->-x, x->x+1, -1.2, .2, line=1., color=\"black\", linestyle=:dashdot)\nplot!(x->x+.6, x->x+.6, -.1, .08, line=1, color=\"red\", linestyle=:solid, arrow=true)We can instantiate and append this approximation to a fresh PolygonalOverapproximation object, which is a type that wraps a set and a list of LocalApproximations. The approximation is refinable, since it can be \"split\" along ndir, where ndir is the direction normal to the line (p_1 p_2) (shown dash-dotted in the figure), providing two approximations which are closer to the given set in Hausdorff distance.import LazySets.Approximations:PolygonalOverapproximation, addapproximation!\n\nΩ = PolygonalOverapproximation{Float64}(b)\np1, d1, p2, d2 = [1.0, 0.0], [1.0, 0.0], [0.0, 1.0], [0.0, 1.0]\napprox_EAST_NORTH = addapproximation!(Ω, p1, d1, p2, d2)\n\napprox_EAST_NORTH.refinableThe associated error is sqrt2-10414213, which is the distance between the point q and the intersection between the line (0 q) and the circle. Actually this point corresponds to the support vector of the set b along ndir.approx_EAST_NORTH.errThe refined approximation is computed next."
+    "text": "The polygonal approximation of an arbitrary lazy convex set S is represented by a list of local approximations or refinements. More precisely, a local approximation is a triple (p_1 p_2 q), where:p_1 and p_2 belong to S\nthe segments (p_1 q) and (p_2 q) belong to support lines of SSince S is assumed to be convex, the segment (p_1 p_2) is inside S. Taking each support line (p_1 q) of a given list of local approximations of S, we can build a polygon in constraint representation that overapproximates S.The type LocalApproximation{N} implements a local approximation; it is parametric in the numeric type N, and also contains additional information regarding the quality of the approximation: The refinable field is a boolean that is true whenever the approximation can be improved, and err is an upper bound on the exact Hausdorff distance of the approximation with respect to the exact set S.Given the unit ball in the 2-norm, below we plot the local approximation along the East and North directions.using Plots, LazySets, LazySets.Approximations\n\nb = Ball2(zeros(2), 1.)\n\nplot(b, 1e-3, aspectratio=1, alpha=0.3)\n\nplot!(Singleton([1.0, 0.0]), annotations=(1.1, 0.1, text(\"p1\")), color=\"green\")\nplot!(Singleton([0.0, 1.0]), annotations=(0.1, 1.1, text(\"p2\")), color=\"green\")\nplot!(Singleton([1.0, 1.0]), annotations=(1.09, 1.1, text(\"q\")))\nplot!(Singleton([0.0, 0.0]), annotations=(0.1, 0.0, text(\"0\")), color=\"green\")\nplot!(annotations=(1.4, 0.1, text(\"d1\")))\nplot!(annotations=(0.1, 1.4, text(\"d2\")))\nplot!(annotations=(0.75, 0.8, text(\"ndir\")))\n\nplot!(x->x, x->1., -0.8, 1.3, line=1, color=\"black\", linestyle=:dash)\nplot!(x->1., x->x, -0.8, 1.3, line=1, color=\"black\", linestyle=:dash)\nplot!(x->x+1, x->0., 0.0, 0.4, line=1, color=\"red\", linestyle=:solid, arrow=true)\nplot!(x->0., x->x+1, 0.0, 0.4, line=1, color=\"red\", linestyle=:solid, arrow=true)\nplot!(x->-x, x->x+1, -1.2, .2, line=1., color=\"black\", linestyle=:dashdot)\nplot!(x->x+.6, x->x+.6, -.1, .08, line=1, color=\"red\", linestyle=:solid, arrow=true)We can instantiate and append this approximation to a fresh PolygonalOverapproximation object, which is a type that wraps a set and a list of LocalApproximations. The approximation is refinable, since it can be \"split\" along ndir, where ndir is the direction normal to the line (p_1 p_2) (shown dash-dotted in the figure), providing two approximations which are closer to the given set in Hausdorff distance.import LazySets.Approximations:PolygonalOverapproximation, addapproximation!\n\nΩ = PolygonalOverapproximation(b)\np1, d1, p2, d2 = [1.0, 0.0], [1.0, 0.0], [0.0, 1.0], [0.0, 1.0]\napprox_EAST_NORTH = addapproximation!(Ω, p1, d1, p2, d2)\n\napprox_EAST_NORTH.refinableThe associated error is sqrt2-10414213, which is the distance between the point q and the intersection between the line (0 q) and the circle. Actually this point corresponds to the support vector of the set b along ndir.approx_EAST_NORTH.errThe refined approximation is computed next."
 },
 
 {
@@ -269,7 +269,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Iterative Refinement",
     "title": "Refinement",
     "category": "section",
-    "text": "Basically, the refinement step consists of splitting the local approximation (p_1 p_2 q) into two local approximations (p_1 s q) and (s p_2 q), where s is the support vector of S along ndir.To illustrate this, first let\'s add the remaining three approximations to Ω along the canonical directions, to build a box overapproximation of b.import LazySets.Approximations: refine, tohrep\n\nplot(b, 1e-3, aspectratio=1, alpha=0.3)\n\n# initialize box directions\nDIR_EAST, DIR_NORTH, DIR_WEST, DIR_SOUTH = [1., 0.], [0., 1.], [-1., 0.], [0., -1.]\npe, pn, pw, ps = σ(DIR_EAST, b), σ(DIR_NORTH, b), σ(DIR_WEST, b), σ(DIR_SOUTH, b)\n\naddapproximation!(Ω, pn, DIR_NORTH, pw, DIR_WEST)\naddapproximation!(Ω, pw, DIR_WEST, ps, DIR_SOUTH)\naddapproximation!(Ω, ps, DIR_SOUTH, pe, DIR_EAST)\n\nplot!(tohrep(Ω), alpha=0.2, color=\"orange\")Next we refine the first approximation of the list.(r1, r2) = refine(Ω, 1)\nΩ.approx_list[1] = r1\ninsert!(Ω.approx_list, 2, r2)\n\nplot(b, 1e-3, aspectratio=1, alpha=0.3)\nplot!(tohrep(Ω), alpha=0.2, color=\"orange\")We call r1 and r2 the right and left approximations respectively, since they are saved in counter-clockwise order. We can check that the first two approximations are still refinable.Ω.approx_list[1].refinable,  Ω.approx_list[2].refinableHence, we can make again a refinement of that approximation.(r1, r2) = refine(Ω, 1)\nΩ.approx_list[1] = r1\ninsert!(Ω.approx_list, 2, r2)\n\nplot(b, 1e-3, aspectratio=1, alpha=0.3)\nplot!(tohrep(Ω), alpha=0.2, color=\"orange\")The criterion for an approximation being refinable is that we can properly define a normal direction ndir. This boils down to checking for the following \"degenerate\" cases:p_1 and p_2 overlap.\np_1 and q overlap.\np_2 and q overlap.Moreover, we include the condition approx_error > TOL where TOL is the floating point epsilon in the given numerical precision."
+    "text": "Basically, the refinement step consists of splitting the local approximation (p_1 p_2 q) into two local approximations (p_1 s q) and (s p_2 q), where s is the support vector of S along ndir.To illustrate this, first let\'s add the remaining three approximations to Ω along the canonical directions, to build a box overapproximation of b.import LazySets.Approximations: refine, tohrep\n\nplot(b, 1e-3, aspectratio=1, alpha=0.3)\n\n# initialize box directions\nDIR_EAST, DIR_NORTH, DIR_WEST, DIR_SOUTH = [1., 0.], [0., 1.], [-1., 0.], [0., -1.]\npe, pn, pw, ps = σ(DIR_EAST, b), σ(DIR_NORTH, b), σ(DIR_WEST, b), σ(DIR_SOUTH, b)\n\nΩ = PolygonalOverapproximation(b)\naddapproximation!(Ω, ps, DIR_SOUTH, pe, DIR_EAST)\naddapproximation!(Ω, pw, DIR_WEST, ps, DIR_SOUTH)\naddapproximation!(Ω, pn, DIR_NORTH, pw, DIR_WEST)\naddapproximation!(Ω, pe, DIR_EAST, pn, DIR_NORTH)\n\nplot!(tohrep(Ω), alpha=0.2, color=\"orange\")Next we refine the first approximation of the list.approx = pop!(Ω.approx_stack)\n(r1, r2) = refine(approx, Ω.S)\npush!(Ω.approx_stack, r2)\npush!(Ω.approx_stack, r1)\n\nplot(b, 1e-3, aspectratio=1, alpha=0.3)\nplot!(tohrep(Ω), alpha=0.2, color=\"orange\")We call r1 and r2 the right and left approximations respectively, since they are saved in counter-clockwise order. We can check that the first two approximations are still refinable.Ω.approx_stack[end].refinable,  Ω.approx_stack[end-1].refinableHence, we can make again a refinement of that approximation.approx = pop!(Ω.approx_stack)\n(r1, r2) = refine(approx, Ω.S)\npush!(Ω.approx_stack, r2)\npush!(Ω.approx_stack, r1)\n\nplot(b, 1e-3, aspectratio=1, alpha=0.3)\nplot!(tohrep(Ω), alpha=0.2, color=\"orange\")The criterion for an approximation being refinable is that we can properly define a normal direction ndir. This boils down to checking for the following \"degenerate\" cases:p_1 and p_2 overlap.\np_1 and q overlap.\np_2 and q overlap.Moreover, we include the condition approx_error > TOL where TOL is the floating point epsilon in the given numerical precision."
 },
 
 {
@@ -285,7 +285,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Iterative Refinement",
     "title": "Example",
     "category": "section",
-    "text": "As a final example consider the iterative refinement of the ball b for different values of the approximation threshold ε.import LazySets.Approximations:overapproximate, approximate\n\np0 = plot(b, 1e-6, aspectratio=1)\np1 = plot!(p0, overapproximate(b, 1.), alpha=0.4, aspectratio=1)\n\np0 = plot(b, 1e-6, aspectratio=1)\np2 = plot!(p0, overapproximate(b, 0.1), alpha=0.4, aspectratio=1)\n\np0 = plot(b, 1e-6, aspectratio=1)\np3 = plot!(p0, overapproximate(b, 0.01), alpha=0.4, aspectratio=1)\n\nplot(p1, p2, p3, layout=(1, 3))We can check that the error is getting smaller with ε in each case:f = x -> (minimum(x), maximum(x))\ng = ε -> f([ai.err for ai in approximate(b, ε).approx_list])\ng(1.), g(0.1), g(0.01)Meanwhile, the number of constraints of the polygonal overapproximation increases, in this example by a power of 2 when the error is divided by a factor 10.h = ε ->  length(approximate(b, ε).approx_list)\nh(1.), h(0.1), h(0.01)note: Note\nActually, the plotting function for an arbitrary LazySet plot(...), called recipe in the context of Plots.jl, is such that it receives a numeric argument ε and the routine itself calls overapproximate. However, some sets such as abstract polygons have their own plotting recipe hence do not require the error threshold, since they are plotted exactly as the convex hull of their vertices."
+    "text": "As a final example consider the iterative refinement of the ball b for different values of the approximation threshold ε.import LazySets.Approximations:overapproximate, approximate\n\np0 = plot(b, 1e-6, aspectratio=1)\np1 = plot!(p0, overapproximate(b, 1.), alpha=0.4, aspectratio=1)\n\np0 = plot(b, 1e-6, aspectratio=1)\np2 = plot!(p0, overapproximate(b, 0.1), alpha=0.4, aspectratio=1)\n\np0 = plot(b, 1e-6, aspectratio=1)\np3 = plot!(p0, overapproximate(b, 0.01), alpha=0.4, aspectratio=1)\n\nplot(p1, p2, p3, layout=(1, 3))Meanwhile, the number of constraints of the polygonal overapproximation increases, in this example by a power of 2 when the error is divided by a factor 10.h = ε ->  length(approximate(b, ε).constraints)\nh(1.), h(0.1), h(0.01)note: Note\nActually, the plotting function for an arbitrary LazySet plot(...), called recipe in the context of Plots.jl, is such that it receives a numeric argument ε and the routine itself calls overapproximate. However, some sets such as abstract polygons have their own plotting recipe and hence do not require the error threshold, since they are plotted exactly as the convex hull of their vertices."
 },
 
 {
@@ -301,7 +301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Interval Hulls",
     "title": "Interval Hulls",
     "category": "section",
-    "text": "In this section we illustrate the interval hull operators as well as several plotting functionalities.Pages = [\"interval_hulls.md\"]\nDepth = 3DocTestSetup = quote\n    using LazySets, Plots, LazySets.Approximations\nend"
+    "text": "In this section we illustrate the interval hull operators as well as several plotting functionalities.Pages = [\"interval_hulls.md\"]\nDepth = 3DocTestSetup = quote\n    using Plots, LazySets, LazySets.Approximations\nend"
 },
 
 {
@@ -309,7 +309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Interval Hulls",
     "title": "Balls and Singletons",
     "category": "section",
-    "text": "Consider a ball in the 2-norm. By default, the coefficients of this set are 64-bit floating point numbers. Other numeric types (such as lower precision floating point, or rational) can be defined with the proper argument types in the Ball2 constructor.using LazySets, Plots\n\nX = Ball2(ones(2), 0.5)To plot a lazy set, we use the plot function. By design, lazy sets plots overapproximate with box directions only. To have a sharp definition of the borders, use the accuracy as a second argument.plot(X, 1e-3, aspectratio=1)To add plots to the same pair of axes we use plot!. Let\'s add some points of the set which are farthest in some given directions. Single points can be plotted using the Singleton type. In the third line of code we plot the center of the ball picking a custom cross marker.plot!(Singleton(σ([1., 0], X)))\nplot!(Singleton(σ([1., 1], X)))\nplot!(Singleton(X.center), markershape=:x)note: Note\nTo see the list of available plot keyword arguments, use the plotattr([attr]) function, where attr is the symbol :Plot, :Series, :Axis or :Subplot.For the remainder of this section we define another ball in the 2-norm and its convex hull with X.Y = Ball2([-3,-.5], 0.8)\nZ = CH(X, Y)\n\nplot(X, 1e-3, aspectratio=1)\nplot!(Y, 1e-3)\nplot!(Z, 1e-3, alpha=0.2)"
+    "text": "Consider a ball in the 2-norm. By default, the coefficients of this set are 64-bit floating point numbers. Other numeric types (such as lower precision floating point, or rational) can be defined with the proper argument types in the Ball2 constructor.using Plots, LazySets\n\nX = Ball2(ones(2), 0.5)To plot a lazy set, we use the plot function. By design, lazy sets plots overapproximate with box directions only. To have a sharp definition of the borders, use the accuracy as a second argument.plot(X, 1e-3, aspectratio=1)To add plots to the same pair of axes we use plot!. Let\'s add some points of the set which are farthest in some given directions. Single points can be plotted using the Singleton type. In the third line of code we plot the center of the ball picking a custom cross marker.plot!(Singleton(σ([1., 0], X)))\nplot!(Singleton(σ([1., 1], X)))\nplot!(Singleton(X.center), markershape=:x)note: Note\nTo see the list of available plot keyword arguments, use the plotattr([attr]) function, where attr is the symbol :Plot, :Series, :Axis or :Subplot.For the remainder of this section we define another ball in the 2-norm and its convex hull with X.Y = Ball2([-3,-.5], 0.8)\nZ = CH(X, Y)\n\nplot(X, 1e-3, aspectratio=1)\nplot!(Y, 1e-3)\nplot!(Z, 1e-3, alpha=0.2)"
 },
 
 {
@@ -357,7 +357,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Convex Hulls",
     "title": "Convex Hulls",
     "category": "section",
-    "text": "In this section we illustrate the convex hull operation. We give examples of the symbolic implementation, and the concrete convex hull in low dimensions.Pages = [\"convex_hulls.md\"]\nDepth = 3DocTestSetup = quote\n    using LazySets, Plots, LazySets.Approximations\nend"
+    "text": "In this section we illustrate the convex hull operation. We give examples of the symbolic implementation, and the concrete convex hull in low dimensions.Pages = [\"convex_hulls.md\"]\nDepth = 3DocTestSetup = quote\n    using Plots, LazySets, LazySets.Approximations\nend"
 },
 
 {
@@ -365,7 +365,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Convex Hulls",
     "title": "Symbolic convex hull",
     "category": "section",
-    "text": "The lazy convex hull, ConvexHull, is the binary operator that implements the convex hull of the union between two convex sets.using LazySets, Plots\n\nA = 1/sqrt(2.) * [1 -1; 1 1]\nBn = n -> BallInf(ones(n), 0.2)\n\nX = Bn(2)\nY = CH(X, expm(A) * X)The name CH is an alias for ConvexHull, so you can use both interchangeably. This type is parametric in the operands\'s types.p = plot(X, 1e-2, color=\"blue\")\nplot!(p, expm(A) * X, 1e-2, color=\"green\")\nplot!(p, Y, 1e-2, color=\"red\", alpha=0.2)We can as well work with a 100-dimensional set:X = Bn(100)\nA = blkdiag([sparse(A) for i in 1:50]...)\nY = CH(X, expm(full(A)) * X)\n\ndim(Y)To take the convex hull of a large number of sets, there is the n-ary type ConvexHullArray. For instance, below we create a collection of balls b via list comprehension, and pass them to create a new ConvexHullArray instance.b = [Ball2([2*pi*i/100, sin(2*pi*i/100)], 0.05) for i in 1:100];\nc = ConvexHullArray(b);\n\nplot(c, 1e-3, alpha=0.1, color=\"blue\")\nplot!(b, 1e-3, alpha=0.5, color=\"red\")"
+    "text": "The lazy convex hull, ConvexHull, is the binary operator that implements the convex hull of the union between two convex sets.using Plots, LazySets\n\nA = 1/sqrt(2.) * [1 -1; 1 1]\nBn = n -> BallInf(ones(n), 0.2)\n\nX = Bn(2)\nY = CH(X, exp(A) * X)The name CH is an alias for ConvexHull, so you can use both interchangeably. This type is parametric in the operands\'s types.p = plot(X, 1e-2, color=\"blue\")\nplot!(p, exp(A) * X, 1e-2, color=\"green\")\nplot!(p, Y, 1e-2, color=\"red\", alpha=0.2)We can as well work with a 100-dimensional set:using SparseArrays\n\nX = Bn(100)\nA = blockdiag([sparse(A) for i in 1:50]...)\nY = CH(X, exp(Matrix(A)) * X)\n\ndim(Y)To take the convex hull of a large number of sets, there is the n-ary type ConvexHullArray. For instance, below we create a collection of balls b via list comprehension, and pass them to create a new ConvexHullArray instance.b = [Ball2([2*pi*i/100, sin(2*pi*i/100)], 0.05) for i in 1:100];\nc = ConvexHullArray(b);\n\nplot(c, 1e-3, alpha=0.1, color=\"blue\")\nplot!(b, 1e-3, alpha=0.5, color=\"red\")"
 },
 
 {
@@ -533,7 +533,7 @@ var documenterSearchIndex = {"docs": [
     "page": "A Reachability Algorithm",
     "title": "Algorithm",
     "category": "section",
-    "text": "using LazySets, Plots\n\nfunction Algorithm1(A, X0, δ, μ, T)\n    # bloating factors\n    Anorm = norm(A, Inf)\n    α = (expm(δ * Anorm) - 1 - δ * Anorm) / norm(X0, Inf)\n    β = (expm(δ * Anorm) - 1) * μ / Anorm\n\n    # discretized system\n    n = size(A, 1)\n    ϕ = expm(δ * A)\n    N = floor(Int, T / δ)\n\n    # preallocate arrays\n    Q = Vector{LazySet}(N)\n    R = Vector{LazySet}(N)\n\n    # initial reach set in the time interval [0, δ]\n    ϕp = (I+ϕ) / 2\n    ϕm = (I-ϕ) / 2\n    c = X0.center\n    Q1_generators = hcat(ϕp * X0.generators, ϕm * c, ϕm * X0.generators)\n    Q[1] = Zonotope(ϕp * c, Q1_generators) ⊕ BallInf(zeros(n), α + β)\n    R[1] = Q[1]\n\n    # set recurrence for [δ, 2δ], ..., [(N-1)δ, Nδ]\n    ballβ = BallInf(zeros(n), β)\n    for i in 2:N\n        Q[i] = ϕ * Q[i-1] ⊕ ballβ\n        R[i] = Q[i]\n    end\n    return R\nend\nnothing # hide"
+    "text": "using Plots, LazySets\n\nfunction Algorithm1(A, X0, δ, μ, T)\n    # bloating factors\n    Anorm = norm(A, Inf)\n    α = (expm(δ * Anorm) - 1 - δ * Anorm) / norm(X0, Inf)\n    β = (expm(δ * Anorm) - 1) * μ / Anorm\n\n    # discretized system\n    n = size(A, 1)\n    ϕ = expm(δ * A)\n    N = floor(Int, T / δ)\n\n    # preallocate arrays\n    Q = Vector{LazySet}(N)\n    R = Vector{LazySet}(N)\n\n    # initial reach set in the time interval [0, δ]\n    ϕp = (I+ϕ) / 2\n    ϕm = (I-ϕ) / 2\n    c = X0.center\n    Q1_generators = hcat(ϕp * X0.generators, ϕm * c, ϕm * X0.generators)\n    Q[1] = Zonotope(ϕp * c, Q1_generators) ⊕ BallInf(zeros(n), α + β)\n    R[1] = Q[1]\n\n    # set recurrence for [δ, 2δ], ..., [(N-1)δ, Nδ]\n    ballβ = BallInf(zeros(n), β)\n    for i in 2:N\n        Q[i] = ϕ * Q[i-1] ⊕ ballβ\n        R[i] = Q[i]\n    end\n    return R\nend\nnothing # hide"
 },
 
 {
@@ -589,7 +589,7 @@ var documenterSearchIndex = {"docs": [
     "page": "A Hybrid Reachability Algorithm",
     "title": "Hybrid algorithm",
     "category": "section",
-    "text": "The hybrid algorithm maintains a queue of triples (m X t) where m is a mode, X is a set of states, and t is a time point. For each element in the queue the algorithm calls the Continuous algorithm to compute the reachable states in the current mode m, starting in the current states X at time t. The result is a flowpipe, i.e., a sequence of sets of states. For each of those sets we check intersection with the guards of m\'s outgoing transitions. Depending on the transition semantics, we add the discrete successors to the queue and continue with the next iteration until the queue is empty.using LazySets, Plots\n\nfunction reach_hybrid(As, Ts, init, δ, μ, T, max_order, instant_transitions)\n    # initialize queue with initial mode and states at time t=0\n    queue = [(init[1], init[2], 0.)]\n\n    res = Tuple{LazySet, Int}[]\n    while !isempty(queue)\n        init, loc, t = pop!(queue)\n        println(\"currently in location $loc at time $t\")\n        R = reach_continuous(As[loc], init, δ, μ, T-t, max_order)\n        found_transition = false\n        for i in 1:length(R)-1\n            S = R[i]\n            push!(res, (S, loc))\n            for (guard, tgt_loc) in Ts[loc]\n                if !is_intersection_empty(S, guard)\n                    new_t = t + δ * i\n                    push!(queue, (S, tgt_loc, new_t))\n                    found_transition = true\n                    println(\"transition $loc -> $tgt_loc at time $new_t\")\n                end\n            end\n            if instant_transitions && found_transition\n                break\n            end\n        end\n        if !instant_transitions || !found_transition && length(R) > 0\n            push!(res, (R[end], loc))\n        end\n    end\n    return res\nend\nnothing # hide"
+    "text": "The hybrid algorithm maintains a queue of triples (m X t) where m is a mode, X is a set of states, and t is a time point. For each element in the queue the algorithm calls the Continuous algorithm to compute the reachable states in the current mode m, starting in the current states X at time t. The result is a flowpipe, i.e., a sequence of sets of states. For each of those sets we check intersection with the guards of m\'s outgoing transitions. Depending on the transition semantics, we add the discrete successors to the queue and continue with the next iteration until the queue is empty.using Plots, LazySets\n\nfunction reach_hybrid(As, Ts, init, δ, μ, T, max_order, instant_transitions)\n    # initialize queue with initial mode and states at time t=0\n    queue = [(init[1], init[2], 0.)]\n\n    res = Tuple{LazySet, Int}[]\n    while !isempty(queue)\n        init, loc, t = pop!(queue)\n        println(\"currently in location $loc at time $t\")\n        R = reach_continuous(As[loc], init, δ, μ, T-t, max_order)\n        found_transition = false\n        for i in 1:length(R)-1\n            S = R[i]\n            push!(res, (S, loc))\n            for (guard, tgt_loc) in Ts[loc]\n                if !is_intersection_empty(S, guard)\n                    new_t = t + δ * i\n                    push!(queue, (S, tgt_loc, new_t))\n                    found_transition = true\n                    println(\"transition $loc -> $tgt_loc at time $new_t\")\n                end\n            end\n            if instant_transitions && found_transition\n                break\n            end\n        end\n        if !instant_transitions || !found_transition && length(R) > 0\n            push!(res, (R[end], loc))\n        end\n    end\n    return res\nend\nnothing # hide"
 },
 
 {
@@ -629,7 +629,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Concrete Polyhedra",
     "title": "Concrete Polyhedra",
     "category": "section",
-    "text": "The focus of LazySets.jl is to wrap set representations and operations into specialized types, delaying the evaluation of the result of an expression until it is necessary. However, sometimes it is necessary to do an explicit computation. For concrete operations with polyhedra we rely on the polyhedra manipulation library Polyhedra.jl.Actually, Polyhedra.jl provides a unified interface to well-known implementations of polyhedral computations, such as CDD or LRS (see the complete list in the documentation of Polyhedra.jl). This is a great advantage because we can easily use a library that supports floating point arithmetic, rational arithmetic, multiple precision, etc. The libraries also include projection and elimination of variables through Fourier-Motzkin.Below we give examples of operations that are actually done via Polyhedra.jl.Pages = [\"concrete_polyhedra.md\"]\nDepth = 3DocTestSetup = quote\n    using LazySets, Plots, LazySets.Approximations, Polyhedra\nend"
+    "text": "The focus of LazySets.jl is to wrap set representations and operations into specialized types, delaying the evaluation of the result of an expression until it is necessary. However, sometimes it is necessary to do an explicit computation. For concrete operations with polyhedra we rely on the polyhedra manipulation library Polyhedra.jl.Actually, Polyhedra.jl provides a unified interface to well-known implementations of polyhedral computations, such as CDD or LRS (see the complete list in the documentation of Polyhedra.jl). This is a great advantage because we can easily use a library that supports floating point arithmetic, rational arithmetic, multiple precision, etc. The libraries also include projection and elimination of variables through Fourier-Motzkin.Below we give examples of operations that are actually done via Polyhedra.jl.Pages = [\"concrete_polyhedra.md\"]\nDepth = 3DocTestSetup = quote\n    using Plots, LazySets, LazySets.Approximations, Polyhedra\nend"
 },
 
 {
@@ -637,7 +637,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Concrete Polyhedra",
     "title": "Creating polyhedra",
     "category": "section",
-    "text": "To use the Polyhedra.jl interface, you need to load the package with using Polyhedra. Let\'s create an H-representation object:using LazySets, Plots, Polyhedra\n\nA = [1. 1;1 -1;-1 0]\nb = [1.,0,0]\nH = Polyhedra.hrep(A, b)It is used to instantiate a new polyhedron:p = polyhedron(H)Now, p is of the generic type Polyhedra.SimplePolyhedron{2,Float64, ...}, where 2 states for its ambient dimension, and Float64 the numeric field. The remaining fields specify the type of representation:typeof(p)Observe that we can use a particular backend, such as the CDD library:using CDDLib\n\np = polyhedron(H, CDDLib.Library())On the other hand, a LazySets.HPolytope object can be constructed from p:x = HPolytope(p)\nx.constraintsConversely, from a HPolytope we can build a polyhedron:y = polyhedron(x)\ntypeof(y)Moreover, you can specify the backend with an extra argument. For instance, we can use an exact representation through the Library(:exact):A, b = Rational{Int}[1 1;1 -1;-1 0], Rational{Int}[1,0,0]\np = HPolytope(A, b)\n\npolyhedron(p, CDDLib.Library(:exact))"
+    "text": "To use the Polyhedra.jl interface, you need to load the package with using Polyhedra. Let\'s create an H-representation object:using Plots, LazySets, Polyhedra\n\nA = [1. 1;1 -1;-1 0]\nb = [1.,0,0]\nH = Polyhedra.hrep(A, b)It is used to instantiate a new polyhedron:p = polyhedron(H)Now, p is of the generic type Polyhedra.SimplePolyhedron{2,Float64, ...}, where 2 states for its ambient dimension, and Float64 the numeric field. The remaining fields specify the type of representation:typeof(p)Observe that we can use a particular backend, such as the CDD library:using CDDLib\n\np = polyhedron(H, CDDLib.Library())On the other hand, a LazySets.HPolytope object can be constructed from p:x = HPolytope(p)\nx.constraintsConversely, from a HPolytope we can build a polyhedron:y = polyhedron(x)\ntypeof(y)Moreover, you can specify the backend with an extra argument. For instance, we can use an exact representation through the Library(:exact):A, b = Rational{Int}[1 1;1 -1;-1 0], Rational{Int}[1,0,0]\np = HPolytope(A, b)\n\npolyhedron(p, CDDLib.Library(:exact))"
 },
 
 {
@@ -677,7 +677,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n19-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolytope\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n HPolyhedron\n Hyperplane\n Intersection\n IntersectionArray\n HalfSpace\n Line\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n\n\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n19-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolytope\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n HPolyhedron\n HalfSpace\n Hyperplane\n Intersection\n IntersectionArray\n Line\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n\n\n\n\n\n"
 },
 
 {
@@ -929,11 +929,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#Base.rand-Union{Tuple{Type{HPOLYGON}}, Tuple{HPOLYGON}} where HPOLYGON<:AbstractHPolygon",
+    "page": "Set Interfaces",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{HPOLYGON}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing,\n     [num_constraints]::Int=-1\n    )::HPOLYGON{N} where {HPOLYGON<:AbstractHPolygon}\n\nCreate a random polygon in constraint representation.\n\nInput\n\nHPOLYGON        – type for dispatch\nN               – (optional, default: Float64) numeric type\ndim             – (optional, default: 2) dimension\nrng             – (optional, default: GLOBAL_RNG) random number generator\nseed            – (optional, default: nothing) seed for reseeding\nnum_constraints – (optional, default: -1) number of constraints of the                      polygon (must be 3 or bigger; see comment below)\n\nOutput\n\nA random polygon in constraint representation.\n\nAlgorithm\n\nWe create a random polygon in vertex representation and convert it to constraint representation. See rand(::Type{VPolygon}). For non-flat polygons the number of vertices and the number of constraints are identical.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#LazySets.vertices_list-Tuple{AbstractHPolygon{Real}}",
     "page": "Set Interfaces",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=false\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) to post process or not the                        intersection of constraints with a convex hull\n\nOutput\n\nList of vertices.\n\n\n\n\n\n"
+    "text": "vertices_list(P::AbstractHPolygon{N},\n              apply_convex_hull::Bool=false,\n              check_feasibility::Bool=true\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a polygon in constraint representation.\n\nInput\n\nP                 – polygon in constraint representation\napply_convex_hull – (optional, default: false) flag to post-process the                        intersection of constraints with a convex hull\ncheck_feasibility – (optional, default: true) flag to check whether the                        polygon was empty (required for correctness in case of                        empty polygons)\n\nOutput\n\nList of vertices.\n\nAlgorithm\n\nWe compute each vertex as the intersection of consecutive lines defined by the half-spaces. If check_feasibility is active, we then check if the constraints of the polygon were actually feasible (i.e., they pointed in the right direction). For this we compute the average of all vertices and check membership in each constraint.\n\n\n\n\n\n"
 },
 
 {
@@ -957,7 +965,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.addconstraint!",
     "category": "method",
-    "text": "addconstraint!(P::AbstractHPolygon{N},\n               constraint::LinearConstraint{N};\n               [linear_search]::Bool=(\n                length(P.constraints) < BINARY_SEARCH_THRESHOLD)\n              )::Nothing where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon in constraint representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n\n\n"
+    "text": "addconstraint!(P::AbstractHPolygon{N},\n               constraint::LinearConstraint{N};\n               linear_search::Bool=(length(P.constraints) < BINARY_SEARCH_THRESHOLD)\n              )::Nothing where {N<:Real}\n\nAdd a linear constraint to a polygon in constraint representation, keeping the constraints sorted by their normal directions.\n\nInput\n\nP          – polygon in constraint representation\nconstraint – linear constraint to add\n\nOutput\n\nNothing.\n\n\n\n\n\n"
 },
 
 {
@@ -973,7 +981,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "HPolygon",
     "category": "section",
-    "text": "An HPolygon is a polygon in H-representation (or constraint representation).AbstractHPolygonThis interface defines the following functions:an_element(::AbstractHPolygon{N}) where {N<:Real}\n∈(::AbstractVector{Real}, ::AbstractHPolygon{Real})\nvertices_list(::AbstractHPolygon{Real})\ntohrep(::AbstractHPolygon{Real})\ntovrep(::AbstractHPolygon{Real})\naddconstraint!(::AbstractHPolygon{Real}, ::LinearConstraint{Real})\nconstraints_list(::AbstractHPolygon{Real})"
+    "text": "An HPolygon is a polygon in H-representation (or constraint representation).AbstractHPolygonThis interface defines the following functions:an_element(::AbstractHPolygon{N}) where {N<:Real}\n∈(::AbstractVector{Real}, ::AbstractHPolygon{Real})\nrand(::Type{HPOLYGON}) where {HPOLYGON<:AbstractHPolygon}\nvertices_list(::AbstractHPolygon{Real})\ntohrep(::AbstractHPolygon{Real})\ntovrep(::AbstractHPolygon{Real})\naddconstraint!(::AbstractHPolygon{Real}, ::LinearConstraint{Real})\nconstraints_list(::AbstractHPolygon{Real})"
 },
 
 {
@@ -1233,11 +1241,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Ball2}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Ball2}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ball2{N}\n\nCreate a random ball in the 2-norm.\n\nInput\n\nBall2 – type for dispatch\nN     – (optional, default: Float64) numeric type\ndim   – (optional, default: 2) dimension\nrng   – (optional, default: GLOBAL_RNG) random number generator\nseed  – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ball in the 2-norm.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Euclidean-norm-ball-1",
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\nσ(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\ncenter(::Ball2)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
+    "text": "Ball2\nσ(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ball2{AbstractFloat})\ncenter(::Ball2)\nrand(::Type{Ball2})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
 },
 
 {
@@ -1281,11 +1297,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{BallInf}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{BallInf}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::BallInf{N}\n\nCreate a random ball in the infinity norm.\n\nInput\n\nBallInf – type for dispatch\nN       – (optional, default: Float64) numeric type\ndim     – (optional, default: 2) dimension\nrng     – (optional, default: GLOBAL_RNG) random number generator\nseed    – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ball in the infinity norm.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Infinity-norm-ball-1",
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
+    "text": "BallInf\ncenter(::BallInf)\nradius(::BallInf, ::Real)\nradius_hyperrectangle(::BallInf)\nradius_hyperrectangle(::BallInf, ::Int)\nrand(::Type{BallInf})Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1329,6 +1353,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Ball1}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Ball1}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ball1{N}\n\nCreate a random ball in the 1-norm.\n\nInput\n\nBall1 – type for dispatch\nN     – (optional, default: Float64) numeric type\ndim   – (optional, default: 2) dimension\nrng   – (optional, default: GLOBAL_RNG) random number generator\nseed  – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ball in the 1-norm.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.constraints_list-Tuple{Ball1}",
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
@@ -1341,7 +1373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)\nconstraints_list(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Ball1\nσ(::AbstractVector{Real}, ::Ball1{Real})\n∈(::AbstractVector{Real}, ::Ball1{Real})\nvertices_list(::Ball1)\ncenter(::Ball1)\nrand(::Type{Ball1})\nconstraints_list(::Ball1)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -1377,11 +1409,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Ballp}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Ballp}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ballp{N}\n\nCreate a random ball in the p-norm.\n\nInput\n\nBallp – type for dispatch\nN     – (optional, default: Float64) numeric type\ndim   – (optional, default: 2) dimension\nrng   – (optional, default: GLOBAL_RNG) random number generator\nseed  – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ball in the p-norm.\n\nAlgorithm\n\nThe center and radius are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative. The p-norm is a normally distributed number ≥ 1 with mean 1 and standard deviation 1.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#p-norm-ball-1",
     "page": "Common Set Representations",
     "title": "p-norm ball",
     "category": "section",
-    "text": "Ballp\nσ(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\ncenter(::Ballp)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
+    "text": "Ballp\nσ(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ballp{AbstractFloat})\ncenter(::Ballp)\nrand(::Type{Ballp})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
 },
 
 {
@@ -1409,6 +1449,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Ellipsoid}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Ellipsoid}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ellipsoid{N}\n\nCreate a random ellipsoid.\n\nInput\n\nEllipsoid – type for dispatch\nN         – (optional, default: Float64) numeric type\ndim       – (optional, default: 2) dimension\nrng       – (optional, default: GLOBAL_RNG) random number generator\nseed      – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ellipsoid.\n\nAlgorithm\n\nThe center is a normally distributed vector with entries of mean 0 and standard deviation 1.\n\nThe idea for the shape matrix comes from here. The matrix is symmetric positive definite, but also diagonally dominant.\n\nQ =  rac12(S + S^T) + nI\n\nwhere n = dim (defaults to 2), and S is a n times n random matrix whose coefficients are uniformly distributed in the interval -1 1.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.center-Tuple{Ellipsoid}",
     "page": "Common Set Representations",
     "title": "LazySets.center",
@@ -1421,7 +1469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Ellipsoid",
     "category": "section",
-    "text": "Ellipsoid\nσ(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\ncenter(::Ellipsoid)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
+    "text": "Ellipsoid\nσ(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\n∈(::AbstractVector{AbstractFloat}, ::Ellipsoid{AbstractFloat})\nrand(::Type{Ellipsoid})\ncenter(::Ellipsoid)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
 },
 
 {
@@ -1473,6 +1521,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{EmptySet}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{EmptySet}; [N]::Type{<:Real}=Float64, [dim]::Int=0,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::EmptySet{N}\n\nCreate an empty set (note that there is nothing to randomize).\n\nInput\n\nEmptySet – type for dispatch\nN        – (optional, default: Float64) numeric type\ndim      – (optional, default: 0) dimension (is ignored)\nrng      – (optional, default: GLOBAL_RNG) random number generator\nseed     – (optional, default: nothing) seed for reseeding\n\nOutput\n\nThe (only) empty set of the given numeric type.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{EmptySet}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1509,7 +1565,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Empty set",
     "category": "section",
-    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{Real}, ::EmptySet{Real})\n∈(::AbstractVector{Real}, ::EmptySet{Real})\nan_element(::EmptySet)\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real)\nradius(::EmptySet, ::Real)\ndiameter(::EmptySet, ::Real)Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{Real}, ::EmptySet{Real})\n∈(::AbstractVector{Real}, ::EmptySet{Real})\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real)\nradius(::EmptySet, ::Real)\ndiameter(::EmptySet, ::Real)Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1561,6 +1617,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{LazySets.HalfSpace}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{HalfSpace}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::HalfSpace{N}\n\nCreate a random half-space.\n\nInput\n\nHalfSpace – type for dispatch\nN         – (optional, default: Float64) numeric type\ndim       – (optional, default: 2) dimension\nrng       – (optional, default: GLOBAL_RNG) random number generator\nseed      – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random half-space.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the constraint a is nonzero.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{LazySets.HalfSpace}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1605,7 +1669,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{Real}, ::HalfSpace{Real})\n∈(::AbstractVector{Real}, ::HalfSpace{Real})\nan_element(::HalfSpace{N}) where {N<:Real}\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nLazySets.halfspace_left(::AbstractVector{Real}, ::AbstractVector{Real})\nLazySets.halfspace_right(::AbstractVector{Real}, ::AbstractVector{Real})Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{Real}, ::HalfSpace{Real})\n∈(::AbstractVector{Real}, ::HalfSpace{Real})\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nLazySets.halfspace_left(::AbstractVector{Real}, ::AbstractVector{Real})\nLazySets.halfspace_right(::AbstractVector{Real}, ::AbstractVector{Real})Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1649,6 +1713,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Hyperplane}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Hyperplane}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Hyperplane{N}\n\nCreate a random hyperplane.\n\nInput\n\nHyperplane – type for dispatch\nN          – (optional, default: Float64) numeric type\ndim        – (optional, default: 2) dimension\nrng        – (optional, default: GLOBAL_RNG) random number generator\nseed       – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random hyperplane.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the constraint a is nonzero.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{Hyperplane}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1669,7 +1741,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperplane",
     "category": "section",
-    "text": "Hyperplane\ndim(::Hyperplane)\nσ(::AbstractVector{Real}, ::Hyperplane{Real})\n∈(::AbstractVector{Real}, ::Hyperplane{Real})\nan_element(::Hyperplane{N}) where {N<:Real}\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Hyperplane\ndim(::Hyperplane)\nσ(::AbstractVector{Real}, ::Hyperplane{Real})\n∈(::AbstractVector{Real}, ::Hyperplane{Real})\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1678,6 +1750,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.Hyperrectangle",
     "category": "type",
     "text": "Hyperrectangle{N<:Real} <: AbstractHyperrectangle{N}\n\nType that represents a hyperrectangle.\n\nA hyperrectangle is the Cartesian product of one-dimensional intervals.\n\nFields\n\ncenter – center of the hyperrectangle as a real vector\nradius – radius of the ball as a real vector, i.e., half of its width along             each coordinate direction\n\nExamples\n\nThere is also a constructor from lower and upper bounds with keyword arguments high and low. The following two constructions are equivalent:\n\njulia> c = ones(2);\n\njulia> r = [0.1, 0.2];\n\njulia> l = [0.9, 0.8];\n\njulia> h = [1.1, 1.2];\n\njulia> Hyperrectangle(c, r)\nHyperrectangle{Float64}([1.0, 1.0], [0.1, 0.2])\njulia> Hyperrectangle(low=l, high=h)\nHyperrectangle{Float64}([1.0, 1.0], [0.1, 0.2])\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Hyperrectangle}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Hyperrectangle}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Hyperrectangle{N}\n\nCreate a random hyperrectangle.\n\nInput\n\nHyperrectangle – type for dispatch\nN              – (optional, default: Float64) numeric type\ndim            – (optional, default: 2) dimension\nrng            – (optional, default: GLOBAL_RNG) random number generator\nseed           – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random hyperrectangle.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the radius is nonnegative.\n\n\n\n\n\n"
 },
 
 {
@@ -1709,7 +1789,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "Hyperrectangle\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+    "text": "Hyperrectangle\nrand(::Type{Hyperrectangle})\ncenter(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle)\nradius_hyperrectangle(::Hyperrectangle, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1793,6 +1873,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Interval}",
+    "page": "Common Set Representations",
+    "title": "LazySets.radius_hyperrectangle",
+    "category": "method",
+    "text": "radius_hyperrectangle(x::Interval{N})::Vector{N} where {N<:Real}\n\nReturn the box radius of an interval in every dimension.\n\nInput\n\nx – interval\n\nOutput\n\nThe box radius of the interval (a one-dimensional vector).\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.radius_hyperrectangle-Tuple{LazySets.Interval,Int64}",
+    "page": "Common Set Representations",
+    "title": "LazySets.radius_hyperrectangle",
+    "category": "method",
+    "text": "radius_hyperrectangle(x::Interval{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of an interval in a given dimension.\n\nInput\n\nx – interval\ni – dimension index (must be 1)\n\nOutput\n\nThe box radius in the given dimension.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.:+-Tuple{LazySets.Interval,LazySets.Interval}",
     "page": "Common Set Representations",
     "title": "Base.:+",
@@ -1817,11 +1913,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{LazySets.Interval}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Interval}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Interval{N}\n\nCreate a random interval.\n\nInput\n\nInterval – type for dispatch\nN        – (optional, default: Float64) numeric type\ndim      – (optional, default: 1) dimension\nrng      – (optional, default: GLOBAL_RNG) random number generator\nseed     – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random interval.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Interval-1",
     "page": "Common Set Representations",
     "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Real}, ::Interval{Real})\n∈(::AbstractVector, ::Interval)\n∈(::Real, ::Interval)\nan_element(::Interval)\nvertices_list(::Interval)\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{Real}, ::Interval{Real})\n∈(::AbstractVector, ::Interval)\n∈(::Real, ::Interval)\nan_element(::Interval)\nvertices_list(::Interval)\ncenter(::Interval)\nlow(::Interval)\nhigh(::Interval)\nradius_hyperrectangle(::Interval)\nradius_hyperrectangle(::Interval, ::Int)\n+(::Interval, ::Interval)\n-(::Interval, ::Interval)\n*(::Interval, ::Interval)\nrand(::Type{Interval})Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
 },
 
 {
@@ -1865,6 +1969,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{LazySets.Line}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Line}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Line{N}\n\nCreate a random line.\n\nInput\n\nLine – type for dispatch\nN    – (optional, default: Float64) numeric type\ndim  – (optional, default: 2) dimension\nrng  – (optional, default: GLOBAL_RNG) random number generator\nseed – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random line.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1. Additionally, the constraint a is nonzero.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{LazySets.Line}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1885,7 +1997,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line",
     "category": "section",
-    "text": "Line\ndim(::Line)\nσ(::AbstractVector{Real}, ::Line{Real})\n∈(::AbstractVector{Real}, ::Line{Real})\nan_element(::Line{N}) where {N<:Real}\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Line\ndim(::Line)\nσ(::AbstractVector{Real}, ::Line{Real})\n∈(::AbstractVector{Real}, ::Line{Real})\nan_element(::Line{N}) where {N<:Real}\nrand(::Type{Line})\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1921,6 +2033,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{LineSegment}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{LineSegment}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::LineSegment{N}\n\nCreate a random line segment.\n\nInput\n\nLineSegment – type for dispatch\nN           – (optional, default: Float64) numeric type\ndim         – (optional, default: 2) dimension\nrng         – (optional, default: GLOBAL_RNG) random number generator\nseed        – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random line segment.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.halfspace_left-Tuple{LineSegment}",
     "page": "Common Set Representations",
     "title": "LazySets.halfspace_left",
@@ -1949,7 +2069,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line segment",
     "category": "section",
-    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{Real}, ::LineSegment{Real})\n∈(::AbstractVector{Real}, ::LineSegment{Real})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)\nLazySets.constraints_list(::LineSegment)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetricPolytope:isempty"
+    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{Real}, ::LineSegment{Real})\n∈(::AbstractVector{Real}, ::LineSegment{Real})\nrand(::Type{LineSegment})\nLazySets.halfspace_left(::LineSegment)\nLazySets.halfspace_right(::LineSegment)\nLazySets.constraints_list(::LineSegment)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetricPolytope:isempty"
 },
 
 {
@@ -2041,6 +2161,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{VPolygon}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{VPolygon}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::VPolygon{N}\n\nCreate a random polygon in vertex representation.\n\nInput\n\nVPolygon     – type for dispatch\nN            – (optional, default: Float64) numeric type\ndim          – (optional, default: 2) dimension\nrng          – (optional, default: GLOBAL_RNG) random number generator\nseed         – (optional, default: nothing) seed for reseeding\nnum_vertices – (optional, default: -1) number of vertices of the                   polygon (see comment below)\n\nOutput\n\nA random polygon in vertex representation.\n\nAlgorithm\n\nWe follow the idea here based on P. Valtr. Probability that n random points are in convex position. There is also a nice video available here.\n\nThe number of vertices can be controlled with the argument num_vertices. For a negative value we choose a random number in the range 3:10.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.vertices_list-Tuple{VPolygon}",
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
@@ -2077,7 +2205,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\nσ(::AbstractVector{Real}, ::VPolygon{Real})\n∈(::AbstractVector{Real}, ::VPolygon{Real})\nan_element(::VPolygon{N}) where {N<:Real}\nvertices_list(::VPolygon)\ntohrep(::VPolygon)\ntovrep(::VPolygon)\nconstraints_list(::VPolygon)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
+    "text": "VPolygon\nσ(::AbstractVector{Real}, ::VPolygon{Real})\n∈(::AbstractVector{Real}, ::VPolygon{Real})\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon)\ntohrep(::VPolygon)\ntovrep(::VPolygon)\nconstraints_list(::VPolygon)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
 },
 
 {
@@ -2185,6 +2313,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.copy-Union{Tuple{PT}, Tuple{PT}, Tuple{N}} where PT<:Union{HPolyhedron{N}, HPolytope{N}} where N",
+    "page": "Common Set Representations",
+    "title": "Base.copy",
+    "category": "method",
+    "text": "copy(P::PT) where {N, PT<:HPoly{N}}\n\nCreate a copy of a polyhedron.\n\nInput\n\nP – polyhedron\n\nOutput\n\nThe polyhedron obtained by copying the constraints in P using Base.copy.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.tosimplehrep-Tuple{Union{HPolyhedron{Real}, HPolytope{Real}}}",
     "page": "Common Set Representations",
     "title": "LazySets.tosimplehrep",
@@ -2233,6 +2369,70 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Polyhedra.polyhedron-Tuple{Union{HPolyhedron{N}, HPolytope{N}} where N}",
+    "page": "Common Set Representations",
+    "title": "Polyhedra.polyhedron",
+    "category": "method",
+    "text": "polyhedron(P::HPoly{N}, [backend]=default_polyhedra_backend(P, N)) where {N}\n\nReturn an HRep polyhedron from Polyhedra.jl given a polytope in H-representation.\n\nInput\n\nP       – polytope\nbackend – (optional, default: call default_polyhedra_backend(P, N))               the polyhedral computations backend\n\nOutput\n\nAn HRep polyhedron.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\npolyhedron(P::VPolytope{N}, [backend]=default_polyhedra_backend(P, N)) where {N}\n\nReturn an VRep polyhedron from Polyhedra.jl given a polytope in V-representation.\n\nInput\n\nP       – polytope\nbackend – (optional, default: default_polyhedra_backend(P, N)) the polyhedral              computations backend, see Polyhedra\'s documentation              for further information\n\nOutput\n\nA VRep polyhedron.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.remove_redundant_constraints",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_constraints",
+    "category": "function",
+    "text": "remove_redundant_constraints(P::PT;\n                             backend=GLPKSolverLP()) where {N, PT<:HPoly{N}}\n\nGiven a polyhedron in H-representation, return a new polyhedron with no reundant constraints.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nA new polyhedron obtained by removing the redundant constraints in P.\n\nAlgorithm\n\nSee remove_redundant_constraints!. \n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.remove_redundant_constraints!",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_constraints!",
+    "category": "function",
+    "text": "remove_redundant_constraints!(P::PT;\n                              backend=GLPKSolverLP()) where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation; the polyhedron is updated inplace.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nThe polyhedron obtained by removing the redundant constraints in P.\n\nAlgorithm\n\nIf the polyhedron P has m constraints and its dimension is n, this function checks one by one if each of the m constraints is implied by the remaining ones. To check if the k-th constraint is redundant, an LP is formulated.\n\nFor details, see Fukuda\'s Polyhedra FAQ.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Constraint-representation-2",
+    "page": "Common Set Representations",
+    "title": "Constraint representation",
+    "category": "section",
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{Real})\nρ(::AbstractVector{Real}, ::HPoly{Real})\nσ(::AbstractVector{Real}, ::HPoly{Real})\n∈(::AbstractVector{Real}, ::HPoly{Real})\naddconstraint!(::HPoly{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPoly{Real})\ncopy(P::PT) where {N, PT<:HPoly{N}}\ntosimplehrep(::HPoly{Real})\ntohrep(::HPoly{Real})\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{Real}, ::HPoly{Real})\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{Real})\npolyhedron(::HPoly)\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{HPolytope}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{HPolytope}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::HPolytope{N}\n\nCreate a random polytope in constraint representation.\n\nInput\n\nHPolytope    – type for dispatch\nN            – (optional, default: Float64) numeric type\ndim          – (optional, default: 2) dimension\nrng          – (optional, default: GLOBAL_RNG) random number generator\nseed         – (optional, default: nothing) seed for reseeding\nnum_vertices – (optional, default: -1) upper bound on the number of                   vertices of the polytope (see comment below)\n\nOutput\n\nA random polytope in constraint representation.\n\nAlgorithm\n\nWe create a random polytope in vertex representation and convert it to constraint representation (hence the argument num_vertices). See rand(::Type{VPolytope}).\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.vertices_list-Tuple{HPolytope{Real}}",
+    "page": "Common Set Representations",
+    "title": "LazySets.vertices_list",
+    "category": "method",
+    "text": "vertices_list(P::HPolytope{N};\n              [backend]=default_polyhedra_backend(P, N),\n              [prunefunc]=removevredundancy!)::Vector{Vector{N}} where\n              {N<:Real}\n\nReturn the list of vertices of a polytope in constraint representation.\n\nInput\n\nP         – polytope in constraint representation\nbackend   – (optional, default: default_polyhedra_backend(P, N))                 the polyhedral computations backend\nprunefunc – (optional, default: removevredundancy!) function to                post-process the output of vreps\n\nOutput\n\nList of vertices.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Polytopes-in-constraint-representation-1",
+    "page": "Common Set Representations",
+    "title": "Polytopes in constraint representation",
+    "category": "section",
+    "text": "The following methods are specific for HPolytope.rand(::Type{HPolytope})\nvertices_list(::HPolytope{Real})Inherited from AbstractPolytope:singleton_listThe following methods are specific for polytopes."
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{HPolyhedron}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{HPolyhedron}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::HPolyhedron{N}\n\nCreate a polyhedron.\n\nInput\n\nHPolyhedron – type for dispatch\nN           – (optional, default: Float64) numeric type\ndim         – (optional, default: 2) dimension (is ignored)\nrng         – (optional, default: GLOBAL_RNG) random number generator\nseed        – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA polyhedron.\n\nAlgorithm\n\nWe first create a random polytope and then randomly remove some of the constraints.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.vertices_list-Tuple{HPolyhedron{Real}}",
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
@@ -2249,19 +2449,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Polyhedra.polyhedron-Tuple{Union{HPolyhedron{N}, HPolytope{N}} where N}",
+    "location": "lib/representations.html#Polyhedra-1",
     "page": "Common Set Representations",
-    "title": "Polyhedra.polyhedron",
-    "category": "method",
-    "text": "polyhedron(P::HPoly{N}, [backend]=default_polyhedra_backend(P, N)) where {N}\n\nReturn an HRep polyhedron from Polyhedra.jl given a polytope in H-representation.\n\nInput\n\nP       – polytope\nbackend – (optional, default: call default_polyhedra_backend(P, N))               the polyhedral computations backend\n\nOutput\n\nAn HRep polyhedron.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\npolyhedron(P::VPolytope{N}, [backend]=default_polyhedra_backend(P, N)) where {N}\n\nReturn an VRep polyhedron from Polyhedra.jl given a polytope in V-representation.\n\nInput\n\nP       – polytope\nbackend – (optional, default: default_polyhedra_backend(P, N)) the polyhedral              computations backend, see Polyhedra\'s documentation              for further information\n\nOutput\n\nA VRep polyhedron.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Constraint-representation-2",
-    "page": "Common Set Representations",
-    "title": "Constraint representation",
+    "title": "Polyhedra",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between polyhedra and polytopes. dim(::HPoly{Real})\nρ(::AbstractVector{Real}, ::HPoly{Real})\nσ(::AbstractVector{Real}, ::HPoly{Real})\n∈(::AbstractVector{Real}, ::HPoly{Real})\naddconstraint!(::HPoly{Real}, ::LinearConstraint{Real})\nconstraints_list(::HPoly{Real})\ntosimplehrep(::HPoly{Real})\ntohrep(::HPoly{Real})\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{Real}, ::HPoly{Real})\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{Real})\nvertices_list(::HPolyhedron{Real})\nsingleton_list(::HPolyhedron{N}) where {N<:Real}\npolyhedron(::HPoly)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_map"
+    "text": "The following methods are specific for HPolyhedron.rand(::Type{HPolyhedron})\nvertices_list(::HPolyhedron{Real})\nsingleton_list(::HPolyhedron{N}) where {N<:Real}"
 },
 
 {
@@ -2286,6 +2478,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.σ",
     "category": "method",
     "text": "σ(d::AbstractVector{N}, P::VPolytope{N}; algorithm=\"hrep\") where {N<:Real}\n\nReturn the support vector of a polyhedron (in V-representation) in a given direction.\n\nInput\n\nd         – direction\nP         – polyhedron in V-representation\nalgorithm – (optional, default: \'hrep\') method to compute the support vector\n\nOutput\n\nThe support vector in the given direction.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{VPolytope}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{VPolytope}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::VPolytope{N}\n\nCreate a random polytope in vertex representation.\n\nInput\n\nVPolytope    – type for dispatch\nN            – (optional, default: Float64) numeric type\ndim          – (optional, default: 2) dimension\nrng          – (optional, default: GLOBAL_RNG) random number generator\nseed         – (optional, default: nothing) seed for reseeding\nnum_vertices – (optional, default: -1) upper bound on the number of                   vertices of the polytope (see comment below)\n\nOutput\n\nA random polytope in vertex representation.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1.\n\nThe number of vertices can be controlled with the argument num_vertices. For a negative value we choose a random number in the range dim:5*dim (except if dim == 1, in which case we choose in the range 1:2). Note that we do not guarantee that the vertices are not redundant.\n\n\n\n\n\n"
 },
 
 {
@@ -2317,7 +2517,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{Real}, ::VPolytope{Real})\nvertices_list(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_map"
+    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{Real}, ::VPolytope{Real})\nrand(::Type{VPolytope})\nvertices_list(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_map"
 },
 
 {
@@ -2326,6 +2526,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.Singleton",
     "category": "type",
     "text": "Singleton{N<:Real} <: AbstractSingleton{N}\n\nType that represents a singleton, that is, a set with a unique element.\n\nFields\n\nelement – the only element of the set\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Singleton}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Singleton}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Singleton{N}\n\nCreate a random singleton.\n\nInput\n\nSingleton – type for dispatch\nN         – (optional, default: Float64) numeric type\ndim       – (optional, default: 2) dimension\nrng       – (optional, default: GLOBAL_RNG) random number generator\nseed      – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random singleton.\n\nAlgorithm\n\nThe element is a normally distributed vector with entries of mean 0 and standard deviation 1.\n\n\n\n\n\n"
 },
 
 {
@@ -2349,7 +2557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Singleton",
     "category": "section",
-    "text": "Singleton\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
+    "text": "Singleton\nrand(::Type{Singleton})\nelement(::Singleton)\nelement(::Singleton, ::Int)Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
 },
 
 {
@@ -2385,6 +2593,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.rand-Tuple{Type{ZeroSet}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{ZeroSet}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::ZeroSet{N}\n\nCreate a zero set (note that there is nothing to randomize).\n\nInput\n\nZeroSet – type for dispatch\nN       – (optional, default: Float64) numeric type\ndim     – (optional, default: 2) dimension\nrng     – (optional, default: GLOBAL_RNG) random number generator\nseed    – (optional, default: nothing) seed for reseeding\n\nOutput\n\nThe (only) zero set of the given numeric type and dimension.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.element-Tuple{ZeroSet}",
     "page": "Common Set Representations",
     "title": "LazySets.element",
@@ -2413,7 +2629,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zero set",
     "category": "section",
-    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet)\nelement(::ZeroSet, ::Int)\nlinear_map(::AbstractMatrix, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
+    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nrand(::Type{ZeroSet})\nelement(::ZeroSet)\nelement(::ZeroSet, ::Int)\nlinear_map(::AbstractMatrix, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
 },
 
 {
@@ -2438,6 +2654,14 @@ var documenterSearchIndex = {"docs": [
     "title": "Base.:∈",
     "category": "method",
     "text": "∈(x::AbstractVector{N}, Z::Zonotope{N};\n  solver=GLPKSolverLP(method=:Simplex))::Bool where {N<:Real}\n\nCheck whether a given point is contained in a zonotope.\n\nInput\n\nx      – point/vector\nZ      – zonotope\nsolver – (optional, default: GLPKSolverLP(method=:Simplex)) the backend             used to solve the linear program\n\nOutput\n\ntrue iff x  Z.\n\nExamples\n\njulia> Z = Zonotope([1.0, 0.0], [0.1 0.0; 0.0 0.1]);\n\njulia> ∈([1.0, 0.2], Z)\nfalse\njulia> ∈([1.0, 0.1], Z)\ntrue\n\nAlgorithm\n\nThe membership problem is computed by stating and solving the following linear program with the simplex method. Let p and n be the number of generators and ambient dimension, respectively. We consider the minimization of x_0 in the p+1-dimensional space of elements (x_0 ξ_1  ξ_p) constrained to 0  x_0  , ξ_i  -1 1 for all i = 1  p, and such that x-c = Gξ holds. If a feasible solution exists, the optimal value x_0 = 0 is achieved.\n\nNotes\n\nThis function is parametric in the number type N. For exact arithmetic use an appropriate backend, e.g. solver=GLPKSolverLP(method=:Exact).\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Zonotope}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Zonotope}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Zonotope{N}\n\nCreate a random zonotope.\n\nInput\n\nZonotope       – type for dispatch\nN              – (optional, default: Float64) numeric type\ndim            – (optional, default: 2) dimension\nrng            – (optional, default: GLOBAL_RNG) random number generator\nseed           – (optional, default: nothing) seed for reseeding\nnum_generators – (optional, default: -1) number of generators of the                     zonotope (see comment below)\n\nOutput\n\nA random zonotope.\n\nAlgorithm\n\nAll numbers are normally distributed with mean 0 and standard deviation 1.\n\nThe number of generators can be controlled with the argument num_generators. For a negative value we choose a random number in the range dim:2*dim (except if dim == 1, in which case we only create a single generator).\n\n\n\n\n\n"
 },
 
 {
@@ -2509,7 +2733,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{Real}, ::Zonotope{Real})\n∈(::AbstractVector{Real}, ::Zonotope{Real})\nvertices_list(::Zonotope)\ncenter(::Zonotope)\norder(::Zonotope)\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Zonotope\nσ(::AbstractVector{Real}, ::Zonotope{Real})\n∈(::AbstractVector{Real}, ::Zonotope{Real})\nrand(::Type{Zonotope})\nvertices_list(::Zonotope)\ncenter(::Zonotope)\norder(::Zonotope)\nminkowski_sum(::Zonotope, ::Zonotope)\nlinear_map(::AbstractMatrix, ::Zonotope)\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -2953,6 +3177,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets._line_search",
+    "page": "Common Set Operations",
+    "title": "LazySets._line_search",
+    "category": "function",
+    "text": "_line_search(ℓ, X, H; [kwargs...])\n\nGiven a compact and convex set X and a halfspace H = x a^T x  b  or a hyperplane H = x a^T x = b , calculate:\n\nmin_ λ  D_h  ρ(ℓ - λa X) + λb\n\nwhere D_h =  λ  λ  0  if H is a half-space or D_h =  λ  λ  mathbbR  if H is a hyperplane.\n\nInput\n\nℓ           – direction\nX           – set\nH           – halfspace or hyperplane\n\nOutput\n\nThe tuple (fmin, λmin), where fmin is the minimum value of the function f(λ) = ρ(ℓ - λa) + λb over the feasible set λ  0, and λmin is the minimizer.\n\nNotes\n\nThis function requires the Optim package, and relies on the univariate optimization interface Optim.optimize(...).\n\nAdditional arguments to the optimize backend can be passed as keyword arguments. The default method is Optim.Brent().\n\nExamples\n\njulia> X = Ball1(zeros(2), 1.0);\n\njulia> H = HalfSpace([-1.0, 0.0], -1.0); # x >= 0 \n\njulia> using Optim\n\njulia> import LazySets._line_search\n\njulia> _line_search([1.0, 0.0], X, H) # uses Brent\'s method by default\n(1.0, 999999.9849478417)\n\nWe can specify the upper bound in Brent\'s method:\n\njulia> _line_search([1.0, 0.0], X, H, upper=1e3)\n(1.0, 999.9999849478418)\n\nInstead of using Brent, we use the Golden Section method:\n\njulia> _line_search([1.0, 0.0], X, H, upper=1e3, method=GoldenSection())\n(1.0, 381.9660112501051)\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets._projection",
     "page": "Common Set Operations",
     "title": "LazySets._projection",
@@ -2965,7 +3197,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:AbstractPolytope{N}}) where {N<:Real}\nisempty(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, <:LazySet{N}, <:AbstractPolytope{N}}) where {N<:Real}\nisempty(::Intersection)\nσ(::AbstractVector{Real}, ::Intersection{Real})\n∈(::AbstractVector{Real}, ::Intersection{Real})\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_line_search\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3809,6 +4041,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Interval{N,IN} where IN<:AbstractInterval{N},Interval{N,IN} where IN<:AbstractInterval{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(x::Interval{N},\n             y::Interval{N}\n             )::Union{Interval{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two intervals.\n\nInput\n\nx – first interval\ny – second interval\n\nOutput\n\nIf the intervals do not intersect, the result is the empty set. Otherwise the result is the interval that describes the intersection.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{AbstractHPolygon{N},AbstractHPolygon{N}}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
@@ -3837,7 +4077,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Intersection of two sets",
     "category": "section",
-    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::Hyperrectangle{N}, ::Hyperrectangle{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}\nintersection(::HPolytope{N}, ::HalfSpace{N}) where {N<:Real}\nintersection(::HPolyhedron{N}, ::AbstractPolytope{N}) where {N<:Real}"
+    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::Hyperrectangle{N}, ::Hyperrectangle{N}) where {N<:Real}\nintersection(::Interval{N}, ::Interval{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}\nintersection(::HPolytope{N}, ::HalfSpace{N}) where {N<:Real}\nintersection(::HPolyhedron{N}, ::AbstractPolytope{N}) where {N<:Real}"
 },
 
 {
@@ -3969,11 +4209,75 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/approximations.html#LazySets.Approximations.LocalApproximation",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.LocalApproximation",
+    "category": "type",
+    "text": "LocalApproximation{N<:Real}\n\nType that represents a local approximation in 2D.\n\nFields\n\np1        – first inner point\nd1        – first direction\np2        – second inner point\nd2        – second direction\nq         – intersection of the lines l1 ⟂ d1 at p1 and l2 ⟂ d2 at p2\nrefinable – states if this approximation is refinable\nerr       – error upper bound\n\nNotes\n\nThe criteria for being refinable are determined in the method new_approx.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.PolygonalOverapproximation",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.PolygonalOverapproximation",
+    "category": "type",
+    "text": "PolygonalOverapproximation{N<:Real}\n\nType that represents the polygonal approximation of a convex set.\n\nFields\n\nS            – convex set\napprox_stack – stack of local approximations that still need to be examined\nconstraints  – vector of linear constraints that are already finalized                   (i.e., they satisfy the given error bound)\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.new_approx-Tuple{LazySet,Array{Float64,1},Array{Float64,1},Array{Float64,1},Array{Float64,1}}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.new_approx",
+    "category": "method",
+    "text": "new_approx(S::LazySet, p1::Vector{N}, d1::Vector{N}, p2::Vector{N},\n           d2::Vector{N}) where N<:Real\n\nCreate a LocalApproximation instance for the given excerpt of a polygonal approximation.\n\nInput\n\nS  – convex set\np1 – first inner point\nd1 – first direction\np2 – second inner point\nd2 – second direction\n\nOutput\n\nA local approximation of S in the given directions.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.addapproximation!-Tuple{LazySets.Approximations.PolygonalOverapproximation,Array{Float64,1},Array{Float64,1},Array{Float64,1},Array{Float64,1}}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.addapproximation!",
+    "category": "method",
+    "text": "addapproximation!(Ω::PolygonalOverapproximation, p1::Vector{N},\n    d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where N<:Real\n\nInput\n\nΩ  – polygonal overapproximation of a convex set\np1 – first inner point\nd1 – first direction\np2 – second inner point\nd2 – second direction\n\nOutput\n\nThe list of local approximations in Ω of the set Ω.S is updated in-place and the new approximation is returned by this function.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.refine-Tuple{LazySets.Approximations.LocalApproximation,LazySet}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.refine",
+    "category": "method",
+    "text": "refine(approx::LocalApproximation, S::LazySet\n      )::Tuple{LocalApproximation, LocalApproximation}\n\nRefine a given local approximation of the polygonal approximation of a convex set by splitting along the normal direction of the approximation.\n\nInput\n\napprox – local approximation to be refined\nS      – 2D convex set\n\nOutput\n\nThe tuple consisting of the refined right and left local approximations.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.tohrep-Tuple{LazySets.Approximations.PolygonalOverapproximation}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.tohrep",
+    "category": "method",
+    "text": "tohrep(Ω::PolygonalOverapproximation{N})::AbstractHPolygon{N} where N<:Real\n\nConvert a polygonal overapproximation into a concrete polygon.\n\nInput\n\nΩ – polygonal overapproximation of a convex set\n\nOutput\n\nA polygon in constraint representation.\n\nAlgorithm\n\nInternally we keep the constraints sorted. Hence we do not need to use addconstraint! when creating the HPolygon.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.approximate-Tuple{LazySet{Float64},Float64}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.approximate",
+    "category": "method",
+    "text": "approximate(S::LazySet{N},\n            ε::N)::PolygonalOverapproximation{N} where N<:Real\n\nReturn an ε-close approximation of the given 2D convex set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nS – 2D convex set\nε – error bound\n\nOutput\n\nAn ε-close approximation of the given 2D convex set.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#LazySets.Approximations.constraint-Tuple{LazySets.Approximations.LocalApproximation}",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.constraint",
+    "category": "method",
+    "text": "constraint(approx::LocalApproximation)\n\nConvert a local approximation to a linear constraint.\n\nInput\n\napprox – local approximation\n\nOutput\n\nA linear constraint.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/approximations.html#Iterative-refinement-1",
     "page": "Approximations",
     "title": "Iterative refinement",
     "category": "section",
-    "text": "LocalApproximation\nPolygonalOverapproximation\nnew_approx(::LazySet, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\naddapproximation!(::PolygonalOverapproximation, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\nrefine(::PolygonalOverapproximation, ::Int)\ntohrep(::PolygonalOverapproximation)\napproximate(::LazySet{Float64}, ::Float64)"
+    "text": "LocalApproximation\nPolygonalOverapproximation\nnew_approx(::LazySet, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\naddapproximation!(::PolygonalOverapproximation, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64}, ::Vector{Float64})\nrefine(::LocalApproximation, ::LazySet)\ntohrep(::PolygonalOverapproximation)\napproximate(::LazySet{Float64}, ::Float64)\nconstraint(::LocalApproximation)"
 },
 
 {
@@ -4153,11 +4457,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets._random_zero_sum_vector",
+    "page": "Utility Functions",
+    "title": "LazySets._random_zero_sum_vector",
+    "category": "function",
+    "text": "_random_zero_sum_vector(rng::AbstractRNG, N::Type{<:Real}, n::Int)\n\nCreate a random vector with entries whose sum is zero.\n\nInput\n\nrng – random number generator\nN   – numeric type\nn   – length of vector\n\nOutput\n\nA random vector of random numbers such that all positive entries come first and all negative entries come last, and such that the total sum is zero.\n\nAlgorithm\n\nThis is a preprocessing step of the algorithm here based on P. Valtr. Probability that n random points are in convex position.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.remove_duplicates_sorted!",
+    "page": "Utility Functions",
+    "title": "LazySets.remove_duplicates_sorted!",
+    "category": "function",
+    "text": "remove_duplicates_sorted!(v::AbstractVector)\n\nRemove duplicate entries in a sorted vector.\n\nInput\n\nv – sorted vector\n\nOutput\n\nThe input vector without duplicates.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.reseed",
+    "page": "Utility Functions",
+    "title": "LazySets.reseed",
+    "category": "function",
+    "text": "reseed(rng::AbstractRNG, seed::Union{Int, Nothing})::AbstractRNG\n\nReset the RNG seed if the seed argument is a number.\n\nInput\n\nrng  – random number generator\nseed – seed for reseeding\n\nOutput\n\nThe input RNG if the seed is nothing, and a reseeded RNG otherwise.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#Functions-and-Macros-1",
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints\nnonzero_indices\nsamedir"
+    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints\nnonzero_indices\nsamedir\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed"
 },
 
 {
