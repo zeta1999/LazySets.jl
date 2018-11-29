@@ -3905,11 +3905,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{EmptySet{N},LazySet{N}}, Tuple{EmptySet{N},LazySet{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(∅::EmptySet{N}, X::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether an empty set is contained in another set.\n\nInput\n\n∅       – empty set\nX       – another set\nwitness – (optional, default: false) compute a witness if activated              (ignored, just kept for interface reasons)\n\nOutput\n\ntrue.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{LazySet{N},EmptySet{N}}, Tuple{LazySet{N},EmptySet{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(X::LazySet{N}, ∅::EmptySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a set is contained in an empty set.\n\nInput\n\nX       – another set\n∅       – empty set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\ntrue iff X is empty.\n\nAlgorithm\n\nWe rely on isempty(X) for the emptiness check and on an_element(X) for witness production.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#Subset-check-1",
     "page": "Binary Functions on Sets",
     "title": "Subset check",
     "category": "section",
-    "text": "⊆(::LazySet{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::AbstractHyperrectangle, ::Bool=false) where {N<:Real}\n⊆(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::Ball2{AbstractFloat}, ::Ball2{AbstractFloat}, ::Bool=false) where {N<:AbstractFloat}\n	⊆(::Union{Ball2{N}, Ballp{N}}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::Hyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::Interval, ::Interval)"
+    "text": "⊆(::LazySet{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::AbstractHyperrectangle, ::Bool=false) where {N<:Real}\n⊆(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::Ball2{AbstractFloat}, ::Ball2{AbstractFloat}, ::Bool=false) where {N<:AbstractFloat}\n	⊆(::Union{Ball2{N}, Ballp{N}}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::Hyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::Interval, ::Interval)\n⊆(::EmptySet{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::EmptySet{N}, ::Bool=false) where {N<:Real}"
 },
 
 {
