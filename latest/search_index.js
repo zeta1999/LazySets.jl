@@ -1741,7 +1741,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
     "category": "method",
-    "text": "constrained_dimensions(hs::HalfSpace{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a half-space is constrained.\n\nInput\n\nhs – half-space\n\nOutput\n\nA vector of ascending indices i such that the half-space is constrained in dimension i.\n\nNotes\n\nA 2D half-space with constraint x1  0 is constrained in dimension 1 only.\n\n\n\n\n\n"
+    "text": "constrained_dimensions(hs::HalfSpace{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a half-space is constrained.\n\nInput\n\nhs – half-space\n\nOutput\n\nA vector of ascending indices i such that the half-space is constrained in dimension i.\n\nExamples\n\nA 2D half-space with constraint x1  0 is constrained in dimension 1 only.\n\n\n\n\n\n"
 },
 
 {
@@ -1829,7 +1829,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
     "category": "method",
-    "text": "constrained_dimensions(hp::Hyperplane{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a hyperplane is constrained.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nA vector of ascending indices i such that the hyperplane is constrained in dimension i.\n\nNotes\n\nA 2D hyperplane with constraint x1 = 0 is constrained in dimension 1 only.\n\n\n\n\n\n"
+    "text": "constrained_dimensions(hp::Hyperplane{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a hyperplane is constrained.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nA vector of ascending indices i such that the hyperplane is constrained in dimension i.\n\nExamples\n\nA 2D hyperplane with constraint x1 = 0 is constrained in dimension 1 only.\n\n\n\n\n\n"
 },
 
 {
@@ -2101,7 +2101,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
     "category": "method",
-    "text": "constrained_dimensions(L::Line{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a line is constrained.\n\nInput\n\nL – line\n\nOutput\n\nA vector of ascending indices i such that the line is constrained in dimension i.\n\nNotes\n\nA line with constraint x1 = 0 is constrained in dimension 1 only.\n\n\n\n\n\n"
+    "text": "constrained_dimensions(L::Line{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a line is constrained.\n\nInput\n\nL – line\n\nOutput\n\nA vector of ascending indices i such that the line is constrained in dimension i.\n\nExamples\n\nA line with constraint x1 = 0 is constrained in dimension 1 only.\n\n\n\n\n\n"
 },
 
 {
@@ -2581,7 +2581,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Polytopes in constraint representation",
     "category": "section",
-    "text": "The following methods are specific for HPolytope.rand(::Type{HPolytope})\nvertices_list(::HPolytope{N}) where {N<:Real}Inherited from AbstractPolytope:singleton_listThe following methods are specific for polytopes."
+    "text": "The following methods are specific for HPolytope.rand(::Type{HPolytope})\nvertices_list(::HPolytope{N}) where {N<:Real}Inherited from AbstractPolytope:singleton_list"
 },
 
 {
@@ -2609,11 +2609,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.constrained_dimensions-Union{Tuple{HPolyhedron{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.constrained_dimensions",
+    "category": "method",
+    "text": "constrained_dimensions(P::HPolyhedron{N})::Vector{Int} where {N<:Real}\n\nReturn the indices in which a polyhedron in constraint representation is constrained.\n\nInput\n\nP – polyhedron in constraint representation\n\nOutput\n\nA vector of ascending indices i such that the polyhedron is constrained in dimension i.\n\nExamples\n\nA 2D polyhedron with constraint x1  0 is constrained in dimension 1 only.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Polyhedra-1",
     "page": "Common Set Representations",
     "title": "Polyhedra",
     "category": "section",
-    "text": "The following methods are specific for HPolyhedron.rand(::Type{HPolyhedron})\nvertices_list(::HPolyhedron{N}) where {N<:Real}\nsingleton_list(::HPolyhedron{N}) where {N<:Real}"
+    "text": "The following methods are specific for HPolyhedron.rand(::Type{HPolyhedron})\nvertices_list(::HPolyhedron{N}) where {N<:Real}\nsingleton_list(::HPolyhedron{N}) where {N<:Real}\nconstrained_dimensions(::HPolyhedron{N}) where {N<:Real}"
 },
 
 {
