@@ -2709,7 +2709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.cartesian_product",
     "category": "method",
-    "text": "cartesian_product(P1::VPolytope{N}, P2::VPolytope{N};\n                  [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the Cartesian product of two polytopes in V-representation.\n\nInput\n\nP1         – polytope\nP2         – another polytope\nbackend    – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral                 computations backend, see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe VPolytope obtained by the concrete Cartesian product of P1 and P2.\n\n\n\n\n\n"
+    "text": "cartesian_product(P1::VPolytope{N}, P2::VPolytope{N};\n                  [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the Cartesian product of two polytopes in V-representation.\n\nInput\n\nP1         – polytope\nP2         – another polytope\nbackend    – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral                 computations backend, see                 Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe VPolytope obtained by the concrete Cartesian product of P1 and P2.\n\n\n\n\n\n"
 },
 
 {
