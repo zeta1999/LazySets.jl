@@ -405,7 +405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Operations on Sets",
     "title": "Unary operations",
     "category": "section",
-    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty linear_map norm radius diameter\nInterfaces          \nLazySet  x  x      x\nAPolytope  i  i  x x   i\nACentrallySymmetric x i  x  x    i\nACentrallySymmetricPolytope i i  i  x i   i\nAPolygon x i  i  i i   i\nAHyperrectangle i i x i x i i x x i\nAHPolygon i i  x x i i   i\nASingleton i i x i x i x i i i\n          \nBasic set types          \nBall1 i i x i x i i   i\nBall2 i i x i x i    i\nBallInf i i i i i i i i x i\nBallp i i x i x i    i\nEllipsoid i i x i x i    i\nEmptySet x i x x x x  x x x\nHalfSpace x x x x x x    i\nHPolygon/HPolygonOpt i i x i i i i   i\nHPolyhedron x x x i x x    i\nHPolytope x x x i x x i   i\nHyperplane x x x x x x    i\nHyperrectangle i i i i i i i i i i\nInterval x i x x x i i i i i\nLine x i x x x x    i\nLineSegment x i x x x i i   i\nSingleton i i i i i i i i i i\nVPolygon i i x x x i x   i\nVPolytope x i x i  i x   i\nZeroSet x i x i x i x i i i\nZonotope i i x i x i x   i\n          \nLazy set operation types          \nCartesianProduct x x x i x x    i\nCartesianProductArray x x x i x x    i\nConvexHull x x x i  x    i\nConvexHullArray x x x i  x    i\nExponentialMap x x x i x x    i\nExponentialProjectionMap x i x i  x    i\nIntersection x x  i x x    i\nIntersectionArray x i  i x     i\nLinearMap x x x x x x    i\nMinkowskiSum x x x i  x    i\nMinkowskiSumArray x x x i  x    i\nCacheMinkowskiSum x i x i  x    i\nSymmetricIntervalHull x i x i i i i i i i"
+    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty isbounded linear_map norm radius diameter\nInterfaces           \nLazySet  x  x   x    x\nAPolytope  i  i  x x x   i\nACentrallySymmetric x i  x  x x    i\nACentrallySymmetricPolytope i i  i  x i i   i\nAPolygon x i  i  i i i   i\nAHyperrectangle i i x i x i i i x x i\nAHPolygon i i  x x i i i   i\nASingleton i i x i x i i x i i i\n           \nBasic set types           \nBall1 i i x i x i i i   i\nBall2 i i x i x i i    i\nBallInf i i i i i i i i i x i\nBallp i i x i x i i    i\nEllipsoid i i x i x i i    i\nEmptySet x i x x x x x  x x x\nHalfSpace x x x x x x x    i\nHPolygon/HPolygonOpt i i x i i i i i   i\nHPolyhedron x x x i x x x    i\nHPolytope x x x i x x i i   i\nHyperplane x x x x x x x    i\nHyperrectangle i i i i i i i i i i i\nInterval x i x x x i i i i i i\nLine x i x x x x x    i\nLineSegment x i x x x i i i   i\nSingleton i i i i i i i i i i i\nVPolygon i i x x x i i x   i\nVPolytope x i x i  i i x   i\nZeroSet x i x i x i i x i i i\nZonotope i i x i x i i x   i\n           \nLazy set operation types           \nCartesianProduct x x x i x x x    i\nCartesianProductArray x x x i x x x    i\nConvexHull x x x i  x x    i\nConvexHullArray x x x i  x x    i\nExponentialMap x x x i x x x    i\nExponentialProjectionMap x i x i  x x    i\nIntersection x x  i x x x    i\nIntersectionArray x i  i x  x    i\nLinearMap x x x x x x x    i\nMinkowskiSum x x x i  x x    i\nMinkowskiSumArray x x x i  x x    i\nCacheMinkowskiSum x i x i  x x    i\nSymmetricIntervalHull x i x i i i i i i i i"
 },
 
 {
@@ -753,6 +753,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.isbounded-Tuple{LazySet}",
+    "page": "Set Interfaces",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(S::LazySet)::Bool\n\nDetermine whether a set is bounded.\n\nInput\n\nS – set\n\nOutput\n\ntrue iff the set is bounded.\n\nAlgorithm\n\nWe check boundedness via isbounded_unit_dimensions.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.isbounded_unit_dimensions-Union{Tuple{LazySet{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.isbounded_unit_dimensions",
+    "category": "method",
+    "text": "isbounded_unit_dimensions(S::LazySet{N})::Bool where {N<:Real}\n\nDetermine whether a set is bounded in each unit dimension.\n\nInput\n\nS – set\n\nOutput\n\ntrue iff the set is bounded in each unit dimension.\n\nAlgorithm\n\nThis function performs 2n support function checks, where n is the ambient dimension of S.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{LazySet{N}}, Tuple{N}} where N<:Real",
     "page": "Set Interfaces",
     "title": "LazySets.an_element",
@@ -805,7 +821,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Other globally defined set functions",
     "category": "section",
-    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)\nan_element(::LazySet{N}) where {N<:Real}\n==(::LazySet, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LazySet}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet, ::Float64)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}, ::Float64) where {S<:LazySet}"
+    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)\nisbounded(::LazySet)\nisbounded_unit_dimensions(::LazySet{N}) where {N<:Real}\nan_element(::LazySet{N}) where {N<:Real}\n==(::LazySet, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LazySet}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet, ::Float64)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}, ::Float64) where {S<:LazySet}"
 },
 
 {
@@ -849,6 +865,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.isbounded-Tuple{AbstractCentrallySymmetric}",
+    "page": "Set Interfaces",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(S::AbstractCentrallySymmetric)::Bool\n\nDetermine whether a centrally symmetric set is bounded.\n\nInput\n\nS – centrally symmetric set\n\nOutput\n\ntrue (since a set with a unique center must be bounded).\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#LazySets.an_element-Union{Tuple{AbstractCentrallySymmetric{N}}, Tuple{N}} where N<:Real",
     "page": "Set Interfaces",
     "title": "LazySets.an_element",
@@ -869,7 +893,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Centrally symmetric set",
     "category": "section",
-    "text": "Centrally symmetric sets such as balls of different norms are characterized by a center. Note that there is a special interface combination Centrally symmetric polytope.AbstractCentrallySymmetricThis interface defines the following functions:dim(::AbstractCentrallySymmetric)\nan_element(::AbstractCentrallySymmetric{N}) where {N<:Real}\nisempty(::AbstractCentrallySymmetric)"
+    "text": "Centrally symmetric sets such as balls of different norms are characterized by a center. Note that there is a special interface combination Centrally symmetric polytope.AbstractCentrallySymmetricThis interface defines the following functions:dim(::AbstractCentrallySymmetric)\nisbounded(::AbstractCentrallySymmetric)\nan_element(::AbstractCentrallySymmetric{N}) where {N<:Real}\nisempty(::AbstractCentrallySymmetric)"
 },
 
 {
@@ -881,11 +905,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.isbounded-Tuple{AbstractPolytope}",
+    "page": "Set Interfaces",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(P::AbstractPolytope)::Bool\n\nDetermine whether a polytopic set is bounded.\n\nInput\n\nP – polytopic set\n\nOutput\n\ntrue (since a polytope must be bounded).\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#LazySets.singleton_list-Union{Tuple{AbstractPolytope{N}}, Tuple{N}} where N<:Real",
     "page": "Set Interfaces",
     "title": "LazySets.singleton_list",
     "category": "method",
-    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic set as a list of singletons.\n\nInput\n\nP – a polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n\n\n"
+    "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic set as a list of singletons.\n\nInput\n\nP – polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n\n\n"
 },
 
 {
@@ -925,7 +957,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Polytope",
     "category": "section",
-    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Centrally symmetric polytope.AbstractPolytopeThis interface defines the following functions:singleton_list(::AbstractPolytope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::AbstractPolytope{N}) where {N<:Real}\nisempty(::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:AbstractPolytope}"
+    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Centrally symmetric polytope.AbstractPolytopeThis interface defines the following functions:isbounded(::AbstractPolytope)\nsingleton_list(::AbstractPolytope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::AbstractPolytope{N}) where {N<:Real}\nisempty(::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:AbstractPolytope}"
 },
 
 {
@@ -1349,7 +1381,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\nσ(::AbstractVector{N}, ::Ball2{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ball2{N}) where {N<:AbstractFloat}\ncenter(::Ball2{N}) where {N<:AbstractFloat}\nrand(::Type{Ball2})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
+    "text": "Ball2\nσ(::AbstractVector{N}, ::Ball2{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ball2{N}) where {N<:AbstractFloat}\ncenter(::Ball2{N}) where {N<:AbstractFloat}\nrand(::Type{Ball2})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
 },
 
 {
@@ -1405,7 +1437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ncenter(::BallInf{N}) where {N<:Real}\nradius(::BallInf, ::Real=Inf)\nradius_hyperrectangle(::BallInf{N}) where {N<:Real}\nradius_hyperrectangle(::BallInf{N}, ::Int) where {N<:Real}\nrand(::Type{BallInf})Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
+    "text": "BallInf\ncenter(::BallInf{N}) where {N<:Real}\nradius(::BallInf, ::Real=Inf)\nradius_hyperrectangle(::BallInf{N}) where {N<:Real}\nradius_hyperrectangle(::BallInf{N}, ::Int) where {N<:Real}\nrand(::Type{BallInf})Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1469,7 +1501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\nσ(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\nvertices_list(::Ball1{N}) where {N<:Real}\ncenter(::Ball1{N}) where {N<:Real}\nrand(::Type{Ball1})\nconstraints_list(::Ball1{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Ball1\nσ(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\nvertices_list(::Ball1{N}) where {N<:Real}\ncenter(::Ball1{N}) where {N<:Real}\nrand(::Type{Ball1})\nconstraints_list(::Ball1{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -1517,7 +1549,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "p-norm ball",
     "category": "section",
-    "text": "Ballp\nσ(::AbstractVector{N}, ::Ballp{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ballp{N}) where {N<:AbstractFloat}\ncenter(::Ballp{N}) where {N<:AbstractFloat}\nrand(::Type{Ballp})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
+    "text": "Ballp\nσ(::AbstractVector{N}, ::Ballp{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ballp{N}) where {N<:AbstractFloat}\ncenter(::Ballp{N}) where {N<:AbstractFloat}\nrand(::Type{Ballp})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
 },
 
 {
@@ -1565,7 +1597,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Ellipsoid",
     "category": "section",
-    "text": "Ellipsoid\nσ(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\nrand(::Type{Ellipsoid})\ncenter(::Ellipsoid{N}) where {N<:AbstractFloat}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisempty\nan_element"
+    "text": "Ellipsoid\nσ(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\nrand(::Type{Ellipsoid})\ncenter(::Ellipsoid{N}) where {N<:AbstractFloat}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
 },
 
 {
@@ -1625,6 +1657,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.isbounded-Tuple{EmptySet}",
+    "page": "Common Set Representations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(∅::EmptySet)::Bool\n\nDetermine whether an empty set is bounded.\n\nInput\n\n∅ – empty set\n\nOutput\n\ntrue.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{EmptySet}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1661,7 +1701,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Empty set",
     "category": "section",
-    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real=Inf)\nradius(::EmptySet, ::Real=Inf)\ndiameter(::EmptySet, ::Real=Inf)Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisbounded(::EmptySet)\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real=Inf)\nradius(::EmptySet, ::Real=Inf)\ndiameter(::EmptySet, ::Real=Inf)Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1729,6 +1769,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.isbounded-Tuple{LazySets.HalfSpace}",
+    "page": "Common Set Representations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(hs::HalfSpace)::Bool\n\nDetermine whether a half-space is bounded.\n\nInput\n\nhs – half-space\n\nOutput\n\nfalse.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{LazySets.HalfSpace}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1773,7 +1821,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1833,6 +1881,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.isbounded-Tuple{Hyperplane}",
+    "page": "Common Set Representations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(hp::Hyperplane)::Bool\n\nDetermine whether a hyperplane is bounded.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nfalse.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{Hyperplane}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -1853,7 +1909,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperplane",
     "category": "section",
-    "text": "Hyperplane\ndim(::Hyperplane)\nρ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Hyperplane\ndim(::Hyperplane)\nρ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisbounded(::Hyperplane)\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1901,7 +1957,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "Hyperrectangle\nrand(::Type{Hyperrectangle})\ncenter(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+    "text": "Hyperrectangle\nrand(::Type{Hyperrectangle})\ncenter(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -2053,7 +2109,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nlow(::Interval{N}) where {N<:Real}\nhigh(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nlow(::Interval{N}) where {N<:Real}\nhigh(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
 },
 
 {
@@ -2105,6 +2161,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.isbounded-Tuple{LazySets.Line}",
+    "page": "Common Set Representations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(L::Line)::Bool\n\nDetermine whether a line is bounded.\n\nInput\n\nL – line\n\nOutput\n\nfalse.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Base.isempty-Tuple{LazySets.Line}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
@@ -2125,7 +2189,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line",
     "category": "section",
-    "text": "Line\ndim(::Line)\nσ(::AbstractVector{N}, ::Line{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Line{N}) where {N<:Real}\nan_element(::Line{N}) where {N<:Real}\nrand(::Type{Line})\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Line\ndim(::Line)\nσ(::AbstractVector{N}, ::Line{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Line{N}) where {N<:Real}\nan_element(::Line{N}) where {N<:Real}\nrand(::Type{Line})\nisbounded(::Line)\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -2237,7 +2301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line segment",
     "category": "section",
-    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{N}, ::LineSegment{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LineSegment{N}) where {N<:Real}\ncenter(::LineSegment{N}) where {N<:Real}\nan_element(::LineSegment{N}) where {N<:Real}\nrand(::Type{LineSegment})\nhalfspace_left(::LineSegment)\nhalfspace_right(::LineSegment)\nvertices_list(::LineSegment{N}) where {N<:Real}\nconstraints_list(::LineSegment{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LineSegment)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LineSegment}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetricPolytope:isempty"
+    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{N}, ::LineSegment{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LineSegment{N}) where {N<:Real}\ncenter(::LineSegment{N}) where {N<:Real}\nan_element(::LineSegment{N}) where {N<:Real}\nrand(::Type{LineSegment})\nhalfspace_left(::LineSegment)\nhalfspace_right(::LineSegment)\nvertices_list(::LineSegment{N}) where {N<:Real}\nconstraints_list(::LineSegment{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LineSegment)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LineSegment}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isboundedInherited from AbstractCentrallySymmetricPolytope:isempty"
 },
 
 {
@@ -2269,7 +2333,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "HPolygon\nσ(::AbstractVector{N}, ::HPolygon{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
+    "text": "HPolygon\nσ(::AbstractVector{N}, ::HPolygon{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
 },
 
 {
@@ -2293,7 +2357,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\nσ(::AbstractVector{N}, ::HPolygonOpt{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
+    "text": "HPolygonOpt\nσ(::AbstractVector{N}, ::HPolygonOpt{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
 },
 
 {
@@ -2373,7 +2437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\nσ(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon{N}) where {N<:Real}\ntohrep(::VPolygon{N}, ::Type{HPOLYGON}=HPolygon) where {N<:Real, HPOLYGON<:AbstractHPolygon}\ntovrep(::VPolygon{N}) where {N<:Real}\nconstraints_list(::VPolygon{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
+    "text": "VPolygon\nσ(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon{N}) where {N<:Real}\ntohrep(::VPolygon{N}, ::Type{HPOLYGON}=HPolygon) where {N<:Real, HPOLYGON<:AbstractHPolygon}\ntovrep(::VPolygon{N}) where {N<:Real}\nconstraints_list(::VPolygon{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
 },
 
 {
@@ -2597,7 +2661,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Polytopes in constraint representation",
     "category": "section",
-    "text": "The following methods are specific for HPolytope.rand(::Type{HPolytope})\nvertices_list(::HPolytope{N}) where {N<:Real}Inherited from AbstractPolytope:singleton_list"
+    "text": "The following methods are specific for HPolytope.rand(::Type{HPolytope})\nvertices_list(::HPolytope{N}) where {N<:Real}Inherited from AbstractPolytope:isbounded\nsingleton_list"
 },
 
 {
@@ -2606,6 +2670,14 @@ var documenterSearchIndex = {"docs": [
     "title": "Base.rand",
     "category": "method",
     "text": "rand(::Type{HPolyhedron}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::HPolyhedron{N}\n\nCreate a polyhedron.\n\nInput\n\nHPolyhedron – type for dispatch\nN           – (optional, default: Float64) numeric type\ndim         – (optional, default: 2) dimension (is ignored)\nrng         – (optional, default: GLOBAL_RNG) random number generator\nseed        – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA polyhedron.\n\nAlgorithm\n\nWe first create a random polytope and then randomly remove some of the constraints.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.isbounded-Tuple{HPolyhedron}",
+    "page": "Common Set Representations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(P::HPolyhedron)::Bool\n\nDetermine whether a polyhedron in constraint representation is bounded.\n\nInput\n\nP – polyhedron in constraint representation\n\nOutput\n\ntrue iff the polyhedron is bounded.\n\nAlgorithm\n\nWe first check if the polyhedron has more than max(dim(P), 1) constraints, which is a necessary condition for boundedness. If so, we check boundedness via isbounded_unit_dimensions.\n\n\n\n\n\n"
 },
 
 {
@@ -2637,7 +2709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Polyhedra",
     "category": "section",
-    "text": "The following methods are specific for HPolyhedron.rand(::Type{HPolyhedron})\nvertices_list(::HPolyhedron{N}) where {N<:Real}\nsingleton_list(::HPolyhedron{N}) where {N<:Real}\nconstrained_dimensions(::HPolyhedron{N}) where {N<:Real}"
+    "text": "The following methods are specific for HPolyhedron.rand(::Type{HPolyhedron})\nisbounded(::HPolyhedron)\nvertices_list(::HPolyhedron{N}) where {N<:Real}\nsingleton_list(::HPolyhedron{N}) where {N<:Real}\nconstrained_dimensions(::HPolyhedron{N}) where {N<:Real}"
 },
 
 {
@@ -2725,7 +2797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\nvertices_list(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_map"
+    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\nvertices_list(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_map"
 },
 
 {
@@ -2765,7 +2837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Singleton",
     "category": "section",
-    "text": "Singleton\nrand(::Type{Singleton})\nelement(::Singleton{N}) where {N<:Real}\nelement(::Singleton{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
+    "text": "Singleton\nrand(::Type{Singleton})\nelement(::Singleton{N}) where {N<:Real}\nelement(::Singleton{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
 },
 
 {
@@ -2837,7 +2909,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zero set",
     "category": "section",
-    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nrand(::Type{ZeroSet})\nelement(::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet{N}, ::Int) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
+    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nrand(::Type{ZeroSet})\nelement(::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet{N}, ::Int) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
 },
 
 {
@@ -2949,7 +3021,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:singleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -3025,6 +3097,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{CartesianProduct}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(cp::CartesianProduct)::Bool\n\nDetermine whether a Cartesian product is bounded.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\ntrue iff both wrapped sets are bounded.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Base.:∈-Union{Tuple{N}, Tuple{AbstractArray{N,1},CartesianProduct{N,S1,S2} where S2<:LazySet{N} where S1<:LazySet{N}}} where N<:Real",
     "page": "Common Set Operations",
     "title": "Base.:∈",
@@ -3061,7 +3141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Cartesian Product",
     "category": "section",
-    "text": "CartesianProduct\n×(::LazySet, ::LazySet)\n*(::LazySet, ::LazySet)\ndim(::CartesianProduct)\nρ(::AbstractVector{N}, ::CartesianProduct{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::CartesianProduct{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::CartesianProduct{N}) where {N<:Real}\nisempty(::CartesianProduct)\nconstraints_list(::CartesianProduct{N}) where {N<:Real}\nvertices_list(::CartesianProduct{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CartesianProduct\n×(::LazySet, ::LazySet)\n*(::LazySet, ::LazySet)\ndim(::CartesianProduct)\nρ(::AbstractVector{N}, ::CartesianProduct{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::CartesianProduct{N}) where {N<:Real}\nisbounded(::CartesianProduct)\n∈(::AbstractVector{N}, ::CartesianProduct{N}) where {N<:Real}\nisempty(::CartesianProduct)\nconstraints_list(::CartesianProduct{N}) where {N<:Real}\nvertices_list(::CartesianProduct{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3094,6 +3174,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.σ",
     "category": "method",
     "text": "σ(d::AbstractVector{N}, cpa::CartesianProductArray{N}) where {N<:Real}\n\nSupport vector of a Cartesian product array.\n\nInput\n\nd   – direction\ncpa – Cartesian product array\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the product sets.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{CartesianProductArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(cpa::CartesianProductArray)::Bool\n\nDetermine whether a Cartesian product of a finite number of convex sets is bounded.\n\nInput\n\ncpa – Cartesian product of a finite number of convex sets\n\nOutput\n\ntrue iff all wrapped sets are bounded.\n\n\n\n\n\n"
 },
 
 {
@@ -3141,7 +3229,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Cartesian Product",
     "category": "section",
-    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nρ(::AbstractVector{N}, ::CartesianProductArray{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::CartesianProductArray{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::CartesianProductArray{N}) where {N<:Real}\nisempty(::CartesianProductArray)\nconstraints_list(::CartesianProductArray{N}) where {N<:Real}\nvertices_list(::CartesianProductArray{N}) where {N<:Real}\narray(::CartesianProductArray{N, S}) where {N<:Real, S<:LazySet{N}}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CartesianProductArray\ndim(::CartesianProductArray)\nρ(::AbstractVector{N}, ::CartesianProductArray{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::CartesianProductArray{N}) where {N<:Real}\nisbounded(::CartesianProductArray)\n∈(::AbstractVector{N}, ::CartesianProductArray{N}) where {N<:Real}\nisempty(::CartesianProductArray)\nconstraints_list(::CartesianProductArray{N}) where {N<:Real}\nvertices_list(::CartesianProductArray{N}) where {N<:Real}\narray(::CartesianProductArray{N, S}) where {N<:Real, S<:LazySet{N}}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3193,6 +3281,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{ConvexHull}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(ch::ConvexHull)::Bool\n\nDetermine whether a convex hull of two convex sets is bounded.\n\nInput\n\nch – convex hull of two convex sets\n\nOutput\n\ntrue iff both wrapped sets are bounded.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Base.isempty-Tuple{ConvexHull}",
     "page": "Common Set Operations",
     "title": "Base.isempty",
@@ -3205,7 +3301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Convex Hull",
     "category": "section",
-    "text": "ConvexHull\nCH\ndim(::ConvexHull)\nρ(::AbstractVector{N}, ::ConvexHull{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::ConvexHull{N}) where {N<:Real}\nisempty(::ConvexHull)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "ConvexHull\nCH\ndim(::ConvexHull)\nρ(::AbstractVector{N}, ::ConvexHull{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::ConvexHull{N}) where {N<:Real}\nisbounded(::ConvexHull)\nisempty(::ConvexHull)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3249,6 +3345,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{ConvexHullArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(cha::ConvexHullArray)::Bool\n\nDetermine whether a convex hull of a finite number of convex sets is bounded.\n\nInput\n\ncha – convex hull of a finite number of convex sets\n\nOutput\n\ntrue iff all wrapped sets are bounded.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.array-Union{Tuple{ConvexHullArray{N,S}}, Tuple{S}, Tuple{N}} where S<:LazySet{N} where N<:Real",
     "page": "Common Set Operations",
     "title": "LazySets.array",
@@ -3269,7 +3373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Convex Hull",
     "category": "section",
-    "text": "ConvexHullArray\nCHArray\ndim(::ConvexHullArray)\nρ(::AbstractVector{N}, ::ConvexHullArray{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::ConvexHullArray{N}) where {N<:Real}\narray(::ConvexHullArray{N, S}) where {N<:Real, S<:LazySet{N}}\nisempty(::ConvexHullArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "ConvexHullArray\nCHArray\ndim(::ConvexHullArray)\nρ(::AbstractVector{N}, ::ConvexHullArray{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::ConvexHullArray{N}) where {N<:Real}\nisbounded(::ConvexHullArray)\narray(::ConvexHullArray{N, S}) where {N<:Real, S<:LazySet{N}}\nisempty(::ConvexHullArray)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3369,19 +3473,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#Base.isempty-Tuple{Intersection}",
-    "page": "Common Set Operations",
-    "title": "Base.isempty",
-    "category": "method",
-    "text": "isempty(cap::Intersection)::Bool\n\nReturn if the intersection is empty or not.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff the intersection is empty.\n\nNotes\n\nThe result will be cached, so a second query will be fast.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/operations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Intersection{N,S1,S2} where S2<:LazySet{N} where S1<:LazySet{N}}} where N<:Real",
     "page": "Common Set Operations",
     "title": "LazySets.σ",
     "category": "method",
     "text": "σ(d::AbstractVector{N}, cap::Intersection{N}) where {N<:Real}\n\nReturn the support vector of an intersection of two convex sets in a given direction.\n\nInput\n\nd   – direction\ncap – intersection of two convex sets\n\nOutput\n\nThe support vector in the given direction.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{Intersection}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(cap::Intersection)::Bool\n\nDetermine whether an intersection of two convex sets is bounded.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff the intersection is bounded.\n\nAlgorithm\n\nWe first check if any of the wrapped sets is bounded. Otherwise, we check boundedness via isbounded_unit_dimensions.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.isempty-Tuple{Intersection}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(cap::Intersection)::Bool\n\nReturn if the intersection is empty or not.\n\nInput\n\ncap – intersection of two convex sets\n\nOutput\n\ntrue iff the intersection is empty.\n\nNotes\n\nThe result will be cached, so a second query will be fast.\n\n\n\n\n\n"
 },
 
 {
@@ -3445,7 +3557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:AbstractPolytope{N}}\nisempty(::Intersection)\nσ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_line_search\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:AbstractPolytope{N}}\nσ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nisbounded(::Intersection)\nisempty(::Intersection)\n∈(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_line_search\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3489,6 +3601,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{IntersectionArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(ia::IntersectionArray)::Bool\n\nDetermine whether an intersection of a finite number of convex sets is bounded.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\ntrue iff the intersection is bounded.\n\nAlgorithm\n\nWe first check if any of the wrapped sets is bounded. Otherwise, we check boundedness via isbounded_unit_dimensions.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Base.:∈-Union{Tuple{N}, Tuple{AbstractArray{N,1},IntersectionArray{N,S} where S<:LazySet{N}}} where N<:Real",
     "page": "Common Set Operations",
     "title": "Base.:∈",
@@ -3509,7 +3629,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Intersection",
     "category": "section",
-    "text": "IntersectionArray\ndim(::IntersectionArray)\nσ(::AbstractVector{N}, ::IntersectionArray{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::IntersectionArray{N}) where {N<:Real}\narray(::IntersectionArray{N, S}) where {N<:Real, S<:LazySet{N}}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "IntersectionArray\ndim(::IntersectionArray)\nσ(::AbstractVector{N}, ::IntersectionArray{N}) where {N<:Real}\nisbounded(::IntersectionArray)\n∈(::AbstractVector{N}, ::IntersectionArray{N}) where {N<:Real}\narray(::IntersectionArray{N, S}) where {N<:Real, S<:LazySet{N}}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3569,6 +3689,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{MinkowskiSum}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(ms::MinkowskiSum)::Bool\n\nDetermine whether a Minkowski sum is bounded.\n\nInput\n\nms – Minkowski sum\n\nOutput\n\ntrue iff both wrapped sets are bounded.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Base.isempty-Tuple{MinkowskiSum}",
     "page": "Common Set Operations",
     "title": "Base.isempty",
@@ -3581,7 +3709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSum\n⊕(::LazySet, ::LazySet)\n+(::LazySet, ::LazySet)\ndim(::MinkowskiSum)\nρ(::AbstractVector{N}, ::MinkowskiSum{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::MinkowskiSum{N}) where {N<:Real}\nisempty(::MinkowskiSum)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "MinkowskiSum\n⊕(::LazySet, ::LazySet)\n+(::LazySet, ::LazySet)\ndim(::MinkowskiSum)\nρ(::AbstractVector{N}, ::MinkowskiSum{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::MinkowskiSum{N}) where {N<:Real}\nisbounded(::MinkowskiSum)\nisempty(::MinkowskiSum)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3617,11 +3745,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{MinkowskiSumArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(msa::MinkowskiSumArray)::Bool\n\nDetermine whether a Minkowski sum of a finite number of convex sets is bounded.\n\nInput\n\nmsa – Minkowski sum of a finite number of convex sets\n\nOutput\n\ntrue iff all wrapped sets are bounded.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Base.isempty-Tuple{MinkowskiSumArray}",
     "page": "Common Set Operations",
     "title": "Base.isempty",
     "category": "method",
-    "text": "isempty(msa::MinkowskiSumArray)::Bool\n\nReturn if a Minkowski sum array is empty or not.\n\nInput\n\ncp – Minkowski sum array\n\nOutput\n\ntrue iff any of the wrapped sets are empty.\n\n\n\n\n\n"
+    "text": "isempty(msa::MinkowskiSumArray)::Bool\n\nReturn if a Minkowski sum array is empty or not.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\ntrue iff any of the wrapped sets are empty.\n\n\n\n\n\n"
 },
 
 {
@@ -3637,7 +3773,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Minkowski Sum",
     "category": "section",
-    "text": "MinkowskiSumArray\ndim(::MinkowskiSumArray)\nρ(::AbstractVector{N}, ::MinkowskiSumArray{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::MinkowskiSumArray{N}) where {N<:Real}\nisempty(::MinkowskiSumArray)\narray(::MinkowskiSumArray{N, S}) where {N<:Real, S<:LazySet{N}}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "MinkowskiSumArray\ndim(::MinkowskiSumArray)\nρ(::AbstractVector{N}, ::MinkowskiSumArray{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::MinkowskiSumArray{N}) where {N<:Real}\nisbounded(::MinkowskiSumArray)\nisempty(::MinkowskiSumArray)\narray(::MinkowskiSumArray{N, S}) where {N<:Real, S<:LazySet{N}}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3665,11 +3801,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{CacheMinkowskiSum}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(cms::CacheMinkowskiSum)::Bool\n\nDetermine whether a caching Minkowski sum is bounded.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\ntrue iff all wrapped sets are bounded.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Base.isempty-Tuple{CacheMinkowskiSum}",
     "page": "Common Set Operations",
     "title": "Base.isempty",
     "category": "method",
-    "text": "isempty(cms::CacheMinkowskiSum)::Bool\n\nReturn if a caching Minkowski sum array is empty or not.\n\nInput\n\ncp – caching Minkowski sum\n\nOutput\n\ntrue iff any of the wrapped sets are empty.\n\nNotes\n\nForgotten sets cannot be checked anymore. Usually they have been empty because otherwise the support vector query should have crashed before. In that case, the caching Minkowski sum should not be used further.\n\n\n\n\n\n"
+    "text": "isempty(cms::CacheMinkowskiSum)::Bool\n\nReturn if a caching Minkowski sum array is empty or not.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\ntrue iff any of the wrapped sets are empty.\n\nNotes\n\nForgotten sets cannot be checked anymore. Usually they have been empty because otherwise the support vector query should have crashed before. In that case, the caching Minkowski sum should not be used further.\n\n\n\n\n\n"
 },
 
 {
@@ -3693,7 +3837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "n-ary Minkowski Sum with cache",
     "category": "section",
-    "text": "CacheMinkowskiSum\ndim(::CacheMinkowskiSum)\nσ(::AbstractVector{N}, ::CacheMinkowskiSum{N}) where {N<:Real}\nisempty(::CacheMinkowskiSum)\narray(::CacheMinkowskiSum{N, S}) where {N<:Real, S<:LazySet{N}}\nforget_sets!(::CacheMinkowskiSum)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "CacheMinkowskiSum\ndim(::CacheMinkowskiSum)\nσ(::AbstractVector{N}, ::CacheMinkowskiSum{N}) where {N<:Real}\nisbounded(::CacheMinkowskiSum)\nisempty(::CacheMinkowskiSum)\narray(::CacheMinkowskiSum{N, S}) where {N<:Real, S<:LazySet{N}}\nforget_sets!(::CacheMinkowskiSum)Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3785,6 +3929,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{LinearMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(lm::LinearMap)::Bool\n\nDetermine whether a linear map is bounded.\n\nInput\n\nlm – linear map\n\nOutput\n\ntrue iff the linear map is bounded.\n\nAlgorithm\n\nWe first check if the matrix is zero or the wrapped set is bounded. Otherwise, we check boundedness via isbounded_unit_dimensions.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Base.isempty-Tuple{LinearMap}",
     "page": "Common Set Operations",
     "title": "Base.isempty",
@@ -3805,7 +3957,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Linear Map",
     "category": "section",
-    "text": "LinearMap\n*(::AbstractMatrix{N}, ::LazySet{N}) where {N<:Real}\n*(::N, ::LazySet{N}) where {N<:Real}\n*(::N, ::LM) where {N<:Real, LM<:LinearMap{N}}\n*(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ndim(::LinearMap)\nρ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nan_element(::LinearMap{N}) where {N<:Real}\nisempty(::LinearMap)\nvertices_list(::LinearMap{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "LinearMap\n*(::AbstractMatrix{N}, ::LazySet{N}) where {N<:Real}\n*(::N, ::LazySet{N}) where {N<:Real}\n*(::N, ::LM) where {N<:Real, LM<:LinearMap{N}}\n*(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ndim(::LinearMap)\nρ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nan_element(::LinearMap{N}) where {N<:Real}\nisbounded(::LinearMap)\nisempty(::LinearMap)\nvertices_list(::LinearMap{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -3849,6 +4001,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{ExponentialMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(em::ExponentialMap)::Bool\n\nDetermine whether an exponential map is bounded.\n\nInput\n\nem – exponential map\n\nOutput\n\ntrue iff the exponential map is bounded.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Base.isempty-Tuple{ExponentialMap}",
     "page": "Common Set Operations",
     "title": "Base.isempty",
@@ -3886,6 +4046,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.σ",
     "category": "method",
     "text": "σ(d::AbstractVector{N},\n  eprojmap::ExponentialProjectionMap{N}) where {N<:Real}\n\nReturn the support vector of a projection of an exponential map.\n\nInput\n\nd        – direction\neprojmap – projection of an exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf S = (LMR)X, where L and R are matrices, M is a matrix exponential, and X is a set, it follows that σ(d S) = LMRσ(R^TM^TL^Td X) for any direction d.\n\nWe allow sparse direction vectors, but will convert them to dense vectors to be able to use expmv.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.isbounded-Tuple{ExponentialProjectionMap}",
+    "page": "Common Set Operations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(eprojmap::ExponentialProjectionMap)::Bool\n\nDetermine whether an exponential projection map is bounded.\n\nInput\n\neprojmap – exponential projection map\n\nOutput\n\ntrue iff the exponential projection map is bounded.\n\nAlgorithm\n\nWe first check if the left or right projection matrix is zero or the wrapped set is bounded. Otherwise, we check boundedness via isbounded_unit_dimensions.\n\n\n\n\n\n"
 },
 
 {
@@ -3941,7 +4109,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Exponential Map",
     "category": "section",
-    "text": "ExponentialMap\ndim(::ExponentialMap)\nρ(::AbstractVector{N}, ::ExponentialMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::ExponentialMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ExponentialMap{N}) where {N<:Real}\nisempty(::ExponentialMap)\nvertices_list(::ExponentialMap{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter\nan_elementExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{N}, ::ExponentialProjectionMap{N}) where {N<:Real}\nisempty(::ExponentialProjectionMap)Inherited from LazySet:norm\nradius\ndiameter\nan_elementSparseMatrixExp\n*(::SparseMatrixExp{N}, ::LazySet{N}) where {N<:Real}\nget_row(::SparseMatrixExp, ::Int)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
+    "text": "ExponentialMap\ndim(::ExponentialMap)\nρ(::AbstractVector{N}, ::ExponentialMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::ExponentialMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ExponentialMap{N}) where {N<:Real}\nisbounded(::ExponentialMap)\nisempty(::ExponentialMap)\nvertices_list(::ExponentialMap{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter\nan_elementExponentialProjectionMap\ndim(::ExponentialProjectionMap)\nσ(::AbstractVector{N}, ::ExponentialProjectionMap{N}) where {N<:Real}\nisbounded(::ExponentialProjectionMap)\nisempty(::ExponentialProjectionMap)Inherited from LazySet:norm\nradius\ndiameter\nan_elementSparseMatrixExp\n*(::SparseMatrixExp{N}, ::LazySet{N}) where {N<:Real}\nget_row(::SparseMatrixExp, ::Int)ProjectionSparseMatrixExp\n*(::ProjectionSparseMatrixExp, ::LazySet)"
 },
 
 {
@@ -3997,7 +4165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Symmetric Interval Hull",
     "category": "section",
-    "text": "SymmetricIntervalHull\ndim(::SymmetricIntervalHull)\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}\ncenter(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:singleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isempty\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+    "text": "SymmetricIntervalHull\ndim(::SymmetricIntervalHull)\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}\ncenter(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isempty\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
