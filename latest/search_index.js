@@ -2005,7 +2005,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(x::Interval{N})::Vector{N} where {N<:Real}\n\nReturn some element of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe left border (low(x)) of the interval.\n\n\n\n\n\n"
+    "text": "an_element(x::Interval{N})::Vector{N} where {N<:Real}\n\nReturn some element of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe left border (min(x)) of the interval.\n\n\n\n\n\n"
 },
 
 {
@@ -2025,19 +2025,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.low-Union{Tuple{Interval{N,IN} where IN<:AbstractInterval{N}}, Tuple{N}} where N<:Real",
+    "location": "lib/representations.html#Base.min-Union{Tuple{Interval{N,IN} where IN<:AbstractInterval{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
-    "title": "LazySets.low",
+    "title": "Base.min",
     "category": "method",
-    "text": "low(x::Interval{N})::N where {N<:Real}\n\nReturn the lower component of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe lower (lo) component of the interval.\n\n\n\n\n\n"
+    "text": "min(x::Interval{N})::N where {N<:Real}\n\nReturn the lower component of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe lower (lo) component of the interval.\n\n\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.high-Union{Tuple{Interval{N,IN} where IN<:AbstractInterval{N}}, Tuple{N}} where N<:Real",
+    "location": "lib/representations.html#Base.max-Union{Tuple{Interval{N,IN} where IN<:AbstractInterval{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
-    "title": "LazySets.high",
+    "title": "Base.max",
     "category": "method",
-    "text": "high(x::Interval{N})::N where {N<:Real}\n\nReturn the higher or upper component of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe higher (hi) component of the interval.\n\n\n\n\n\n"
+    "text": "max(x::Interval{N})::N where {N<:Real}\n\nReturn the higher or upper component of an interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe higher (hi) component of the interval.\n\n\n\n\n\n"
 },
 
 {
@@ -2109,7 +2109,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nlow(::Interval{N}) where {N<:Real}\nhigh(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nmin(::Interval{N}) where {N<:Real}\nmax(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
 },
 
 {
