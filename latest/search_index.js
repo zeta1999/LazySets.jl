@@ -405,7 +405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Operations on Sets",
     "title": "Unary operations",
     "category": "section",
-    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty linear_map norm radius diameter\nInterfaces          \nLazySet  x  x      x\nAPolytope  i  i  x x   i\nACentrallySymmetric x i  x  x    i\nACentrallySymmetricPolytope i i  i  x i   i\nAPolygon x i  i  i i   i\nAHyperrectangle i i x i x i i x x i\nAHPolygon i i  x x i i   i\nASingleton i i x i x i x i i i\n          \nBasic set types          \nBall1 i i x i x i i   i\nBall2 i i x i x i    i\nBallInf i i i i i i i i x i\nBallp i i x i x i    i\nEllipsoid i i x i x i    i\nEmptySet x i x x x x  x x x\nHalfSpace x i x x x x    i\nHPolygon/HPolygonOpt i i x i i i i   i\nHPolyhedron x x x i x x    i\nHPolytope x x x i x x i   i\nHyperplane x i x x x x    i\nHyperrectangle i i i i i i i i i i\nInterval x i x x x i i i i i\nLine x i x x x x    i\nLineSegment x i x x x i i   i\nSingleton i i i i i i i i i i\nVPolygon i i x x x i x   i\nVPolytope x i x i  i x   i\nZeroSet x i x i x i x i i i\nZonotope i i x i x i x   i\n          \nLazy set operation types          \nCartesianProduct x x x i x x    i\nCartesianProductArray x x x i x x    i\nConvexHull x x x i  x    i\nConvexHullArray x x x i  x    i\nExponentialMap x x x i x x    i\nExponentialProjectionMap x i x i  x    i\nIntersection x x  i x x    i\nIntersectionArray x i  i x     i\nLinearMap x x x x x x    i\nMinkowskiSum x x x i  x    i\nMinkowskiSumArray x x x i  x    i\nCacheMinkowskiSum x i x i  x    i\nSymmetricIntervalHull x i x i i i i i i i"
+    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty linear_map norm radius diameter\nInterfaces          \nLazySet  x  x      x\nAPolytope  i  i  x x   i\nACentrallySymmetric x i  x  x    i\nACentrallySymmetricPolytope i i  i  x i   i\nAPolygon x i  i  i i   i\nAHyperrectangle i i x i x i i x x i\nAHPolygon i i  x x i i   i\nASingleton i i x i x i x i i i\n          \nBasic set types          \nBall1 i i x i x i i   i\nBall2 i i x i x i    i\nBallInf i i i i i i i i x i\nBallp i i x i x i    i\nEllipsoid i i x i x i    i\nEmptySet x i x x x x  x x x\nHalfSpace x x x x x x    i\nHPolygon/HPolygonOpt i i x i i i i   i\nHPolyhedron x x x i x x    i\nHPolytope x x x i x x i   i\nHyperplane x x x x x x    i\nHyperrectangle i i i i i i i i i i\nInterval x i x x x i i i i i\nLine x i x x x x    i\nLineSegment x i x x x i i   i\nSingleton i i i i i i i i i i\nVPolygon i i x x x i x   i\nVPolytope x i x i  i x   i\nZeroSet x i x i x i x i i i\nZonotope i i x i x i x   i\n          \nLazy set operation types          \nCartesianProduct x x x i x x    i\nCartesianProductArray x x x i x x    i\nConvexHull x x x i  x    i\nConvexHullArray x x x i  x    i\nExponentialMap x x x i x x    i\nExponentialProjectionMap x i x i  x    i\nIntersection x x  i x x    i\nIntersectionArray x i  i x     i\nLinearMap x x x x x x    i\nMinkowskiSum x x x i  x    i\nMinkowskiSumArray x x x i  x    i\nCacheMinkowskiSum x i x i  x    i\nSymmetricIntervalHull x i x i i i i i i i"
 },
 
 {
@@ -1689,6 +1689,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},HalfSpace{N}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, hs::HalfSpace{N})::N where {N<:Real}\n\nEvaluate the support function of a half-space in a given direction.\n\nInput\n\nd  – direction\nhs – half-space\n\nOutput\n\nThe support function of the half-space. If the set is unbounded in the given direction, the result is Inf.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},HalfSpace{N}}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
@@ -1765,7 +1773,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1785,11 +1793,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Hyperplane{N}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, hp::Hyperplane{N})::N where {N<:Real}\n\nEvaluate the support function of a hyperplane in a given direction.\n\nInput\n\nd  – direction\nhp – hyperplane\n\nOutput\n\nThe support function of the hyperplane. If the set is unbounded in the given direction, the result is Inf.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Hyperplane{N}}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, hp::Hyperplane{N}) where {N<:Real}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd  – direction\nhp – hyperplane\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\n\nIn both cases the result is any point on the hyperplane. Otherwise this function throws an error.\n\n\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, hp::Hyperplane{N}) where {N<:Real}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd  – direction\nhp – hyperplane\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction or its opposite direction.\n\nIn all cases, the result is any point on the hyperplane. Otherwise this function throws an error.\n\n\n\n\n\n"
 },
 
 {
@@ -1837,7 +1853,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperplane",
     "category": "section",
-    "text": "Hyperplane\ndim(::Hyperplane)\nσ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Hyperplane\ndim(::Hyperplane)\nρ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -4821,7 +4837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.σ_helper",
     "category": "function",
-    "text": "    σ_helper(d::AbstractVector{N},\n             hp::Hyperplane{N},\n             [halfspace]::Bool=false) where {N<:Real}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd         – direction\nhp        – hyperplane\nhalfspace – (optional, default: false) true if the support vector should                be computed for a half-space\n\nOutput\n\nThe support vector in the given direction, which is only defined in the following two cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\n\nIn both cases the result is any point on the hyperplane. Otherwise this function throws an error.\n\n\n\n\n\n"
+    "text": "    σ_helper(d::AbstractVector{N},\n             hp::Hyperplane{N};\n             error_unbounded::Bool=true,\n             [halfspace]::Bool=false) where {N<:Real}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd         – direction\nhp        – hyperplane\nerror_unbounded – (optional, default: true) true if an error should be                thrown whenever the set is                unbounded in the given direction\nhalfspace – (optional, default: false) true if the support vector                should be computed for a half-space\n\nOutput\n\nA pair (v, b) where v is a vector and b is a Boolean flag.\n\nThe flag b is false in one of the following cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\nThe direction is the opposite of the hyperplane\'s normal direction and\n\nhalfspace is false. In all these cases, v is any point on the hyperplane.\n\nOtherwise, the flag b is true, the set is unbounded in the given direction, and v is any vector.\n\nIf error_unbounded is true and the set is unbounded in the given direction, this function throws an error instead of returning.\n\nNotes\n\nFor correctness, consider the weak duality of LPs: If the primal is unbounded, then the dual is infeasible. Since there is only a single constraint, the feasible set of the dual problem is hp.a ⋅ y == d, y >= 0 (with objective function hp.b ⋅ y). It is easy to see that this problem is infeasible whenever a is not parallel to d.\n\n\n\n\n\n"
 },
 
 {
