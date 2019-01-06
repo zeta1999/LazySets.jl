@@ -2805,7 +2805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Singleton",
     "category": "type",
-    "text": "Singleton{N<:Real} <: AbstractSingleton{N}\n\nType that represents a singleton, that is, a set with a unique element.\n\nFields\n\nelement – the only element of the set\n\n\n\n\n\n"
+    "text": "Singleton{N<:Real, VN<:AbstractVector{N}} <: AbstractSingleton{N}\n\nType that represents a singleton, that is, a set with a unique element.\n\nFields\n\nelement – the only element of the set\n\n\n\n\n\n"
 },
 
 {
@@ -2817,15 +2817,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.element-Union{Tuple{Singleton{N}}, Tuple{N}} where N<:Real",
+    "location": "lib/representations.html#LazySets.element-Union{Tuple{Singleton{N,VN} where VN<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.element",
     "category": "method",
-    "text": "element(S::Singleton{N})::Vector{N} where {N<:Real}\n\nReturn the element of a singleton.\n\nInput\n\nS – singleton\n\nOutput\n\nThe element of the singleton.\n\n\n\n\n\n"
+    "text": "element(S::Singleton{N}) where {N<:Real}\n\nReturn the element of a singleton.\n\nInput\n\nS – singleton\n\nOutput\n\nThe element of the singleton.\n\n\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.element-Union{Tuple{N}, Tuple{Singleton{N},Int64}} where N<:Real",
+    "location": "lib/representations.html#LazySets.element-Union{Tuple{N}, Tuple{Singleton{N,VN} where VN<:AbstractArray{N,1},Int64}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.element",
     "category": "method",
@@ -4581,7 +4581,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
     "category": "method",
-    "text": "intersection(L1::Line{N}, L2::Line{N}\n            )::Union{Singleton{N}, Line{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two 2D lines.\n\nInput\n\nL1 – first line\nL2 – second line\n\nOutput\n\nIf the lines are identical, the result is the first line. If the lines are parallel and not identical, the result is the empty set. Otherwise the result is the only intersection point.\n\nExamples\n\nThe line y = -x + 1 intersected with the line y = x:\n\njulia> intersection(Line([-1., 1.], 0.), Line([1., 1.], 1.))\nSingleton{Float64}([0.5, 0.5])\njulia> intersection(Line([1., 1.], 1.), Line([1., 1.], 1.))\nLine{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n\n\n\n"
+    "text": "intersection(L1::Line{N}, L2::Line{N}\n            )::Union{Singleton{N}, Line{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two 2D lines.\n\nInput\n\nL1 – first line\nL2 – second line\n\nOutput\n\nIf the lines are identical, the result is the first line. If the lines are parallel and not identical, the result is the empty set. Otherwise the result is the only intersection point.\n\nExamples\n\nThe line y = -x + 1 intersected with the line y = x:\n\njulia> intersection(Line([-1., 1.], 0.), Line([1., 1.], 1.))\nSingleton{Float64,Array{Float64,1}}([0.5, 0.5])\n\njulia> intersection(Line([1., 1.], 1.), Line([1., 1.], 1.))\nLine{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n\n\n"
 },
 
 {
