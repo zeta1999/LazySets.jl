@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Manual Outline",
     "category": "section",
-    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\",\n    \"man/interval_hulls.md\",\n    \"man/convex_hulls.md\",\n    \"man/reach_zonotopes.md\",\n    \"man/reach_zonotopes_hybrid.md\",\n    \"man/concrete_polyhedra.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\",\n    \"man/interval_hulls.md\",\n    \"man/convex_hulls.md\",\n    \"man/reach_zonotopes.md\",\n    \"man/reach_zonotopes_hybrid.md\",\n    \"man/concrete_polyhedra.md\",\n    \"man/parallel_approximations.md\"\n]\nDepth = 2"
 },
 
 {
@@ -53,7 +53,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Library Outline",
     "category": "section",
-    "text": "Pages = [\n    \"lib/interfaces.md\",\n    \"lib/representations.md\",\n    \"lib/operations.md\",\n    \"lib/conversion.md\",\n    \"lib/approximations.md\",\n    \"lib/utils.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"lib/interfaces.md\",\n    \"lib/representations.md\",\n    \"lib/operations.md\",\n    \"lib/conversion.md\",\n    \"lib/approximations.md\",\n    \"lib/utils.md\",\n    \"lib/parallel.md\"\n]\nDepth = 2"
 },
 
 {
@@ -654,6 +654,30 @@ var documenterSearchIndex = {"docs": [
     "title": "Projections",
     "category": "section",
     "text": "Projection of high-dimensional polyhedra and elimination of variables can be performed with the eliminate function, which supports three types of methods: :FourierMotzkin, :BlockElimination and :ProjectGenerators.For further details, see the documentation of Polyhedra.jl."
+},
+
+{
+    "location": "man/parallel_approximations.html#",
+    "page": "Parallel Approximations",
+    "title": "Parallel Approximations",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "man/parallel_approximations.html#Parallel-Approximations-1",
+    "page": "Parallel Approximations",
+    "title": "Parallel Approximations",
+    "category": "section",
+    "text": "A subset of the approximation algorithms are implemented in parallel in the  LazySets.Parallel module. In order to use parallel versions of the algorithms, you can write:using LazySets\nimport LazySets.Parallel\n\n# call a method implemented in parallel, for example:\nS = Ball2(ones(100), 1.0)\nParallel.box_approximation(S)Note that after importing or using LazySets.Parallel, the version of the function used must be fully qualified, eg. LazySets.Approximations.box_approximation for the sequential version or LazySets.Parallel.box_approximation for the parallel version.The parallelization strategy that is available uses processes. To set the number of processes N, use the flag -p N at julia startup. For example, do$ julia -p 4to launch 4 additional local worker julia processes. Use the keyword auto, as in$ julia -p autoto launch as many workers as the number of local CPU cores.Pages = [\"parallel_approximations.md\"]\nDepth = 3DocTestSetup = quote\n    using LazySets, LazySets.Parallel\nend"
+},
+
+{
+    "location": "man/parallel_approximations.html#Parallel-interval-hulls-1",
+    "page": "Parallel Approximations",
+    "title": "Parallel interval hulls",
+    "category": "section",
+    "text": "As an illustration of the symmetric interval hull approximation of a nested lazy set computed in parallel, consider the following calculation. It arises in the discretization of set-based ODEs, and is defined below for an artificial example of a tridiagonal matrix of order n, where n is a positive integer.using LazySets\nusing SparseArrays, LinearAlgebra\n\n# define an nxn tridiagonal matrix\nA(n) = sparse(diagm(0 => fill(0.05, n), -1 => fill(-1, n-1), 1 => fill(-1, n-1)))\n\n# step size and initial set\nδ = 0.1\nX0(n) = Ball2(ones(n), 0.1)\n\n# input coefficients matrix (nx2 matrix with coefficients from -1 to 1)\nb(n) = vcat(range(-1, stop=1, length=n))\nB(n) = [b(n) b(n)] \nU = BallInf(zeros(2), 1.2)\n\n# lazy matrix exponential\neAδ(n) = SparseMatrixExp(A(n) * δ)\n\n# set that we want to overapproximate with an interval hull\nY(n) = ConvexHull(eAδ(n) * X0(n) ⊕ (δ * B(n) * U), X0(n))The set Y(n) is parametric in the system\'s dimension n, to facilitate benchmarking. We will explore the computational cost as the dimension n increases, and compare the sequential algorithm with the parallel algorithm.Given the lazy set Y(n), we want to calculate the symmetric interval hull, which corresponds to finding the smallest n-dimensional hyperrectangle that contains the set Y(n) and is symmetric with respect to the origin. Notice that this operation is inherently parallel, since one can evaluate the support function of Y independently in each dimension from 1 to n.The sequential algorithm returns the following execution times. We use the @btime macro from the BenchmarkTools package to have a more accurate timing than @time; the $n argument is used for interpolation of the arguments (if you are not behchmarking, pass n to symmetric_interval_hull, as usual).using BenchmarkTools\n\nfor n in [50, 100, 500, 1000]\n    @btime res = Approximations.symmetric_interval_hull(Y($n));\nend\n\n  59.103 ms (11554 allocations: 25.89 MiB)\n  129.453 ms (23118 allocations: 54.16 MiB)\n  1.943 s (115530 allocations: 381.26 MiB)\n  10.017 s (232506 allocations: 1.01 GiB)For the parallel benchmark, we start Julia with 4 processes with the command $ julia -p 4 and call LazySets.Parallel.symmetric_interval_hull(Y(n)). import LazySets.Parallel\n\nfor n in [50, 100, 500, 1000]\n    @btime LazySets.Parallel.symmetric_interval_hull($Y($n));\nend\n\n  6.846 ms (2550 allocations: 160.59 KiB)\n  13.544 ms (3528 allocations: 271.94 KiB)\n  387.556 ms (11155 allocations: 2.51 MiB)\n  2.638 s (22156 allocations: 8.77 MiB)In the following table we summarize the speedup.n Sequential (s) Parallel p=4 (s) Speedup\n50 0.059 0.007 8.42\n100 0.129 0.013 9.92\n500 1.94 0.387 4.96\n1000 10.0 2.64 3.79The results in this section were obtained with a standard MacBook Pro laptop with the following specifications:julia> versioninfo()\nJulia Version 1.0.2\nCommit d789231e99 (2018-11-08 20:11 UTC)\nPlatform Info:\n  OS: macOS (x86_64-apple-darwin14.5.0)\n  CPU: Intel(R) Core(TM) i7-4770HQ CPU @ 2.20GHz\n  WORD_SIZE: 64\n  LIBM: libopenlibm\n  LLVM: libLLVM-6.0.0 (ORCJIT, haswell)"
 },
 
 {
@@ -4749,7 +4773,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.ballinf_approximation",
     "category": "function",
-    "text": "ballinf_approximation(S::LazySet{N};\n                     )::BallInf{N} where {N<:Real}\n\nOverapproximate a convex set by a tight ball in the infinity norm.\n\nInput\n\nS           – convex set\n\nOutput\n\nA tight ball in the infinity norm.\n\nAlgorithm\n\nThe center and radius of the box are obtained by evaluating the support function of the given convex set along the canonical directions.\n\n\n\n\n\n"
+    "text": "ballinf_approximation(S::LazySet{N};\n                     )::BallInf{N} where {N<:Real}\n\nOverapproximate a convex set by a tight ball in the infinity norm.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight ball in the infinity norm.\n\nAlgorithm\n\nThe center and radius of the box are obtained by evaluating the support function of the given convex set along the canonical directions.\n\n\n\n\n\n"
 },
 
 {
@@ -4757,7 +4781,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation",
     "category": "function",
-    "text": "box_approximation(S::LazySet{N})::Union{Hyperrectangle{N}, EmptySet{N}}\n    where {N<:Real}\n\nOverapproximate a convex set by a tight hyperrectangle.\n\nInput\n\nS           – convex set\n\nOutput\n\nA tight hyperrectangle.\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
+    "text": "box_approximation(S::LazySet{N})::Union{Hyperrectangle{N}, EmptySet{N}}\n    where {N<:Real}\n\nOverapproximate a convex set by a tight hyperrectangle.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle.\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
 },
 
 {
@@ -4773,7 +4797,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation_symmetric",
     "category": "function",
-    "text": "box_approximation_symmetric(S::LazySet{N}\n                           )::Union{Hyperrectangle{N}, EmptySet{N}}\n                            where {N<:Real}\n\nOverapproximate a convex set by a tight hyperrectangle centered in the origin.\n\nInput\n\nS           – convex set\n\nOutput\n\nA tight hyperrectangle centered in the origin.\n\nAlgorithm\n\nThe center of the box is the origin, and the radius is obtained by computing the maximum value of the support function evaluated at the canonical directions.\n\n\n\n\n\n"
+    "text": "box_approximation_symmetric(S::LazySet{N}\n                           )::Union{Hyperrectangle{N}, EmptySet{N}}\n                            where {N<:Real}\n\nOverapproximate a convex set by a tight hyperrectangle centered in the origin.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle centered in the origin.\n\nAlgorithm\n\nThe center of the box is the origin, and the radius is obtained by computing the maximum value of the support function evaluated at the canonical directions.\n\n\n\n\n\n"
 },
 
 {
@@ -4789,7 +4813,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation_helper",
     "category": "function",
-    "text": "box_approximation_helper(S::LazySet{N};\n                        ) where {N<:Real}\n\nCommon code of box_approximation and box_approximation_symmetric.\n\nInput\n\nS           – convex set\n\nOutput\n\nA tuple containing the data that is needed to construct a tightly overapproximating hyperrectangle.\n\nc – center\nr – radius\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given convex set in the canonical directions. The lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
+    "text": "box_approximation_helper(S::LazySet{N};\n                        ) where {N<:Real}\n\nCommon code of box_approximation and box_approximation_symmetric.\n\nInput\n\nS – convex set\n\nOutput\n\nA tuple containing the data that is needed to construct a tightly overapproximating hyperrectangle.\n\nc – center\nr – radius\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given convex set in the canonical directions. The lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
 },
 
 {
@@ -5102,6 +5126,118 @@ var documenterSearchIndex = {"docs": [
     "title": "Types",
     "category": "section",
     "text": "CachedPair\nApproximations.UnitVector"
+},
+
+{
+    "location": "lib/parallel.html#",
+    "page": "Parallel",
+    "title": "Parallel",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel",
+    "page": "Parallel",
+    "title": "LazySets.Parallel",
+    "category": "module",
+    "text": "Module Parallel.jl – LazySets algorithms that are parallelized.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#Parallel-1",
+    "page": "Parallel",
+    "title": "Parallel",
+    "category": "section",
+    "text": "This section of the manual describes the parallel implementation of some algorithms in the LazySets library. These algorithms are implemented in the LazySets.Parallel module.Pages = [\"parallel.md\"]\nDepth = 3CurrentModule = LazySets.Parallel\nDocTestSetup = quote\n    using LazySets, LazySets.Parallel\nendParallel"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.interval_hull",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.interval_hull",
+    "category": "function",
+    "text": "interval_hull\n\nAlias for box_approximation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.box_approximation",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.box_approximation",
+    "category": "function",
+    "text": "box_approximation(S::LazySet)::Hyperrectangle\n\nOverapproximation a convex set by a tight hyperrectangle using a parallel algorithm.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle.\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.symmetric_interval_hull",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.symmetric_interval_hull",
+    "category": "function",
+    "text": "symmetric_interval_hull\n\nAlias for box_approximation_symmetric.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.box_approximation_symmetric",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.box_approximation_symmetric",
+    "category": "function",
+    "text": "box_approximation_symmetric(S::LazySet{N}\n                           )::Union{Hyperrectangle{N}, EmptySet{N}} where {N<:Real}\n\nOverapproximate a convex set by a tight hyperrectangle centered in the origin, using a parallel algorithm.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle centered in the origin.\n\nAlgorithm\n\nThe center of the box is the origin, and the radius is obtained by computing the maximum value of the support function evaluated at the canonical directions.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.box_approximation_helper_parallel",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.box_approximation_helper_parallel",
+    "category": "function",
+    "text": "box_approximation_helper_parallel(S::LazySet{N}) where {N<:Real}\n\nParallel implementation for the common code of box_approximation and box_approximation_symmetric.\n\nInput\n\nS – convex set\n\nOutput\n\nA tuple containing the data that is needed to construct a tightly overapproximating hyperrectangle.\n\nc – center\nr – radius\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given convex set in the canonical directions. The lengths of the sides can be recovered from the distance among support functions in the same directions.\n\nThe same load is distributed among all available workers, see distribute_task!.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.process_chunk!",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.process_chunk!",
+    "category": "function",
+    "text": "process_chunk!(S::LazySet{N},\n               irange::UnitRange{Int},\n               c::SharedVector{N}, r::SharedVector{N}) where {N<:Real}\n\nKernel to process a given chunk \n\nInput\n\nc      – shared vector with the center of the hyperrectangle\nr      – shared vector with the center of the hyperrectangle\nS      – set\nirange – indices range of the given worker\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given convex set in the canonical directions. The lengths of the sides can be recovered from the distance among support functions in the same directions.\n\nThe load for each worker is passed through the irange argument. By default, the same load is distributed among all available workers. For details see distribute_task!.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#Box-approximations-1",
+    "page": "Parallel",
+    "title": "Box approximations",
+    "category": "section",
+    "text": "LazySets.Parallel.interval_hull\nLazySets.Parallel.box_approximation\nLazySets.Parallel.symmetric_interval_hull\nLazySets.Parallel.box_approximation_symmetric\nLazySets.Parallel.box_approximation_helper_parallel\nLazySets.Parallel.process_chunk!"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.assign_chunk!",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.assign_chunk!",
+    "category": "function",
+    "text": "assign_chunk!(S::LazySet{N}, v::SharedVector{N}...) where {N<:Real}\n\nReturn the function that assigns the work for each process.\n\nInput\n\nS – convex set\nv – variable number of shared vectors\n\nOutput\n\nThe function process_chunk! that equally distributes the load for each worker.\n\nNotes\n\nUse this function to distribute a given task acting on a set S and a pool v of shared vectors. The tasks are equally distributed among the number of processes.\n\nSee also distribute_task!.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.distribute_task!",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.distribute_task!",
+    "category": "function",
+    "text": "distribute_task!(S::LazySet{N}, v::SharedVector{N}...) where {N<:Real}\n\nDistribute the assignment of each chunk among the available processes.\n\nInput\n\nS – convex set\nv – variable number of shared vectors\n\nOutput\n\nNothing.\n\nNotes\n\nUse this function to distribute a given task acting on a set S and a pool v of shared vectors.\n\nThe task for each processor is distributed through remotecall_wait using a function assign_chunk! that should be defined elsewhere. The vectors v contain one or more shared vectors in which the values of the task are written.\n\nTypically, the function assign_chunk! is a wrapper around some problem-specific process_chunk! function.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel._prange",
+    "page": "Parallel",
+    "title": "LazySets.Parallel._prange",
+    "category": "function",
+    "text": "_prange(v::SharedVector{N}) where {N<:Real}\n\nReturns the indexes assigned to a process.\n\nInput\n\nv – shared vector of length n\n\nOutput\n\nThe indices range assigned to each process.\n\nNotes\n\nThe indices are assigned such that the vector is equally distributed among the processes. If the worker is not assigned a piece, the unit range 1:0 is returned.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#Distributed-functions-1",
+    "page": "Parallel",
+    "title": "Distributed functions",
+    "category": "section",
+    "text": "LazySets.Parallel.assign_chunk!\nLazySets.Parallel.distribute_task!\nLazySets.Parallel._prange"
 },
 
 {
