@@ -3261,7 +3261,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -3397,7 +3397,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -3661,7 +3661,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -3805,7 +3805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -3861,7 +3861,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -4206,6 +4206,110 @@ var documenterSearchIndex = {"docs": [
     "title": "Symmetric Interval Hull",
     "category": "section",
     "text": "SymmetricIntervalHull\ndim(::SymmetricIntervalHull)\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}\ncenter(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isempty\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+},
+
+{
+    "location": "lib/operations.html#Union-1",
+    "page": "Common Set Operations",
+    "title": "Union",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "lib/operations.html#LazySets.UnionSet",
+    "page": "Common Set Operations",
+    "title": "LazySets.UnionSet",
+    "category": "type",
+    "text": "UnionSet{N<:Real, S1<:LazySet{N}, S2<:LazySet{N}}\n\nType that represents the set union of two convex sets.\n\nFields\n\nX – convex set\nY – convex set\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:∪-Tuple{LazySet,LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:∪",
+    "category": "method",
+    "text": "∪\n\nAlias for UnionSet.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{Union}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(cup::Union)::Int\n\nReturn the dimension of the set union of two convex sets.\n\nInput\n\ncup – union of two convex sets\n\nOutput\n\nThe ambient dimension of the union of two convex sets.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},UnionSet{N,S1,S2} where S2<:LazySet{N} where S1<:LazySet{N}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{N}, cup::UnionSet{N}; [algorithm]=\"support_vector\") where {N<:Real}\n\nReturn the support vector of the union of two convex sets in a given direction.\n\nInput\n\nd         – direction\ncup       – union of two convex sets\nalgorithm – (optional, default: \"supportvector\"): the algorithm to compute                the support vector; if \"supportvector\", use the support                vector of each argument; if \"support_function\" use the support                function of each argument and evaluate the support vector of only                one of them\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThe support vector of the union of two convex sets X and Y can be obtained as the vector that maximizes the support function of either X or Y, i.e. it is sufficient to find the argmax(ρ(d X) ρ(d Y)) and evaluate its support vector.\n\nThe default implementation, with option algorithm=\"support_vector\", computes the support vector of X and Y and then compares the support function using a dot product. If it happens that the support function can be more efficiently computed (without passing through the support vector), consider using the alternative algorithm=\"support_function\" implementation, which evaluates the support function of each set directly and then calls only the support vector of either X or Y.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},UnionSet{N,S1,S2} where S2<:LazySet{N} where S1<:LazySet{N}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, cup::UnionSet{N}) where {N<:Real}\n\nReturn the support function of the union of two convex sets in a given direction.\n\nInput\n\nd   – direction\ncup – union of two convex sets\n\nOutput\n\nThe support function in the given direction.\n\nAlgorithm\n\nThe support function of the union of two convex sets X and Y is the maximum of the support functions of X and Y.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Binary-Set-Union-1",
+    "page": "Common Set Operations",
+    "title": "Binary Set Union",
+    "category": "section",
+    "text": "UnionSet\n∪(::LazySet, ::LazySet)\ndim(::Union)\nσ(::AbstractVector{N}, ::UnionSet{N}; algorithm=\"support_vector\") where {N<:Real}\nρ(::AbstractVector{N}, ::UnionSet{N}) where {N<:Real}"
+},
+
+{
+    "location": "lib/operations.html#LazySets.UnionSetArray",
+    "page": "Common Set Operations",
+    "title": "LazySets.UnionSetArray",
+    "category": "type",
+    "text": "UnionSetArray{N<:Real, S<:LazySet{N}}\n\nType that represents the set union of a finite number of convex sets.\n\nFields\n\narray – array of convex sets\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{UnionSetArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(cup::UnionSetArray)::Int\n\nReturn the dimension of the set union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe ambient dimension of the union of a finite number of convex sets.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.array-Union{Tuple{UnionSetArray{N,S}}, Tuple{S}, Tuple{N}} where S<:LazySet{N} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "method",
+    "text": "array(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},UnionSetArray{N,S} where S<:LazySet{N}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{N}, cup::UnionSetArray{N}; [algorithm]=\"support_vector\") where {N<:Real}\n\nReturn the support vector of the union of a finite number of convex sets in a given direction.\n\nInput\n\nd         – direction\ncup       – union of a finite number of convex sets\nalgorithm – (optional, default: \"supportvector\"): the algorithm to compute                the support vector; if \"supportvector\", use the support                vector of each argument; if \"support_function\" use the support                function of each argument and evaluate the support vector of only                one of them\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThe support vector of the union of a finite number of convex sets X₁ X₂  can be obtained as the vector that maximizes the support function, i.e. it is sufficient to find the argmax(ρ(d X₂) ρ(d X₂) ) and evaluate its support vector.\n\nThe default implementation, with option algorithm=\"support_vector\", computes the support vector of all X₁ X₂  and then compares the support function using a dot product. If it happens that the support function can be more efficiently computed (without passing through the support vector), consider using the alternative algorithm=\"support_function\" implementation, which evaluates the support function of each set directly and then calls only the support vector of one of the Xᵢ.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},UnionSetArray{N,S} where S<:LazySet{N}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, cup::UnionSetArray{N}) where {N<:Real}\n\nReturn the support function of the union of a finite number of convex sets in a given direction.\n\nInput\n\nd   – direction\ncup – union of a finite number of convex sets\n\nOutput\n\nThe support function in the given direction.\n\nAlgorithm\n\nThe support function of the union of a finite number of convex sets X₁ X₂  can be obtained as the maximum of ρ(d X₂) ρ(d X₂) .\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#n-ary-Set-Union-1",
+    "page": "Common Set Operations",
+    "title": "n-ary Set Union",
+    "category": "section",
+    "text": "UnionSetArray\ndim(::UnionSetArray)\narray(::UnionSetArray{N, S}) where {N<:Real, S<:LazySet{N}}\nσ(::AbstractVector{N}, ::UnionSetArray{N}; algorithm=\"support_vector\") where {N<:Real}\nρ(::AbstractVector{N}, ::UnionSetArray{N}) where {N<:Real}"
 },
 
 {
