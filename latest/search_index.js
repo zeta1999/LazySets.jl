@@ -2645,7 +2645,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tovrep",
     "category": "method",
-    "text": "tovrep(P::HPoly{N};\n      [backend]=default_polyhedra_backend(P, N)) where {N<:Real}\n\nTransform a polyhedron in H-representation to a polytope in V-representation.\n\nInput\n\nP          – polyhedron in constraint representation\nbackend    – (optional, default: default_polyhedra_backend(P, N))                 the polyhedral computations backend\n\nOutput\n\nThe VPolytope which is the vertex representation of the given polyhedron in constraint representation.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
+    "text": "tovrep(P::HPoly{N};\n      [backend]=default_polyhedra_backend(P, N)) where {N<:Real}\n\nTransform a polyhedron in H-representation to a polytope in V-representation.\n\nInput\n\nP       – polyhedron in constraint representation\nbackend – (optional, default: default_polyhedra_backend(P, N)) the              backend for polyhedral computations\n\nOutput\n\nThe VPolytope which is the vertex representation of the given polyhedron in constraint representation.\n\nNotes\n\nThe conversion may not preserve the numeric type (e.g., with N == Float32) depending on the backend. For further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
 },
 
 {
@@ -2805,7 +2805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tohrep",
     "category": "method",
-    "text": "tohrep(P::VPolytope{N};\n       [backend]=default_polyhedra_backend(P, N)) where {N<:Real}\n\nTransform a polytope in V-representation to a polytope in H-representation.\n\nInput\n\nP          – polytope in vertex representation\nbackend    – (optional, default: default_polyhedra_backend(P, N)) the polyhedral                 computations backend,                 see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe HPolytope which is the constraint representation of the given polytope in vertex representation.\n\n\n\n\n\n"
+    "text": "tohrep(P::VPolytope{N};\n       [backend]=default_polyhedra_backend(P, N)) where {N<:Real}\n\nTransform a polytope in V-representation to a polytope in H-representation.\n\nInput\n\nP       – polytope in vertex representation\nbackend – (optional, default: default_polyhedra_backend(P, N)) the              backend for polyhedral computations\n\nOutput\n\nThe HPolytope which is the constraint representation of the given polytope in vertex representation.\n\nNotes\n\nThe conversion may not preserve the numeric type (e.g., with N == Float32) depending on the backend. For further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
 },
 
 {
