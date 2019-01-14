@@ -801,14 +801,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#Base.:==-Tuple{LazySet,LazySet}",
-    "page": "Set Interfaces",
-    "title": "Base.:==",
-    "category": "method",
-    "text": "==(X::LazySet, Y::LazySet)\n\nReturn whether two LazySets of the same type are exactly equal by recursively comparing their fields until a mismatch is found.\n\nInput\n\nX – any LazySet\nY – another LazySet of the same type as X\n\nOutput\n\ntrue iff X is equal to Y.\n\nNotes\n\nThe check is purely syntactic and the sets need to have the same base type. I.e. X::VPolytope == Y::HPolytope returns false even if X and Y represent the same polytope. However X::HPolytope{Int64} == Y::HPolytope{Float64} is a valid comparison.\n\nExamples\n\njulia> HalfSpace([1], 1) == HalfSpace([1], 1)\ntrue\n\njulia> HalfSpace([1], 1) == HalfSpace([1.0], 1.0)\ntrue\n\njulia> Ball1([0.], 1.) == Ball2([0.], 1.)\nfalse\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/interfaces.html#RecipesBase.apply_recipe-Tuple{Dict{Symbol,Any},LazySet}",
     "page": "Set Interfaces",
     "title": "RecipesBase.apply_recipe",
@@ -845,7 +837,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Other globally defined set functions",
     "category": "section",
-    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)\nisbounded(::LazySet)\nisbounded_unit_dimensions(::LazySet{N}) where {N<:Real}\nan_element(::LazySet{N}) where {N<:Real}\n==(::LazySet, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LazySet}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet, ::Float64)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}, ::Float64) where {S<:LazySet}"
+    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)\nisbounded(::LazySet)\nisbounded_unit_dimensions(::LazySet{N}) where {N<:Real}\nan_element(::LazySet{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LazySet}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet, ::Float64)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}, ::Float64) where {S<:LazySet}"
+},
+
+{
+    "location": "lib/interfaces.html#Base.:==-Tuple{LazySet,LazySet}",
+    "page": "Set Interfaces",
+    "title": "Base.:==",
+    "category": "method",
+    "text": "==(X::LazySet, Y::LazySet)\n\nReturn whether two LazySets of the same type are exactly equal by recursively comparing their fields until a mismatch is found.\n\nInput\n\nX – any LazySet\nY – another LazySet of the same type as X\n\nOutput\n\ntrue iff X is equal to Y.\n\nNotes\n\nThe check is purely syntactic and the sets need to have the same base type. I.e. X::VPolytope == Y::HPolytope returns false even if X and Y represent the same polytope. However X::HPolytope{Int64} == Y::HPolytope{Float64} is a valid comparison.\n\nExamples\n\njulia> HalfSpace([1], 1) == HalfSpace([1], 1)\ntrue\n\njulia> HalfSpace([1], 1) == HalfSpace([1.0], 1.0)\ntrue\n\njulia> Ball1([0.], 1.) == Ball2([0.], 1.)\nfalse\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Base.copy-Tuple{LazySet}",
+    "page": "Set Interfaces",
+    "title": "Base.copy",
+    "category": "method",
+    "text": "copy(S::LazySet)\n\nReturn a deep copy of the given set by copying its values recursively.\n\nInput\n\nS – any LazySet\n\nOutput\n\nA copy of S.\n\nNotes\n\nThis function performs a deepcopy of each field in S, resulting in a completely independent object. See the documentation of ?deepcopy for further details.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Set-functions-that-override-Base-functions-1",
+    "page": "Set Interfaces",
+    "title": "Set functions that override Base functions",
+    "category": "section",
+    "text": "==(::LazySet, ::LazySet)\ncopy(::LazySet)"
 },
 
 {
@@ -2593,14 +2609,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.copy-Union{Tuple{PT}, Tuple{PT}, Tuple{N}, Tuple{N}} where PT<:Union{HPolyhedron{N}, HPolytope{N}} where N",
-    "page": "Common Set Representations",
-    "title": "Base.copy",
-    "category": "method",
-    "text": "copy(P::PT) where {N, PT<:HPoly{N}}\n\nCreate a copy of a polyhedron.\n\nInput\n\nP – polyhedron\n\nOutput\n\nThe polyhedron obtained by copying the constraints in P using Base.copy.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#LazySets.tosimplehrep-Union{Tuple{Union{HPolyhedron{N}, HPolytope{N}}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.tosimplehrep",
@@ -2677,7 +2685,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ncopy(P::PT) where {N, PT<:HPoly{N}} where {N<:Real}\ntosimplehrep(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntosimplehrep(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
 },
 
 {
