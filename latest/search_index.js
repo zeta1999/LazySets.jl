@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Manual Outline",
     "category": "section",
-    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\",\n    \"man/interval_hulls.md\",\n    \"man/convex_hulls.md\",\n    \"man/reach_zonotopes.md\",\n    \"man/reach_zonotopes_hybrid.md\",\n    \"man/concrete_polyhedra.md\",\n    \"man/parallel_approximations.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\",\n    \"man/interval_hulls.md\",\n    \"man/convex_hulls.md\",\n    \"man/set_operations.md\",\n    \"man/reach_zonotopes.md\",\n    \"man/reach_zonotopes_hybrid.md\",\n    \"man/concrete_polyhedra.md\",\n    \"man/parallel_approximations.md\"\n]\nDepth = 2"
 },
 
 {
@@ -53,7 +53,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Library Outline",
     "category": "section",
-    "text": "Pages = [\n    \"lib/interfaces.md\",\n    \"lib/representations.md\",\n    \"lib/operations.md\",\n    \"lib/conversion.md\",\n    \"lib/approximations.md\",\n    \"lib/utils.md\",\n    \"lib/parallel.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"lib/interfaces.md\",\n    \"lib/representations.md\",\n    \"lib/operations.md\",\n    \"lib/comparisons.md\",\n    \"lib/conversion.md\",\n    \"lib/binary_functions.md\",\n    \"lib/approximations.md\",\n    \"lib/utils.md\",\n    \"lib/parallel.md\"\n]\nDepth = 2"
 },
 
 {
@@ -4321,16 +4321,88 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/comparisons.html#",
+    "page": "Comparisons",
+    "title": "Comparisons",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._leq-Union{Tuple{N}, Tuple{N,N}} where N<:Real",
+    "page": "Comparisons",
+    "title": "LazySets._leq",
+    "category": "method",
+    "text": "_leq(x::N, y::N; [kwargs...]) where {N<:Real}\n\nDetermine if x is smaller than or equal to y.\n\nInput\n\nx      – number\ny      – another number (of the same numeric type as x)\nkwargs – not used\n\nOutput\n\nA boolean that is true iff x <= y.\n\nAlgorithm\n\nThis is a fallback implementation for numbers of type Real. If the arguments are floating point numbers, see _leq(x::AbstractFloat, y::AbstractFloat).\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._leq-Union{Tuple{M}, Tuple{N}, Tuple{N,M}} where M<:Real where N<:Real",
+    "page": "Comparisons",
+    "title": "LazySets._leq",
+    "category": "method",
+    "text": "_leq(x::N, y::M; [kwargs...]) where {N<:Real, M<:Real}\n\nDetermine if x is smaller than or equal to y.\n\nInput\n\nx      – number\ny      – another number (of possibly different numeric type than x)\nkwargs – optional arguments; see ?_leq for the available options \n\nOutput\n\nA boolean that is true iff x <= y.\n\nAlgorithm\n\nThis implementation calls Julia\'s promote(x, y) function, which converts all arguments to a common numeric type, returning them as a tuple. The conversion is such that the common type to which the values are converted can represent them as faithfully as possible.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._geq-Tuple{Real,Real}",
+    "page": "Comparisons",
+    "title": "LazySets._geq",
+    "category": "method",
+    "text": "_geq(x::Real, y::Real; [kwargs...])\n\nDetermine if x is greater than or equal to y.\n\nInput\n\nx – number\ny – another number (of possibly different numeric type than x)\n\nOutput\n\nA boolean that is true iff x >= y.\n\nAlgorithm\n\nThis function falls back to _leq(y, x), with type promotion if needed. See the documentation of _leq for further details.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets.isapproxzero-Tuple{Real}",
+    "page": "Comparisons",
+    "title": "LazySets.isapproxzero",
+    "category": "method",
+    "text": "isapproxzero(x::Real; [kwargs...])\n\nDetermine if x is approximately zero.\n\nInput\n\nx      – number\nkwargs – ignored\n\nOutput\n\nA boolean that is true iff x ≈ 0.\n\nAlgorithm\n\nThis is a fallback implementation for any real x such that x ≈ 0 is true whenever x is equal to zero in the same numeric type as x.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets.isapproxzero-Union{Tuple{N}, Tuple{N}} where N<:AbstractFloat",
+    "page": "Comparisons",
+    "title": "LazySets.isapproxzero",
+    "category": "method",
+    "text": "isapproxzero(x::N; ztol::Real=ABSZTOL(N)) where {N<:AbstractFloat}\n\nDetermine if x is approximately zero.\n\nInput\n\nx    – number\nztol – (optional, default: ABSZTOL) tolerance against zero\n\nOutput\n\nA boolean that is true iff x ≈ 0.\n\nAlgorithm\n\nIt is considered that x ≈ 0 whenever x (in absolute value) is smaller than the tolerance for zero, ztol.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._isapprox-Union{Tuple{N}, Tuple{N,N}} where N<:AbstractFloat",
+    "page": "Comparisons",
+    "title": "LazySets._isapprox",
+    "category": "method",
+    "text": "_isapprox(x::N, y::N;\n          rtol::Real=Base.rtoldefault(N),\n          ztol::Real=ABSZTOL(N),\n          atol::Real=zero(N)) where {N<:AbstractFloat}\n\nDetermine if x is approximately equal to y.\n\nInput\n\nx    – number\ny    – another number (of the same numeric type as x)\nrtol – (optional, default: Base.rtoldefault(N)) relative tolerance\nztol – (optional, default: ABSZTOL(N)) absolute tolerance for comparison against zero\natol – (optional, default: zero(N)) absolute tolerance\n\nOutput\n\nA boolean that is true iff x ≈ y.\n\nAlgorithm\n\nWe first check if x and y are both approximately zero, using isapproxzero(x, y). If that fails, we check if x ≈ y, using Julia\'s isapprox(x, y). In the latter check we use atol absolute tolerance and rtol relative tolerance.\n\nComparing to zero with default tolerances is a special case in Julia\'s isapprox, see the last paragraph in ?isapprox. This function tries to combine isapprox with its default values and a branch for x ≈ y ≈ 0 which includes x == y == 0 but also admits a tolerance ztol.\n\nNote that if x = ztol and y = -ztol, then |x-y| = 2*ztol and still _isapprox returns true.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._leq-Union{Tuple{N}, Tuple{N,N}} where N<:AbstractFloat",
+    "page": "Comparisons",
+    "title": "LazySets._leq",
+    "category": "method",
+    "text": "_leq(x::N, y::N;\n     rtol::Real=Base.rtoldefault(N),\n     ztol::Real=ABSZTOL(N),\n     atol::Real=zero(N)) where {N<:AbstractFloat}\n\nDetermine if x is smaller than or equal to y.\n\nInput\n\nx    – number\ny    – another number (of the same numeric type as x)\nrtol – (optional, default: Base.rtoldefault(N)) relative tolerance\nztol – (optional, default: ABSZTOL(N)) absolute tolerance for comparison against zero\natol – absolute tolerance\n\nOutput\n\nA boolean that is true iff x <= y.\n\nAlgorithm\n\nThe x <= y comparison is split into x < y or x ≈ y; the latter is implemented by extending Juila\'s built-in isapprox(x, y) with an absolute tolerance that is used to compare against zero.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#Comparisons-1",
+    "page": "Comparisons",
+    "title": "Comparisons",
+    "category": "section",
+    "text": "This section of the manual lists the comparison functions in floating point between scalars and between vectors.Pages = [\"comparisons.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nend_leq(x::N, y::N; kwargs...) where {N<:Real}\n_leq(x::N, y::M; kwargs...) where {N<:Real, M<:Real}\n_geq(x::Real, y::Real; kwargs...)\nisapproxzero(x::Real; kwargs...)\nisapproxzero(x::N; ztol::Real=ABSZTOL(N)) where {N<:AbstractFloat}\n_isapprox(x::N, y::N; rtol::Real=Base.rtoldefault(N), ztol::Real=ABSZTOL(N), atol::Real=zero(N)) where {N<:AbstractFloat}\n_leq(x::N, y::N; rtol::Real=Base.rtoldefault(N), ztol::Real=ABSZTOL(N), atol::Real=zero(N)) where {N<:AbstractFloat}"
+},
+
+{
     "location": "lib/conversion.html#",
-    "page": "Conversion between set representations",
-    "title": "Conversion between set representations",
+    "page": "Conversions between set representations",
+    "title": "Conversions between set representations",
     "category": "page",
     "text": ""
 },
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON2}, Tuple{HPOLYGON1}, Tuple{Type{HPOLYGON1},HPOLYGON2}} where HPOLYGON2<:AbstractHPolygon where HPOLYGON1<:AbstractHPolygon",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON1},\n        P::HPOLYGON2) where {HPOLYGON1<:AbstractHPolygon,\n                             HPOLYGON2<:AbstractHPolygon}\n\nConvert between polygon types in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as the target type.\n\nNotes\n\nWe need the Union type for HPOLYGON1 because the target type must be concrete.\n\n\n\n\n\n"
@@ -4338,7 +4410,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{Type{HPOLYGON},VPolygon}} where HPOLYGON<:AbstractHPolygon",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(T::Type{HPOLYGON}, P::VPolygon) where {HPOLYGON<:AbstractHPolygon}\n\nConverts a polygon in vertex representation to a polygon in constraint representation.\n\nInput\n\nHPOLYGON – type used for dispatch\nP        – polygon in vertex representation\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n\n\n"
@@ -4346,7 +4418,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{Hyperrectangle},LazySets.Interval}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{Hyperrectangle}, x::Interval)\n\nConverts a unidimensional interval into a hyperrectangular set.\n\nInput\n\nAbstractHyperrectangle\nx – interval\n\nOutput\n\nA hyperrectangle.\n\nExamples\n\njulia> convert(Hyperrectangle, Interval(0.0, 1.0))\nHyperrectangle{Float64}([0.5], [0.5])\n\n\n\n\n\n"
@@ -4354,7 +4426,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{Type{HPOLYGON},AbstractHyperrectangle}} where HPOLYGON<:AbstractHPolygon",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON}, H::AbstractHyperrectangle) where\n    {HPOLYGON<:AbstractHPolygon}\n\nConverts a hyperrectangular set to a polygon in constraint representation.\n\nInput\n\nHPOLYGON  – type used for dispatch\nH         – hyperrectangular set\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n\n\n"
@@ -4362,7 +4434,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{N}, Tuple{Type{HPOLYGON},HPolytope{N}}} where HPOLYGON<:AbstractHPolygon where N<:Real",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON}, P::HPolytope{N}) where\n    {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nConvert from 2D polytope in H-representation to polygon in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope (must be 2D)\n\nOutput\n\nThe 2D polytope represented as polygon.\n\n\n\n\n\n"
@@ -4370,7 +4442,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{N}, Tuple{Type{HPOLYGON},AbstractSingleton{N}}} where HPOLYGON<:AbstractHPolygon where N<:Real",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON}, S::AbstractSingleton{N}\n       ) where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nConvert from singleton to polygon in H-representation.\n\nInput\n\ntype – target type\nS    – singleton\n\nOutput\n\nA polygon in constraint representation with the minimal number of constraints (three).\n\n\n\n\n\n"
@@ -4378,7 +4450,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{N}, Tuple{Type{HPOLYGON},LineSegment{N}}} where HPOLYGON<:AbstractHPolygon where N<:Real",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON}, L::LineSegment{N}\n      ) where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nConvert from line segment to polygon in H-representation.\n\nInput\n\ntype – target type\nL    – line segment\n\nOutput\n\nA flat polygon in constraint representation with the minimal number of constraints (four).\n\n\n\n\n\n"
@@ -4386,7 +4458,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolyhedron},AbstractPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolyhedron}, P::AbstractPolytope)\n\nConvert a polytopic set to a polyhedron in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe given polytope represented as a polyhedron in constraint representation.\n\n\n\n\n\n"
@@ -4394,7 +4466,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolytope},AbstractHPolygon}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolytope}, P::AbstractHPolygon)\n\nConvert from polygon in H-representation to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as 2D polytope.\n\n\n\n\n\n"
@@ -4402,7 +4474,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolytope},AbstractHyperrectangle}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolytope}, H::AbstractHyperrectangle)\n\nConverts a hyperrectangular set to a polytope in constraint representation.\n\nInput\n\nHPolytope – type used for dispatch\nH         – hyperrectangular set\n\nOutput\n\nA polytope in constraint representation.\n\n\n\n\n\n"
@@ -4410,7 +4482,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolytope},AbstractPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolytope}, P::AbstractPolytope)\n\nConvert a polytopic set to a polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe given polytope represented as a polytope in constraint representation.\n\nAlgorithm\n\nP is first converted to a polytope in V-representation. Then, the conversion method to a polytope in H-representation is invoked. This conversion may require the Polyhedra library.\n\n\n\n\n\n"
@@ -4418,7 +4490,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolytope},VPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolytope}, P::VPolytope)\n\nConvert from polytope in V-representation to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe polytope in the dual representation.\n\nAlgorithm\n\nThe tohrep function is invoked. It requires the Polyhedra package.\n\n\n\n\n\n"
@@ -4426,7 +4498,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{VPolygon},AbstractHPolygon}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{VPolygon}, P::AbstractHPolygon)\n\nConverts a polygon in constraint representation to a polygon in vertex representation.\n\nInput\n\nVPolygon – type used for dispatch\nP        – polygon in constraint representation\n\nOutput\n\nA polygon in vertex representation.\n\n\n\n\n\n"
@@ -4434,7 +4506,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{VPolygon},AbstractPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{VPolygon}, P::AbstractPolytope)\n\nConvert polytopic set to polygon in V-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe 2D polytope represented as a polygon.\n\n\n\n\n\n"
@@ -4442,7 +4514,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{VPolytope},AbstractPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{VPolytope}, P::AbstractPolytope)\n\nConvert polytopic type to polytope in V-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe set P represented as a VPolytope.\n\n\n\n\n\n"
@@ -4450,7 +4522,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{VPolytope},HPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{VPolytope}, P::HPolytope)\n\nConvert from polytope in H-representation to polytope in V-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe polytope in the dual representation.\n\nAlgorithm\n\nThe tovrep function is invoked. It requires the Polyhedra package.\n\n\n\n\n\n"
@@ -4458,7 +4530,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{Zonotope},AbstractHyperrectangle}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{Zonotope}, H::AbstractHyperrectangle)\n\nConverts a hyperrectangular set to a zonotope.\n\nInput\n\nZonotope\nH – hyperrectangular set\n\nOutput\n\nA zonotope.\n\n\n\n\n\n"
@@ -4466,7 +4538,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Conversion-between-set-representations-1",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Conversion between set representations",
     "category": "section",
     "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert(::Type{HPOLYGON1}, ::HPOLYGON2) where {HPOLYGON1<:AbstractHPolygon, HPOLYGON2<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::VPolygon) where {HPOLYGON<:AbstractHPolygon}\nconvert(::Type{Hyperrectangle}, ::Interval)\nconvert(::Type{HPOLYGON}, ::AbstractHyperrectangle) where {HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::HPolytope{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::AbstractSingleton{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::LineSegment{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPolyhedron}, ::AbstractPolytope)\nconvert(::Type{HPolytope}, ::AbstractHPolygon)\nconvert(::Type{HPolytope}, ::AbstractHyperrectangle)\nconvert(::Type{HPolytope}, ::AbstractPolytope)\nconvert(::Type{HPolytope}, ::VPolytope)\nconvert(::Type{VPolygon}, ::AbstractHPolygon)\nconvert(::Type{VPolygon}, ::AbstractPolytope)\nconvert(::Type{VPolytope}, ::AbstractPolytope)\nconvert(::Type{VPolytope}, ::HPolytope)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle)"
