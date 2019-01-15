@@ -2421,7 +2421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.VPolygon",
     "category": "type",
-    "text": "VPolygon{N<:Real} <: AbstractPolygon{N}\n\nType that represents a polygon by its vertices.\n\nFields\n\nvertices – the list of vertices\n\nNotes\n\nThe constructor of VPolygon runs a convex hull algorithm, and the given vertices are sorted in counter-clockwise fashion. The constructor flag apply_convex_hull can be used to skip the computation of the convex hull.\n\nVPolygon(vertices::Vector{Vector{N}};           apply_convex_hull::Bool=true,           algorithm::String=\"monotone_chain\")\n\n\n\n\n\n"
+    "text": "VPolygon{N<:Real} <: AbstractPolygon{N}\n\nType that represents a polygon by its vertices.\n\nFields\n\nvertices – the list of vertices\n\nNotes\n\nThe constructor of VPolygon runs a convex hull algorithm on its vertices by default, to remove the possibly redundant vertices. The vertices are sorted in counter-clockwise fashion. Use the flag apply_convex_hull=false to skip the computation of the convex hull.\n\nVPolygon(vertices::Vector{Vector{N}};           apply_convex_hull::Bool=true,           algorithm::String=\"monotone_chain\")\n\n\n\n\n\n"
 },
 
 {
@@ -2489,11 +2489,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.remove_redundant_vertices-Union{Tuple{VPolygon{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_vertices",
+    "category": "method",
+    "text": "remove_redundant_vertices(P::VPolygon{N};\n                          [algorithm]::String=\"monotone_chain\")::VPolygon{N} where {N<:Real}\n\nReturn the polygon obtained by removing the redundant vertices of the given polygon.\n\nInput\n\nP         – polygon in vertex representation\nalgorithm – (optional, default: \"monotone_chain\") the algorithm used to                compute the convex hull\n\nOutput\n\nA new polygon such that its vertices are the convex hull of the given polygon.\n\nAlgorithm\n\nA convex hull algorithm is used to compute the convex hull of the vertices of the given input polygon P; see ?convex_hull for details on the available algorithms. The vertices of the output polygon are sorted in counter-clockwise fashion.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.remove_redundant_vertices!-Union{Tuple{VPolygon{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_vertices!",
+    "category": "method",
+    "text": "remove_redundant_vertices!(P::VPolygon{N};\n                           [algorithm]::String=\"monotone_chain\")::VPolygon{N} where {N<:Real}\n\nRemove the redundant vertices of the given polygon.\n\nInput\n\nP         – polygon in vertex representation\nalgorithm – (optional, default: \"monotone_chain\") the algorithm used to                compute the convex hull\n\nOutput\n\nA new polygon such that its vertices are the convex hull of the given polygon.\n\nAlgorithm\n\nA convex hull algorithm is used to compute the convex hull of the vertices of the given input polygon P; see ?convex_hull for details on the available algorithms. The vertices of the output polygon are sorted in counter-clockwise fashion.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Vertex-representation-1",
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\nσ(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon{N}) where {N<:Real}\ntohrep(::VPolygon{N}, ::Type{HPOLYGON}=HPolygon) where {N<:Real, HPOLYGON<:AbstractHPolygon}\ntovrep(::VPolygon{N}) where {N<:Real}\nconstraints_list(::VPolygon{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
+    "text": "VPolygon\nσ(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon{N}) where {N<:Real}\ntohrep(::VPolygon{N}, ::Type{HPOLYGON}=HPolygon) where {N<:Real, HPOLYGON<:AbstractHPolygon}\ntovrep(::VPolygon{N}) where {N<:Real}\nconstraints_list(::VPolygon{N}) where {N<:Real}\nremove_redundant_vertices(::VPolygon{N}; ::String=\"monotone_chain\") where {N<:Real}\nremove_redundant_vertices!(::VPolygon{N}; ::String=\"monotone_chain\") where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
 },
 
 {
@@ -2633,14 +2649,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.convex_hull-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
-    "page": "Common Set Representations",
-    "title": "LazySets.convex_hull",
-    "category": "method",
-    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#LazySets.cartesian_product-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.cartesian_product",
@@ -2685,7 +2693,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntosimplehrep(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntosimplehrep(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
 },
 
 {
@@ -2801,6 +2809,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.remove_redundant_vertices-Union{Tuple{VPolytope{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_vertices",
+    "category": "method",
+    "text": "remove_redundant_vertices(P::VPolytope{N};\n                          [backend]=default_polyhedra_backend(P, N))::VPolytope{N} where {N<:Real}\n\nReturn the polytope obtained by removing the redundant vertices of the given polytope.\n\nInput\n\nP       – polytope in vertex representation\nbackend – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral              computations backend, see              Polyhedra\'s documentation              for further information\n\nOutput\n\nA new polytope such that its vertices are the convex hull of the given polytope.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{VPolytope{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
@@ -2845,7 +2861,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\nvertices_list(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_map"
+    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\nvertices_list(::VPolytope{N}) where {N<:Real}\nremove_redundant_vertices(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_map"
 },
 
 {
@@ -3429,7 +3445,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull",
     "category": "function",
-    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\nconvex_hull(P1::VPolytope{N}, P2::VPolytope{N};\n            [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polytopes in V-representation.\n\nInput\n\nP1         – polytope\nP2         – another polytope\nbackend    – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral                 computations backend, see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe VPolytope obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\n\n\n\n\nconvex_hull(points::Vector{VN}; [algorithm]::String=\"monotone_chain\"\n           )::Vector{VN} where {N<:Real, VN<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – list of 2D vectors\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\"monotone_chain_sorted\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\n\njulia> hull = convex_hull(points);\n\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nPlot both the random points and the computed convex hull polygon:\n\njulia> using Plots;\n\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter);\n\njulia> plot!(VPolygon(hull), alpha=0.2);\n\n\n\n\n\n"
+    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\nconvex_hull(P::VPolygon{N}, Q::VPolygon{N};\n            [algorithm]::String=\"monotone_chain\")::VPolygon{N} where {N<:Real}\n\nReturn the convex hull of two polygons in vertex representation.\n\nInput\n\nP         – polygon in vertex representation\nQ         – another polygon in vertex representation\nalgorithm – (optional, default: \"monotone_chain\") the algorithm used to                compute the convex hull\n\nOutput\n\nA new polygon such that its vertices are the convex hull of the given two polygons.\n\nAlgorithm\n\nA convex hull algorithm is used to compute the convex hull of the vertices of the given input polygons P and Q; see ?convex_hull for details on the available algorithms. The vertices of the output polygon are sorted in counter-clockwise fashion.\n\n\n\n\n\nconvex_hull(P1::VPolytope{N}, P2::VPolytope{N};\n            [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polytopes in V-representation.\n\nInput\n\nP1         – polytope\nP2         – another polytope\nbackend    – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral                 computations backend, see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe VPolytope obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\n\n\n\n\nconvex_hull(points::Vector{VN}; [algorithm]::String=\"monotone_chain\"\n           )::Vector{VN} where {N<:Real, VN<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – list of 2D vectors\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\"monotone_chain_sorted\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\n\njulia> hull = convex_hull(points);\n\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nPlot both the random points and the computed convex hull polygon:\n\njulia> using Plots;\n\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter);\n\njulia> plot!(VPolygon(hull), alpha=0.2);\n\n\n\n\n\n"
 },
 
 {
@@ -4561,126 +4577,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{LazySet{N},AbstractHyperrectangle{N}}, Tuple{LazySet{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(S::LazySet{N}, H::AbstractHyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set is contained in a hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nS – inner convex set\nH – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nAlgorithm\n\nS  H iff operatornameihull(S)  H, where  operatornameihull is the interval hull operator.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractPolytope{N},LazySet{N}}, Tuple{AbstractPolytope{N},LazySet{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(P::AbstractPolytope{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  S\nIf witness option is activated:\n(true, []) iff P  S\n(false, v) iff P notsubseteq S and v  P setminus S\n\nAlgorithm\n\nSince S is convex, P  S iff v_i  S for all vertices v_i of P.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractPolytope{N},AbstractHyperrectangle}, Tuple{AbstractPolytope{N},AbstractHyperrectangle,Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(P::AbstractPolytope{N}, H::AbstractHyperrectangle, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nH – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  H\nIf witness option is activated:\n(true, []) iff P  H\n(false, v) iff P notsubseteq H and v  P setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, P  H iff v_i  H for all vertices v_i of P.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N}}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(H1::AbstractHyperrectangle{N},\n  H2::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given hyperrectangular set is contained in another hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nH1 – inner hyperrectangular set\nH2 – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2\nIf witness option is activated:\n(true, []) iff H1  H2\n(false, v) iff H1 notsubseteq H2 and v  H1 setminus H2\n\nAlgorithm\n\nH1  H2 iff c_1 + r_1  c_2 + r_2  c_1 - r_1  c_2 - r_2 iff r_1 - r_2  c_1 - c_2  -(r_1 - r_2), where  is taken component-wise.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractSingleton{N},LazySet{N}}, Tuple{AbstractSingleton{N},LazySet{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(S::AbstractSingleton{N}, set::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nS   – inner set with a single value\nset – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  textset\nIf witness option is activated:\n(true, []) iff S  textset\n(false, v) iff S notsubseteq textset and v  S setminus textset\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractSingleton{N},AbstractHyperrectangle{N}}, Tuple{AbstractSingleton{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(S::AbstractSingleton{N},\n  H::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nS – inner set with a single value\nH – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractSingleton{N},AbstractSingleton{N}}, Tuple{AbstractSingleton{N},AbstractSingleton{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(S1::AbstractSingleton{N},\n  S2::AbstractSingleton{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in another set with a single value, and if not, optionally compute a witness.\n\nInput\n\nS1 – inner set with a single value\nS2 – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2 iff S1 == S2\nIf witness option is activated:\n(true, []) iff S1  S2\n(false, v) iff S1 notsubseteq S2 and v  S1 setminus S2\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{Ball2{N},Ball2{N}}, Tuple{Ball2{N},Ball2{N},Bool}} where N<:AbstractFloat",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(B1::Ball2{N}, B2::Ball2{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:AbstractFloat}\n\nCheck whether a ball in the 2-norm is contained in another ball in the 2-norm, and if not, optionally compute a witness.\n\nInput\n\nB1 – inner ball in the 2-norm\nB2 – outer ball in the 2-norm\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B1  B2\nIf witness option is activated:\n(true, []) iff B1  B2\n(false, v) iff B1 notsubseteq B2 and v  B1 setminus B2\n\nAlgorithm\n\nB1  B2 iff  c_1 - c_2 _2 + r_1  r_2\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{Union{Ball2{N}, Ballp{N}},AbstractSingleton{N}}, Tuple{Union{Ball2{N}, Ballp{N}},AbstractSingleton{N},Bool}} where N<:AbstractFloat",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(B::Union{Ball2{N}, Ballp{N}},\n  S::AbstractSingleton{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:AbstractFloat}\n\nCheck whether a ball in the 2-norm or p-norm is contained in a set with a single value, and if not, optionally compute a witness.\n\nInput\n\nB – inner ball in the 2-norm or p-norm\nS – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B  S\nIf witness option is activated:\n(true, []) iff B  S\n(false, v) iff B notsubseteq S and v  B setminus S\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{LineSegment{N},LazySet{N}}, Tuple{LineSegment{N},LazySet{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(L::LineSegment{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a line segment is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nL – inner line segment\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff L  S\nIf witness option is activated:\n(true, []) iff L  S\n(false, v) iff L notsubseteq S and v  L setminus S\n\nAlgorithm\n\nSince S is convex, L  S iff p  S and q  S, where p q are the end points of L.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{LineSegment{N},AbstractHyperrectangle{N}}, Tuple{LineSegment{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(L::LineSegment{N}, H::AbstractHyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a line segment is contained in a hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nL – inner line segment\nH – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff L  H\nIf witness option is activated:\n(true, []) iff L  H\n(false, v) iff L notsubseteq H and v  L setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, L  H iff p  H and q  H, where p q are the end points of L.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.Interval,LazySets.Interval}",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(x::Interval, y::Interval)\n\nCheck whether an interval is contained in another interval.\n\nInput\n\nx – interval\ny – interval\n\nOutput\n\ntrue iff x  y.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{EmptySet{N},LazySet{N}}, Tuple{EmptySet{N},LazySet{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(∅::EmptySet{N}, X::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether an empty set is contained in another set.\n\nInput\n\n∅       – empty set\nX       – another set\nwitness – (optional, default: false) compute a witness if activated              (ignored, just kept for interface reasons)\n\nOutput\n\ntrue.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{LazySet{N},EmptySet{N}}, Tuple{LazySet{N},EmptySet{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "Base.:⊆",
-    "category": "method",
-    "text": "⊆(X::LazySet{N}, ∅::EmptySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a set is contained in an empty set.\n\nInput\n\nX       – another set\n∅       – empty set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\ntrue iff X is empty.\n\nAlgorithm\n\nWe rely on isempty(X) for the emptiness check and on an_element(X) for witness production.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Subset-check-1",
-    "page": "Binary Functions on Sets",
-    "title": "Subset check",
-    "category": "section",
-    "text": "⊆(::LazySet{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::AbstractHyperrectangle, ::Bool=false) where {N<:Real}\n⊆(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\n⊆(::Union{Ball2{N}, Ballp{N}}, ::AbstractSingleton{N}, ::Bool=false) where {N<:AbstractFloat}\n⊆(::LineSegment{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::Interval, ::Interval)\n⊆(::EmptySet{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::EmptySet{N}, ::Bool=false) where {N<:Real}"
-},
-
-{
     "location": "lib/binary_functions.html#LazySets.isdisjoint",
     "page": "Binary Functions on Sets",
     "title": "LazySets.isdisjoint",
@@ -4801,6 +4697,38 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.convex_hull-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.convex_hull",
+    "category": "method",
+    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.convex_hull-Union{Tuple{N}, Tuple{VPolytope{N},VPolytope{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.convex_hull",
+    "category": "method",
+    "text": "convex_hull(P1::VPolytope{N}, P2::VPolytope{N};\n            [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polytopes in V-representation.\n\nInput\n\nP1         – polytope\nP2         – another polytope\nbackend    – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral                 computations backend, see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe VPolytope obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.convex_hull-Union{Tuple{N}, Tuple{VPolygon{N},VPolygon{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.convex_hull",
+    "category": "method",
+    "text": "convex_hull(P::VPolygon{N}, Q::VPolygon{N};\n            [algorithm]::String=\"monotone_chain\")::VPolygon{N} where {N<:Real}\n\nReturn the convex hull of two polygons in vertex representation.\n\nInput\n\nP         – polygon in vertex representation\nQ         – another polygon in vertex representation\nalgorithm – (optional, default: \"monotone_chain\") the algorithm used to                compute the convex hull\n\nOutput\n\nA new polygon such that its vertices are the convex hull of the given two polygons.\n\nAlgorithm\n\nA convex hull algorithm is used to compute the convex hull of the vertices of the given input polygons P and Q; see ?convex_hull for details on the available algorithms. The vertices of the output polygon are sorted in counter-clockwise fashion.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Convex-hull-1",
+    "page": "Binary Functions on Sets",
+    "title": "Convex hull",
+    "category": "section",
+    "text": "convex_hull(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nconvex_hull(::VPolytope{N}, ::VPolytope{N}) where {N<:Real}\nconvex_hull(::VPolygon{N}, ::VPolygon{N}) where {N<:Real}"
+},
+
+{
     "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Line{N,VN} where VN<:AbstractArray{N,1},Line{N,VN} where VN<:AbstractArray{N,1}}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
@@ -4878,6 +4806,126 @@ var documenterSearchIndex = {"docs": [
     "title": "Intersection of two sets",
     "category": "section",
     "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nintersection(::Interval{N}, ::Interval{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}\nintersection(::HPoly{N}, ::HalfSpace{N}) where {N<:Real}\nintersection(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nintersection(::HPoly{N}, ::VPolytope{N}) where {N<:Real}\nintersection(::HPoly{N}, ::AbstractPolytope{N}) where {N<:Real}\nintersection(::S1, ::S2) where {N<:Real, S1<:AbstractPolytope{N}, S2<:AbstractPolytope{N}}"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{LazySet{N},AbstractHyperrectangle{N}}, Tuple{LazySet{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(S::LazySet{N}, H::AbstractHyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set is contained in a hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nS – inner convex set\nH – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nAlgorithm\n\nS  H iff operatornameihull(S)  H, where  operatornameihull is the interval hull operator.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractPolytope{N},LazySet{N}}, Tuple{AbstractPolytope{N},LazySet{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(P::AbstractPolytope{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  S\nIf witness option is activated:\n(true, []) iff P  S\n(false, v) iff P notsubseteq S and v  P setminus S\n\nAlgorithm\n\nSince S is convex, P  S iff v_i  S for all vertices v_i of P.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractPolytope{N},AbstractHyperrectangle}, Tuple{AbstractPolytope{N},AbstractHyperrectangle,Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(P::AbstractPolytope{N}, H::AbstractHyperrectangle, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a polytope is contained in a hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nP – inner polytope\nH – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff P  H\nIf witness option is activated:\n(true, []) iff P  H\n(false, v) iff P notsubseteq H and v  P setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, P  H iff v_i  H for all vertices v_i of P.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N}}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(H1::AbstractHyperrectangle{N},\n  H2::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given hyperrectangular set is contained in another hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nH1 – inner hyperrectangular set\nH2 – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2\nIf witness option is activated:\n(true, []) iff H1  H2\n(false, v) iff H1 notsubseteq H2 and v  H1 setminus H2\n\nAlgorithm\n\nH1  H2 iff c_1 + r_1  c_2 + r_2  c_1 - r_1  c_2 - r_2 iff r_1 - r_2  c_1 - c_2  -(r_1 - r_2), where  is taken component-wise.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractSingleton{N},LazySet{N}}, Tuple{AbstractSingleton{N},LazySet{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(S::AbstractSingleton{N}, set::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nS   – inner set with a single value\nset – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  textset\nIf witness option is activated:\n(true, []) iff S  textset\n(false, v) iff S notsubseteq textset and v  S setminus textset\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractSingleton{N},AbstractHyperrectangle{N}}, Tuple{AbstractSingleton{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(S::AbstractSingleton{N},\n  H::AbstractHyperrectangle{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in a hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nS – inner set with a single value\nH – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  H\nIf witness option is activated:\n(true, []) iff S  H\n(false, v) iff S notsubseteq H and v  S setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{AbstractSingleton{N},AbstractSingleton{N}}, Tuple{AbstractSingleton{N},AbstractSingleton{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(S1::AbstractSingleton{N},\n  S2::AbstractSingleton{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a given set with a single value is contained in another set with a single value, and if not, optionally compute a witness.\n\nInput\n\nS1 – inner set with a single value\nS2 – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2 iff S1 == S2\nIf witness option is activated:\n(true, []) iff S1  S2\n(false, v) iff S1 notsubseteq S2 and v  S1 setminus S2\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{Ball2{N},Ball2{N}}, Tuple{Ball2{N},Ball2{N},Bool}} where N<:AbstractFloat",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(B1::Ball2{N}, B2::Ball2{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:AbstractFloat}\n\nCheck whether a ball in the 2-norm is contained in another ball in the 2-norm, and if not, optionally compute a witness.\n\nInput\n\nB1 – inner ball in the 2-norm\nB2 – outer ball in the 2-norm\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B1  B2\nIf witness option is activated:\n(true, []) iff B1  B2\n(false, v) iff B1 notsubseteq B2 and v  B1 setminus B2\n\nAlgorithm\n\nB1  B2 iff  c_1 - c_2 _2 + r_1  r_2\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{Union{Ball2{N}, Ballp{N}},AbstractSingleton{N}}, Tuple{Union{Ball2{N}, Ballp{N}},AbstractSingleton{N},Bool}} where N<:AbstractFloat",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(B::Union{Ball2{N}, Ballp{N}},\n  S::AbstractSingleton{N},\n  [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:AbstractFloat}\n\nCheck whether a ball in the 2-norm or p-norm is contained in a set with a single value, and if not, optionally compute a witness.\n\nInput\n\nB – inner ball in the 2-norm or p-norm\nS – outer set with a single value\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B  S\nIf witness option is activated:\n(true, []) iff B  S\n(false, v) iff B notsubseteq S and v  B setminus S\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{LineSegment{N},LazySet{N}}, Tuple{LineSegment{N},LazySet{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(L::LineSegment{N}, S::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a line segment is contained in a convex set, and if not, optionally compute a witness.\n\nInput\n\nL – inner line segment\nS – outer convex set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff L  S\nIf witness option is activated:\n(true, []) iff L  S\n(false, v) iff L notsubseteq S and v  L setminus S\n\nAlgorithm\n\nSince S is convex, L  S iff p  S and q  S, where p q are the end points of L.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{LineSegment{N},AbstractHyperrectangle{N}}, Tuple{LineSegment{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(L::LineSegment{N}, H::AbstractHyperrectangle{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a line segment is contained in a hyperrectangular set, and if not, optionally compute a witness.\n\nInput\n\nL – inner line segment\nH – outer hyperrectangular set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff L  H\nIf witness option is activated:\n(true, []) iff L  H\n(false, v) iff L notsubseteq H and v  L setminus H\n\nNotes\n\nThis copy-pasted method just exists to avoid method ambiguities.\n\nAlgorithm\n\nSince H is convex, L  H iff p  H and q  H, where p q are the end points of L.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.Interval,LazySets.Interval}",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(x::Interval, y::Interval)\n\nCheck whether an interval is contained in another interval.\n\nInput\n\nx – interval\ny – interval\n\nOutput\n\ntrue iff x  y.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{EmptySet{N},LazySet{N}}, Tuple{EmptySet{N},LazySet{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(∅::EmptySet{N}, X::LazySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether an empty set is contained in another set.\n\nInput\n\n∅       – empty set\nX       – another set\nwitness – (optional, default: false) compute a witness if activated              (ignored, just kept for interface reasons)\n\nOutput\n\ntrue.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{LazySet{N},EmptySet{N}}, Tuple{LazySet{N},EmptySet{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(X::LazySet{N}, ∅::EmptySet{N}, [witness]::Bool=false\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a set is contained in an empty set.\n\nInput\n\nX       – another set\n∅       – empty set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\ntrue iff X is empty.\n\nAlgorithm\n\nWe rely on isempty(X) for the emptiness check and on an_element(X) for witness production.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Subset-check-1",
+    "page": "Binary Functions on Sets",
+    "title": "Subset check",
+    "category": "section",
+    "text": "⊆(::LazySet{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::AbstractHyperrectangle, ::Bool=false) where {N<:Real}\n⊆(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\n⊆(::Union{Ball2{N}, Ballp{N}}, ::AbstractSingleton{N}, ::Bool=false) where {N<:AbstractFloat}\n⊆(::LineSegment{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::Interval, ::Interval)\n⊆(::EmptySet{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::EmptySet{N}, ::Bool=false) where {N<:Real}"
 },
 
 {
