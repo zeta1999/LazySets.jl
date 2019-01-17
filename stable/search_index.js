@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Manual Outline",
     "category": "section",
-    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\",\n    \"man/interval_hulls.md\",\n    \"man/convex_hulls.md\",\n    \"man/reach_zonotopes.md\",\n    \"man/reach_zonotopes_hybrid.md\",\n    \"man/concrete_polyhedra.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"man/getting_started.md\",\n    \"man/polyhedral_approximations.md\",\n    \"man/decompose_example.md\",\n    \"man/fast_2d_LPs.md\",\n    \"man/iterative_refinement.md\",\n    \"man/interval_hulls.md\",\n    \"man/convex_hulls.md\",\n    \"man/set_operations.md\",\n    \"man/reach_zonotopes.md\",\n    \"man/reach_zonotopes_hybrid.md\",\n    \"man/concrete_polyhedra.md\",\n    \"man/parallel_approximations.md\"\n]\nDepth = 2"
 },
 
 {
@@ -53,7 +53,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Library Outline",
     "category": "section",
-    "text": "Pages = [\n    \"lib/interfaces.md\",\n    \"lib/representations.md\",\n    \"lib/operations.md\",\n    \"lib/conversion.md\",\n    \"lib/approximations.md\",\n    \"lib/utils.md\"\n]\nDepth = 2"
+    "text": "Pages = [\n    \"lib/interfaces.md\",\n    \"lib/representations.md\",\n    \"lib/operations.md\",\n    \"lib/comparisons.md\",\n    \"lib/conversion.md\",\n    \"lib/binary_functions.md\",\n    \"lib/approximations.md\",\n    \"lib/utils.md\",\n    \"lib/parallel.md\"\n]\nDepth = 2"
 },
 
 {
@@ -657,6 +657,30 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "man/parallel_approximations.html#",
+    "page": "Parallel Approximations",
+    "title": "Parallel Approximations",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "man/parallel_approximations.html#Parallel-Approximations-1",
+    "page": "Parallel Approximations",
+    "title": "Parallel Approximations",
+    "category": "section",
+    "text": "A subset of the approximation algorithms are implemented in parallel in the  LazySets.Parallel module. In order to use parallel versions of the algorithms, you can write:using LazySets\nimport LazySets.Parallel\n\n# call a method implemented in parallel, for example:\nS = Ball2(ones(100), 1.0)\nParallel.box_approximation(S)Note that after importing or using LazySets.Parallel, the version of the function used must be fully qualified, eg. LazySets.Approximations.box_approximation for the sequential version or LazySets.Parallel.box_approximation for the parallel version.The parallelization strategy that is available uses processes. To set the number of processes N, use the flag -p N at julia startup. For example, do$ julia -p 4to launch 4 additional local worker julia processes. Use the keyword auto, as in$ julia -p autoto launch as many workers as the number of local CPU cores.Pages = [\"parallel_approximations.md\"]\nDepth = 3DocTestSetup = quote\n    using LazySets, LazySets.Parallel\nend"
+},
+
+{
+    "location": "man/parallel_approximations.html#Parallel-interval-hulls-1",
+    "page": "Parallel Approximations",
+    "title": "Parallel interval hulls",
+    "category": "section",
+    "text": "As an illustration of the symmetric interval hull approximation of a nested lazy set computed in parallel, consider the following calculation. It arises in the discretization of set-based ODEs, and is defined below for an artificial example of a tridiagonal matrix of order n, where n is a positive integer.using LazySets\nusing SparseArrays, LinearAlgebra\n\n# define an nxn tridiagonal matrix\nA(n) = sparse(diagm(0 => fill(0.05, n), -1 => fill(-1, n-1), 1 => fill(-1, n-1)))\n\n# step size and initial set\nδ = 0.1\nX0(n) = Ball2(ones(n), 0.1)\n\n# input coefficients matrix (nx2 matrix with coefficients from -1 to 1)\nb(n) = vcat(range(-1, stop=1, length=n))\nB(n) = [b(n) b(n)] \nU = BallInf(zeros(2), 1.2)\n\n# lazy matrix exponential\neAδ(n) = SparseMatrixExp(A(n) * δ)\n\n# set that we want to overapproximate with an interval hull\nY(n) = ConvexHull(eAδ(n) * X0(n) ⊕ (δ * B(n) * U), X0(n))The set Y(n) is parametric in the system\'s dimension n, to facilitate benchmarking. We will explore the computational cost as the dimension n increases, and compare the sequential algorithm with the parallel algorithm.Given the lazy set Y(n), we want to calculate the symmetric interval hull, which corresponds to finding the smallest n-dimensional hyperrectangle that contains the set Y(n) and is symmetric with respect to the origin. Notice that this operation is inherently parallel, since one can evaluate the support function of Y independently in each dimension from 1 to n.The sequential algorithm returns the following execution times. We use the @btime macro from the BenchmarkTools package to have a more accurate timing than @time; the $n argument is used for interpolation of the arguments (if you are not behchmarking, pass n to symmetric_interval_hull, as usual).using BenchmarkTools\n\nfor n in [50, 100, 500, 1000]\n    @btime res = Approximations.symmetric_interval_hull(Y($n));\nend\n\n  59.103 ms (11554 allocations: 25.89 MiB)\n  129.453 ms (23118 allocations: 54.16 MiB)\n  1.943 s (115530 allocations: 381.26 MiB)\n  10.017 s (232506 allocations: 1.01 GiB)For the parallel benchmark, we start Julia with 4 processes with the command $ julia -p 4 and call LazySets.Parallel.symmetric_interval_hull(Y(n)). import LazySets.Parallel\n\nfor n in [50, 100, 500, 1000]\n    @btime LazySets.Parallel.symmetric_interval_hull($Y($n));\nend\n\n  6.846 ms (2550 allocations: 160.59 KiB)\n  13.544 ms (3528 allocations: 271.94 KiB)\n  387.556 ms (11155 allocations: 2.51 MiB)\n  2.638 s (22156 allocations: 8.77 MiB)In the following table we summarize the speedup.n Sequential (s) Parallel p=4 (s) Speedup\n50 0.059 0.007 8.42\n100 0.129 0.013 9.92\n500 1.94 0.387 4.96\n1000 10.0 2.64 3.79The results in this section were obtained with a standard MacBook Pro laptop with the following specifications:julia> versioninfo()\nJulia Version 1.0.2\nCommit d789231e99 (2018-11-08 20:11 UTC)\nPlatform Info:\n  OS: macOS (x86_64-apple-darwin14.5.0)\n  CPU: Intel(R) Core(TM) i7-4770HQ CPU @ 2.20GHz\n  WORD_SIZE: 64\n  LIBM: libopenlibm\n  LLVM: libLLVM-6.0.0 (ORCJIT, haswell)"
+},
+
+{
     "location": "lib/interfaces.html#",
     "page": "Set Interfaces",
     "title": "Set Interfaces",
@@ -777,14 +801,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#Base.:==-Tuple{LazySet,LazySet}",
-    "page": "Set Interfaces",
-    "title": "Base.:==",
-    "category": "method",
-    "text": "==(X::LazySet, Y::LazySet)\n\nReturn whether two LazySets of the same type are exactly equal by recursively comparing their fields until a mismatch is found.\n\nInput\n\nX – any LazySet\nY – another LazySet of the same type as X\n\nOutput\n\ntrue iff X is equal to Y.\n\nNotes\n\nThe check is purely syntactic and the sets need to have the same base type. I.e. X::VPolytope == Y::HPolytope returns false even if X and Y represent the same polytope. However X::HPolytope{Int64} == Y::HPolytope{Float64} is a valid comparison.\n\nExamples\n\njulia> HalfSpace([1], 1) == HalfSpace([1], 1)\ntrue\n\njulia> HalfSpace([1], 1) == HalfSpace([1.0], 1.0)\ntrue\n\njulia> Ball1([0.], 1.) == Ball2([0.], 1.)\nfalse\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/interfaces.html#RecipesBase.apply_recipe-Tuple{Dict{Symbol,Any},LazySet}",
     "page": "Set Interfaces",
     "title": "RecipesBase.apply_recipe",
@@ -821,7 +837,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Other globally defined set functions",
     "category": "section",
-    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)\nisbounded(::LazySet)\nisbounded_unit_dimensions(::LazySet{N}) where {N<:Real}\nan_element(::LazySet{N}) where {N<:Real}\n==(::LazySet, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LazySet}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet, ::Float64)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}, ::Float64) where {S<:LazySet}"
+    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)\nisbounded(::LazySet)\nisbounded_unit_dimensions(::LazySet{N}) where {N<:Real}\nan_element(::LazySet{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LazySet}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet, ::Float64)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}, ::Float64) where {S<:LazySet}"
+},
+
+{
+    "location": "lib/interfaces.html#Base.:==-Tuple{LazySet,LazySet}",
+    "page": "Set Interfaces",
+    "title": "Base.:==",
+    "category": "method",
+    "text": "==(X::LazySet, Y::LazySet)\n\nReturn whether two LazySets of the same type are exactly equal by recursively comparing their fields until a mismatch is found.\n\nInput\n\nX – any LazySet\nY – another LazySet of the same type as X\n\nOutput\n\ntrue iff X is equal to Y.\n\nNotes\n\nThe check is purely syntactic and the sets need to have the same base type. I.e. X::VPolytope == Y::HPolytope returns false even if X and Y represent the same polytope. However X::HPolytope{Int64} == Y::HPolytope{Float64} is a valid comparison.\n\nExamples\n\njulia> HalfSpace([1], 1) == HalfSpace([1], 1)\ntrue\n\njulia> HalfSpace([1], 1) == HalfSpace([1.0], 1.0)\ntrue\n\njulia> Ball1([0.], 1.) == Ball2([0.], 1.)\nfalse\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Base.copy-Tuple{LazySet}",
+    "page": "Set Interfaces",
+    "title": "Base.copy",
+    "category": "method",
+    "text": "copy(S::LazySet)\n\nReturn a deep copy of the given set by copying its values recursively.\n\nInput\n\nS – any LazySet\n\nOutput\n\nA copy of S.\n\nNotes\n\nThis function performs a deepcopy of each field in S, resulting in a completely independent object. See the documentation of ?deepcopy for further details.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Set-functions-that-override-Base-functions-1",
+    "page": "Set Interfaces",
+    "title": "Set functions that override Base functions",
+    "category": "section",
+    "text": "==(::LazySet, ::LazySet)\ncopy(::LazySet)"
 },
 
 {
@@ -1797,7 +1837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
     "category": "method",
-    "text": "constrained_dimensions(hs::HalfSpace{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a half-space is constrained.\n\nInput\n\nhs – half-space\n\nOutput\n\nA vector of ascending indices i such that the half-space is constrained in dimension i.\n\nExamples\n\nA 2D half-space with constraint x1  0 is constrained in dimension 1 only.\n\n\n\n\n\n"
+    "text": "constrained_dimensions(hs::HalfSpace{N})::Vector{Int} where {N<:Real}\n\nReturn the indices in which a half-space is constrained.\n\nInput\n\nhs – half-space\n\nOutput\n\nA vector of ascending indices i such that the half-space is constrained in dimension i.\n\nExamples\n\nA 2D half-space with constraint x1  0 is constrained in dimension 1 only.\n\n\n\n\n\n"
 },
 
 {
@@ -1901,7 +1941,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
     "category": "method",
-    "text": "constrained_dimensions(hp::Hyperplane{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a hyperplane is constrained.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nA vector of ascending indices i such that the hyperplane is constrained in dimension i.\n\nExamples\n\nA 2D hyperplane with constraint x1 = 0 is constrained in dimension 1 only.\n\n\n\n\n\n"
+    "text": "constrained_dimensions(hp::Hyperplane{N})::Vector{Int} where {N<:Real}\n\nReturn the indices in which a hyperplane is constrained.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nA vector of ascending indices i such that the hyperplane is constrained in dimension i.\n\nExamples\n\nA 2D hyperplane with constraint x1 = 0 is constrained in dimension 1 only.\n\n\n\n\n\n"
 },
 
 {
@@ -1965,7 +2005,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Interval",
     "category": "type",
-    "text": "Interval{N<:Real, IN <: AbstractInterval{N}} <: AbstractHyperrectangle{N}\n\nType representing an interval on the real line. Mathematically, it is of the form\n\na b =  a  x  b   mathbbR\n\nFields\n\ndat – data container for the given interval\n\nNotes\n\nThis type relies on the IntervalArithmetic.jl library for representation of intervals and arithmetic operations.\n\nExamples\n\nUnidimensional intervals are symbolic representations of a real closed interval.\n\nWe can create intervals in different ways, the simpler way is to pass a pair of numbers:\n\njulia> x = Interval(0.0, 1.0)\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nor a 2-vector:\n\njulia> x = Interval([0.0, 1.0])\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nNote that if the package IntervalArithmetic is loaded in the current scope, you have to prepend the LazySets to the interval type, since there is a name conflict otherwise.\n\njulia> using IntervalArithmetic\nWARNING: using IntervalArithmetic.Interval in module Main conflicts with an existing identifier.\n\njulia> x = Interval(IntervalArithmetic.Interval(0.0, 1.0))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\njulia> dim(x)\n1\n\njulia> center(x)\n1-element Array{Float64,1}:\n 0.5\n\nThis type is such that the usual pairwise arithmetic operators +, -, * trigger the corresponding interval arithmetic backend method, and return a new Interval object. For the symbolic Minkowksi sum, use MinkowskiSum or ⊕.\n\nInterval of other numeric types can be created as well, eg. a rational interval:\n\njulia> Interval(0//1, 2//1)\nInterval{Rational{Int64},AbstractInterval{Rational{Int64}}}([0//1, 2//1])\n\n\n\n\n\n"
+    "text": "Interval{N<:Real, IN<:AbstractInterval{N}} <: AbstractHyperrectangle{N}\n\nType representing an interval on the real line. Mathematically, it is of the form\n\na b =  a  x  b   mathbbR\n\nFields\n\ndat – data container for the given interval\n\nNotes\n\nThis type relies on the IntervalArithmetic.jl library for representation of intervals and arithmetic operations.\n\nExamples\n\nUnidimensional intervals are symbolic representations of a real closed interval.\n\nWe can create intervals in different ways, the simpler way is to pass a pair of numbers:\n\njulia> x = Interval(0.0, 1.0)\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nor a 2-vector:\n\njulia> x = Interval([0.0, 1.0])\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nNote that if the package IntervalArithmetic is loaded in the current scope, you have to prepend the LazySets to the interval type, since there is a name conflict otherwise.\n\njulia> using IntervalArithmetic\nWARNING: using IntervalArithmetic.Interval in module Main conflicts with an existing identifier.\n\njulia> x = Interval(IntervalArithmetic.Interval(0.0, 1.0))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\njulia> dim(x)\n1\n\njulia> center(x)\n1-element Array{Float64,1}:\n 0.5\n\nThis type is such that the usual pairwise arithmetic operators +, -, * trigger the corresponding interval arithmetic backend method, and return a new Interval object. For the symbolic Minkowksi sum, use MinkowskiSum or ⊕.\n\nInterval of other numeric types can be created as well, eg. a rational interval:\n\njulia> Interval(0//1, 2//1)\nInterval{Rational{Int64},AbstractInterval{Rational{Int64}}}([0//1, 2//1])\n\n\n\n\n\n"
 },
 
 {
@@ -2041,6 +2081,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.low-Union{Tuple{Interval{N,IN} where IN<:AbstractInterval{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.low",
+    "category": "method",
+    "text": "low(x::Interval{N})::Vector{N} where {N<:Real}\n\nReturn the lower coordinate of an interval set.\n\nInput\n\nx – interval\n\nOutput\n\nA vector with the lower coordinate of the interval.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.high-Union{Tuple{Interval{N,IN} where IN<:AbstractInterval{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.high",
+    "category": "method",
+    "text": "high(x::Interval{N})::Vector{N} where {N<:Real}\n\nReturn the higher coordinate of an interval set.\n\nInput\n\nx – interval\n\nOutput\n\nA vector with the higher coordinate of the interval.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.radius_hyperrectangle-Union{Tuple{Interval{N,IN} where IN<:AbstractInterval{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.radius_hyperrectangle",
@@ -2109,7 +2165,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nmin(::Interval{N}) where {N<:Real}\nmax(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nmin(::Interval{N}) where {N<:Real}\nmax(::Interval{N}) where {N<:Real}\nlow(::Interval{N}) where {N<:Real}\nhigh(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
 },
 
 {
@@ -2117,7 +2173,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Line",
     "category": "type",
-    "text": "Line{N<:Real} <: LazySet{N}\n\nType that represents a line in 2D of the form ax = b (i.e., a special case of a Hyperplane).\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLine{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n\n\n"
+    "text": "Line{N<:Real, VN<:AbstractVector{N}} <: LazySet{N}\n\nType that represents a line in 2D of the form ax = b (i.e., a special case of a Hyperplane).\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLine{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n\n\n"
 },
 
 {
@@ -2129,7 +2185,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Line{N,V} where V<:AbstractArray{N,1}}} where N<:Real",
+    "location": "lib/representations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Line{N,VN} where VN<:AbstractArray{N,1}}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
@@ -2137,7 +2193,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.:∈-Union{Tuple{N}, Tuple{AbstractArray{N,1},Line{N,V} where V<:AbstractArray{N,1}}} where N<:Real",
+    "location": "lib/representations.html#Base.:∈-Union{Tuple{N}, Tuple{AbstractArray{N,1},Line{N,VN} where VN<:AbstractArray{N,1}}} where N<:Real",
     "page": "Common Set Representations",
     "title": "Base.:∈",
     "category": "method",
@@ -2145,11 +2201,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.an_element-Union{Tuple{Line{N,V} where V<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
+    "location": "lib/representations.html#LazySets.an_element-Union{Tuple{Line{N,VN} where VN<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.an_element",
     "category": "method",
-    "text": "an_element(L::Line{N})::Vector{N} where N<:Real\n\nReturn some element of a line.\n\nInput\n\nL – line\n\nOutput\n\nAn element on the line.\n\nAlgorithm\n\nIf the b value of the line is zero, the result is the origin. Otherwise the result is some x = x1 x2 such that ax1 x2 = b. We first find out in which dimension a is nonzero, say, dimension 1, and then choose x1 = 1 and accordingly x2 = fracb - a1a2.\n\n\n\n\n\n"
+    "text": "an_element(L::Line{N})::Vector{N} where {N<:Real}\n\nReturn some element of a line.\n\nInput\n\nL – line\n\nOutput\n\nAn element on the line.\n\nAlgorithm\n\nIf the b value of the line is zero, the result is the origin. Otherwise the result is some x = x1 x2 such that ax1 x2 = b. We first find out in which dimension a is nonzero, say, dimension 1, and then choose x1 = 1 and accordingly x2 = fracb - a1a2.\n\n\n\n\n\n"
 },
 
 {
@@ -2177,11 +2233,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.constrained_dimensions-Union{Tuple{Line{N,V} where V<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
+    "location": "lib/representations.html#LazySets.constrained_dimensions-Union{Tuple{Line{N,VN} where VN<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
     "category": "method",
-    "text": "constrained_dimensions(L::Line{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a line is constrained.\n\nInput\n\nL – line\n\nOutput\n\nA vector of ascending indices i such that the line is constrained in dimension i.\n\nExamples\n\nA line with constraint x1 = 0 is constrained in dimension 1 only.\n\n\n\n\n\n"
+    "text": "constrained_dimensions(L::Line{N})::Vector{Int} where {N<:Real}\n\nReturn the indices in which a line is constrained.\n\nInput\n\nL – line\n\nOutput\n\nA vector of ascending indices i such that the line is constrained in dimension i.\n\nExamples\n\nA line with constraint x1 = 0 is constrained in dimension 1 only.\n\n\n\n\n\n"
 },
 
 {
@@ -2365,7 +2421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.VPolygon",
     "category": "type",
-    "text": "VPolygon{N<:Real} <: AbstractPolygon{N}\n\nType that represents a polygon by its vertices.\n\nFields\n\nvertices – the list of vertices\n\nNotes\n\nThe constructor of VPolygon runs a convex hull algorithm, and the given vertices are sorted in counter-clockwise fashion. The constructor flag apply_convex_hull can be used to skip the computation of the convex hull.\n\nVPolygon(vertices::Vector{Vector{N}};           apply_convex_hull::Bool=true,           algorithm::String=\"monotone_chain\")\n\n\n\n\n\n"
+    "text": "VPolygon{N<:Real} <: AbstractPolygon{N}\n\nType that represents a polygon by its vertices.\n\nFields\n\nvertices – the list of vertices\n\nNotes\n\nThe constructor of VPolygon runs a convex hull algorithm on its vertices by default, to remove the possibly redundant vertices. The vertices are sorted in counter-clockwise fashion. Use the flag apply_convex_hull=false to skip the computation of the convex hull.\n\nVPolygon(vertices::Vector{Vector{N}};           apply_convex_hull::Bool=true,           algorithm::String=\"monotone_chain\")\n\n\n\n\n\n"
 },
 
 {
@@ -2433,11 +2489,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.remove_redundant_vertices-Union{Tuple{VPolygon{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_vertices",
+    "category": "method",
+    "text": "remove_redundant_vertices(P::VPolygon{N};\n                          [algorithm]::String=\"monotone_chain\")::VPolygon{N} where {N<:Real}\n\nReturn the polygon obtained by removing the redundant vertices of the given polygon.\n\nInput\n\nP         – polygon in vertex representation\nalgorithm – (optional, default: \"monotone_chain\") the algorithm used to                compute the convex hull\n\nOutput\n\nA new polygon such that its vertices are the convex hull of the given polygon.\n\nAlgorithm\n\nA convex hull algorithm is used to compute the convex hull of the vertices of the given input polygon P; see ?convex_hull for details on the available algorithms. The vertices of the output polygon are sorted in counter-clockwise fashion.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.remove_redundant_vertices!-Union{Tuple{VPolygon{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_vertices!",
+    "category": "method",
+    "text": "remove_redundant_vertices!(P::VPolygon{N};\n                           [algorithm]::String=\"monotone_chain\")::VPolygon{N} where {N<:Real}\n\nRemove the redundant vertices of the given polygon.\n\nInput\n\nP         – polygon in vertex representation\nalgorithm – (optional, default: \"monotone_chain\") the algorithm used to                compute the convex hull\n\nOutput\n\nA new polygon such that its vertices are the convex hull of the given polygon.\n\nAlgorithm\n\nA convex hull algorithm is used to compute the convex hull of the vertices of the given input polygon P; see ?convex_hull for details on the available algorithms. The vertices of the output polygon are sorted in counter-clockwise fashion.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Vertex-representation-1",
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\nσ(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon{N}) where {N<:Real}\ntohrep(::VPolygon{N}, ::Type{HPOLYGON}=HPolygon) where {N<:Real, HPOLYGON<:AbstractHPolygon}\ntovrep(::VPolygon{N}) where {N<:Real}\nconstraints_list(::VPolygon{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
+    "text": "VPolygon\nσ(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon{N}) where {N<:Real}\ntohrep(::VPolygon{N}, ::Type{HPOLYGON}=HPolygon) where {N<:Real, HPOLYGON<:AbstractHPolygon}\ntovrep(::VPolygon{N}) where {N<:Real}\nconstraints_list(::VPolygon{N}) where {N<:Real}\nremove_redundant_vertices(::VPolygon{N}; ::String=\"monotone_chain\") where {N<:Real}\nremove_redundant_vertices!(::VPolygon{N}; ::String=\"monotone_chain\") where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
 },
 
 {
@@ -2553,14 +2625,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.copy-Union{Tuple{PT}, Tuple{PT}, Tuple{N}, Tuple{N}} where PT<:Union{HPolyhedron{N}, HPolytope{N}} where N",
-    "page": "Common Set Representations",
-    "title": "Base.copy",
-    "category": "method",
-    "text": "copy(P::PT) where {N, PT<:HPoly{N}}\n\nCreate a copy of a polyhedron.\n\nInput\n\nP – polyhedron\n\nOutput\n\nThe polyhedron obtained by copying the constraints in P using Base.copy.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#LazySets.tosimplehrep-Union{Tuple{Union{HPolyhedron{N}, HPolytope{N}}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.tosimplehrep",
@@ -2585,19 +2649,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.convex_hull-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
-    "page": "Common Set Representations",
-    "title": "LazySets.convex_hull",
-    "category": "method",
-    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#LazySets.cartesian_product-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.cartesian_product",
     "category": "method",
-    "text": "cartesian_product(P1::HPoly{N}, P2::HPoly{N};\n                  [backend]=default_polyhedra_backend(P1, N)) where N<:Real\n\nCompute the Cartesian product of two polyhedra in H-representaion.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe polyhedron obtained by the concrete cartesian product of P1 and P2.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
+    "text": "cartesian_product(P1::HPoly{N}, P2::HPoly{N};\n                  [backend]=default_polyhedra_backend(P1, N)\n                 ) where {N<:Real}\n\nCompute the Cartesian product of two polyhedra in H-representaion.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe polyhedron obtained by the concrete cartesian product of P1 and P2.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
 },
 
 {
@@ -2605,7 +2661,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tovrep",
     "category": "method",
-    "text": "tovrep(P::HPoly{N};\n      [backend]=default_polyhedra_backend(P, N)) where {N<:Real}\n\nTransform a polyhedron in H-representation to a polytope in V-representation.\n\nInput\n\nP          – polyhedron in constraint representation\nbackend    – (optional, default: default_polyhedra_backend(P, N))                 the polyhedral computations backend\n\nOutput\n\nThe VPolytope which is the vertex representation of the given polyhedron in constraint representation.\n\nNotes\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
+    "text": "tovrep(P::HPoly{N};\n      [backend]=default_polyhedra_backend(P, N)) where {N<:Real}\n\nTransform a polyhedron in H-representation to a polytope in V-representation.\n\nInput\n\nP       – polyhedron in constraint representation\nbackend – (optional, default: default_polyhedra_backend(P, N)) the              backend for polyhedral computations\n\nOutput\n\nThe VPolytope which is the vertex representation of the given polyhedron in constraint representation.\n\nNotes\n\nThe conversion may not preserve the numeric type (e.g., with N == Float32) depending on the backend. For further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
 },
 
 {
@@ -2637,7 +2693,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ncopy(P::PT) where {N, PT<:HPoly{N}} where {N<:Real}\ntosimplehrep(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}) where {N<:Real}\nconvex_hull(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntosimplehrep(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
 },
 
 {
@@ -2753,6 +2809,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.remove_redundant_vertices-Union{Tuple{VPolytope{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_vertices",
+    "category": "method",
+    "text": "remove_redundant_vertices(P::VPolytope{N};\n                          [backend]=default_polyhedra_backend(P, N))::VPolytope{N} where {N<:Real}\n\nReturn the polytope obtained by removing the redundant vertices of the given polytope.\n\nInput\n\nP       – polytope in vertex representation\nbackend – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral              computations backend, see              Polyhedra\'s documentation              for further information\n\nOutput\n\nA new polytope such that its vertices are the convex hull of the given polytope.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{VPolytope{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
@@ -2765,7 +2829,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.tohrep",
     "category": "method",
-    "text": "tohrep(P::VPolytope{N};\n       [backend]=default_polyhedra_backend(P, N)) where {N<:Real}\n\nTransform a polytope in V-representation to a polytope in H-representation.\n\nInput\n\nP          – polytope in vertex representation\nbackend    – (optional, default: default_polyhedra_backend(P, N)) the polyhedral                 computations backend,                 see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe HPolytope which is the constraint representation of the given polytope in vertex representation.\n\n\n\n\n\n"
+    "text": "tohrep(P::VPolytope{N};\n       [backend]=default_polyhedra_backend(P, N)) where {N<:Real}\n\nTransform a polytope in V-representation to a polytope in H-representation.\n\nInput\n\nP       – polytope in vertex representation\nbackend – (optional, default: default_polyhedra_backend(P, N)) the              backend for polyhedral computations\n\nOutput\n\nThe HPolytope which is the constraint representation of the given polytope in vertex representation.\n\nNotes\n\nThe conversion may not preserve the numeric type (e.g., with N == Float32) depending on the backend. For further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
 },
 
 {
@@ -2797,7 +2861,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\nvertices_list(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_map"
+    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\nvertices_list(::VPolytope{N}) where {N<:Real}\nremove_redundant_vertices(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_map"
 },
 
 {
@@ -2805,7 +2869,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Singleton",
     "category": "type",
-    "text": "Singleton{N<:Real} <: AbstractSingleton{N}\n\nType that represents a singleton, that is, a set with a unique element.\n\nFields\n\nelement – the only element of the set\n\n\n\n\n\n"
+    "text": "Singleton{N<:Real, VN<:AbstractVector{N}} <: AbstractSingleton{N}\n\nType that represents a singleton, that is, a set with a unique element.\n\nFields\n\nelement – the only element of the set\n\n\n\n\n\n"
 },
 
 {
@@ -2817,15 +2881,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.element-Union{Tuple{Singleton{N}}, Tuple{N}} where N<:Real",
+    "location": "lib/representations.html#LazySets.element-Union{Tuple{Singleton{N,VN} where VN<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.element",
     "category": "method",
-    "text": "element(S::Singleton{N})::Vector{N} where {N<:Real}\n\nReturn the element of a singleton.\n\nInput\n\nS – singleton\n\nOutput\n\nThe element of the singleton.\n\n\n\n\n\n"
+    "text": "element(S::Singleton{N}) where {N<:Real}\n\nReturn the element of a singleton.\n\nInput\n\nS – singleton\n\nOutput\n\nThe element of the singleton.\n\n\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.element-Union{Tuple{N}, Tuple{Singleton{N},Int64}} where N<:Real",
+    "location": "lib/representations.html#LazySets.element-Union{Tuple{N}, Tuple{Singleton{N,VN} where VN<:AbstractArray{N,1},Int64}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.element",
     "category": "method",
@@ -2917,7 +2981,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Zonotope",
     "category": "type",
-    "text": "Zonotope{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nType that represents a zonotope.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – matrix; each column is a generator of the zonotope\n\nNotes\n\nMathematically, a zonotope is defined as the set\n\nZ = left c + _i=1^p ξ_i g_i ξ_i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line segments. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nZonotope(center::AbstractVector{N},           generators::AbstractMatrix{N}) where {N<:Real}\nZonotope(center::AbstractVector{N},           generators_list::AbstractVector{T}          ) where {N<:Real, T<:AbstractVector{N}}\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> Z = Zonotope([1.0, 0.0], [0.1 0.0; 0.0 0.1])\nZonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(Z)\n2\n\nCompute its vertices:\n\njulia> vertices_list(Z)\n4-element Array{Array{Float64,1},1}:\n [1.1, 0.1]\n [0.9, 0.1]\n [1.1, -0.1]\n [0.9, -0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], Z)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\nAlternative constructor: A zonotope in two dimensions with three generators:\n\njulia> Z = Zonotope(ones(2), [[1., 0.], [0., 1.], [1., 1.]])\nZonotope{Float64}([1.0, 1.0], [1.0 0.0 1.0; 0.0 1.0 1.0])\njulia> Z.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n\n\n"
+    "text": "Zonotope{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nType that represents a zonotope.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – matrix; each column is a generator of the zonotope\n\nNotes\n\nMathematically, a zonotope is defined as the set\n\nZ = left c + _i=1^p ξ_i g_i ξ_i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line segments. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nZonotope(center::AbstractVector{N},           generators::AbstractMatrix{N}) where {N<:Real}\nZonotope(center::AbstractVector{N},           generators_list::AbstractVector{VN}          ) where {N<:Real, VN<:AbstractVector{N}}\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> Z = Zonotope([1.0, 0.0], [0.1 0.0; 0.0 0.1])\nZonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(Z)\n2\n\nCompute its vertices:\n\njulia> vertices_list(Z)\n4-element Array{Array{Float64,1},1}:\n [1.1, 0.1]\n [0.9, 0.1]\n [1.1, -0.1]\n [0.9, -0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], Z)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\nAlternative constructor: A zonotope in two dimensions with three generators:\n\njulia> Z = Zonotope(ones(2), [[1., 0.], [0., 1.], [1., 1.]])\nZonotope{Float64}([1.0, 1.0], [1.0 0.0 1.0; 0.0 1.0 1.0])\njulia> Z.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n\n\n"
 },
 
 {
@@ -2957,7 +3021,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
     "category": "method",
-    "text": "constraints_list(P::Zonotope{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe list of constraints of the polyhedron.\n\nAlgorithm\n\nThis is a naive implementation that calculates all vertices and transforms to the H-representation of the zonotope. The transformation to the dual representation requires the concrete polyhedra package Polyhedra.\n\n\n\n\n\n"
+    "text": "constraints_list(P::Zonotope{N}\n                )::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe list of constraints of the zonotope.\n\nAlgorithm\n\nThis is the (inefficient) fallback implementation for rational numbers. It first computes the vertices and then converts the corresponding polytope to constraint representation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{Zonotope{N}}, Tuple{N}} where N<:AbstractFloat",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(P::Zonotope{N}\n                )::Vector{LinearConstraint{N}} where {N<:AbstractFloat}\n\nReturn the list of constraints defining a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe list of constraints of the zonotope.\n\nNotes\n\nThe algorithm assumes that no generator is redundant. The result has 2 binompn-1 (with p being the number of generators and n being the ambient dimension) constraints, which is optimal under this assumption.\n\nAlgorithm\n\nWe follow the algorithm presented in Althoff, Stursberg, Buss: Computing Reachable Sets of Hybrid Systems Using a Combination of Zonotopes and Polytopes. 2009.\n\nThe one-dimensional case is not covered by that algorithm; we manually handle this case, assuming that there is only one generator.\n\n\n\n\n\n"
 },
 
 {
@@ -3021,7 +3093,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:AbstractFloat}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -3125,7 +3197,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.constraints_list",
     "category": "method",
-    "text": "constraints_list(cp::CartesianProduct{N}\n                )::Vector{LinearConstraint{N}} where N<:Real\n\nReturn the list of constraints of a (polytopic) Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nA list of constraints.\n\n\n\n\n\n"
+    "text": "constraints_list(cp::CartesianProduct{N}\n                )::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints of a (polytopic) Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nA list of constraints.\n\n\n\n\n\n"
 },
 
 {
@@ -3133,7 +3205,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(cp::CartesianProduct{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying sets are polytopic. Then the high-dimensional set of vertices is just the Cartesian product of the low-dimensional sets of vertices.\n\n\n\n\n\n"
+    "text": "vertices_list(cp::CartesianProduct{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a (polytopic) Cartesian product.\n\nInput\n\ncp – Cartesian product\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying sets are polytopic. Then the high-dimensional set of vertices is just the Cartesian product of the low-dimensional sets of vertices.\n\n\n\n\n\n"
 },
 
 {
@@ -3205,7 +3277,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.constraints_list",
     "category": "method",
-    "text": "constraints_list(cpa::CartesianProductArray{N}\n                )::Vector{LinearConstraint{N}} where N<:Real\n\nReturn the list of constraints of a (polytopic) Cartesian product of a finite number of sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nA list of constraints.\n\n\n\n\n\n"
+    "text": "constraints_list(cpa::CartesianProductArray{N}\n                )::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints of a (polytopic) Cartesian product of a finite number of sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nA list of constraints.\n\n\n\n\n\n"
 },
 
 {
@@ -3213,7 +3285,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(cpa::CartesianProductArray{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) Cartesian product of a finite number of sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying sets are polytopic. Then the high-dimensional set of vertices is just the Cartesian product of the low-dimensional sets of vertices.\n\n\n\n\n\n"
+    "text": "vertices_list(cpa::CartesianProductArray{N}\n             )::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a (polytopic) Cartesian product of a finite number of sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying sets are polytopic. Then the high-dimensional set of vertices is just the Cartesian product of the low-dimensional sets of vertices.\n\n\n\n\n\n"
 },
 
 {
@@ -3221,7 +3293,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -3357,7 +3429,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -3381,7 +3453,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull",
     "category": "function",
-    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\nconvex_hull(P1::VPolytope{N}, P2::VPolytope{N};\n            [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polytopes in V-representation.\n\nInput\n\nP1         – polytope\nP2         – another polytope\nbackend    – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral                 computations backend, see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe VPolytope obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\n\n\n\n\nconvex_hull(points::Vector{S}; [algorithm]::String=\"monotone_chain\"\n           )::Vector{S} where {N<:Real, S<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – list of 2D vectors\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\"monotone_chain_sorted\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\n\njulia> hull = convex_hull(points);\n\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nPlot both the random points and the computed convex hull polygon:\n\njulia> using Plots;\n\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter);\n\njulia> plot!(VPolygon(hull), alpha=0.2);\n\n\n\n\n\n"
+    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\nconvex_hull(P::VPolygon{N}, Q::VPolygon{N};\n            [algorithm]::String=\"monotone_chain\")::VPolygon{N} where {N<:Real}\n\nReturn the convex hull of two polygons in vertex representation.\n\nInput\n\nP         – polygon in vertex representation\nQ         – another polygon in vertex representation\nalgorithm – (optional, default: \"monotone_chain\") the algorithm used to                compute the convex hull\n\nOutput\n\nA new polygon such that its vertices are the convex hull of the given two polygons.\n\nAlgorithm\n\nA convex hull algorithm is used to compute the convex hull of the vertices of the given input polygons P and Q; see ?convex_hull for details on the available algorithms. The vertices of the output polygon are sorted in counter-clockwise fashion.\n\n\n\n\n\nconvex_hull(P1::VPolytope{N}, P2::VPolytope{N};\n            [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polytopes in V-representation.\n\nInput\n\nP1         – polytope\nP2         – another polytope\nbackend    – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral                 computations backend, see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe VPolytope obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\n\n\n\n\nconvex_hull(points::Vector{VN}; [algorithm]::String=\"monotone_chain\"\n           )::Vector{VN} where {N<:Real, VN<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane.\n\nInput\n\npoints    – list of 2D vectors\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm, valid options are:\n\"monotone_chain\"\n\"monotone_chain_sorted\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nExamples\n\nCompute the convex hull of a random set of points:\n\njulia> points = [randn(2) for i in 1:30]; # 30 random points in 2D\n\njulia> hull = convex_hull(points);\n\njulia> typeof(hull)\nArray{Array{Float64,1},1}\n\nPlot both the random points and the computed convex hull polygon:\n\njulia> using Plots;\n\njulia> plot([Tuple(pi) for pi in points], seriestype=:scatter);\n\njulia> plot!(VPolygon(hull), alpha=0.2);\n\n\n\n\n\n"
 },
 
 {
@@ -3389,7 +3461,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.convex_hull!",
     "category": "function",
-    "text": "convex_hull!(points::Vector{S}; [algorithm]::String=\"monotone_chain\"\n            )::Vector{S} where {N<:Real, S<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane, in-place.\n\nInput\n\npoints    – list of 2D vectors (is modified)\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm; valid options are:\n\"monotone_chain\"\n\"monotone_chain_sorted\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nNotes\n\nSee the non-modifying version convex_hull for more details.\n\n\n\n\n\n"
+    "text": "convex_hull!(points::Vector{VN}; [algorithm]::String=\"monotone_chain\"\n            )::Vector{VN} where {N<:Real, VN<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane, in-place.\n\nInput\n\npoints    – list of 2D vectors (is modified)\nalgorithm – (optional, default: \"monotone_chain\") the convex hull                algorithm; valid options are:\n\"monotone_chain\"\n\"monotone_chain_sorted\"\n\nOutput\n\nThe convex hull as a list of 2D vectors with the coordinates of the points.\n\nNotes\n\nSee the non-modifying version convex_hull for more details.\n\n\n\n\n\n"
 },
 
 {
@@ -3405,7 +3477,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.monotone_chain!",
     "category": "function",
-    "text": "monotone_chain!(points::Vector{S}; sort::Bool=true\n               )::Vector{S} where {N<:Real, S<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane using Andrew\'s monotone chain method.\n\nInput\n\npoints – list of 2D vectors; is sorted in-place inside this function\nsort   – (optional, default: true) flag for sorting the vertices             lexicographically; sortedness is required for correctness\n\nOutput\n\nList of vectors containing the 2D coordinates of the corner points of the convex hull.\n\nNotes\n\nFor large sets of points, it is convenient to use static vectors to get maximum performance. For information on how to convert usual vectors into static vectors, see the type SVector provided by the StaticArrays package.\n\nAlgorithm\n\nThis function implements Andrew\'s monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see Monotone chain\n\n\n\n\n\n"
+    "text": "monotone_chain!(points::Vector{VN}; sort::Bool=true\n               )::Vector{VN} where {N<:Real, VN<:AbstractVector{N}}\n\nCompute the convex hull of points in the plane using Andrew\'s monotone chain method.\n\nInput\n\npoints – list of 2D vectors; is sorted in-place inside this function\nsort   – (optional, default: true) flag for sorting the vertices             lexicographically; sortedness is required for correctness\n\nOutput\n\nList of vectors containing the 2D coordinates of the corner points of the convex hull.\n\nNotes\n\nFor large sets of points, it is convenient to use static vectors to get maximum performance. For information on how to convert usual vectors into static vectors, see the type SVector provided by the StaticArrays package.\n\nAlgorithm\n\nThis function implements Andrew\'s monotone chain convex hull algorithm to construct the convex hull of a set of n points in the plane in O(n log n) time. For further details see Monotone chain\n\n\n\n\n\n"
 },
 
 {
@@ -3457,7 +3529,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{S2}, Tuple{S1}, Tuple{N}, Tuple{AbstractArray{N,1},Intersection{N,S1,S2}}} where S2<:Union{HalfSpace{N}, Hyperplane{N}, Line{N,V} where V<:AbstractArray{N,1}} where S1<:LazySet{N} where N<:Real",
+    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{S2}, Tuple{S1}, Tuple{N}, Tuple{AbstractArray{N,1},Intersection{N,S1,S2}}} where S2<:Union{HalfSpace{N}, Hyperplane{N}, Line{N,VN} where VN<:AbstractArray{N,1}} where S1<:LazySet{N} where N<:Real",
     "page": "Common Set Operations",
     "title": "LazySets.ρ",
     "category": "method",
@@ -3621,7 +3693,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -3765,7 +3837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -3821,7 +3893,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.array",
     "category": "method",
-    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\n"
+    "text": "array(cpa::CartesianProductArray{N, S}\n     )::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Cartesian product of a finite number of convex sets.\n\nInput\n\ncpa – Cartesian product array\n\nOutput\n\nThe array of a Cartesian product of a finite number of convex sets.\n\n\n\n\n\narray(cha::ConvexHullArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a convex hull of a finite number of convex sets.\n\nInput\n\ncha – convex hull array\n\nOutput\n\nThe array of a convex hull of a finite number of convex sets.\n\n\n\n\n\narray(ia::IntersectionArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of an intersection of a finite number of convex sets.\n\nInput\n\nia – intersection of a finite number of convex sets\n\nOutput\n\nThe array of an intersection of a finite number of convex sets.\n\n\n\n\n\narray(msa::MinkowskiSumArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a Minkowski sum of a finite number of convex sets.\n\nInput\n\nmsa – Minkowski sum array\n\nOutput\n\nThe array of a Minkowski sum of a finite number of convex sets.\n\n\n\n\n\narray(cms::CacheMinkowskiSum{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a caching Minkowski sum.\n\nInput\n\ncms – caching Minkowski sum\n\nOutput\n\nThe array of a caching Minkowski sum.\n\n\n\n\n\narray(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -3949,7 +4021,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(lm::LinearMap{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying set X is polytopic. Then the result is just the linear map applied to the vertices of X.\n\n\n\n\n\n"
+    "text": "vertices_list(lm::LinearMap{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a (polytopic) linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying set X is polytopic. Then the result is just the linear map applied to the vertices of X.\n\n\n\n\n\n"
 },
 
 {
@@ -4021,7 +4093,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(em::ExponentialMap{N})::Vector{Vector{N}} where N<:Real\n\nReturn the list of vertices of a (polytopic) exponential map.\n\nInput\n\nem – exponential map\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying set X is polytopic. Then the result is just the exponential map applied to the vertices of X.\n\n\n\n\n\n"
+    "text": "vertices_list(em::ExponentialMap{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a (polytopic) exponential map.\n\nInput\n\nem – exponential map\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying set X is polytopic. Then the result is just the exponential map applied to the vertices of X.\n\n\n\n\n\n"
 },
 
 {
@@ -4169,16 +4241,192 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#Union-1",
+    "page": "Common Set Operations",
+    "title": "Union",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "lib/operations.html#LazySets.UnionSet",
+    "page": "Common Set Operations",
+    "title": "LazySets.UnionSet",
+    "category": "type",
+    "text": "UnionSet{N<:Real, S1<:LazySet{N}, S2<:LazySet{N}}\n\nType that represents the set union of two convex sets.\n\nFields\n\nX – convex set\nY – convex set\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:∪-Tuple{LazySet,LazySet}",
+    "page": "Common Set Operations",
+    "title": "Base.:∪",
+    "category": "method",
+    "text": "∪\n\nAlias for UnionSet.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{Union}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(cup::Union)::Int\n\nReturn the dimension of the set union of two convex sets.\n\nInput\n\ncup – union of two convex sets\n\nOutput\n\nThe ambient dimension of the union of two convex sets.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},UnionSet{N,S1,S2} where S2<:LazySet{N} where S1<:LazySet{N}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{N}, cup::UnionSet{N}; [algorithm]=\"support_vector\") where {N<:Real}\n\nReturn the support vector of the union of two convex sets in a given direction.\n\nInput\n\nd         – direction\ncup       – union of two convex sets\nalgorithm – (optional, default: \"supportvector\"): the algorithm to compute                the support vector; if \"supportvector\", use the support                vector of each argument; if \"support_function\" use the support                function of each argument and evaluate the support vector of only                one of them\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThe support vector of the union of two convex sets X and Y can be obtained as the vector that maximizes the support function of either X or Y, i.e. it is sufficient to find the argmax(ρ(d X) ρ(d Y)) and evaluate its support vector.\n\nThe default implementation, with option algorithm=\"support_vector\", computes the support vector of X and Y and then compares the support function using a dot product. If it happens that the support function can be more efficiently computed (without passing through the support vector), consider using the alternative algorithm=\"support_function\" implementation, which evaluates the support function of each set directly and then calls only the support vector of either X or Y.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},UnionSet{N,S1,S2} where S2<:LazySet{N} where S1<:LazySet{N}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, cup::UnionSet{N}) where {N<:Real}\n\nReturn the support function of the union of two convex sets in a given direction.\n\nInput\n\nd   – direction\ncup – union of two convex sets\n\nOutput\n\nThe support function in the given direction.\n\nAlgorithm\n\nThe support function of the union of two convex sets X and Y is the maximum of the support functions of X and Y.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Binary-Set-Union-1",
+    "page": "Common Set Operations",
+    "title": "Binary Set Union",
+    "category": "section",
+    "text": "UnionSet\n∪(::LazySet, ::LazySet)\ndim(::Union)\nσ(::AbstractVector{N}, ::UnionSet{N}; algorithm=\"support_vector\") where {N<:Real}\nρ(::AbstractVector{N}, ::UnionSet{N}) where {N<:Real}"
+},
+
+{
+    "location": "lib/operations.html#LazySets.UnionSetArray",
+    "page": "Common Set Operations",
+    "title": "LazySets.UnionSetArray",
+    "category": "type",
+    "text": "UnionSetArray{N<:Real, S<:LazySet{N}}\n\nType that represents the set union of a finite number of convex sets.\n\nFields\n\narray – array of convex sets\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{UnionSetArray}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(cup::UnionSetArray)::Int\n\nReturn the dimension of the set union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe ambient dimension of the union of a finite number of convex sets.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.array-Union{Tuple{UnionSetArray{N,S}}, Tuple{S}, Tuple{N}} where S<:LazySet{N} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.array",
+    "category": "method",
+    "text": "array(cup::UnionSetArray{N, S})::Vector{S} where {N<:Real, S<:LazySet{N}}\n\nReturn the array of a union of a finite number of convex sets.\n\nInput\n\ncup – union of a finite number of convex sets\n\nOutput\n\nThe array that holds the union of a finite number of convex sets.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},UnionSetArray{N,S} where S<:LazySet{N}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{N}, cup::UnionSetArray{N}; [algorithm]=\"support_vector\") where {N<:Real}\n\nReturn the support vector of the union of a finite number of convex sets in a given direction.\n\nInput\n\nd         – direction\ncup       – union of a finite number of convex sets\nalgorithm – (optional, default: \"supportvector\"): the algorithm to compute                the support vector; if \"supportvector\", use the support                vector of each argument; if \"support_function\" use the support                function of each argument and evaluate the support vector of only                one of them\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThe support vector of the union of a finite number of convex sets X₁ X₂  can be obtained as the vector that maximizes the support function, i.e. it is sufficient to find the argmax(ρ(d X₂) ρ(d X₂) ) and evaluate its support vector.\n\nThe default implementation, with option algorithm=\"support_vector\", computes the support vector of all X₁ X₂  and then compares the support function using a dot product. If it happens that the support function can be more efficiently computed (without passing through the support vector), consider using the alternative algorithm=\"support_function\" implementation, which evaluates the support function of each set directly and then calls only the support vector of one of the Xᵢ.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},UnionSetArray{N,S} where S<:LazySet{N}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, cup::UnionSetArray{N}) where {N<:Real}\n\nReturn the support function of the union of a finite number of convex sets in a given direction.\n\nInput\n\nd   – direction\ncup – union of a finite number of convex sets\n\nOutput\n\nThe support function in the given direction.\n\nAlgorithm\n\nThe support function of the union of a finite number of convex sets X₁ X₂  can be obtained as the maximum of ρ(d X₂) ρ(d X₂) .\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#n-ary-Set-Union-1",
+    "page": "Common Set Operations",
+    "title": "n-ary Set Union",
+    "category": "section",
+    "text": "UnionSetArray\ndim(::UnionSetArray)\narray(::UnionSetArray{N, S}) where {N<:Real, S<:LazySet{N}}\nσ(::AbstractVector{N}, ::UnionSetArray{N}; algorithm=\"support_vector\") where {N<:Real}\nρ(::AbstractVector{N}, ::UnionSetArray{N}) where {N<:Real}"
+},
+
+{
+    "location": "lib/comparisons.html#",
+    "page": "Comparisons",
+    "title": "Comparisons",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._leq-Union{Tuple{N}, Tuple{N,N}} where N<:Real",
+    "page": "Comparisons",
+    "title": "LazySets._leq",
+    "category": "method",
+    "text": "_leq(x::N, y::N; [kwargs...]) where {N<:Real}\n\nDetermine if x is smaller than or equal to y.\n\nInput\n\nx      – number\ny      – another number (of the same numeric type as x)\nkwargs – not used\n\nOutput\n\nA boolean that is true iff x <= y.\n\nAlgorithm\n\nThis is a fallback implementation for numbers of type Real. If the arguments are floating point numbers, see _leq(x::AbstractFloat, y::AbstractFloat).\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._leq-Union{Tuple{M}, Tuple{N}, Tuple{N,M}} where M<:Real where N<:Real",
+    "page": "Comparisons",
+    "title": "LazySets._leq",
+    "category": "method",
+    "text": "_leq(x::N, y::M; [kwargs...]) where {N<:Real, M<:Real}\n\nDetermine if x is smaller than or equal to y.\n\nInput\n\nx      – number\ny      – another number (of possibly different numeric type than x)\nkwargs – optional arguments; see ?_leq for the available options \n\nOutput\n\nA boolean that is true iff x <= y.\n\nAlgorithm\n\nThis implementation calls Julia\'s promote(x, y) function, which converts all arguments to a common numeric type, returning them as a tuple. The conversion is such that the common type to which the values are converted can represent them as faithfully as possible.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._geq-Tuple{Real,Real}",
+    "page": "Comparisons",
+    "title": "LazySets._geq",
+    "category": "method",
+    "text": "_geq(x::Real, y::Real; [kwargs...])\n\nDetermine if x is greater than or equal to y.\n\nInput\n\nx – number\ny – another number (of possibly different numeric type than x)\n\nOutput\n\nA boolean that is true iff x >= y.\n\nAlgorithm\n\nThis function falls back to _leq(y, x), with type promotion if needed. See the documentation of _leq for further details.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets.isapproxzero-Tuple{Real}",
+    "page": "Comparisons",
+    "title": "LazySets.isapproxzero",
+    "category": "method",
+    "text": "isapproxzero(x::Real; [kwargs...])\n\nDetermine if x is approximately zero.\n\nInput\n\nx      – number\nkwargs – ignored\n\nOutput\n\nA boolean that is true iff x ≈ 0.\n\nAlgorithm\n\nThis is a fallback implementation for any real x such that x ≈ 0 is true whenever x is equal to zero in the same numeric type as x.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets.isapproxzero-Union{Tuple{N}, Tuple{N}} where N<:AbstractFloat",
+    "page": "Comparisons",
+    "title": "LazySets.isapproxzero",
+    "category": "method",
+    "text": "isapproxzero(x::N; ztol::Real=ABSZTOL(N)) where {N<:AbstractFloat}\n\nDetermine if x is approximately zero.\n\nInput\n\nx    – number\nztol – (optional, default: ABSZTOL) tolerance against zero\n\nOutput\n\nA boolean that is true iff x ≈ 0.\n\nAlgorithm\n\nIt is considered that x ≈ 0 whenever x (in absolute value) is smaller than the tolerance for zero, ztol.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._isapprox-Union{Tuple{N}, Tuple{N,N}} where N<:AbstractFloat",
+    "page": "Comparisons",
+    "title": "LazySets._isapprox",
+    "category": "method",
+    "text": "_isapprox(x::N, y::N;\n          rtol::Real=Base.rtoldefault(N),\n          ztol::Real=ABSZTOL(N),\n          atol::Real=zero(N)) where {N<:AbstractFloat}\n\nDetermine if x is approximately equal to y.\n\nInput\n\nx    – number\ny    – another number (of the same numeric type as x)\nrtol – (optional, default: Base.rtoldefault(N)) relative tolerance\nztol – (optional, default: ABSZTOL(N)) absolute tolerance for comparison against zero\natol – (optional, default: zero(N)) absolute tolerance\n\nOutput\n\nA boolean that is true iff x ≈ y.\n\nAlgorithm\n\nWe first check if x and y are both approximately zero, using isapproxzero(x, y). If that fails, we check if x ≈ y, using Julia\'s isapprox(x, y). In the latter check we use atol absolute tolerance and rtol relative tolerance.\n\nComparing to zero with default tolerances is a special case in Julia\'s isapprox, see the last paragraph in ?isapprox. This function tries to combine isapprox with its default values and a branch for x ≈ y ≈ 0 which includes x == y == 0 but also admits a tolerance ztol.\n\nNote that if x = ztol and y = -ztol, then |x-y| = 2*ztol and still _isapprox returns true.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#LazySets._leq-Union{Tuple{N}, Tuple{N,N}} where N<:AbstractFloat",
+    "page": "Comparisons",
+    "title": "LazySets._leq",
+    "category": "method",
+    "text": "_leq(x::N, y::N;\n     rtol::Real=Base.rtoldefault(N),\n     ztol::Real=ABSZTOL(N),\n     atol::Real=zero(N)) where {N<:AbstractFloat}\n\nDetermine if x is smaller than or equal to y.\n\nInput\n\nx    – number\ny    – another number (of the same numeric type as x)\nrtol – (optional, default: Base.rtoldefault(N)) relative tolerance\nztol – (optional, default: ABSZTOL(N)) absolute tolerance for comparison against zero\natol – absolute tolerance\n\nOutput\n\nA boolean that is true iff x <= y.\n\nAlgorithm\n\nThe x <= y comparison is split into x < y or x ≈ y; the latter is implemented by extending Juila\'s built-in isapprox(x, y) with an absolute tolerance that is used to compare against zero.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/comparisons.html#Comparisons-1",
+    "page": "Comparisons",
+    "title": "Comparisons",
+    "category": "section",
+    "text": "This section of the manual lists the comparison functions in floating point between scalars and between vectors.Pages = [\"comparisons.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nend_leq(x::N, y::N; kwargs...) where {N<:Real}\n_leq(x::N, y::M; kwargs...) where {N<:Real, M<:Real}\n_geq(x::Real, y::Real; kwargs...)\nisapproxzero(x::Real; kwargs...)\nisapproxzero(x::N; ztol::Real=ABSZTOL(N)) where {N<:AbstractFloat}\n_isapprox(x::N, y::N; rtol::Real=Base.rtoldefault(N), ztol::Real=ABSZTOL(N), atol::Real=zero(N)) where {N<:AbstractFloat}\n_leq(x::N, y::N; rtol::Real=Base.rtoldefault(N), ztol::Real=ABSZTOL(N), atol::Real=zero(N)) where {N<:AbstractFloat}"
+},
+
+{
     "location": "lib/conversion.html#",
-    "page": "Conversion between set representations",
-    "title": "Conversion between set representations",
+    "page": "Conversions between set representations",
+    "title": "Conversions between set representations",
     "category": "page",
     "text": ""
 },
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON2}, Tuple{HPOLYGON1}, Tuple{Type{HPOLYGON1},HPOLYGON2}} where HPOLYGON2<:AbstractHPolygon where HPOLYGON1<:AbstractHPolygon",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON1},\n        P::HPOLYGON2) where {HPOLYGON1<:AbstractHPolygon,\n                             HPOLYGON2<:AbstractHPolygon}\n\nConvert between polygon types in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as the target type.\n\nNotes\n\nWe need the Union type for HPOLYGON1 because the target type must be concrete.\n\n\n\n\n\n"
@@ -4186,7 +4434,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{Type{HPOLYGON},VPolygon}} where HPOLYGON<:AbstractHPolygon",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(T::Type{HPOLYGON}, P::VPolygon) where {HPOLYGON<:AbstractHPolygon}\n\nConverts a polygon in vertex representation to a polygon in constraint representation.\n\nInput\n\nHPOLYGON – type used for dispatch\nP        – polygon in vertex representation\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n\n\n"
@@ -4194,7 +4442,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{Hyperrectangle},LazySets.Interval}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{Hyperrectangle}, x::Interval)\n\nConverts a unidimensional interval into a hyperrectangular set.\n\nInput\n\nAbstractHyperrectangle\nx – interval\n\nOutput\n\nA hyperrectangle.\n\nExamples\n\njulia> convert(Hyperrectangle, Interval(0.0, 1.0))\nHyperrectangle{Float64}([0.5], [0.5])\n\n\n\n\n\n"
@@ -4202,7 +4450,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{Type{HPOLYGON},AbstractHyperrectangle}} where HPOLYGON<:AbstractHPolygon",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON}, H::AbstractHyperrectangle) where\n    {HPOLYGON<:AbstractHPolygon}\n\nConverts a hyperrectangular set to a polygon in constraint representation.\n\nInput\n\nHPOLYGON  – type used for dispatch\nH         – hyperrectangular set\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n\n\n"
@@ -4210,7 +4458,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{N}, Tuple{Type{HPOLYGON},HPolytope{N}}} where HPOLYGON<:AbstractHPolygon where N<:Real",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON}, P::HPolytope{N}) where\n    {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nConvert from 2D polytope in H-representation to polygon in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope (must be 2D)\n\nOutput\n\nThe 2D polytope represented as polygon.\n\n\n\n\n\n"
@@ -4218,7 +4466,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{N}, Tuple{Type{HPOLYGON},AbstractSingleton{N}}} where HPOLYGON<:AbstractHPolygon where N<:Real",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON}, S::AbstractSingleton{N}\n       ) where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nConvert from singleton to polygon in H-representation.\n\nInput\n\ntype – target type\nS    – singleton\n\nOutput\n\nA polygon in constraint representation with the minimal number of constraints (three).\n\n\n\n\n\n"
@@ -4226,7 +4474,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Union{Tuple{HPOLYGON}, Tuple{N}, Tuple{Type{HPOLYGON},LineSegment{N}}} where HPOLYGON<:AbstractHPolygon where N<:Real",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPOLYGON}, L::LineSegment{N}\n      ) where {N<:Real, HPOLYGON<:AbstractHPolygon}\n\nConvert from line segment to polygon in H-representation.\n\nInput\n\ntype – target type\nL    – line segment\n\nOutput\n\nA flat polygon in constraint representation with the minimal number of constraints (four).\n\n\n\n\n\n"
@@ -4234,7 +4482,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolyhedron},AbstractPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolyhedron}, P::AbstractPolytope)\n\nConvert a polytopic set to a polyhedron in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe given polytope represented as a polyhedron in constraint representation.\n\n\n\n\n\n"
@@ -4242,7 +4490,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolytope},AbstractHPolygon}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolytope}, P::AbstractHPolygon)\n\nConvert from polygon in H-representation to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polygon\n\nOutput\n\nThe polygon represented as 2D polytope.\n\n\n\n\n\n"
@@ -4250,7 +4498,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolytope},AbstractHyperrectangle}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolytope}, H::AbstractHyperrectangle)\n\nConverts a hyperrectangular set to a polytope in constraint representation.\n\nInput\n\nHPolytope – type used for dispatch\nH         – hyperrectangular set\n\nOutput\n\nA polytope in constraint representation.\n\n\n\n\n\n"
@@ -4258,7 +4506,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolytope},AbstractPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolytope}, P::AbstractPolytope)\n\nConvert a polytopic set to a polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe given polytope represented as a polytope in constraint representation.\n\nAlgorithm\n\nP is first converted to a polytope in V-representation. Then, the conversion method to a polytope in H-representation is invoked. This conversion may require the Polyhedra library.\n\n\n\n\n\n"
@@ -4266,7 +4514,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{HPolytope},VPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{HPolytope}, P::VPolytope)\n\nConvert from polytope in V-representation to polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe polytope in the dual representation.\n\nAlgorithm\n\nThe tohrep function is invoked. It requires the Polyhedra package.\n\n\n\n\n\n"
@@ -4274,7 +4522,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{VPolygon},AbstractHPolygon}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{VPolygon}, P::AbstractHPolygon)\n\nConverts a polygon in constraint representation to a polygon in vertex representation.\n\nInput\n\nVPolygon – type used for dispatch\nP        – polygon in constraint representation\n\nOutput\n\nA polygon in vertex representation.\n\n\n\n\n\n"
@@ -4282,7 +4530,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{VPolygon},AbstractPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{VPolygon}, P::AbstractPolytope)\n\nConvert polytopic set to polygon in V-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe 2D polytope represented as a polygon.\n\n\n\n\n\n"
@@ -4290,7 +4538,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{VPolytope},AbstractPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{VPolytope}, P::AbstractPolytope)\n\nConvert polytopic type to polytope in V-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe set P represented as a VPolytope.\n\n\n\n\n\n"
@@ -4298,7 +4546,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{VPolytope},HPolytope}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{VPolytope}, P::HPolytope)\n\nConvert from polytope in H-representation to polytope in V-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe polytope in the dual representation.\n\nAlgorithm\n\nThe tovrep function is invoked. It requires the Polyhedra package.\n\n\n\n\n\n"
@@ -4306,7 +4554,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Base.convert-Tuple{Type{Zonotope},AbstractHyperrectangle}",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
     "text": "convert(::Type{Zonotope}, H::AbstractHyperrectangle)\n\nConverts a hyperrectangular set to a zonotope.\n\nInput\n\nZonotope\nH – hyperrectangular set\n\nOutput\n\nA zonotope.\n\n\n\n\n\n"
@@ -4314,7 +4562,7 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "lib/conversion.html#Conversion-between-set-representations-1",
-    "page": "Conversion between set representations",
+    "page": "Conversions between set representations",
     "title": "Conversion between set representations",
     "category": "section",
     "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert(::Type{HPOLYGON1}, ::HPOLYGON2) where {HPOLYGON1<:AbstractHPolygon, HPOLYGON2<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::VPolygon) where {HPOLYGON<:AbstractHPolygon}\nconvert(::Type{Hyperrectangle}, ::Interval)\nconvert(::Type{HPOLYGON}, ::AbstractHyperrectangle) where {HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::HPolytope{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::AbstractSingleton{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::LineSegment{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPolyhedron}, ::AbstractPolytope)\nconvert(::Type{HPolytope}, ::AbstractHPolygon)\nconvert(::Type{HPolytope}, ::AbstractHyperrectangle)\nconvert(::Type{HPolytope}, ::AbstractPolytope)\nconvert(::Type{HPolytope}, ::VPolytope)\nconvert(::Type{VPolygon}, ::AbstractHPolygon)\nconvert(::Type{VPolygon}, ::AbstractPolytope)\nconvert(::Type{VPolytope}, ::AbstractPolytope)\nconvert(::Type{VPolytope}, ::HPolytope)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle)"
@@ -4334,6 +4582,238 @@ var documenterSearchIndex = {"docs": [
     "title": "Binary Functions on Sets",
     "category": "section",
     "text": "This section of the manual describes the binary functions for set types.Pages = [\"binary_functions.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nend"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.isdisjoint",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.isdisjoint",
+    "category": "function",
+    "text": "isdisjoint(X, Y)\n\nAn alternative name for is_intersection_empty(X, Y).\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},LazySet{N}}, Tuple{LazySet{N},LazySet{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(X::LazySet{N},\n                      Y::LazySet{N},\n                      witness::Bool=false\n                      )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether two sets do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – set\nY       – another set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff X  Y = \nIf witness option is activated:\n(true, []) iff X  Y = \n(false, v) iff X  Y   and v  X  Y\n\nAlgorithm\n\nThis is a fallback implementation that computes the concrete intersection, intersection, of the given sets.\n\nA witness is constructed using the an_element implementation of the result.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N}}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(H1::AbstractHyperrectangle{N},\n                      H2::AbstractHyperrectangle{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether two hyperrectangles do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2 = \nIf witness option is activated:\n(true, []) iff H1  H2 = \n(false, v) iff H1  H2   and v  H1  H2\n\nAlgorithm\n\nH1  H2   iff c_2 - c_1  r_1 + r_2, where  is taken component-wise.\n\nA witness is computed by starting in one center and moving toward the other center for as long as the minimum of the radius and the center distance. In other words, the witness is the point in H1 that is closest to the center of H2.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},AbstractSingleton{N}}, Tuple{LazySet{N},AbstractSingleton{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(X::LazySet{N},\n                      S::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a convex set and a singleton do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – convex set\nS       – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  X = \nIf witness option is activated:\n(true, []) iff S  X = \n(false, v) iff S  X   and v = element(S)  S  X\n\nAlgorithm\n\nS  X =  iff element(S)  X.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},AbstractSingleton{N}}, Tuple{AbstractHyperrectangle{N},AbstractSingleton{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(H::AbstractHyperrectangle{N},\n                      S::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a hyperrectangle and a singleton do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH – hyperrectangle\nS – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H  S = \nIf witness option is activated:\n(true, []) iff H  S = \n(false, v) iff H  S   and v = element(S)  H  S\n\nAlgorithm\n\nH  S =  iff element(S)  H.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{AbstractSingleton{N},AbstractSingleton{N}}, Tuple{AbstractSingleton{N},AbstractSingleton{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(S1::AbstractSingleton{N},\n                      S2::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether two singletons do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS1 – first singleton\nS2 – second singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2 = \nIf witness option is activated:\n(true, []) iff S1  S2 = \n(false, v) iff S1  S2   and v = element(S1)  S1  S2\n\nAlgorithm\n\nS1  S2 =  iff S1  S2.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{Zonotope{N},Hyperplane{N}}, Tuple{Zonotope{N},Hyperplane{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(Z::Zonotope{N}, H::Hyperplane{N}, witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a zonotope and a hyperplane do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nZ – zonotope\nH – hyperplane\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff Z  H = \nIf witness option is activated:\n(true, []) iff Z  H = \n(false, v) iff Z  H   and v  Z  H\n\nAlgorithm\n\nZ  H =  iff (b - ac)  left  _i=1^p ag_i right, where a, b are the hyperplane coefficients, c is the zonotope\'s center, and g_i are the zonotope\'s generators.\n\nFor witness production we fall back to a less efficient implementation for general sets as the first argument.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{Ball2{N},Ball2{N}}, Tuple{Ball2{N},Ball2{N},Bool}} where N<:AbstractFloat",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(B1::Ball2{N},\n                      B2::Ball2{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:AbstractFloat}\n\nCheck whether two balls in the 2-norm do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nB1 – first ball in the 2-norm\nB2 – second ball in the 2-norm\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B1  B2 = \nIf witness option is activated:\n(true, []) iff B1  B2 = \n(false, v) iff B1  B2   and v  B1  B2\n\nAlgorithm\n\nB1  B2 =  iff  c_2 - c_1 _2  r_1 + r_2.\n\nA witness is computed depending on the smaller/bigger ball (to break ties, choose B1 for the smaller ball) as follows.\n\nIf the smaller ball\'s center is contained in the bigger ball, we return it.\nOtherwise start in the smaller ball\'s center and move toward the other center until hitting the smaller ball\'s border. In other words, the witness is the point in the smaller ball that is closest to the center of the bigger ball.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LineSegment{N},LineSegment{N}}, Tuple{LineSegment{N},LineSegment{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(ls1::LineSegment{N},\n                      ls2::LineSegment{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether two line segments do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nls1 – first line segment\nls2 – second line segment\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff ls1  ls2 = \nIf witness option is activated:\n(true, []) iff ls1  ls2 = \n(false, v) iff ls1  ls2   and v  ls1  ls2\n\nAlgorithm\n\nThe algorithm is inspired from here, which again is the special 2D case of a 3D algorithm by Ronald Goldman\'s article on the Intersection of two lines in three-space in Graphics Gems, Andrew S. (ed.), 1990.\n\nWe first check if the two line segments are parallel, and if so, if they are collinear. In the latter case, we check containment of any of the end points in the other line segment. Otherwise the lines are not parallel, so we can solve an equation of the intersection point, if it exists.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},Union{Hyperplane{N}, Line{N,VN} where VN<:AbstractArray{N,1}}}, Tuple{LazySet{N},Union{Hyperplane{N}, Line{N,VN} where VN<:AbstractArray{N,1}},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(X::LazySet{N},\n                      hp::Union{Hyperplane{N}, Line{N}},\n                      [witness]::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a compact set an a hyperplane do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – compact set\nhp      – hyperplane\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff X  hp = \nIf witness option is activated:\n(true, []) iff X  hp = \n(false, v) iff X  hp   and v  X  hp\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail.\n\nAlgorithm\n\nA compact convex set intersects with a hyperplane iff the support function in the negative resp. positive direction of the hyperplane\'s normal vector a is to the left resp. right of the hyperplane\'s constraint b:\n\n-ρ(-a)  b  ρ(a)\n\nFor witness generation, we compute a line connecting the support vectors to the left and right, and then take the intersection of the line with the hyperplane. We follow this algorithm for the line-hyperplane intersection.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},HalfSpace{N}}, Tuple{LazySet{N},HalfSpace{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(X::LazySet{N},\n                      hs::HalfSpace{N},\n                      [witness]::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a compact set an a half-space do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – compact set\nhs      – half-space\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff X  hs = \nIf witness option is activated:\n(true, []) iff X  hs = \n(false, v) iff X  hs   and v  X  hs\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail.\n\nAlgorithm\n\nA compact convex set intersects with a half-space iff the support vector in the negative direction of the half-space\'s normal vector a is contained in the half-space: σ(-a)  hs. The support vector is thus also a witness.\n\nOptional keyword arguments can be passed to the ρ function. In particular, if X is a lazy intersection, options can be passed to the line search algorithm.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{HalfSpace{N},HalfSpace{N}}, Tuple{HalfSpace{N},HalfSpace{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(hs1::HalfSpace{N},\n                      hs2::HalfSpace{N},\n                      [witness]::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether two half-spaces do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nhs1     – half-space\nhs2     – half-space\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff hs1  hs2 = \nIf witness option is activated:\n(true, []) iff hs1  hs2 = \n(false, v) iff hs1  hs2   and v  hs1  hs2\n\nAlgorithm\n\nTwo half-spaces do not intersect if and only if their normal vectors point in the opposite direction and there is a gap between the two defining hyperplanes.\n\nThe latter can be checked as follows: Let hs_1  a_1x = b_1 and hs2  a_2x = b_2. Then we already know that a_2 = -ka_1 for some positive scaling factor k. Let x_1 be a point on the defining hyperplane of hs_1. We construct a line segment from x_1 to the point x_2 on the defining hyperplane of hs_2 by shooting a ray from x_1 with direction a_1. Thus we look for a factor s such that (x_1 + sa_1)a_2 = b_2. This gives us s = (b_2 - x_1a_2)  (-k a_1a_1). The gap exists if and only if s is positive.\n\nIf the normal vectors do not point in opposite directions, then the defining hyperplanes intersect and we can produce a witness as follows. All points x in this intersection satisfy a_1x = b_1 and a_2x = b_2. Thus we have (a_1 + a_2)x = b_1+b_2. We now find a dimension where a_1 + a_2 is non-zero, say, i. Then the result is a vector with one non-zero entry in dimension i, defined as 0  0 (b_1 + b_2)(a_1i + a_2i) 0  0. Such a dimension i always exists.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},Union{AbstractHPolygon{N}, HPolyhedron{N}, HPolytope{N}}}, Tuple{LazySet{N},Union{AbstractHPolygon{N}, HPolyhedron{N}, HPolytope{N}},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(X::LazySet{N},\n                      P::Union{HPolyhedron{N}, HPolytope{N}, AbstractHPolygon{N}},\n                      witness::Bool=false\n                     )::Bool where {N<:Real}\n\nCheck whether a compact set and a polytope do not intersect.\n\nInput\n\nX  – compact set\nP  – polytope or polygon in constraint-representation\n\nOutput\n\ntrue iff X  P = .\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail. Witness production is not supported.\n\nAlgorithm\n\nThe algorithm relies on the intersection check between the set X and each constraint in P. It costs m support vector evaluations of X, where m is the number of constraints in P.\n\nNote that this method can be used with any set P whose constraints are known.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{HPolytope{N},HPolytope{N}}, Tuple{HPolytope{N},HPolytope{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.is_intersection_empty",
+    "category": "method",
+    "text": "is_intersection_empty(X::LazySet{N},\n                      Y::LazySet{N},\n                      witness::Bool=false\n                      )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether two sets do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – set\nY       – another set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff X  Y = \nIf witness option is activated:\n(true, []) iff X  Y = \n(false, v) iff X  Y   and v  X  Y\n\nAlgorithm\n\nThis is a fallback implementation that computes the concrete intersection, intersection, of the given sets.\n\nA witness is constructed using the an_element implementation of the result.\n\n\n\n\n\nis_intersection_empty(X::LazySet{N},\n                      P::Union{HPolyhedron{N}, HPolytope{N}, AbstractHPolygon{N}},\n                      witness::Bool=false\n                     )::Bool where {N<:Real}\n\nCheck whether a compact set and a polytope do not intersect.\n\nInput\n\nX  – compact set\nP  – polytope or polygon in constraint-representation\n\nOutput\n\ntrue iff X  P = .\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail. Witness production is not supported.\n\nAlgorithm\n\nThe algorithm relies on the intersection check between the set X and each constraint in P. It costs m support vector evaluations of X, where m is the number of constraints in P.\n\nNote that this method can be used with any set P whose constraints are known.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Check-for-emptiness-of-intersection-1",
+    "page": "Binary Functions on Sets",
+    "title": "Check for emptiness of intersection",
+    "category": "section",
+    "text": "isdisjoint\nis_intersection_empty(::LazySet{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{Hyperplane{N}, Line{N}}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::HalfSpace{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::HalfSpace{N}, ::HalfSpace{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{HPolyhedron{N}, HPolytope{N}, AbstractHPolygon{N}}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::HPolytope{N}, ::HPolytope{N}, ::Bool=false) where {N<:Real}"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.convex_hull-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.convex_hull",
+    "category": "method",
+    "text": "convex_hull(P1::HPoly{N}, P2::HPoly{N};\n           [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polyhedra in H-representation.\n\nInput\n\nP1         – polyhedron\nP2         – another polyhedron\nbackend    – (optional, default: default_polyhedra_backend(P1, N))                 the polyhedral computations backend\n\nOutput\n\nThe HPolyhedron (resp. HPolytope) obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\nFor further information on the supported backends see Polyhedra\'s documentation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.convex_hull-Union{Tuple{N}, Tuple{VPolytope{N},VPolytope{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.convex_hull",
+    "category": "method",
+    "text": "convex_hull(P1::VPolytope{N}, P2::VPolytope{N};\n            [backend]=default_polyhedra_backend(P1, N)) where {N}\n\nCompute the convex hull of the set union of two polytopes in V-representation.\n\nInput\n\nP1         – polytope\nP2         – another polytope\nbackend    – (optional, default: default_polyhedra_backend(P1, N)) the polyhedral                 computations backend, see Polyhedra\'s documentation                 for further information\n\nOutput\n\nThe VPolytope obtained by the concrete convex hull of P1 and P2.\n\nNotes\n\nFor performance reasons, it is suggested to use the CDDLib.Library() backend for the convex_hull.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.convex_hull-Union{Tuple{N}, Tuple{VPolygon{N},VPolygon{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.convex_hull",
+    "category": "method",
+    "text": "convex_hull(P::VPolygon{N}, Q::VPolygon{N};\n            [algorithm]::String=\"monotone_chain\")::VPolygon{N} where {N<:Real}\n\nReturn the convex hull of two polygons in vertex representation.\n\nInput\n\nP         – polygon in vertex representation\nQ         – another polygon in vertex representation\nalgorithm – (optional, default: \"monotone_chain\") the algorithm used to                compute the convex hull\n\nOutput\n\nA new polygon such that its vertices are the convex hull of the given two polygons.\n\nAlgorithm\n\nA convex hull algorithm is used to compute the convex hull of the vertices of the given input polygons P and Q; see ?convex_hull for details on the available algorithms. The vertices of the output polygon are sorted in counter-clockwise fashion.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Convex-hull-1",
+    "page": "Binary Functions on Sets",
+    "title": "Convex hull",
+    "category": "section",
+    "text": "convex_hull(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nconvex_hull(::VPolytope{N}, ::VPolytope{N}) where {N<:Real}\nconvex_hull(::VPolygon{N}, ::VPolygon{N}) where {N<:Real}"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Line{N,VN} where VN<:AbstractArray{N,1},Line{N,VN} where VN<:AbstractArray{N,1}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(L1::Line{N}, L2::Line{N}\n            )::Union{Singleton{N}, Line{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two 2D lines.\n\nInput\n\nL1 – first line\nL2 – second line\n\nOutput\n\nIf the lines are identical, the result is the first line. If the lines are parallel and not identical, the result is the empty set. Otherwise the result is the only intersection point.\n\nExamples\n\nThe line y = -x + 1 intersected with the line y = x:\n\njulia> intersection(Line([-1., 1.], 0.), Line([1., 1.], 1.))\nSingleton{Float64,Array{Float64,1}}([0.5, 0.5])\n\njulia> intersection(Line([1., 1.], 1.), Line([1., 1.], 1.))\nLine{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(H1::AbstractHyperrectangle{N},\n             H2::AbstractHyperrectangle{N}\n            )::Union{<:Hyperrectangle{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two hyperrectangles.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\n\nOutput\n\nIf the hyperrectangles do not intersect, the result is the empty set. Otherwise the result is the hyperrectangle that describes the intersection.\n\nAlgorithm\n\nIn each isolated direction i we compute the rightmost left border and the leftmost right border of the hyperrectangles. If these borders contradict, then the intersection is empty. Otherwise the result uses these borders in each dimension.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Interval{N,IN} where IN<:AbstractInterval{N},Interval{N,IN} where IN<:AbstractInterval{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(x::Interval{N},\n             y::Interval{N}\n             )::Union{Interval{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two intervals.\n\nInput\n\nx – first interval\ny – second interval\n\nOutput\n\nIf the intervals do not intersect, the result is the empty set. Otherwise the result is the interval that describes the intersection.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{AbstractHPolygon{N},AbstractHPolygon{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(P1::AbstractHPolygon{N},\n             P2::AbstractHPolygon{N}\n            )::Union{HPolygon{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two polygons in constraint representation.\n\nInput\n\nP1 – first polygon\nP2 – second polygon\n\nOutput\n\nIf the polygons do not intersect, the result is the empty set. Otherwise the result is the polygon that describes the intersection.\n\nAlgorithm\n\nWe just combine the constraints of both polygons. To obtain a linear-time algorithm, we interleave the constraints. If there are two constraints with the same normal vector, we choose the tighter one.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},HalfSpace{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(P::HPoly{N},\n             hs::HalfSpace{N};\n             backend=default_polyhedra_backend(P, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of a polytope in H-representation and a half-space.\n\nInput\n\nP         – polytope\nhs        – half-space\nbackend   – (optional, default: default_polyhedra_backend(P, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the polytope after adding the additional                constraint\n\nOutput\n\nThe same polytope in H-representation with just one more constraint.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(P1::HPoly{N},\n             P2::HPoly{N};\n             backend=default_polyhedra_backend(P1, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of two polyhedra in H-representation.\n\nInput\n\nP1        – polytope\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the polytope after adding the additional                constraint\n\nOutput\n\nA new same polytope in H-representation with just one more constraint.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},VPolytope{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(P1::HPoly{N},\n             P2::VPolytope{N};\n             backend=default_polyhedra_backend(P1, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of two polytopes in either H-representation or V-representation.\n\nInput\n\nP1        – polytope\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the output of intersect\n\nOutput\n\nThe polytope obtained by the intersection of P1 and P2.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},AbstractPolytope{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(P1::HPoly{N},\n             P2::AbstractPolytope{N};\n             backend=default_polyhedra_backend(P1, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of a polyhedron and a polytope.\n\nInput\n\nP1        – polyhedron\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the output of intersect\n\nOutput\n\nThe polytope in H-representation obtained by the intersection of P1 and P2.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{S2}, Tuple{S1}, Tuple{N}, Tuple{S1,S2}} where S2<:AbstractPolytope{N} where S1<:AbstractPolytope{N} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(P1::S1, P2::S2) where {S1<:AbstractPolytope{N},\n                                    S2<:AbstractPolytope{N}} where {N<:Real}\n\nCompute the intersection of two polytopic sets.\n\nInput\n\nP1 – polytope\nP2 – another polytope\n\nOutput\n\nThe polytope obtained by the intersection of P1 and P2. Usually the V-representation is used.\n\nNotes\n\nThis fallback implementation requires Polyhedra to evaluate the concrete intersection. Inputs that are not of type HPolytope or VPolytope are converted to an HPolytope through the constraints_list function.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/binary_functions.html#Intersection-of-two-sets-1",
+    "page": "Binary Functions on Sets",
+    "title": "Intersection of two sets",
+    "category": "section",
+    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nintersection(::Interval{N}, ::Interval{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}\nintersection(::HPoly{N}, ::HalfSpace{N}) where {N<:Real}\nintersection(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nintersection(::HPoly{N}, ::VPolytope{N}) where {N<:Real}\nintersection(::HPoly{N}, ::AbstractPolytope{N}) where {N<:Real}\nintersection(::S1, ::S2) where {N<:Real, S1<:AbstractPolytope{N}, S2<:AbstractPolytope{N}}"
 },
 
 {
@@ -4457,206 +4937,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.isdisjoint",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.isdisjoint",
-    "category": "function",
-    "text": "isdisjoint(X, Y)\n\nAn alternative name for is_intersection_empty(X, Y).\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},LazySet{N}}, Tuple{LazySet{N},LazySet{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(X::LazySet{N},\n                      Y::LazySet{N},\n                      witness::Bool=false\n                      )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether two sets do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – set\nY       – another set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff X  Y = \nIf witness option is activated:\n(true, []) iff X  Y = \n(false, v) iff X  Y   and v  X  Y\n\nAlgorithm\n\nThis is a fallback implementation that computes the concrete intersection, intersection, of the given sets.\n\nA witness is constructed using the an_element implementation of the result.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N}}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(H1::AbstractHyperrectangle{N},\n                      H2::AbstractHyperrectangle{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether two hyperrectangles do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H1  H2 = \nIf witness option is activated:\n(true, []) iff H1  H2 = \n(false, v) iff H1  H2   and v  H1  H2\n\nAlgorithm\n\nH1  H2   iff c_2 - c_1  r_1 + r_2, where  is taken component-wise.\n\nA witness is computed by starting in one center and moving toward the other center for as long as the minimum of the radius and the center distance. In other words, the witness is the point in H1 that is closest to the center of H2.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},AbstractSingleton{N}}, Tuple{LazySet{N},AbstractSingleton{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(X::LazySet{N},\n                      S::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether a convex set and a singleton do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – convex set\nS       – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S  X = \nIf witness option is activated:\n(true, []) iff S  X = \n(false, v) iff S  X   and v = element(S)  S  X\n\nAlgorithm\n\nS  X =  iff element(S)  X.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},AbstractSingleton{N}}, Tuple{AbstractHyperrectangle{N},AbstractSingleton{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(H::AbstractHyperrectangle{N},\n                      S::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether a hyperrectangle and a singleton do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nH – hyperrectangle\nS – singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff H  S = \nIf witness option is activated:\n(true, []) iff H  S = \n(false, v) iff H  S   and v = element(S)  H  S\n\nAlgorithm\n\nH  S =  iff element(S)  H.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{AbstractSingleton{N},AbstractSingleton{N}}, Tuple{AbstractSingleton{N},AbstractSingleton{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(S1::AbstractSingleton{N},\n                      S2::AbstractSingleton{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether two singletons do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nS1 – first singleton\nS2 – second singleton\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff S1  S2 = \nIf witness option is activated:\n(true, []) iff S1  S2 = \n(false, v) iff S1  S2   and v = element(S1)  S1  S2\n\nAlgorithm\n\nS1  S2 =  iff S1  S2.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{Zonotope{N},Hyperplane{N}}, Tuple{Zonotope{N},Hyperplane{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(Z::Zonotope{N}, H::Hyperplane{N}, witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether a zonotope and a hyperplane do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nZ – zonotope\nH – hyperplane\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff Z  H = \nIf witness option is activated:\n(true, []) iff Z  H = \n(false, v) iff Z  H   and v  Z  H\n\nAlgorithm\n\nZ  H =  iff (b - ac)  left  _i=1^p ag_i right, where a, b are the hyperplane coefficients, c is the zonotope\'s center, and g_i are the zonotope\'s generators.\n\nFor witness production we fall back to a less efficient implementation for general sets as the first argument.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{Ball2{N},Ball2{N}}, Tuple{Ball2{N},Ball2{N},Bool}} where N<:AbstractFloat",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(B1::Ball2{N},\n                      B2::Ball2{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:AbstractFloat\n\nCheck whether two balls in the 2-norm do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nB1 – first ball in the 2-norm\nB2 – second ball in the 2-norm\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff B1  B2 = \nIf witness option is activated:\n(true, []) iff B1  B2 = \n(false, v) iff B1  B2   and v  B1  B2\n\nAlgorithm\n\nB1  B2 =  iff  c_2 - c_1 _2  r_1 + r_2.\n\nA witness is computed depending on the smaller/bigger ball (to break ties, choose B1 for the smaller ball) as follows.\n\nIf the smaller ball\'s center is contained in the bigger ball, we return it.\nOtherwise start in the smaller ball\'s center and move toward the other center until hitting the smaller ball\'s border. In other words, the witness is the point in the smaller ball that is closest to the center of the bigger ball.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LineSegment{N},LineSegment{N}}, Tuple{LineSegment{N},LineSegment{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(ls1::LineSegment{N},\n                      ls2::LineSegment{N},\n                      witness::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether two line segments do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nls1 – first line segment\nls2 – second line segment\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff ls1  ls2 = \nIf witness option is activated:\n(true, []) iff ls1  ls2 = \n(false, v) iff ls1  ls2   and v  ls1  ls2\n\nAlgorithm\n\nThe algorithm is inspired from here, which again is the special 2D case of a 3D algorithm by Ronald Goldman\'s article on the Intersection of two lines in three-space in Graphics Gems, Andrew S. (ed.), 1990.\n\nWe first check if the two line segments are parallel, and if so, if they are collinear. In the latter case, we check containment of any of the end points in the other line segment. Otherwise the lines are not parallel, so we can solve an equation of the intersection point, if it exists.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},Union{Hyperplane{N}, Line{N,V} where V<:AbstractArray{N,1}}}, Tuple{LazySet{N},Union{Hyperplane{N}, Line{N,V} where V<:AbstractArray{N,1}},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(X::LazySet{N},\n                      hp::Union{Hyperplane{N}, Line{N}},\n                      [witness]::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether a compact set an a hyperplane do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – compact set\nhp      – hyperplane\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff X  hp = \nIf witness option is activated:\n(true, []) iff X  hp = \n(false, v) iff X  hp   and v  X  hp\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail.\n\nAlgorithm\n\nA compact convex set intersects with a hyperplane iff the support function in the negative resp. positive direction of the hyperplane\'s normal vector a is to the left resp. right of the hyperplane\'s constraint b:\n\n-ρ(-a)  b  ρ(a)\n\nFor witness generation, we compute a line connecting the support vectors to the left and right, and then take the intersection of the line with the hyperplane. We follow this algorithm for the line-hyperplane intersection.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},HalfSpace{N}}, Tuple{LazySet{N},HalfSpace{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(X::LazySet{N},\n                      hs::HalfSpace{N},\n                      [witness]::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether a compact set an a half-space do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – compact set\nhs      – half-space\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff X  hs = \nIf witness option is activated:\n(true, []) iff X  hs = \n(false, v) iff X  hs   and v  X  hs\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail.\n\nAlgorithm\n\nA compact convex set intersects with a half-space iff the support vector in the negative direction of the half-space\'s normal vector a is contained in the half-space: σ(-a)  hs. The support vector is thus also a witness.\n\nOptional keyword arguments can be passed to the ρ function. In particular, if X is a lazy intersection, options can be passed to the line search algorithm.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{HalfSpace{N},HalfSpace{N}}, Tuple{HalfSpace{N},HalfSpace{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(hs1::HalfSpace{N},\n                      hs2::HalfSpace{N},\n                      [witness]::Bool=false\n                     )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether two half-spaces do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nhs1     – half-space\nhs2     – half-space\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff hs1  hs2 = \nIf witness option is activated:\n(true, []) iff hs1  hs2 = \n(false, v) iff hs1  hs2   and v  hs1  hs2\n\nAlgorithm\n\nTwo half-spaces do not intersect if and only if their normal vectors point in the opposite direction and there is a gap between the two defining hyperplanes.\n\nThe latter can be checked as follows: Let hs_1  a_1x = b_1 and hs2  a_2x = b_2. Then we already know that a_2 = -ka_1 for some positive scaling factor k. Let x_1 be a point on the defining hyperplane of hs_1. We construct a line segment from x_1 to the point x_2 on the defining hyperplane of hs_2 by shooting a ray from x_1 with direction a_1. Thus we look for a factor s such that (x_1 + sa_1)a_2 = b_2. This gives us s = (b_2 - x_1a_2)  (-k a_1a_1). The gap exists if and only if s is positive.\n\nIf the normal vectors do not point in opposite directions, then the defining hyperplanes intersect and we can produce a witness as follows. All points x in this intersection satisfy a_1x = b_1 and a_2x = b_2. Thus we have (a_1 + a_2)x = b_1+b_2. We now find a dimension where a_1 + a_2 is non-zero, say, i. Then the result is a vector with one non-zero entry in dimension i, defined as 0  0 (b_1 + b_2)(a_1i + a_2i) 0  0. Such a dimension i always exists.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{LazySet{N},Union{AbstractHPolygon{N}, HPolyhedron{N}, HPolytope{N}}}, Tuple{LazySet{N},Union{AbstractHPolygon{N}, HPolyhedron{N}, HPolytope{N}},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(X::LazySet{N},\n                      P::Union{HPolyhedron{N}, HPolytope{N}, AbstractHPolygon{N}},\n                      witness::Bool=false\n                     )::Bool where N<:Real\n\nCheck whether a compact set and a polytope do not intersect.\n\nInput\n\nX  – compact set\nP  – polytope or polygon in constraint-representation\n\nOutput\n\ntrue iff X  P = .\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail. Witness production is not supported.\n\nAlgorithm\n\nThe algorithm relies on the intersection check between the set X and each constraint in P. It costs m support vector evaluations of X, where m is the number of constraints in P.\n\nNote that this method can be used with any set P whose constraints are known.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.is_intersection_empty-Union{Tuple{N}, Tuple{HPolytope{N},HPolytope{N}}, Tuple{HPolytope{N},HPolytope{N},Bool}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.is_intersection_empty",
-    "category": "method",
-    "text": "is_intersection_empty(X::LazySet{N},\n                      Y::LazySet{N},\n                      witness::Bool=false\n                      )::Union{Bool, Tuple{Bool, Vector{N}}} where N<:Real\n\nCheck whether two sets do not intersect, and otherwise optionally compute a witness.\n\nInput\n\nX       – set\nY       – another set\nwitness – (optional, default: false) compute a witness if activated\n\nOutput\n\nIf witness option is deactivated: true iff X  Y = \nIf witness option is activated:\n(true, []) iff X  Y = \n(false, v) iff X  Y   and v  X  Y\n\nAlgorithm\n\nThis is a fallback implementation that computes the concrete intersection, intersection, of the given sets.\n\nA witness is constructed using the an_element implementation of the result.\n\n\n\n\n\nis_intersection_empty(X::LazySet{N},\n                      P::Union{HPolyhedron{N}, HPolytope{N}, AbstractHPolygon{N}},\n                      witness::Bool=false\n                     )::Bool where N<:Real\n\nCheck whether a compact set and a polytope do not intersect.\n\nInput\n\nX  – compact set\nP  – polytope or polygon in constraint-representation\n\nOutput\n\ntrue iff X  P = .\n\nNotes\n\nWe assume that X is compact. Otherwise, the support vector queries may fail. Witness production is not supported.\n\nAlgorithm\n\nThe algorithm relies on the intersection check between the set X and each constraint in P. It costs m support vector evaluations of X, where m is the number of constraints in P.\n\nNote that this method can be used with any set P whose constraints are known.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Check-for-emptiness-of-intersection-1",
-    "page": "Binary Functions on Sets",
-    "title": "Check for emptiness of intersection",
-    "category": "section",
-    "text": "isdisjoint\nis_intersection_empty(::LazySet{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractHyperrectangle{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Zonotope{N}, ::Hyperplane{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\nis_intersection_empty(::LineSegment{N}, ::LineSegment{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{Hyperplane{N}, Line{N}}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::HalfSpace{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::HalfSpace{N}, ::HalfSpace{N}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::LazySet{N}, ::Union{HPolyhedron{N}, HPolytope{N}, AbstractHPolygon{N}}, ::Bool=false) where {N<:Real}\nis_intersection_empty(::HPolytope{N}, ::HPolytope{N}, ::Bool=false) where {N<:Real}"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Line{N,V} where V<:AbstractArray{N,1},Line{N,V} where V<:AbstractArray{N,1}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(L1::Line{N}, L2::Line{N}\n            )::Union{Singleton{N}, Line{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two 2D lines.\n\nInput\n\nL1 – first line\nL2 – second line\n\nOutput\n\nIf the lines are identical, the result is the first line. If the lines are parallel and not identical, the result is the empty set. Otherwise the result is the only intersection point.\n\nExamples\n\nThe line y = -x + 1 intersected with the line y = x:\n\njulia> intersection(Line([-1., 1.], 0.), Line([1., 1.], 1.))\nSingleton{Float64}([0.5, 0.5])\njulia> intersection(Line([1., 1.], 1.), Line([1., 1.], 1.))\nLine{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},AbstractHyperrectangle{N}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(H1::AbstractHyperrectangle{N},\n             H2::AbstractHyperrectangle{N}\n            )::Union{<:Hyperrectangle{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two hyperrectangles.\n\nInput\n\nH1 – first hyperrectangle\nH2 – second hyperrectangle\n\nOutput\n\nIf the hyperrectangles do not intersect, the result is the empty set. Otherwise the result is the hyperrectangle that describes the intersection.\n\nAlgorithm\n\nIn each isolated direction i we compute the rightmost left border and the leftmost right border of the hyperrectangles. If these borders contradict, then the intersection is empty. Otherwise the result uses these borders in each dimension.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Interval{N,IN} where IN<:AbstractInterval{N},Interval{N,IN} where IN<:AbstractInterval{N}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(x::Interval{N},\n             y::Interval{N}\n             )::Union{Interval{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two intervals.\n\nInput\n\nx – first interval\ny – second interval\n\nOutput\n\nIf the intervals do not intersect, the result is the empty set. Otherwise the result is the interval that describes the intersection.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{AbstractHPolygon{N},AbstractHPolygon{N}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(P1::AbstractHPolygon{N},\n             P2::AbstractHPolygon{N}\n            )::Union{HPolygon{N}, EmptySet{N}} where {N<:Real}\n\nReturn the intersection of two polygons in constraint representation.\n\nInput\n\nP1 – first polygon\nP2 – second polygon\n\nOutput\n\nIf the polygons do not intersect, the result is the empty set. Otherwise the result is the polygon that describes the intersection.\n\nAlgorithm\n\nWe just combine the constraints of both polygons. To obtain a linear-time algorithm, we interleave the constraints. If there are two constraints with the same normal vector, we choose the tighter one.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},HalfSpace{N}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(P::HPoly{N},\n             hs::HalfSpace{N};\n             backend=default_polyhedra_backend(P, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of a polytope in H-representation and a half-space.\n\nInput\n\nP         – polytope\nhs        – half-space\nbackend   – (optional, default: default_polyhedra_backend(P, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the polytope after adding the additional                constraint\n\nOutput\n\nThe same polytope in H-representation with just one more constraint.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(P1::HPoly{N},\n             P2::HPoly{N};\n             backend=default_polyhedra_backend(P1, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of two polyhedra in H-representation.\n\nInput\n\nP1        – polytope\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the polytope after adding the additional                constraint\n\nOutput\n\nA new same polytope in H-representation with just one more constraint.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},VPolytope{N}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(P1::HPoly{N},\n             P2::VPolytope{N};\n             backend=default_polyhedra_backend(P1, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of two polytopes in either H-representation or V-representation.\n\nInput\n\nP1        – polytope\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the output of intersect\n\nOutput\n\nThe polytope obtained by the intersection of P1 and P2.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},AbstractPolytope{N}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(P1::HPoly{N},\n             P2::AbstractPolytope{N};\n             backend=default_polyhedra_backend(P1, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of a polyhedron and a polytope.\n\nInput\n\nP1        – polyhedron\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the output of intersect\n\nOutput\n\nThe polytope in H-representation obtained by the intersection of P1 and P2.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{S2}, Tuple{S1}, Tuple{N}, Tuple{S1,S2}} where S2<:AbstractPolytope{N} where S1<:AbstractPolytope{N} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(P1::S1, P2::S2) where {S1<:AbstractPolytope{N},\n                                    S2<:AbstractPolytope{N}} where {N<:Real}\n\nCompute the intersection of two polytopic sets.\n\nInput\n\nP1 – polytope\nP2 – another polytope\n\nOutput\n\nThe polytope obtained by the intersection of P1 and P2. Usually the V-representation is used.\n\nNotes\n\nThis fallback implementation requires Polyhedra to evaluate the concrete intersection. Inputs that are not of type HPolytope or VPolytope are converted to an HPolytope through the constraints_list function.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#Intersection-of-two-sets-1",
-    "page": "Binary Functions on Sets",
-    "title": "Intersection of two sets",
-    "category": "section",
-    "text": "intersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nintersection(::Interval{N}, ::Interval{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}) where {N<:Real}\nintersection(::HPoly{N}, ::HalfSpace{N}) where {N<:Real}\nintersection(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nintersection(::HPoly{N}, ::VPolytope{N}) where {N<:Real}\nintersection(::HPoly{N}, ::AbstractPolytope{N}) where {N<:Real}\nintersection(::S1, ::S2) where {N<:Real, S1<:AbstractPolytope{N}, S2<:AbstractPolytope{N}}"
-},
-
-{
     "location": "lib/approximations.html#",
     "page": "Approximations",
     "title": "Approximations",
@@ -4717,7 +4997,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.overapproximate",
     "category": "function",
-    "text": "overapproximate(X::S, ::Type{S}) where {S <: LazySet}\n\nOverapproximating a set of type S with type S is a no-op.\n\nInput\n\nX – set\nType{S} – set type\n\nOutput\n\nThe input set.\n\n\n\n\n\noverapproximate(S::LazySet{N},\n                ::Type{<:HPolygon},\n                [ε]::Real=Inf)::HPolygon where {N<:Real}\n\nReturn an approximation of a given 2D convex set. If no error tolerance is given, or is Inf, the result is a box-shaped polygon. Otherwise the result is an ε-close approximation as a polygon.\n\nInput\n\nS           – convex set, assumed to be two-dimensional\nHPolygon    – type for dispatch\nε           – (optional, default: Inf) error bound\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n\n\noverapproximate(S::LazySet, ε::Real)::HPolygon\n\nAlias for overapproximate(S, HPolygon, ε).\n\n\n\n\n\noverapproximate(S::LazySet,\n                Type{<:Hyperrectangle})::Union{Hyperrectangle, EmptySet}\n\nReturn an approximation of a given set as a hyperrectangle.\n\nInput\n\nS              – set\nHyperrectangle – type for dispatch\n\nOutput\n\nA hyperrectangle.\n\n\n\n\n\noverapproximate(S::LazySet)::Union{Hyperrectangle, EmptySet}\n\nAlias for overapproximate(S, Hyperrectangle).\n\n\n\n\n\noverapproximate(S::ConvexHull{N, Zonotope{N}, Zonotope{N}},\n                ::Type{<:Zonotope})::Zonotope where {N<:Real}\n\nOverapproximate the convex hull of two zonotopes.\n\nInput\n\nS           – convex hull of two zonotopes of the same order\nZonotope    – type for dispatch\n\nAlgorithm\n\nThis function implements the method proposed in Reachability of Uncertain Linear Systems Using Zonotopes, A. Girard, HSCC 2005. The convex hull of two zonotopes of the same order, that we write Z_j = c^(j) g^(j)_1  g^(j)_p for j = 1 2, can be overapproximated as follows:\n\nCH(Z_1 Z_2)  frac12c^(1)+c^(2) g^(1)_1+g^(2)_1  g^(1)_p+g^(2)_p c^(1)-c^(2) g^(1)_1-g^(2)_1  g^(1)_p-g^(2)_p\n\nIt should be noted that the output zonotope is not necessarily the minimal enclosing zonotope, which is in general expensive in high dimensions. This is further investigated in: Zonotopes as bounding volumes, L. J. Guibas et al, Proc. of Symposium on Discrete Algorithms, pp. 803-812.\n\n\n\n\n\noverapproximate(X::LazySet,\n                dir::AbstractDirections\n               )::HPolytope\n\nOverapproximating a set with template directions.\n\nInput\n\nX           – set\ndir         – direction representation\n\nOutput\n\nA HPolytope overapproximating the set X with the directions from dir.\n\n\n\n\n\noverapproximate(S::LazySet{N},\n                ::Type{Interval}\n               ) where {N<:Real}\n\nReturn the overapproximation of a real unidimensional set with an interval.\n\nInput\n\nS           – one-dimensional set\nInterval    – type for dispatch\n\nOutput\n\nAn interval.\n\n\n\n\n\noverapproximate(cap::Intersection{N,\n                                  <:LazySet,\n                                  <:Union{AbstractPolytope{N}, HPolyhedron{N}}},\n                dir::AbstractDirections{N};\n                kwargs...\n               ) where {N<:Real}\n\nReturn the overapproximation of the intersection between a compact set and a polytope given a set of template directions.\n\nInput\n\ncap         – intersection of a compact set and a polytope\ndir         – template directions\nkwargs      – additional arguments that are passed to the support function                  algorithm\n\nOutput\n\nA polytope in H-representation such that the normal direction of each half-space is given by an element of dir.\n\nAlgorithm\n\nLet di be a direction drawn from the set of template directions dir. Let X be the compact set and let P be the polytope. We overapproximate the set X ∩ H with a polytope in constraint representation using a given set of template directions dir.\n\nThe idea is to solve the univariate optimization problem ρ(di, X ∩ Hi) for each half-space in the set P and then take the minimum. This gives an overapproximation of the exact support function.\n\nThis algorithm is inspired from G. Frehse, R. Ray. Flowpipe-Guard Intersection for Reachability Computations with Support Functions.\n\nNotes\n\nThis method relies on having available the constraints_list of the polytope P.\n\nThis method of overapproximations can return a non-empty set even if the original intersection is empty.\n\n\n\n\n\noverapproximate(cap::Intersection{N, <:HalfSpace{N}, <:AbstractPolytope{N}},\n                dir::AbstractDirections{N};\n                [kwargs]...\n               ) where {N<:Real}\n\nReturn the overapproximation of the intersection between a half-space and a polytope given a set of template directions.\n\nInput\n\ncap         – intersection of a half-space and a polytope\ndir         – template directions\nkwargs      – additional arguments that are passed to the support function                  algorithm\n\nOutput\n\nA polytope in H-representation such that the normal direction of each half-space is given by an element of dir.\n\n\n\n\n\n"
+    "text": "overapproximate(X::S, ::Type{S}) where {S<:LazySet}\n\nOverapproximating a set of type S with type S is a no-op.\n\nInput\n\nX – set\nType{S} – set type\n\nOutput\n\nThe input set.\n\n\n\n\n\noverapproximate(S::LazySet{N},\n                ::Type{<:HPolygon},\n                [ε]::Real=Inf)::HPolygon where {N<:Real}\n\nReturn an approximation of a given 2D convex set. If no error tolerance is given, or is Inf, the result is a box-shaped polygon. Otherwise the result is an ε-close approximation as a polygon.\n\nInput\n\nS           – convex set, assumed to be two-dimensional\nHPolygon    – type for dispatch\nε           – (optional, default: Inf) error bound\n\nOutput\n\nA polygon in constraint representation.\n\n\n\n\n\noverapproximate(S::LazySet, ε::Real)::HPolygon\n\nAlias for overapproximate(S, HPolygon, ε).\n\n\n\n\n\noverapproximate(S::LazySet,\n                Type{<:Hyperrectangle})::Union{Hyperrectangle, EmptySet}\n\nReturn an approximation of a given set as a hyperrectangle.\n\nInput\n\nS              – set\nHyperrectangle – type for dispatch\n\nOutput\n\nA hyperrectangle.\n\n\n\n\n\noverapproximate(S::LazySet)::Union{Hyperrectangle, EmptySet}\n\nAlias for overapproximate(S, Hyperrectangle).\n\n\n\n\n\noverapproximate(S::ConvexHull{N, Zonotope{N}, Zonotope{N}},\n                ::Type{<:Zonotope})::Zonotope where {N<:Real}\n\nOverapproximate the convex hull of two zonotopes.\n\nInput\n\nS           – convex hull of two zonotopes of the same order\nZonotope    – type for dispatch\n\nAlgorithm\n\nThis function implements the method proposed in Reachability of Uncertain Linear Systems Using Zonotopes, A. Girard, HSCC 2005. The convex hull of two zonotopes of the same order, that we write Z_j = c^(j) g^(j)_1  g^(j)_p for j = 1 2, can be overapproximated as follows:\n\nCH(Z_1 Z_2)  frac12c^(1)+c^(2) g^(1)_1+g^(2)_1  g^(1)_p+g^(2)_p c^(1)-c^(2) g^(1)_1-g^(2)_1  g^(1)_p-g^(2)_p\n\nIt should be noted that the output zonotope is not necessarily the minimal enclosing zonotope, which is in general expensive in high dimensions. This is further investigated in: Zonotopes as bounding volumes, L. J. Guibas et al, Proc. of Symposium on Discrete Algorithms, pp. 803-812.\n\n\n\n\n\noverapproximate(Z::Zonotope, ::Type{<:Hyperrectangle})::Hyperrectangle\n\nReturn a tight overapproximation of a zonotope with an axis-aligned box.\n\nInput\n\nZ              – zonotope\nHyperrectangle – type for dispatch\n\nOutput\n\nA hyperrectangle.\n\nAlgorithm\n\nThis function implements the method in [Section 5.1.2, 1]. A zonotope Z = c G can be overapproximated tightly by an axis-aligned box (i.e. a Hyperrectangle) such that its center is c and the radius along dimension i is the column-sum of the absolute values of the i-th row of G for i = 1 p, where p is the number of generators of Z.\n\n[1] Althoff, M., Stursberg, O., & Buss, M. (2010). Computing reachable sets of hybrid systems using a combination of zonotopes and polytopes. Nonlinear analysis: hybrid systems, 4(2), 233-249.\n\n\n\n\n\noverapproximate(X::LazySet{N}, dir::AbstractDirections{N})::HPolytope{N}\n    where {N}\n\nOverapproximating a set with template directions.\n\nInput\n\nX           – set\ndir         – direction representation\n\nOutput\n\nA HPolytope overapproximating the set X with the directions from dir.\n\n\n\n\n\noverapproximate(S::LazySet{N}, ::Type{Interval}) where {N<:Real}\n\nReturn the overapproximation of a real unidimensional set with an interval.\n\nInput\n\nS           – one-dimensional set\nInterval    – type for dispatch\n\nOutput\n\nAn interval.\n\n\n\n\n\noverapproximate(cap::Intersection{N,\n                                  <:LazySet,\n                                  <:Union{AbstractPolytope{N}, HPolyhedron{N}}},\n                dir::AbstractDirections{N};\n                kwargs...\n               ) where {N<:Real}\n\nReturn the overapproximation of the intersection between a compact set and a polytope given a set of template directions.\n\nInput\n\ncap         – intersection of a compact set and a polytope\ndir         – template directions\nkwargs      – additional arguments that are passed to the support function                  algorithm\n\nOutput\n\nA polytope in H-representation such that the normal direction of each half-space is given by an element of dir.\n\nAlgorithm\n\nLet di be a direction drawn from the set of template directions dir. Let X be the compact set and let P be the polytope. We overapproximate the set X ∩ H with a polytope in constraint representation using a given set of template directions dir.\n\nThe idea is to solve the univariate optimization problem ρ(di, X ∩ Hi) for each half-space in the set P and then take the minimum. This gives an overapproximation of the exact support function.\n\nThis algorithm is inspired from G. Frehse, R. Ray. Flowpipe-Guard Intersection for Reachability Computations with Support Functions.\n\nNotes\n\nThis method relies on having available the constraints_list of the polytope P.\n\nThis method of overapproximations can return a non-empty set even if the original intersection is empty.\n\n\n\n\n\noverapproximate(cap::Intersection{N, <:HalfSpace{N}, <:AbstractPolytope{N}},\n                dir::AbstractDirections{N};\n                [kwargs]...\n               ) where {N<:Real}\n\nReturn the overapproximation of the intersection between a half-space and a polytope given a set of template directions.\n\nInput\n\ncap         – intersection of a half-space and a polytope\ndir         – template directions\nkwargs      – additional arguments that are passed to the support function                  algorithm\n\nOutput\n\nA polytope in H-representation such that the normal direction of each half-space is given by an element of dir.\n\n\n\n\n\n"
 },
 
 {
@@ -4733,7 +5013,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.ballinf_approximation",
     "category": "function",
-    "text": "ballinf_approximation(S::LazySet{N};\n                     )::BallInf{N} where {N<:Real}\n\nOverapproximate a convex set by a tight ball in the infinity norm.\n\nInput\n\nS           – convex set\n\nOutput\n\nA tight ball in the infinity norm.\n\nAlgorithm\n\nThe center and radius of the box are obtained by evaluating the support function of the given convex set along the canonical directions.\n\n\n\n\n\n"
+    "text": "ballinf_approximation(S::LazySet{N};\n                     )::BallInf{N} where {N<:Real}\n\nOverapproximate a convex set by a tight ball in the infinity norm.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight ball in the infinity norm.\n\nAlgorithm\n\nThe center and radius of the box are obtained by evaluating the support function of the given convex set along the canonical directions.\n\n\n\n\n\n"
 },
 
 {
@@ -4741,7 +5021,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation",
     "category": "function",
-    "text": "box_approximation(S::LazySet)::Hyperrectangle\n\nOverapproximate a convex set by a tight hyperrectangle.\n\nInput\n\nS           – convex set\n\nOutput\n\nA tight hyperrectangle.\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
+    "text": "box_approximation(S::LazySet{N})::Union{Hyperrectangle{N}, EmptySet{N}}\n    where {N<:Real}\n\nOverapproximate a convex set by a tight hyperrectangle.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle.\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
 },
 
 {
@@ -4757,7 +5037,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation_symmetric",
     "category": "function",
-    "text": "box_approximation_symmetric(S::LazySet{N}\n                           )::Union{Hyperrectangle{N}, EmptySet{N}}\n                            where {N<:Real}\n\nOverapproximate a convex set by a tight hyperrectangle centered in the origin.\n\nInput\n\nS           – convex set\n\nOutput\n\nA tight hyperrectangle centered in the origin.\n\nAlgorithm\n\nThe center of the box is the origin, and the radius is obtained by computing the maximum value of the support function evaluated at the canonical directions.\n\n\n\n\n\n"
+    "text": "box_approximation_symmetric(S::LazySet{N}\n                           )::Union{Hyperrectangle{N}, EmptySet{N}}\n                            where {N<:Real}\n\nOverapproximate a convex set by a tight hyperrectangle centered in the origin.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle centered in the origin.\n\nAlgorithm\n\nThe center of the box is the origin, and the radius is obtained by computing the maximum value of the support function evaluated at the canonical directions.\n\n\n\n\n\n"
 },
 
 {
@@ -4773,7 +5053,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.box_approximation_helper",
     "category": "function",
-    "text": "box_approximation_helper(S::LazySet{N};\n                        ) where {N<:Real}\n\nCommon code of box_approximation and box_approximation_symmetric.\n\nInput\n\nS           – convex set\n\nOutput\n\nA tuple containing the data that is needed to construct a tightly overapproximating hyperrectangle.\n\nc – center\nr – radius\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given convex set in the canonical directions. The lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
+    "text": "box_approximation_helper(S::LazySet{N};\n                        ) where {N<:Real}\n\nCommon code of box_approximation and box_approximation_symmetric.\n\nInput\n\nS – convex set\n\nOutput\n\nA tuple containing the data that is needed to construct a tightly overapproximating hyperrectangle.\n\nc – center\nr – radius\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given convex set in the canonical directions. The lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
 },
 
 {
@@ -4805,7 +5085,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.new_approx",
     "category": "method",
-    "text": "new_approx(S::LazySet, p1::Vector{N}, d1::Vector{N}, p2::Vector{N},\n           d2::Vector{N}) where N<:Real\n\nCreate a LocalApproximation instance for the given excerpt of a polygonal approximation.\n\nInput\n\nS  – convex set\np1 – first inner point\nd1 – first direction\np2 – second inner point\nd2 – second direction\n\nOutput\n\nA local approximation of S in the given directions.\n\n\n\n\n\n"
+    "text": "new_approx(S::LazySet, p1::Vector{N}, d1::Vector{N}, p2::Vector{N},\n           d2::Vector{N}) where {N<:Real}\n\nCreate a LocalApproximation instance for the given excerpt of a polygonal approximation.\n\nInput\n\nS  – convex set\np1 – first inner point\nd1 – first direction\np2 – second inner point\nd2 – second direction\n\nOutput\n\nA local approximation of S in the given directions.\n\n\n\n\n\n"
 },
 
 {
@@ -4813,7 +5093,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.addapproximation!",
     "category": "method",
-    "text": "addapproximation!(Ω::PolygonalOverapproximation, p1::Vector{N},\n    d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where N<:Real\n\nInput\n\nΩ  – polygonal overapproximation of a convex set\np1 – first inner point\nd1 – first direction\np2 – second inner point\nd2 – second direction\n\nOutput\n\nThe list of local approximations in Ω of the set Ω.S is updated in-place and the new approximation is returned by this function.\n\n\n\n\n\n"
+    "text": "addapproximation!(Ω::PolygonalOverapproximation, p1::Vector{N},\n    d1::Vector{N}, p2::Vector{N}, d2::Vector{N}) where {N<:Real}\n\nInput\n\nΩ  – polygonal overapproximation of a convex set\np1 – first inner point\nd1 – first direction\np2 – second inner point\nd2 – second direction\n\nOutput\n\nThe list of local approximations in Ω of the set Ω.S is updated in-place and the new approximation is returned by this function.\n\n\n\n\n\n"
 },
 
 {
@@ -4829,7 +5109,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.tohrep",
     "category": "method",
-    "text": "tohrep(Ω::PolygonalOverapproximation{N})::AbstractHPolygon{N} where N<:Real\n\nConvert a polygonal overapproximation into a concrete polygon.\n\nInput\n\nΩ – polygonal overapproximation of a convex set\n\nOutput\n\nA polygon in constraint representation.\n\nAlgorithm\n\nInternally we keep the constraints sorted. Hence we do not need to use addconstraint! when creating the HPolygon.\n\n\n\n\n\n"
+    "text": "tohrep(Ω::PolygonalOverapproximation{N})::AbstractHPolygon{N}\n    where {N<:Real}\n\nConvert a polygonal overapproximation into a concrete polygon.\n\nInput\n\nΩ – polygonal overapproximation of a convex set\n\nOutput\n\nA polygon in constraint representation.\n\nAlgorithm\n\nInternally we keep the constraints sorted. Hence we do not need to use addconstraint! when creating the HPolygon.\n\n\n\n\n\n"
 },
 
 {
@@ -4837,7 +5117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "LazySets.Approximations.approximate",
     "category": "method",
-    "text": "approximate(S::LazySet{N},\n            ε::N)::PolygonalOverapproximation{N} where N<:Real\n\nReturn an ε-close approximation of the given 2D convex set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nS – 2D convex set\nε – error bound\n\nOutput\n\nAn ε-close approximation of the given 2D convex set.\n\n\n\n\n\n"
+    "text": "approximate(S::LazySet{N},\n            ε::N)::PolygonalOverapproximation{N} where {N<:Real}\n\nReturn an ε-close approximation of the given 2D convex set (in terms of Hausdorff distance) as an inner and an outer approximation composed by sorted local Approximation2D.\n\nInput\n\nS – 2D convex set\nε – error bound\n\nOutput\n\nAn ε-close approximation of the given 2D convex set.\n\n\n\n\n\n"
 },
 
 {
@@ -4941,7 +5221,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.@declare_array_version",
     "category": "macro",
-    "text": "@declare_array_version(SET, SETARR)\n\nCreate functions to connect a lazy set operation with its array set type.\n\nInput\n\nSET    – lazy set operation type\nSETARR – array set type\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates eight functions (and possibly up to eight more if @neutral/@absorbing has been used in advance for the base and/or array set type).\n\nExamples\n\n@declare_array_version(MinkowskiSum, MinkowskiSumArray) creates at least the following functions:\n\narray_constructor(::MinkowskiSum) = MinkowskiSumArray\nis_array_constructor(::MinkowskiSumArray) = true\nMinkowskiSum!(X, Y)\nMinkowskiSum!(X, arr)\nMinkowskiSum!(arr, X)\nMinkowskiSum!(arr1, arr2)\n\n\n\n\n\n"
+    "text": "@declare_array_version(SET, SETARR)\n\nCreate functions to connect a lazy set operation with its array set type.\n\nInput\n\nSET    – lazy set operation type\nSETARR – array set type\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates six functions (and possibly up to eight more if @neutral/@absorbing has been used in advance for the base and/or array set type).\n\nExamples\n\n@declare_array_version(MinkowskiSum, MinkowskiSumArray) creates at least the following functions:\n\narray_constructor(::MinkowskiSum) = MinkowskiSumArray\nis_array_constructor(::MinkowskiSumArray) = true\nMinkowskiSum!(X, Y)\nMinkowskiSum!(X, arr)\nMinkowskiSum!(arr, X)\nMinkowskiSum!(arr1, arr2)\n\n\n\n\n\n"
 },
 
 {
@@ -4985,6 +5265,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.cross_product-Union{Tuple{AbstractArray{N,2}}, Tuple{N}} where N<:Real",
+    "page": "Utility Functions",
+    "title": "LazySets.cross_product",
+    "category": "method",
+    "text": "cross_product(M::AbstractMatrix{N}) where {N<:Real}\n\nCompute the high-dimensional cross product of n-1 n-dimensional vectors.\n\nInput\n\nM – n  n - 1-dimensional matrix\n\nOutput\n\nA vector.\n\nAlgorithm\n\nThe cross product is defined as follows:\n\nleft dots (-1)^n+1 det(M^i) dots right^T\n\nwhere M^i is defined as M with the i-th row removed. See Althoff, Stursberg, Buss: Computing Reachable Sets of Hybrid Systems Using a Combination of Zonotopes and Polytopes. 2009.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#LazySets.get_radius!",
     "page": "Utility Functions",
     "title": "LazySets.get_radius!",
@@ -5021,7 +5309,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.nonzero_indices",
     "category": "function",
-    "text": "nonzero_indices(v::AbstractVector{N})::Vector{Int} where N<:Real\n\nReturn the indices in which a vector is non-zero.\n\nInput\n\nv – vector\n\nOutput\n\nA vector of ascending indices i such that the vector is non-zero in dimension i.\n\n\n\n\n\n"
+    "text": "nonzero_indices(v::AbstractVector{N})::Vector{Int} where {N<:Real}\n\nReturn the indices in which a vector is non-zero.\n\nInput\n\nv – vector\n\nOutput\n\nA vector of ascending indices i such that the vector is non-zero in dimension i.\n\n\n\n\n\n"
 },
 
 {
@@ -5029,7 +5317,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.samedir",
     "category": "function",
-    "text": "samedir(u::AbstractVector{N},\n        v::AbstractVector{N})::Tuple{Bool, Real} where N<:Real\n\nCheck whether two vectors point in the same direction.\n\nInput\n\nu – first vector\nv – second vector\n\nOutput\n\n(true, k) iff the vectors are identical up to a positive scaling factor k, and (false, 0) otherwise.\n\nExamples\n\njulia> LazySets.samedir([1, 2, 3], [2, 4, 6])\n(true, 0.5)\n\njulia> LazySets.samedir([1, 2, 3], [3, 2, 1])\n(false, 0)\n\njulia> LazySets.samedir([1, 2, 3], [-1, -2, -3])\n(false, 0)\n\n\n\n\n\n\n"
+    "text": "samedir(u::AbstractVector{N},\n        v::AbstractVector{N})::Tuple{Bool, Real} where {N<:Real}\n\nCheck whether two vectors point in the same direction.\n\nInput\n\nu – first vector\nv – second vector\n\nOutput\n\n(true, k) iff the vectors are identical up to a positive scaling factor k, and (false, 0) otherwise.\n\nExamples\n\njulia> LazySets.samedir([1, 2, 3], [2, 4, 6])\n(true, 0.5)\n\njulia> LazySets.samedir([1, 2, 3], [3, 2, 1])\n(false, 0)\n\njulia> LazySets.samedir([1, 2, 3], [-1, -2, -3])\n(false, 0)\n\n\n\n\n\n\n"
 },
 
 {
@@ -5061,7 +5349,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints\nnonzero_indices\nsamedir\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed"
+    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\ncross_product(::AbstractMatrix{N}) where {N<:Real}\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints\nnonzero_indices\nsamedir\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed"
 },
 
 {
@@ -5069,7 +5357,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.CachedPair",
     "category": "type",
-    "text": "CachedPair{N} where N\n\nA mutable pair of an index and a vector.\n\nFields\n\nidx – index\nvec – vector\n\n\n\n\n\n"
+    "text": "CachedPair{N}\n\nA mutable pair of an index and a vector.\n\nFields\n\nidx – index\nvec – vector\n\n\n\n\n\n"
 },
 
 {
@@ -5081,11 +5369,131 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.StrictlyIncreasingIndices",
+    "page": "Utility Functions",
+    "title": "LazySets.StrictlyIncreasingIndices",
+    "category": "type",
+    "text": "StrictlyIncreasingIndices\n\nIterator over the vectors of m strictly increasing indices from 1 to n.\n\nFields\n\nn – size of the index domain\nm – number of indices to choose (resp. length of the vectors)\n\nNotes\n\nThe vectors are modified in-place.\n\nThe iterator ranges over binomnm (n choose m) possible vectors.\n\nThis implementation results in a lexicographic order with the last index growing first.\n\nExamples\n\njulia> for v in LazySets.StrictlyIncreasingIndices(4, 2)\n           println(v)\n       end\n[1, 2]\n[1, 3]\n[1, 4]\n[2, 3]\n[2, 4]\n[3, 4]\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#Types-1",
     "page": "Utility Functions",
     "title": "Types",
     "category": "section",
-    "text": "CachedPair\nApproximations.UnitVector"
+    "text": "CachedPair\nApproximations.UnitVector\nStrictlyIncreasingIndices"
+},
+
+{
+    "location": "lib/parallel.html#",
+    "page": "Parallel",
+    "title": "Parallel",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel",
+    "page": "Parallel",
+    "title": "LazySets.Parallel",
+    "category": "module",
+    "text": "Module Parallel.jl – LazySets algorithms that are parallelized.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#Parallel-1",
+    "page": "Parallel",
+    "title": "Parallel",
+    "category": "section",
+    "text": "This section of the manual describes the parallel implementation of some algorithms in the LazySets library. These algorithms are implemented in the LazySets.Parallel module.Pages = [\"parallel.md\"]\nDepth = 3CurrentModule = LazySets.Parallel\nDocTestSetup = quote\n    using LazySets, LazySets.Parallel\nendParallel"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.interval_hull",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.interval_hull",
+    "category": "function",
+    "text": "interval_hull\n\nAlias for box_approximation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.box_approximation",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.box_approximation",
+    "category": "function",
+    "text": "box_approximation(S::LazySet)::Hyperrectangle\n\nOverapproximation a convex set by a tight hyperrectangle using a parallel algorithm.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle.\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given set in the canonical directions, and the lengths of the sides can be recovered from the distance among support functions in the same directions.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.symmetric_interval_hull",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.symmetric_interval_hull",
+    "category": "function",
+    "text": "symmetric_interval_hull\n\nAlias for box_approximation_symmetric.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.box_approximation_symmetric",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.box_approximation_symmetric",
+    "category": "function",
+    "text": "box_approximation_symmetric(S::LazySet{N}\n                           )::Union{Hyperrectangle{N}, EmptySet{N}} where {N<:Real}\n\nOverapproximate a convex set by a tight hyperrectangle centered in the origin, using a parallel algorithm.\n\nInput\n\nS – convex set\n\nOutput\n\nA tight hyperrectangle centered in the origin.\n\nAlgorithm\n\nThe center of the box is the origin, and the radius is obtained by computing the maximum value of the support function evaluated at the canonical directions.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.box_approximation_helper_parallel",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.box_approximation_helper_parallel",
+    "category": "function",
+    "text": "box_approximation_helper_parallel(S::LazySet{N}) where {N<:Real}\n\nParallel implementation for the common code of box_approximation and box_approximation_symmetric.\n\nInput\n\nS – convex set\n\nOutput\n\nA tuple containing the data that is needed to construct a tightly overapproximating hyperrectangle.\n\nc – center\nr – radius\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given convex set in the canonical directions. The lengths of the sides can be recovered from the distance among support functions in the same directions.\n\nThe same load is distributed among all available workers, see distribute_task!.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.process_chunk!",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.process_chunk!",
+    "category": "function",
+    "text": "process_chunk!(S::LazySet{N},\n               irange::UnitRange{Int},\n               c::SharedVector{N}, r::SharedVector{N}) where {N<:Real}\n\nKernel to process a given chunk \n\nInput\n\nc      – shared vector with the center of the hyperrectangle\nr      – shared vector with the center of the hyperrectangle\nS      – set\nirange – indices range of the given worker\n\nAlgorithm\n\nThe center of the hyperrectangle is obtained by averaging the support function of the given convex set in the canonical directions. The lengths of the sides can be recovered from the distance among support functions in the same directions.\n\nThe load for each worker is passed through the irange argument. By default, the same load is distributed among all available workers. For details see distribute_task!.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#Box-approximations-1",
+    "page": "Parallel",
+    "title": "Box approximations",
+    "category": "section",
+    "text": "LazySets.Parallel.interval_hull\nLazySets.Parallel.box_approximation\nLazySets.Parallel.symmetric_interval_hull\nLazySets.Parallel.box_approximation_symmetric\nLazySets.Parallel.box_approximation_helper_parallel\nLazySets.Parallel.process_chunk!"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.assign_chunk!",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.assign_chunk!",
+    "category": "function",
+    "text": "assign_chunk!(S::LazySet{N}, v::SharedVector{N}...) where {N<:Real}\n\nReturn the function that assigns the work for each process.\n\nInput\n\nS – convex set\nv – variable number of shared vectors\n\nOutput\n\nThe function process_chunk! that equally distributes the load for each worker.\n\nNotes\n\nUse this function to distribute a given task acting on a set S and a pool v of shared vectors. The tasks are equally distributed among the number of processes.\n\nSee also distribute_task!.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel.distribute_task!",
+    "page": "Parallel",
+    "title": "LazySets.Parallel.distribute_task!",
+    "category": "function",
+    "text": "distribute_task!(S::LazySet{N}, v::SharedVector{N}...) where {N<:Real}\n\nDistribute the assignment of each chunk among the available processes.\n\nInput\n\nS – convex set\nv – variable number of shared vectors\n\nOutput\n\nNothing.\n\nNotes\n\nUse this function to distribute a given task acting on a set S and a pool v of shared vectors.\n\nThe task for each processor is distributed through remotecall_wait using a function assign_chunk! that should be defined elsewhere. The vectors v contain one or more shared vectors in which the values of the task are written.\n\nTypically, the function assign_chunk! is a wrapper around some problem-specific process_chunk! function.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#LazySets.Parallel._prange",
+    "page": "Parallel",
+    "title": "LazySets.Parallel._prange",
+    "category": "function",
+    "text": "_prange(v::SharedVector{N}) where {N<:Real}\n\nReturns the indexes assigned to a process.\n\nInput\n\nv – shared vector of length n\n\nOutput\n\nThe indices range assigned to each process.\n\nNotes\n\nThe indices are assigned such that the vector is equally distributed among the processes. If the worker is not assigned a piece, the unit range 1:0 is returned.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/parallel.html#Distributed-functions-1",
+    "page": "Parallel",
+    "title": "Distributed functions",
+    "category": "section",
+    "text": "LazySets.Parallel.assign_chunk!\nLazySets.Parallel.distribute_task!\nLazySets.Parallel._prange"
 },
 
 {
