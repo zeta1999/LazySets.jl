@@ -3021,7 +3021,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
     "category": "method",
-    "text": "constraints_list(P::Zonotope{N})::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe list of constraints of the polyhedron.\n\nAlgorithm\n\nThis is a naive implementation that calculates all vertices and transforms to the H-representation of the zonotope. The transformation to the dual representation requires the concrete polyhedra package Polyhedra.\n\n\n\n\n\n"
+    "text": "constraints_list(P::Zonotope{N}\n                )::Vector{LinearConstraint{N}} where {N<:Real}\n\nReturn the list of constraints defining a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe list of constraints of the zonotope.\n\nAlgorithm\n\nThis is the (inefficient) fallback implementation for rational numbers. It first computes the vertices and then converts the corresponding polytope to constraint representation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{Zonotope{N}}, Tuple{N}} where N<:AbstractFloat",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(P::Zonotope{N}\n                )::Vector{LinearConstraint{N}} where {N<:AbstractFloat}\n\nReturn the list of constraints defining a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe list of constraints of the zonotope.\n\nNotes\n\nThe algorithm assumes that no generator is redundant. The result has 2 binompn-1 (with p being the number of generators and n being the ambient dimension) constraints, which is optimal under this assumption.\n\nAlgorithm\n\nWe follow the algorithm presented in Althoff, Stursberg, Buss: Computing Reachable Sets of Hybrid Systems Using a Combination of Zonotopes and Polytopes. 2009.\n\nThe one-dimensional case is not covered by that algorithm; we manually handle this case, assuming that there is only one generator.\n\n\n\n\n\n"
 },
 
 {
@@ -3085,7 +3093,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:AbstractFloat}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -5257,6 +5265,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.cross_product-Union{Tuple{AbstractArray{N,2}}, Tuple{N}} where N<:Real",
+    "page": "Utility Functions",
+    "title": "LazySets.cross_product",
+    "category": "method",
+    "text": "cross_product(M::AbstractMatrix{N}) where {N<:Real}\n\nCompute the high-dimensional cross product of n-1 n-dimensional vectors.\n\nInput\n\nM – n  n - 1-dimensional matrix\n\nOutput\n\nA vector.\n\nAlgorithm\n\nThe cross product is defined as follows:\n\nleft dots (-1)^n+1 det(M^i) dots right^T\n\nwhere M^i is defined as M with the i-th row removed. See Althoff, Stursberg, Buss: Computing Reachable Sets of Hybrid Systems Using a Combination of Zonotopes and Polytopes. 2009.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#LazySets.get_radius!",
     "page": "Utility Functions",
     "title": "LazySets.get_radius!",
@@ -5333,7 +5349,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints\nnonzero_indices\nsamedir\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed"
+    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\ncross_product(::AbstractMatrix{N}) where {N<:Real}\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints\nnonzero_indices\nsamedir\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed"
 },
 
 {
@@ -5353,11 +5369,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.StrictlyIncreasingIndices",
+    "page": "Utility Functions",
+    "title": "LazySets.StrictlyIncreasingIndices",
+    "category": "type",
+    "text": "StrictlyIncreasingIndices\n\nIterator over the vectors of m strictly increasing indices from 1 to n.\n\nFields\n\nn – size of the index domain\nm – number of indices to choose (resp. length of the vectors)\n\nNotes\n\nThe vectors are modified in-place.\n\nThe iterator ranges over binomnm (n choose m) possible vectors.\n\nThis implementation results in a lexicographic order with the last index growing first.\n\nExamples\n\njulia> for v in LazySets.StrictlyIncreasingIndices(4, 2)\n           println(v)\n       end\n[1, 2]\n[1, 3]\n[1, 4]\n[2, 3]\n[2, 4]\n[3, 4]\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#Types-1",
     "page": "Utility Functions",
     "title": "Types",
     "category": "section",
-    "text": "CachedPair\nApproximations.UnitVector"
+    "text": "CachedPair\nApproximations.UnitVector\nStrictlyIncreasingIndices"
 },
 
 {
