@@ -3105,11 +3105,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#Base.split-Tuple{Zonotope,Int64}",
+    "page": "Common Set Representations",
+    "title": "Base.split",
+    "category": "method",
+    "text": "split(Z::Zonotope, j::Int)\n\nReturn two zonotopes obtained by splitting the given zonotope.\n\nInput\n\nZ – zonotope\nj – index of the generator to be split\n\nOutput\n\nThe zonotope obtained by splitting Z into two zonotopes such that their union is Z and their intersection is possibly non-empty.\n\nAlgorithm\n\nThis function implements [Prop. 3, 1], that we state next. The zonotope Z = c g^(1  p) is split into:\n\nZ₁ = c - frac12g^(j) (g^(1 j-1) frac12g^(j) g^(j+1  p)) \nZ₂ = c + frac12g^(j) (g^(1 j-1) frac12g^(j) g^(j+1  p))\n\nsuch that Z₁  Z₂ = Z and Z₁  Z₂ = Z^*, where\n\nZ^* = c (g^(1j-1) g^(j+1 p))\n\n[1] Althoff, M., Stursberg, O., & Buss, M. (2008). Reachability analysis of nonlinear systems with uncertain parameters using conservative linearization. In Proc. of the 47th IEEE Conference on Decision and Control.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Zonotope-1",
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:AbstractFloat}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:AbstractFloat}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)\nsplit(::Zonotope, ::Int)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
