@@ -405,7 +405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Operations on Sets",
     "title": "Unary operations",
     "category": "section",
-    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty isbounded linear_map norm radius diameter\nInterfaces           \nLazySet  x  x   x    x\nAPolytope  i  i  x x x   i\nACentrallySymmetric x i  x  x x    i\nACentrallySymmetricPolytope i i  i  x i i   i\nAPolygon x i  i  i i i   i\nAHyperrectangle i i x i x i i i x x i\nAHPolygon i i  x x i i i   i\nASingleton i i x i x i i x i i i\n           \nBasic set types           \nBall1 i i x i x i i i   i\nBall2 i i x i x i i    i\nBallInf i i i i i i i i i x i\nBallp i i x i x i i    i\nEllipsoid i i x i x i i    i\nEmptySet x i x x x x x  x x x\nHalfSpace x x x x x x x    i\nHPolygon/HPolygonOpt i i x i i i i i   i\nHPolyhedron x x x i x x x    i\nHPolytope x x x i x x i i   i\nHyperplane x x x x x x x    i\nHyperrectangle i i i i i i i i i i i\nInterval x i x x x i i i i i i\nLine x i x x x x x    i\nLineSegment x i x x x i i i   i\nSingleton i i i i i i i i i i i\nVPolygon i i x x x i i x   i\nVPolytope x i x i x i i x   i\nZeroSet x i x i x i i x i i i\nZonotope i i x i x i i x   i\n           \nLazy set operation types           \nCartesianProduct x x x i x x x    i\nCartesianProductArray x x x i x x x    i\nConvexHull x x x i  x x    i\nConvexHullArray x x x i  x x    i\nExponentialMap x x x i x x x    i\nExponentialProjectionMap x i x i  x x    i\nIntersection x x  i x x x    i\nIntersectionArray x i  i x  x    i\nLinearMap x x x x x x x    i\nMinkowskiSum x x x i  x x    i\nMinkowskiSumArray x x x i  x x    i\nCacheMinkowskiSum x i x i  x x    i\nSymmetricIntervalHull x i x i i i i i i i i\nUnionSet x x x x x x x    \nUnionSetArray x x x x x x x    "
+    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty isbounded linear_map norm radius diameter\nInterfaces           \nLazySet  x  x   x    x\nAPolytope  i  i  x x x   i\nACentrallySymmetric x i  x  x x    i\nACentrallySymmetricPolytope i i  i  x i i   i\nAPolygon x i  i  i i i   i\nAHyperrectangle i i x i x i i i x x i\nAHPolygon i i  x x i i i   i\nASingleton i i x i x i i x i i i\n           \nBasic set types           \nBall1 i i x i x i i i   i\nBall2 i i x i x i i    i\nBallInf i i i i i i i i i x i\nBallp i i x i x i i    i\nEllipsoid i i x i x i i    i\nEmptySet x i x x x x x  x x x\nHalfSpace x x x x x x x    i\nHPolygon/HPolygonOpt i i x i i i i i   i\nHPolyhedron x x x i x x x x   i\nHPolytope x x x i x x i x   i\nHyperplane x x x x x x x    i\nHyperrectangle i i i i i i i i i i i\nInterval x i x x x i i i i i i\nLine x i x x x x x    i\nLineSegment x i x x x i i i   i\nSingleton i i i i i i i i i i i\nVPolygon i i x x x i i x   i\nVPolytope x i x i x i i x   i\nZeroSet x i x i x i i x i i i\nZonotope i i x i x i i x   i\n           \nLazy set operation types           \nCartesianProduct x x x i x x x    i\nCartesianProductArray x x x i x x x    i\nConvexHull x x x i  x x    i\nConvexHullArray x x x i  x x    i\nExponentialMap x x x i x x x    i\nExponentialProjectionMap x i x i  x x    i\nIntersection x x  i x x x    i\nIntersectionArray x i  i x  x    i\nLinearMap x x x x x x x    i\nMinkowskiSum x x x i  x x    i\nMinkowskiSumArray x x x i  x x    i\nCacheMinkowskiSum x i x i  x x    i\nSymmetricIntervalHull x i x i i i i i i i i\nUnionSet x x x x x x x    \nUnionSetArray x x x x x x x    "
 },
 
 {
@@ -2657,6 +2657,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.linear_map-Union{Tuple{PT}, Tuple{N}, Tuple{AbstractArray{N,2},PT}} where PT<:Union{HPolyhedron{N}, HPolytope{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix{N}, P::PT; [cond_tol=DEFAULT_COND_TOL]::Number)\n    where {N<:Real, PT<:HPoly{N}}\n\nConcrete linear map of a polyhedron in constraint representation.\n\nInput\n\nM        – matrix\nP        – polyhedron in constraint representation\ncond_tol – (optional) tolerance of matrix condition (used to check whether               the matrix is invertible)\n\nOutput\n\nA polyhedron of the same type as the input (PT).\n\nAlgorithm\n\nIf the matrix M is invertible (which we check with a sufficient condition), then y = M x implies x = textinv(M) y and we transform the constraint system A x  b to A textinv(M) y  b.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.tovrep-Union{Tuple{Union{HPolyhedron{N}, HPolytope{N}}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.tovrep",
@@ -2693,7 +2701,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntosimplehrep(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:linear_map"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntosimplehrep(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nlinear_map(M::AbstractMatrix{N}, P::PT) where {N<:Real, PT<:HPoly{N}}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -4013,7 +4021,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.isbounded",
     "category": "method",
-    "text": "isbounded(lm::LinearMap)::Bool\n\nDetermine whether a linear map is bounded.\n\nInput\n\nlm – linear map\n\nOutput\n\ntrue iff the linear map is bounded.\n\nAlgorithm\n\nWe first check if the matrix is zero or the wrapped set is bounded. Otherwise, we check boundedness via isbounded_unit_dimensions.\n\n\n\n\n\n"
+    "text": "isbounded(lm::LinearMap; cond_tol::Number=DEFAULT_COND_TOL)::Bool\n\nDetermine whether a linear map is bounded.\n\nInput\n\nlm       – linear map\ncond_tol – (optional) tolerance of matrix condition (used to check whether               the matrix is invertible)\n\nOutput\n\ntrue iff the linear map is bounded.\n\nAlgorithm\n\nWe first check if the matrix is zero or the wrapped set is bounded. If not, we perform a sufficient check whether the matrix is invertible. If the matrix is invertible, then the map being bounded is equivalent to the wrapped set being bounded, and hence the map is unbounded. Otherwise, we check boundedness via isbounded_unit_dimensions.\n\n\n\n\n\n"
 },
 
 {
@@ -5321,51 +5329,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/utils.html#LazySets.sign_cadlag",
-    "page": "Utility Functions",
-    "title": "LazySets.sign_cadlag",
-    "category": "function",
-    "text": "sign_cadlag(x::N)::N where {N<:Real}\n\nThis function works like the sign function but is 1 for input 0.\n\nInput\n\nx – real scalar\n\nOutput\n\n1 if x  0, -1 otherwise.\n\nNotes\n\nThis is the sign function right-continuous at zero (see càdlàg function). It can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> import LazySets.sign_cadlag\n\njulia> sign_cadlag.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/utils.html#LazySets.ispermutation",
-    "page": "Utility Functions",
-    "title": "LazySets.ispermutation",
-    "category": "function",
-    "text": "ispermutation(u::AbstractVector{T}, v::AbstractVector{T})::Bool where T\n\nCheck that two vectors contain the same elements up to reordering.\n\nInput\n\nu – first vector\nv – second vector\n\nOutput\n\ntrue iff the vectors are identical up to reordering.\n\nExamples\n\njulia> LazySets.ispermutation([1, 2, 2], [2, 2, 1])\ntrue\n\njulia> LazySets.ispermutation([1, 2, 2], [1, 1, 2])\nfalse\n\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/utils.html#LazySets.@neutral",
-    "page": "Utility Functions",
-    "title": "LazySets.@neutral",
-    "category": "macro",
-    "text": "@neutral(SET, NEUT)\n\nCreate functions to make a lazy set operation commutative with a given neutral element set type.\n\nInput\n\nSET  – lazy set operation type\nNEUT – set type for neutral element\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates four functions (possibly two more if @absorbing has been used in advance) (possibly two or four more if @declare_array_version has been used in advance).\n\nExamples\n\n@neutral(MinkowskiSum, N) creates at least the following functions:\n\nneutral(::MinkowskiSum) = N\nMinkowskiSum(X, N) = X\nMinkowskiSum(N, X) = X\nMinkowskiSum(N, N) = N\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/utils.html#LazySets.@absorbing",
-    "page": "Utility Functions",
-    "title": "LazySets.@absorbing",
-    "category": "macro",
-    "text": "@absorbing(SET, ABS)\n\nCreate functions to make a lazy set operation commutative with a given absorbing element set type.\n\nInput\n\nSET – lazy set operation type\nABS – set type for absorbing element\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates four functions (possibly two more if @neutral has been used in advance) (possibly two or four more if @declare_array_version has been used in advance).\n\nExamples\n\n@absorbing(MinkowskiSum, A) creates at least the following functions:\n\nabsorbing(::MinkowskiSum) = A\nMinkowskiSum(X, A) = A\nMinkowskiSum(A, X) = A\nMinkowskiSum(A, A) = A\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/utils.html#LazySets.@declare_array_version",
-    "page": "Utility Functions",
-    "title": "LazySets.@declare_array_version",
-    "category": "macro",
-    "text": "@declare_array_version(SET, SETARR)\n\nCreate functions to connect a lazy set operation with its array set type.\n\nInput\n\nSET    – lazy set operation type\nSETARR – array set type\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates six functions (and possibly up to eight more if @neutral/@absorbing has been used in advance for the base and/or array set type).\n\nExamples\n\n@declare_array_version(MinkowskiSum, MinkowskiSumArray) creates at least the following functions:\n\narray_constructor(::MinkowskiSum) = MinkowskiSumArray\nis_array_constructor(::MinkowskiSumArray) = true\nMinkowskiSum!(X, Y)\nMinkowskiSum!(X, arr)\nMinkowskiSum!(arr, X)\nMinkowskiSum!(arr1, arr2)\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/utils.html#Utility-functions-1",
     "page": "Utility Functions",
     "title": "Utility functions",
     "category": "section",
-    "text": "sign_cadlag\nispermutation\n@neutral\n@absorbing\n@declare_array_version"
+    "text": ""
 },
 
 {
@@ -5377,27 +5345,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/utils.html#LazySets.@neutral_absorbing",
+    "location": "lib/utils.html#LazySets.an_element_helper",
     "page": "Utility Functions",
-    "title": "LazySets.@neutral_absorbing",
-    "category": "macro",
-    "text": "@neutral_absorbing(SET, NEUT, ABS)\n\nCreate two functions to avoid method ambiguties for a lazy set operation with respect to neutral and absorbing element set types.\n\nInput\n\nSET  – lazy set operation type\nNEUT – set type for neutral element\nABS  – set type for absorbing element\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@neutral_absorbing(MinkowskiSum, N, A) creates the following functions as quoted expressions:\n\nMinkowskiSum(N, A) = A\nMinkowskiSum(A, N) = A\n\n\n\n\n\n"
+    "title": "LazySets.an_element_helper",
+    "category": "function",
+    "text": "an_element_helper(hp::Hyperplane{N},\n                  [nonzero_entry_a]::Int)::Vector{N} where {N<:Real}\n\nHelper function that computes an element on a hyperplane\'s hyperplane.\n\nInput\n\nhp – hyperplane\nnonzero_entry_a – (optional, default: computes the first index) index i                      such that hp.a[i] is different from 0\n\nOutput\n\nAn element on a hyperplane.\n\nAlgorithm\n\nWe compute the point on the hyperplane as follows:\n\nWe already found a nonzero entry of a in dimension, say, i.\nWe set xi = b  ai.\nWe set xj = 0 for all j  i.\n\n\n\n\n\n"
 },
 
 {
-    "location": "lib/utils.html#LazySets.@array_neutral",
+    "location": "lib/utils.html#LazySets.binary_search_constraints",
     "page": "Utility Functions",
-    "title": "LazySets.@array_neutral",
-    "category": "macro",
-    "text": "@array_neutral(FUN, NEUT, SETARR)\n\nCreate two functions to avoid method ambiguities for a lazy set operation with respect to the neutral element set type and the array set type.\n\nInput\n\nFUN     – function name\nNEUT    – set type for neutral element\nSETARR  – array set type\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@array_neutral(MinkowskiSum, N, ARR) creates the following functions as quoted expressions:\n\nMinkowskiSum(N, ARR) = ARR\nMinkowskiSum(ARR, N) = ARR\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/utils.html#LazySets.@array_absorbing",
-    "page": "Utility Functions",
-    "title": "LazySets.@array_absorbing",
-    "category": "macro",
-    "text": "@array_absorbing(FUN, ABS, SETARR)\n\nCreate two functions to avoid method ambiguities for a lazy set operation with respect to the absorbing element set type and the array set type.\n\nInput\n\nFUN     – function name\nABS     – set type for absorbing element\nSETARR  – array set type\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@array_absorbing(MinkowskiSum, ABS, ARR) creates the following functions as quoted expressions:\n\nMinkowskiSum(ABS, ARR) = ABS\nMinkowskiSum(ARR, ABS) = ABS\n\n\n\n\n\n"
+    "title": "LazySets.binary_search_constraints",
+    "category": "function",
+    "text": "binary_search_constraints(d::AbstractVector{N},\n                          constraints::Vector{LinearConstraint{N}},\n                          n::Int,\n                          k::Int;\n                          [choose_lower]::Bool=false\n                         )::Int where {N<:Real}\n\nPerforms a binary search in the constraints.\n\nInput\n\nd            – direction\nconstraints  – constraints\nn            – number of constraints\nk            – start index\nchoose_lower – (optional, default: false) flag for choosing the lower                   index (see the \'Output\' section)\n\nOutput\n\nIn the default setting, the result is the smallest index k such that d <= constraints[k], or n+1 if no such k exists. If the choose_lower flag is set, the result is the largest index k such that constraints[k] < d, which is equivalent to being k-1 in the normal setting.\n\n\n\n\n\n"
 },
 
 {
@@ -5417,27 +5377,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/utils.html#LazySets.an_element_helper",
+    "location": "lib/utils.html#LazySets.isinvertible",
     "page": "Utility Functions",
-    "title": "LazySets.an_element_helper",
+    "title": "LazySets.isinvertible",
     "category": "function",
-    "text": "an_element_helper(hp::Hyperplane{N},\n                  [nonzero_entry_a]::Int)::Vector{N} where {N<:Real}\n\nHelper function that computes an element on a hyperplane\'s hyperplane.\n\nInput\n\nhp – hyperplane\nnonzero_entry_a – (optional, default: computes the first index) index i                      such that hp.a[i] is different from 0\n\nOutput\n\nAn element on a hyperplane.\n\nAlgorithm\n\nWe compute the point on the hyperplane as follows:\n\nWe already found a nonzero entry of a in dimension, say, i.\nWe set xi = b  ai.\nWe set xj = 0 for all j  i.\n\n\n\n\n\n"
+    "text": "isinvertible(M::AbstractMatrix; [cond_tol]::Number=DEFAULT_COND_TOL)\n\nA sufficient check of a matrix being invertible (or nonsingular).\n\nInput\n\nM        – matrix\ncond_tol – (optional, default: DEFAULT_COND_TOL) tolerance of matrix               condition\n\nOutput\n\nIf the result is true, M is invertible. If the result is false, this function could not conclude.\n\nAlgorithm\n\nWe check whether the matrix condition number cond(M) is below some prescribed tolerance.\n\n\n\n\n\n"
 },
 
 {
-    "location": "lib/utils.html#LazySets.σ_helper",
+    "location": "lib/utils.html#LazySets.ispermutation",
     "page": "Utility Functions",
-    "title": "LazySets.σ_helper",
+    "title": "LazySets.ispermutation",
     "category": "function",
-    "text": "    σ_helper(d::AbstractVector{N},\n             hp::Hyperplane{N};\n             error_unbounded::Bool=true,\n             [halfspace]::Bool=false) where {N<:Real}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd         – direction\nhp        – hyperplane\nerror_unbounded – (optional, default: true) true if an error should be                thrown whenever the set is                unbounded in the given direction\nhalfspace – (optional, default: false) true if the support vector                should be computed for a half-space\n\nOutput\n\nA pair (v, b) where v is a vector and b is a Boolean flag.\n\nThe flag b is false in one of the following cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\nThe direction is the opposite of the hyperplane\'s normal direction and\n\nhalfspace is false. In all these cases, v is any point on the hyperplane.\n\nOtherwise, the flag b is true, the set is unbounded in the given direction, and v is any vector.\n\nIf error_unbounded is true and the set is unbounded in the given direction, this function throws an error instead of returning.\n\nNotes\n\nFor correctness, consider the weak duality of LPs: If the primal is unbounded, then the dual is infeasible. Since there is only a single constraint, the feasible set of the dual problem is hp.a ⋅ y == d, y >= 0 (with objective function hp.b ⋅ y). It is easy to see that this problem is infeasible whenever a is not parallel to d.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/utils.html#LazySets.binary_search_constraints",
-    "page": "Utility Functions",
-    "title": "LazySets.binary_search_constraints",
-    "category": "function",
-    "text": "binary_search_constraints(d::AbstractVector{N},\n                          constraints::Vector{LinearConstraint{N}},\n                          n::Int,\n                          k::Int;\n                          [choose_lower]::Bool=false\n                         )::Int where {N<:Real}\n\nPerforms a binary search in the constraints.\n\nInput\n\nd            – direction\nconstraints  – constraints\nn            – number of constraints\nk            – start index\nchoose_lower – (optional, default: false) flag for choosing the lower                   index (see the \'Output\' section)\n\nOutput\n\nIn the default setting, the result is the smallest index k such that d <= constraints[k], or n+1 if no such k exists. If the choose_lower flag is set, the result is the largest index k such that constraints[k] < d, which is equivalent to being k-1 in the normal setting.\n\n\n\n\n\n"
+    "text": "ispermutation(u::AbstractVector{T}, v::AbstractVector{T})::Bool where T\n\nCheck that two vectors contain the same elements up to reordering.\n\nInput\n\nu – first vector\nv – second vector\n\nOutput\n\ntrue iff the vectors are identical up to reordering.\n\nExamples\n\njulia> LazySets.ispermutation([1, 2, 2], [2, 2, 1])\ntrue\n\njulia> LazySets.ispermutation([1, 2, 2], [1, 1, 2])\nfalse\n\n\n\n\n\n\n"
 },
 
 {
@@ -5454,6 +5406,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.samedir",
     "category": "function",
     "text": "samedir(u::AbstractVector{N},\n        v::AbstractVector{N})::Tuple{Bool, Real} where {N<:Real}\n\nCheck whether two vectors point in the same direction.\n\nInput\n\nu – first vector\nv – second vector\n\nOutput\n\n(true, k) iff the vectors are identical up to a positive scaling factor k, and (false, 0) otherwise.\n\nExamples\n\njulia> LazySets.samedir([1, 2, 3], [2, 4, 6])\n(true, 0.5)\n\njulia> LazySets.samedir([1, 2, 3], [3, 2, 1])\n(false, 0)\n\njulia> LazySets.samedir([1, 2, 3], [-1, -2, -3])\n(false, 0)\n\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.sign_cadlag",
+    "page": "Utility Functions",
+    "title": "LazySets.sign_cadlag",
+    "category": "function",
+    "text": "sign_cadlag(x::N)::N where {N<:Real}\n\nThis function works like the sign function but is 1 for input 0.\n\nInput\n\nx – real scalar\n\nOutput\n\n1 if x  0, -1 otherwise.\n\nNotes\n\nThis is the sign function right-continuous at zero (see càdlàg function). It can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> import LazySets.sign_cadlag\n\njulia> sign_cadlag.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n\n\n"
 },
 
 {
@@ -5481,11 +5441,67 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.σ_helper",
+    "page": "Utility Functions",
+    "title": "LazySets.σ_helper",
+    "category": "function",
+    "text": "    σ_helper(d::AbstractVector{N},\n             hp::Hyperplane{N};\n             error_unbounded::Bool=true,\n             [halfspace]::Bool=false) where {N<:Real}\n\nReturn the support vector of a hyperplane.\n\nInput\n\nd         – direction\nhp        – hyperplane\nerror_unbounded – (optional, default: true) true if an error should be                thrown whenever the set is                unbounded in the given direction\nhalfspace – (optional, default: false) true if the support vector                should be computed for a half-space\n\nOutput\n\nA pair (v, b) where v is a vector and b is a Boolean flag.\n\nThe flag b is false in one of the following cases:\n\nThe direction has norm zero.\nThe direction is the hyperplane\'s normal direction.\nThe direction is the opposite of the hyperplane\'s normal direction and\n\nhalfspace is false. In all these cases, v is any point on the hyperplane.\n\nOtherwise, the flag b is true, the set is unbounded in the given direction, and v is any vector.\n\nIf error_unbounded is true and the set is unbounded in the given direction, this function throws an error instead of returning.\n\nNotes\n\nFor correctness, consider the weak duality of LPs: If the primal is unbounded, then the dual is infeasible. Since there is only a single constraint, the feasible set of the dual problem is hp.a ⋅ y == d, y >= 0 (with objective function hp.b ⋅ y). It is easy to see that this problem is infeasible whenever a is not parallel to d.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.@neutral",
+    "page": "Utility Functions",
+    "title": "LazySets.@neutral",
+    "category": "macro",
+    "text": "@neutral(SET, NEUT)\n\nCreate functions to make a lazy set operation commutative with a given neutral element set type.\n\nInput\n\nSET  – lazy set operation type\nNEUT – set type for neutral element\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates four functions (possibly two more if @absorbing has been used in advance) (possibly two or four more if @declare_array_version has been used in advance).\n\nExamples\n\n@neutral(MinkowskiSum, N) creates at least the following functions:\n\nneutral(::MinkowskiSum) = N\nMinkowskiSum(X, N) = X\nMinkowskiSum(N, X) = X\nMinkowskiSum(N, N) = N\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.@absorbing",
+    "page": "Utility Functions",
+    "title": "LazySets.@absorbing",
+    "category": "macro",
+    "text": "@absorbing(SET, ABS)\n\nCreate functions to make a lazy set operation commutative with a given absorbing element set type.\n\nInput\n\nSET – lazy set operation type\nABS – set type for absorbing element\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates four functions (possibly two more if @neutral has been used in advance) (possibly two or four more if @declare_array_version has been used in advance).\n\nExamples\n\n@absorbing(MinkowskiSum, A) creates at least the following functions:\n\nabsorbing(::MinkowskiSum) = A\nMinkowskiSum(X, A) = A\nMinkowskiSum(A, X) = A\nMinkowskiSum(A, A) = A\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.@neutral_absorbing",
+    "page": "Utility Functions",
+    "title": "LazySets.@neutral_absorbing",
+    "category": "macro",
+    "text": "@neutral_absorbing(SET, NEUT, ABS)\n\nCreate two functions to avoid method ambiguties for a lazy set operation with respect to neutral and absorbing element set types.\n\nInput\n\nSET  – lazy set operation type\nNEUT – set type for neutral element\nABS  – set type for absorbing element\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@neutral_absorbing(MinkowskiSum, N, A) creates the following functions as quoted expressions:\n\nMinkowskiSum(N, A) = A\nMinkowskiSum(A, N) = A\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.@declare_array_version",
+    "page": "Utility Functions",
+    "title": "LazySets.@declare_array_version",
+    "category": "macro",
+    "text": "@declare_array_version(SET, SETARR)\n\nCreate functions to connect a lazy set operation with its array set type.\n\nInput\n\nSET    – lazy set operation type\nSETARR – array set type\n\nOutput\n\nNothing.\n\nNotes\n\nThis macro generates six functions (and possibly up to eight more if @neutral/@absorbing has been used in advance for the base and/or array set type).\n\nExamples\n\n@declare_array_version(MinkowskiSum, MinkowskiSumArray) creates at least the following functions:\n\narray_constructor(::MinkowskiSum) = MinkowskiSumArray\nis_array_constructor(::MinkowskiSumArray) = true\nMinkowskiSum!(X, Y)\nMinkowskiSum!(X, arr)\nMinkowskiSum!(arr, X)\nMinkowskiSum!(arr1, arr2)\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.@array_neutral",
+    "page": "Utility Functions",
+    "title": "LazySets.@array_neutral",
+    "category": "macro",
+    "text": "@array_neutral(FUN, NEUT, SETARR)\n\nCreate two functions to avoid method ambiguities for a lazy set operation with respect to the neutral element set type and the array set type.\n\nInput\n\nFUN     – function name\nNEUT    – set type for neutral element\nSETARR  – array set type\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@array_neutral(MinkowskiSum, N, ARR) creates the following functions as quoted expressions:\n\nMinkowskiSum(N, ARR) = ARR\nMinkowskiSum(ARR, N) = ARR\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.@array_absorbing",
+    "page": "Utility Functions",
+    "title": "LazySets.@array_absorbing",
+    "category": "macro",
+    "text": "@array_absorbing(FUN, ABS, SETARR)\n\nCreate two functions to avoid method ambiguities for a lazy set operation with respect to the absorbing element set type and the array set type.\n\nInput\n\nFUN     – function name\nABS     – set type for absorbing element\nSETARR  – array set type\n\nOutput\n\nA quoted expression containing the function definitions.\n\nExamples\n\n@array_absorbing(MinkowskiSum, ABS, ARR) creates the following functions as quoted expressions:\n\nMinkowskiSum(ABS, ARR) = ABS\nMinkowskiSum(ARR, ABS) = ABS\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#Functions-and-Macros-1",
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "@neutral_absorbing\n@array_neutral\n@array_absorbing\ncross_product(::AbstractMatrix{N}) where {N<:Real}\nget_radius!\nan_element_helper\nσ_helper\nbinary_search_constraints\nnonzero_indices\nsamedir\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed"
+    "text": "an_element_helper\nbinary_search_constraints\ncross_product(::AbstractMatrix{N}) where {N<:Real}\nget_radius!\nisinvertible\nispermutation\nnonzero_indices\nsamedir\nsign_cadlag\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed\nσ_helper\n@neutral\n@absorbing\n@neutral_absorbing\n@declare_array_version\n@array_neutral\n@array_absorbing"
 },
 
 {
