@@ -1113,11 +1113,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.isbounded",
+    "page": "Set Interfaces",
+    "title": "LazySets.isbounded",
+    "category": "function",
+    "text": "isbounded(P::AbstractHPolygon, [use_type_assumption]::Bool=true)::Bool\n\nDetermine whether a polygon in constraint representation is bounded.\n\nInput\n\nP                   – polygon in constraint representation\nuse_type_assumption – (optional, default: true) flag for ignoring the                          type assumption that polygons are bounded\n\nOutput\n\ntrue if use_type_assumption is activated. Otherwise, true iff P is bounded.\n\nAlgorithm\n\nIf !use_type_assumption, we convert P to an HPolyhedron P2 and then use isbounded(P2).\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#HPolygon-1",
     "page": "Set Interfaces",
     "title": "HPolygon",
     "category": "section",
-    "text": "An HPolygon is a polygon in H-representation (or constraint representation).AbstractHPolygonThis interface defines the following functions:an_element(::AbstractHPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::AbstractHPolygon{N}) where {N<:Real}\nrand(::Type{HPOLYGON}) where {HPOLYGON<:AbstractHPolygon}\ntohrep(::HPOLYGON) where {HPOLYGON<:AbstractHPolygon}\ntovrep(::AbstractHPolygon{N}) where {N<:Real}\naddconstraint!(::AbstractHPolygon{N}, ::LinearConstraint{N}) where {N<:Real}\naddconstraint!(::Vector{LinearConstraint{N}}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::AbstractHPolygon{N}) where {N<:Real}\nvertices_list(::AbstractHPolygon{N}, ::Bool=false, ::Bool=true) where {N<:Real}"
+    "text": "An HPolygon is a polygon in H-representation (or constraint representation).AbstractHPolygonThis interface defines the following functions:an_element(::AbstractHPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::AbstractHPolygon{N}) where {N<:Real}\nrand(::Type{HPOLYGON}) where {HPOLYGON<:AbstractHPolygon}\ntohrep(::HPOLYGON) where {HPOLYGON<:AbstractHPolygon}\ntovrep(::AbstractHPolygon{N}) where {N<:Real}\naddconstraint!(::AbstractHPolygon{N}, ::LinearConstraint{N}) where {N<:Real}\naddconstraint!(::Vector{LinearConstraint{N}}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::AbstractHPolygon{N}) where {N<:Real}\nvertices_list(::AbstractHPolygon{N}, ::Bool=false, ::Bool=true) where {N<:Real}\nisbounded(::AbstractHPolygon, ::Bool=true)"
 },
 
 {
@@ -2373,7 +2381,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolygon",
     "category": "type",
-    "text": "HPolygon{N<:Real} <: AbstractHPolygon{N}\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions.\n\nFields\n\nconstraints – list of linear constraints, sorted by the angle\n\nNotes\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygon(constraints::Vector{LinearConstraint{<:Real}}) – default constructor\nHPolygon() – constructor with no constraints\nHPolygon(S::LazySet) – constructor from another set\n\n\n\n\n\n"
+    "text": "HPolygon{N<:Real} <: AbstractHPolygon{N}\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions.\n\nFields\n\nconstraints       – list of linear constraints, sorted by the angle\nsort_constraints  – (optional, default: true) flag for sorting the                        constraints (sortedness is a running assumption of this                        type)\ncheck_boundedness – (optional, default: false) flag for checking if the                        constraints make the polygon bounded; (boundedness is a                        running assumption of this type)\n\nNotes\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygon(constraints::Vector{LinearConstraint{<:Real}}) – default constructor\nHPolygon() – constructor with no constraints\n\n\n\n\n\n"
 },
 
 {
@@ -2389,7 +2397,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "HPolygon\nσ(::AbstractVector{N}, ::HPolygon{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
+    "text": "HPolygon\nσ(::AbstractVector{N}, ::HPolygon{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\nisbounded\naddconstraint!\nconstraints_list"
 },
 
 {
@@ -2397,7 +2405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolygonOpt",
     "category": "type",
-    "text": "HPolygonOpt{N<:Real} <: AbstractHPolygon{N}\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions. This is a refined version of HPolygon.\n\nFields\n\nconstraints – list of linear constraints\nind – index in the list of constraints to begin the search to evaluate the          support function\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions that are close to each other. The strategy is to have an index that can be used to warm-start the search for optimal values in the support vector computation.\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygonOpt(constraints::Vector{LinearConstraint{<:Real}}, [ind]::Int) – default constructor with optional index\nHPolygonOpt(S::LazySet) – constructor from another set\n\n\n\n\n\n"
+    "text": "HPolygonOpt{N<:Real} <: AbstractHPolygon{N}\n\nType that represents a convex polygon in constraint representation whose edges are sorted in counter-clockwise fashion with respect to their normal directions. This is a refined version of HPolygon.\n\nFields\n\nconstraints       – list of linear constraints\nind               – index in the list of constraints to begin the search                        to evaluate the support function\nsort_constraints  – (optional, default: true) flag for sorting the                        constraints (sortedness is a running assumption of this                        type)\ncheck_boundedness – (optional, default: false) flag for checking if the                        constraints make the polygon bounded; (boundedness is a                        running assumption of this type)\n\nNotes\n\nThis structure is optimized to evaluate the support function/vector with a large sequence of directions that are close to each other. The strategy is to have an index that can be used to warm-start the search for optimal values in the support vector computation.\n\nThe default constructor assumes that the given list of edges is sorted. It does not perform any sorting. Use addconstraint! to iteratively add the edges in a sorted way.\n\nHPolygonOpt(constraints::Vector{LinearConstraint{<:Real}}, [ind]::Int=1) – default constructor with optional index\n\n\n\n\n\n"
 },
 
 {
@@ -2413,7 +2421,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\nσ(::AbstractVector{N}, ::HPolygonOpt{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\naddconstraint!\nconstraints_list"
+    "text": "HPolygonOpt\nσ(::AbstractVector{N}, ::HPolygonOpt{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\nisbounded\naddconstraint!\nconstraints_list"
 },
 
 {
@@ -2565,7 +2573,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolytope",
     "category": "type",
-    "text": "HPolytope{N<:Real} <: AbstractPolytope{N}\n\nType that represents a convex polytope in H-representation.\n\nFields\n\nconstraints – vector of linear constraints\n\nNote\n\nRecall that a polytope is a bounded polyhedron. Boundedness is a running assumption in this type.\n\n\n\n\n\n"
+    "text": "HPolytope{N<:Real} <: AbstractPolytope{N}\n\nType that represents a convex polytope in H-representation.\n\nFields\n\nconstraints       – vector of linear constraints\ncheck_boundedness – (optional, default: false) flag for checking if the                        constraints make the polytope bounded; (boundedness is                        a running assumption of this type)\n\nNote\n\nRecall that a polytope is a bounded polyhedron. Boundedness is a running assumption in this type.\n\n\n\n\n\n"
 },
 
 {
@@ -2721,11 +2729,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.isbounded",
+    "page": "Common Set Representations",
+    "title": "LazySets.isbounded",
+    "category": "function",
+    "text": "isbounded(P::HPolytope, [use_type_assumption]::Bool=true)::Bool\n\nDetermine whether a polytope in constraint representation is bounded.\n\nInput\n\nP                   – polytope in constraint representation\nuse_type_assumption – (optional, default: true) flag for ignoring the                          type assumption that polytopes are bounded\n\nOutput\n\ntrue if use_type_assumption is activated. Otherwise, true iff P is bounded.\n\nAlgorithm\n\nIf !use_type_assumption, we convert P to an HPolyhedron P2 and then use isbounded(P2).\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Polytopes-in-constraint-representation-1",
     "page": "Common Set Representations",
     "title": "Polytopes in constraint representation",
     "category": "section",
-    "text": "The following methods are specific for HPolytope.rand(::Type{HPolytope})\nvertices_list(::HPolytope{N}) where {N<:Real}Inherited from AbstractPolytope:isbounded\nsingleton_list"
+    "text": "The following methods are specific for HPolytope.rand(::Type{HPolytope})\nvertices_list(::HPolytope{N}) where {N<:Real}\nisbounded(::HPolytope, ::Bool=true)Inherited from AbstractPolytope:singleton_list"
 },
 
 {
