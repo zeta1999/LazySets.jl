@@ -2709,7 +2709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.remove_redundant_constraints",
     "category": "function",
-    "text": "remove_redundant_constraints(P::PT;\n                             backend=GLPKSolverLP()) where {N, PT<:HPoly{N}}\n\nGiven a polyhedron in H-representation, return a new polyhedron with no reundant constraints.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nA new polyhedron obtained by removing the redundant constraints in P.\n\nAlgorithm\n\nSee remove_redundant_constraints!. \n\n\n\n\n\n"
+    "text": "remove_redundant_constraints(P::PT;\n                             backend=GLPKSolverLP())::Union{PT, EmptySet{N}} where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nA polyhedron equivalent to P but with no redundant constraints, or an empty set if P is detected to be empty (which happens if the constraints are infeasible).\n\nAlgorithm\n\nSee remove_redundant_constraints! for details.\n\n\n\n\n\n"
 },
 
 {
@@ -2717,7 +2717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.remove_redundant_constraints!",
     "category": "function",
-    "text": "remove_redundant_constraints!(P::PT;\n                              backend=GLPKSolverLP()) where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation; the polyhedron is updated inplace.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nThe polyhedron obtained by removing the redundant constraints in P.\n\nAlgorithm\n\nIf the polyhedron P has m constraints and its dimension is n, this function checks one by one if each of the m constraints is implied by the remaining ones. To check if the k-th constraint is redundant, an LP is formulated.\n\nFor details, see Fukuda\'s Polyhedra FAQ.\n\n\n\n\n\n"
+    "text": "remove_redundant_constraints!(P::PT;\n                              backend=GLPKSolverLP())::Bool where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation; the polyhedron is updated in-place.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\ntrue if the method was successful and the polyhedron P is modified by removing its redundant constraints, and false if P is detected to be empty (which happens if the constraints are infeasible).\n\nAlgorithm\n\nIf the polyhedron P has m constraints and its dimension is n, this function checks one by one if each of the m constraints is implied by the remaining ones. To check if the k-th constraint is redundant, an LP is formulated.\n\nFor details, see Fukuda\'s Polyhedra FAQ.\n\n\n\n\n\n"
 },
 
 {
@@ -4917,7 +4917,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
     "category": "method",
-    "text": "intersection(P::HPoly{N},\n             hs::HalfSpace{N};\n             backend=default_polyhedra_backend(P, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of a polytope in H-representation and a half-space.\n\nInput\n\nP         – polytope\nhs        – half-space\nbackend   – (optional, default: default_polyhedra_backend(P, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the polytope after adding the additional                constraint\n\nOutput\n\nThe same polytope in H-representation with just one more constraint.\n\n\n\n\n\n"
+    "text": "intersection(P::HPoly{N},\n             hs::HalfSpace{N};\n             backend=default_polyhedra_backend(P, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of a polytope in H-representation and a half-space.\n\nInput\n\nP         – polytope\nhs        – half-space\nbackend   – (optional, default: nothing) the LP solver or the the                polyhedral computations backend; its value is set internally,                see see below in the Notes for details\nuse_polyhedra_interface – (optional, default: false) if true, use the                Polyhedra interface for the removal of constraints\n\nOutput\n\nThe same polytope in H-representation with just one more constraint.\n\n\n\n\n\n"
 },
 
 {
@@ -4925,7 +4925,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
     "category": "method",
-    "text": "intersection(P1::HPoly{N},\n             P2::HPoly{N};\n             backend=default_polyhedra_backend(P1, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of two polyhedra in H-representation.\n\nInput\n\nP1        – polytope\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the polytope after adding the additional                constraint\n\nOutput\n\nA new same polytope in H-representation with just one more constraint.\n\n\n\n\n\n"
+    "text": "intersection(P1::HPoly{N},\n             P2::HPoly{N};\n             backend=nothing,\n             use_polyhedra_interface=false) where {N<:Real}\n\nCompute the intersection of two polyhedra in H-representation.\n\nInput\n\nP1        – polyhedron\nP2        – polyhedron\nbackend   – (optional, default: nothing) the LP solver or the the                polyhedral computations backend; its value is set internally,                see see below in the Notes for details\nuse_polyhedra_interface – (optional, default: false) if true, use the                Polyhedra interface for the removal of constraints\n\nOutput\n\nA polyhedron resulting from the intersection of P1 and P2, with the redundant constraints removed, or an empty set if the intersection is empty.\n\nNotes\n\nThe default value of the backend is set internally and depends on whether the Polyhedra backend is used or not. The default backends are GLPKSolverLP() and default_polyhedra_backend(P1, N) respectively.\n\nNote that if use_polyhedra_interface is set to true, there is no guarantee that the removal of constraints keep the set empty (see #1038 and Polyhedra#146), so it is better to check for emptiness of intersection before using this function in that case.\n\nThe method implemented in this function can be used for any pair of sets that can handle the constraints_list option.\n\n\n\n\n\n"
 },
 
 {
