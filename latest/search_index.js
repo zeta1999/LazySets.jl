@@ -1953,11 +1953,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{Hyperplane{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(hp::Hyperplane{N})::Vector{LinearConstraint{N}}\n    where {N<:Real}\n\nReturn the list of constraints of a hyperplane.\n\nInput\n\nhp – hyperplane\n\nOutput\n\nA list containing two half-spaces.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Hyperplane-1",
     "page": "Common Set Representations",
     "title": "Hyperplane",
     "category": "section",
-    "text": "Hyperplane\ndim(::Hyperplane)\nρ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisbounded(::Hyperplane)\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Hyperplane\ndim(::Hyperplane)\nρ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisbounded(::Hyperplane)\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}\nconstraints_list(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -2249,11 +2257,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{Line{N,VN} where VN<:AbstractArray{N,1}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(L::Line{N})::Vector{LinearConstraint{N}}\n    where {N<:Real}\n\nReturn the list of constraints of a line.\n\nInput\n\nL – line\n\nOutput\n\nA list containing two half-spaces.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Line-1",
     "page": "Common Set Representations",
     "title": "Line",
     "category": "section",
-    "text": "Line\ndim(::Line)\nσ(::AbstractVector{N}, ::Line{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Line{N}) where {N<:Real}\nan_element(::Line{N}) where {N<:Real}\nrand(::Type{Line})\nisbounded(::Line)\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Line\ndim(::Line)\nσ(::AbstractVector{N}, ::Line{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Line{N}) where {N<:Real}\nan_element(::Line{N}) where {N<:Real}\nrand(::Type{Line})\nisbounded(::Line)\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}\nconstraints_list(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
