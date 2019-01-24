@@ -833,11 +833,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.tosimplehrep-Tuple{LazySet}",
+    "page": "Set Interfaces",
+    "title": "LazySets.tosimplehrep",
+    "category": "method",
+    "text": "tosimplehrep(S::LazySet)\n\nReturn the simple H-representation Ax  b of a set from its list of constraints.\n\nInput\n\nS – set\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b are the offsets.\n\nNotes\n\nThis function uses constraints_list(S). It is a fallback implementation that works only for those sets that can be represented exactly by a list of linear constraints, which is available through the constraints_list(S) function.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Other-globally-defined-set-functions-1",
     "page": "Set Interfaces",
     "title": "Other globally defined set functions",
     "category": "section",
-    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)\nisbounded(::LazySet)\nisbounded_unit_dimensions(::LazySet{N}) where {N<:Real}\nan_element(::LazySet{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LazySet}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet, ::Float64)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}, ::Float64) where {S<:LazySet}"
+    "text": "norm(::LazySet, ::Real=Inf)\nradius(::LazySet, ::Real=Inf)\ndiameter(::LazySet, ::Real=Inf)\nisbounded(::LazySet)\nisbounded_unit_dimensions(::LazySet{N}) where {N<:Real}\nan_element(::LazySet{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LazySet}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LazySet, ::Float64)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}, ::Float64) where {S<:LazySet}\ntosimplehrep(::LazySet)"
 },
 
 {
@@ -1865,11 +1873,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.tosimplehrep-Union{Tuple{AbstractArray{HalfSpace{N},1}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.tosimplehrep",
+    "category": "method",
+    "text": "tosimplehrep(constraints::AbstractVector{LinearConstraint{N}}) where {N<:Real}\n\nReturn the simple H-representation Ax  b of a list of constraints.\n\nInput\n\nconstraints – a list of constraints\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b are the offsets.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Half-Space-1",
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -2649,14 +2665,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.tosimplehrep-Union{Tuple{Union{HPolyhedron{N}, HPolytope{N}}}, Tuple{N}} where N<:Real",
-    "page": "Common Set Representations",
-    "title": "LazySets.tosimplehrep",
-    "category": "method",
-    "text": "tosimplehrep(P::HPoly{N}) where {N}\n\nReturn the simple H-representation Ax  b of a polyhedron.\n\nInput\n\nP – polyhedron\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b are the offsets.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#LazySets.tohrep-Union{Tuple{Union{HPolyhedron{N}, HPolytope{N}}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.tohrep",
@@ -2709,7 +2717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.remove_redundant_constraints",
     "category": "function",
-    "text": "remove_redundant_constraints(P::PT;\n                             backend=GLPKSolverLP())::Union{PT, EmptySet{N}} where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nA polyhedron equivalent to P but with no redundant constraints, or an empty set if P is detected to be empty (which happens if the constraints are infeasible).\n\nAlgorithm\n\nSee remove_redundant_constraints! for details.\n\n\n\n\n\n"
+    "text": "remove_redundant_constraints(P::PT;\n                             backend=GLPKSolverLP())::Union{PT, EmptySet{N}} where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nA polyhedron equivalent to P but with no redundant constraints, or an empty set if P is detected to be empty, which may happen if the constraints are infeasible.\n\nAlgorithm\n\nSee remove_redundant_constraints!(::Vector{LinearConstraint{N}}) where {N<:Real} for details.\n\n\n\n\n\nremove_redundant_constraints(constraints::AbstractVector{LinearConstraint{N}};\n                             backend=GLPKSolverLP())::Union{AbstractVector{LinearConstraint{N}}, EmptySet{N}} where {N}\n\nRemove the redundant constraints of a given list of linear constraints.\n\nInput\n\nconstraints – list of constraints\nbackend     – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nThe list of constraints with the redundant ones removed, or an empty set if the given constraints are infeasible.\n\nAlgorithm\n\nSee remove_redundant_constraints!(::AbstractVector{LinearConstraint{N}}) where {N<:Real} for details.\n\n\n\n\n\n"
 },
 
 {
@@ -2717,7 +2725,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.remove_redundant_constraints!",
     "category": "function",
-    "text": "remove_redundant_constraints!(P::PT;\n                              backend=GLPKSolverLP())::Bool where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation; the polyhedron is updated in-place.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\ntrue if the method was successful and the polyhedron P is modified by removing its redundant constraints, and false if P is detected to be empty (which happens if the constraints are infeasible).\n\nAlgorithm\n\nIf the polyhedron P has m constraints and its dimension is n, this function checks one by one if each of the m constraints is implied by the remaining ones. To check if the k-th constraint is redundant, an LP is formulated.\n\nFor details, see Fukuda\'s Polyhedra FAQ.\n\n\n\n\n\n"
+    "text": "remove_redundant_constraints!(P::PT;\n                              backend=GLPKSolverLP())::Bool where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation; the polyhedron is updated in-place.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\ntrue if the method was successful and the polyhedron P is modified by removing its redundant constraints, and false if P is detected to be empty, which may happen if the constraints are infeasible.\n\nAlgorithm\n\nSee remove_redundant_constraints!(::Vector{LinearConstraint{N}}) where {N<:Real} for details.\n\n\n\n\n\n remove_redundant_constraints!(constraints::Vector{LinearConstraint{N}};\n                               backend=GLPKSolverLP())::Bool where {N}\n\nRemove the redundant constraints of a given list of linear constraints; the list is updated in-place.\n\nInput\n\nconstraints – list of constraints\nbackend     – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\ntrue if the method was successful and the list of constraints constraints is modified by removing the redundant constraints, and false if the constraints are infeasible.\n\nAlgorithm\n\nIf there are m constraints in n dimensions, this function checks one by one if each of the m constraints is implied by the remaining ones.\n\nTo check if the k-th constraint is redundant, an LP is formulated using the constraints that have not yet being removed. If, at an intermediate step, it is detected that a subgruop of the constraints is infeasible, this function returns false; if the calculation finished successfully it returns true.\n\nNote that the constraints being infeasible does not imply that false is returned. For example, x <= 0 && x >= 1 will return true without removing any constraint. To check if the constraints are infeasible use isempty(HPolyhedron(constraints).\n\nFor details, see Fukuda\'s Polyhedra FAQ.\n\n\n\n\n\n"
 },
 
 {
@@ -2725,7 +2733,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntosimplehrep(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nlinear_map(M::AbstractMatrix{N}, P::PT) where {N<:Real, PT<:HPoly{N}}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nlinear_map(M::AbstractMatrix{N}, P::PT) where {N<:Real, PT<:HPoly{N}}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -3633,6 +3641,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.constraints_list-Union{Tuple{Intersection{N,S1,S2} where S2<:LazySet{N} where S1<:LazySet{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(cap::Intersection{N}) where {N<:Real}\n\nReturn the list of constraints of an intersection of two (polyhedral) sets.\n\nInput\n\ncap – intersection of two (polyhedral) sets\n\nOutput\n\nThe list of constraints of the intersection.\n\nNotes\n\nWe assume that the underlying sets are polyhedral, i.e., offer a method constraints_list.\n\nAlgorithm\n\nWe create the polyhedron by taking the intersection of the constraints_lists of the sets and remove redundant constraints.\n\nThis function ignores the boolean output from the in-place remove_redundant_constraints!, which may inform the user that the constraints are infeasible. In that case, the list of constraints at the moment when the infeasibility was detected is returned.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.isempty_known-Tuple{Intersection}",
     "page": "Common Set Operations",
     "title": "LazySets.isempty_known",
@@ -3685,7 +3701,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:AbstractPolytope{N}}\nσ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nisbounded(::Intersection)\nisempty(::Intersection)\n∈(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_line_search\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:AbstractPolytope{N}}\nσ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nisbounded(::Intersection)\nisempty(::Intersection)\n∈(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nconstraints_list(::Intersection{N}) where {N<:Real}\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_line_search\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
@@ -3753,11 +3769,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.constraints_list-Union{Tuple{IntersectionArray{N,S} where S<:LazySet{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(ia::IntersectionArray{N}) where {N<:Real}\n\nReturn the list of constraints of an intersection of a finite number of (polyhedral) sets.\n\nInput\n\nia – intersection of a finite number of (polyhedral) sets\n\nOutput\n\nThe list of constraints of the intersection.\n\nNotes\n\nWe assume that the underlying sets are polyhedral, i.e., offer a method constraints_list.\n\nAlgorithm\n\nWe create the polyhedron from the constraints_lists of the sets and remove redundant constraints.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#n-ary-Intersection-1",
     "page": "Common Set Operations",
     "title": "n-ary Intersection",
     "category": "section",
-    "text": "IntersectionArray\ndim(::IntersectionArray)\nσ(::AbstractVector{N}, ::IntersectionArray{N}) where {N<:Real}\nisbounded(::IntersectionArray)\n∈(::AbstractVector{N}, ::IntersectionArray{N}) where {N<:Real}\narray(::IntersectionArray{N, S}) where {N<:Real, S<:LazySet{N}}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "IntersectionArray\ndim(::IntersectionArray)\nσ(::AbstractVector{N}, ::IntersectionArray{N}) where {N<:Real}\nisbounded(::IntersectionArray)\n∈(::AbstractVector{N}, ::IntersectionArray{N}) where {N<:Real}\narray(::IntersectionArray{N, S}) where {N<:Real, S<:LazySet{N}}\nconstraints_list(::IntersectionArray{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
