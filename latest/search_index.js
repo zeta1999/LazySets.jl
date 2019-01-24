@@ -4077,7 +4077,15 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.vertices_list",
     "category": "method",
-    "text": "vertices_list(lm::LinearMap{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a (polytopic) linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying set X is polytopic. Then the result is just the linear map applied to the vertices of X.\n\n\n\n\n\n"
+    "text": "vertices_list(lm::LinearMap{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a (polyhedral) linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying set X is polyhedral. Then the result is just the linear map applied to the vertices of X.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.constraints_list-Union{Tuple{LinearMap{N,S,NM,MAT} where MAT<:AbstractArray{NM,2} where NM}, Tuple{S}, Tuple{N}} where S<:Union{AbstractPolytope{N}, HPolyhedron{N}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(lm::LinearMap{N, S}) where\n    {N<:Real, S<:Union{AbstractPolytope{N}, HPolyhedron{N}}}\n\nReturn the list of constraints of a (polyhedral) linear map.\n\nInput\n\nlm – linear map\n\nOutput\n\nThe list of constraints of the linear map.\n\nNotes\n\nWe assume that the underlying set X is polyhedral, i.e., offers a method constraints_list(X).\n\nAlgorithm\n\nWe fall back to a concrete set representation and apply linear_map.\n\n\n\n\n\n"
 },
 
 {
@@ -4085,7 +4093,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Linear Map",
     "category": "section",
-    "text": "LinearMap\n*(::AbstractMatrix{N}, ::LazySet{N}) where {N<:Real}\n*(::N, ::LazySet{N}) where {N<:Real}\n*(::N, ::LM) where {N<:Real, LM<:LinearMap{N}}\n*(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ndim(::LinearMap)\nρ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nan_element(::LinearMap{N}) where {N<:Real}\nisbounded(::LinearMap)\nisempty(::LinearMap)\nvertices_list(::LinearMap{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "LinearMap\n*(::AbstractMatrix{N}, ::LazySet{N}) where {N<:Real}\n*(::N, ::LazySet{N}) where {N<:Real}\n*(::N, ::LM) where {N<:Real, LM<:LinearMap{N}}\n*(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ndim(::LinearMap)\nρ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nan_element(::LinearMap{N}) where {N<:Real}\nisbounded(::LinearMap)\nisempty(::LinearMap)\nvertices_list(::LinearMap{N}) where {N<:Real}\nconstraints_list(::LinearMap{N, S}) where {N<:Real, S<:Union{AbstractPolytope{N}, HPolyhedron{N}}}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
