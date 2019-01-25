@@ -1753,11 +1753,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.linear_map-Union{Tuple{N}, Tuple{AbstractArray{N,2},EmptySet{N}}} where N",
+    "page": "Common Set Representations",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix{N}, ∅::EmptySet{N}) where {N}\n\nReturn the linear map of an empty set.\n\nInput\n\nM – matrix\n∅ – empty set\n\nOutput\n\nThe empty set.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Empty-set-1",
     "page": "Common Set Representations",
     "title": "Empty set",
     "category": "section",
-    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisbounded(::EmptySet)\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real=Inf)\nradius(::EmptySet, ::Real=Inf)\ndiameter(::EmptySet, ::Real=Inf)Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisbounded(::EmptySet)\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real=Inf)\nradius(::EmptySet, ::Real=Inf)\ndiameter(::EmptySet, ::Real=Inf)\nlinear_map(::AbstractMatrix{N}, ::EmptySet{N}) where {N}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
