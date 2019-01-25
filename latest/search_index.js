@@ -3705,11 +3705,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.linear_map-Union{Tuple{N}, Tuple{AbstractArray{N,2},Intersection{N,S1,S2} where S2<:LazySet{N} where S1<:LazySet{N}}} where N",
+    "page": "Common Set Operations",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix{N}, cap::Intersection{N}) where {N}\n\nReturn the concrete linear map of a lazy intersection.\n\nInput\n\nM   – matrix\ncap – lazy intersection\n\nOutput\n\nThe set obtained by applying the given linear map to the lazy intersection.\n\nNotes\n\nThis function relies on computing cap concretely (i.e. as a set representation), and then applying the linear map.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Binary-Intersection-1",
     "page": "Common Set Operations",
     "title": "Binary Intersection",
     "category": "section",
-    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:AbstractPolytope{N}}\nσ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nisbounded(::Intersection)\nisempty(::Intersection)\n∈(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nconstraints_list(::Intersection{N}) where {N<:Real}\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_line_search\n_projectionInherited from LazySet:norm\nradius\ndiameter\nan_element"
+    "text": "Intersection\n∩(::LazySet, ::LazySet)\ndim(::Intersection)\nρ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:Union{HalfSpace{N}, Hyperplane{N}, Line{N}}}\nρ(::AbstractVector{N}, ::Intersection{N, S1, S2}) where {N<:Real, S1<:LazySet{N}, S2<:AbstractPolytope{N}}\nσ(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nisbounded(::Intersection)\nisempty(::Intersection)\n∈(::AbstractVector{N}, ::Intersection{N}) where {N<:Real}\nconstraints_list(::Intersection{N}) where {N<:Real}\nisempty_known(::Intersection)\nset_isempty!(::Intersection, ::Bool)\nswap(::Intersection)\nuse_precise_ρ\n_line_search\n_projection\nlinear_map(::AbstractMatrix{N}, ::Intersection{N}) where {N}Inherited from LazySet:norm\nradius\ndiameter\nan_element"
 },
 
 {
