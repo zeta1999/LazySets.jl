@@ -1889,11 +1889,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.linear_map-Union{Tuple{N}, Tuple{AbstractArray{N,2},HalfSpace{N}}} where N",
+    "page": "Common Set Representations",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix{N}, hs::HalfSpace{N}) where {N}\n\nReturn the concrete linear map of a half-space.\n\nInput\n\nM  – matrix\nhs – half-space\n\nOutput\n\nThe half-space obtained by applying the given linear map to the half-space.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Half-Space-1",
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::HalfSpace{N}) where {N}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
