@@ -4137,11 +4137,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.intersection-Union{Tuple{N}, Tuple{LinearMap{N,S,NM,MAT} where MAT<:AbstractArray{NM,2} where NM where S<:LazySet{N},LazySet{N}}} where N",
+    "page": "Common Set Operations",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(L::LinearMap{N}, S::LazySet{N}) where {N}\n\nReturn the intersection of a lazy linear map and a convex set.\n\nInput\n\nL – linear map\nS – convex set\n\nOutput\n\nThe polytope obtained by the intersection of l.M * L.X and S.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Linear-Map-1",
     "page": "Common Set Operations",
     "title": "Linear Map",
     "category": "section",
-    "text": "LinearMap\n*(::AbstractMatrix{N}, ::LazySet{N}) where {N<:Real}\n*(::N, ::LazySet{N}) where {N<:Real}\n*(::N, ::LM) where {N<:Real, LM<:LinearMap{N}}\n*(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ndim(::LinearMap)\nρ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nan_element(::LinearMap{N}) where {N<:Real}\nisbounded(::LinearMap)\nisempty(::LinearMap)\nvertices_list(::LinearMap{N}) where {N<:Real}\nconstraints_list(::LinearMap{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "LinearMap\n*(::AbstractMatrix{N}, ::LazySet{N}) where {N<:Real}\n*(::N, ::LazySet{N}) where {N<:Real}\n*(::N, ::LM) where {N<:Real, LM<:LinearMap{N}}\n*(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ndim(::LinearMap)\nρ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nan_element(::LinearMap{N}) where {N<:Real}\nisbounded(::LinearMap)\nisempty(::LinearMap)\nvertices_list(::LinearMap{N}) where {N<:Real}\nconstraints_list(::LinearMap{N}) where {N<:Real}\nintersection(::LinearMap{N}, ::LazySet{N}) where {N}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
