@@ -4137,6 +4137,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.linear_map-Union{Tuple{N}, Tuple{AbstractArray{N,2},LinearMap{N,S,NM,MAT} where MAT<:AbstractArray{NM,2} where NM where S<:LazySet{N}}} where N",
+    "page": "Common Set Operations",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix{N}, lm::LinearMap{N}) where {N}\n\nReturn the linear map of a lazy linear map.\n\nInput\n\nM  – matrix\nlm – linear map\n\nOutput\n\nThe polytope representing the linear map of the lazy linear map of a set.  \n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#LazySets.intersection-Union{Tuple{N}, Tuple{LinearMap{N,S,NM,MAT} where MAT<:AbstractArray{NM,2} where NM where S<:LazySet{N},LazySet{N}}} where N",
     "page": "Common Set Operations",
     "title": "LazySets.intersection",
@@ -4149,7 +4157,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Linear Map",
     "category": "section",
-    "text": "LinearMap\n*(::AbstractMatrix{N}, ::LazySet{N}) where {N<:Real}\n*(::N, ::LazySet{N}) where {N<:Real}\n*(::N, ::LM) where {N<:Real, LM<:LinearMap{N}}\n*(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ndim(::LinearMap)\nρ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nan_element(::LinearMap{N}) where {N<:Real}\nisbounded(::LinearMap)\nisempty(::LinearMap)\nvertices_list(::LinearMap{N}) where {N<:Real}\nconstraints_list(::LinearMap{N}) where {N<:Real}\nintersection(::LinearMap{N}, ::LazySet{N}) where {N}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "LinearMap\n*(::AbstractMatrix{N}, ::LazySet{N}) where {N<:Real}\n*(::N, ::LazySet{N}) where {N<:Real}\n*(::N, ::LM) where {N<:Real, LM<:LinearMap{N}}\n*(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ndim(::LinearMap)\nρ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nan_element(::LinearMap{N}) where {N<:Real}\nisbounded(::LinearMap)\nisempty(::LinearMap)\nvertices_list(::LinearMap{N}) where {N<:Real}\nconstraints_list(::LinearMap{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::LinearMap{N}) where {N}\nintersection(::LinearMap{N}, ::LazySet{N}) where {N}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
