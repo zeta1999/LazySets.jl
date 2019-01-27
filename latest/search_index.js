@@ -701,7 +701,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n19-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolytope\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n HPolyhedron\n HalfSpace\n Hyperplane\n Intersection\n IntersectionArray\n Line\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n\n\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n15-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolyhedron\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n Intersection\n IntersectionArray\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n\n\n\n\n\n"
 },
 
 {
@@ -837,7 +837,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.tosimplehrep",
     "category": "method",
-    "text": "tosimplehrep(S::LazySet)\n\nReturn the simple H-representation Ax  b of a set from its list of constraints.\n\nInput\n\nS – set\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b are the offsets.\n\nNotes\n\nThis function uses constraints_list(S). It is a fallback implementation that works only for those sets that can be represented exactly by a list of linear constraints, which is available through the constraints_list(S) function.\n\n\n\n\n\n"
+    "text": "tosimplehrep(S::LazySet)\n\nReturn the simple H-representation Ax  b of a set from its list of linear constraints.\n\nInput\n\nS – set\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b is the vector of offsets.\n\nNotes\n\nThis function only works for sets that can be represented exactly by a finite list of linear constraints. This fallback implementation relies on constraints_list(S).\n\n\n\n\n\n"
 },
 
 {
@@ -945,11 +945,43 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.AbstractPolyhedron",
+    "page": "Set Interfaces",
+    "title": "LazySets.AbstractPolyhedron",
+    "category": "type",
+    "text": "AbstractPolyhedron{N<:Real} <: LazySet{N}\n\nAbstract type for polyhedral sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of half-spaces.\n\nNotes\n\nEvery concrete AbstractPolyhedron must define the following functions:\n\nconstraints_list(::AbstractPolyhedron{N})::Vector{LinearConstraint{N}} –   return a list of all facet constraints\n\njulia> subtypes(AbstractPolyhedron)\n5-element Array{Any,1}:\n AbstractPolytope\n HPolyhedron\n HalfSpace\n Hyperplane\n Line\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Base.:∈-Union{Tuple{N}, Tuple{AbstractArray{N,1},AbstractPolyhedron{N}}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(x::AbstractVector{N}, P::AbstractPolyhedron{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a polyhedron.\n\nInput\n\nx – point/vector\nP – polyhedron\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation checks if the point lies inside each defining half-space.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.constrained_dimensions-Union{Tuple{AbstractPolyhedron{N}}, Tuple{N}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.constrained_dimensions",
+    "category": "method",
+    "text": "constrained_dimensions(P::AbstractPolyhedron{N})::Vector{Int}\n    where {N<:Real}\n\nReturn the indices in which a polyhedron is constrained.\n\nInput\n\nP – polyhedron\n\nOutput\n\nA vector of ascending indices i such that the polyhedron is constrained in dimension i.\n\nExamples\n\nA 2D polyhedron with constraint x1  0 is constrained in dimension 1 only.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#Polyhedron-1",
+    "page": "Set Interfaces",
+    "title": "Polyhedron",
+    "category": "section",
+    "text": "A polyhedron has finitely many facets (H-representation) and is not necessarily bounded.AbstractPolyhedronThis interface defines the following functions:∈(::AbstractVector{N}, ::AbstractPolyhedron{N}) where {N<:Real}\nconstrained_dimensions(::AbstractPolyhedron{N}) where {N<:Real}"
+},
+
+{
     "location": "lib/interfaces.html#LazySets.AbstractPolytope",
     "page": "Set Interfaces",
     "title": "LazySets.AbstractPolytope",
     "category": "type",
-    "text": "AbstractPolytope{N<:Real} <: LazySet{N}\n\nAbstract type for polytopic sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of halfspaces, or equivalently, sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nconstraints_list(::AbstractPolytope{N})::Vector{LinearConstraint{N}} –   return a list of all facet constraints\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n4-element Array{Any,1}:\n AbstractCentrallySymmetricPolytope\n AbstractPolygon\n HPolytope\n VPolytope\n\n\n\n\n\n"
+    "text": "AbstractPolytope{N<:Real} <: AbstractPolyhedron{N}\n\nAbstract type for polytopic sets, i.e., bounded sets with finitely many flat facets, or equivalently, bounded sets defined as an intersection of a finite number of half-spaces, or equivalently, bounded sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nconstraints_list(::AbstractPolytope{N})::Vector{LinearConstraint{N}} –   return a list of all facet constraints\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n4-element Array{Any,1}:\n AbstractCentrallySymmetricPolytope\n AbstractPolygon\n HPolytope\n VPolytope\n\n\n\n\n\n"
 },
 
 {
@@ -1005,7 +1037,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Polytope",
     "category": "section",
-    "text": "A polytope has finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Centrally symmetric polytope.AbstractPolytopeThis interface defines the following functions:isbounded(::AbstractPolytope)\nsingleton_list(::AbstractPolytope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::AbstractPolytope{N}) where {N<:Real}\nisempty(::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:AbstractPolytope}"
+    "text": "A polytope is a bounded set with finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Centrally symmetric polytope.AbstractPolytopeThis interface defines the following functions:isbounded(::AbstractPolytope)\nsingleton_list(::AbstractPolytope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::AbstractPolytope{N}) where {N<:Real}\nisempty(::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:AbstractPolytope}"
 },
 
 {
@@ -1773,7 +1805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HalfSpace",
     "category": "type",
-    "text": "HalfSpace{N<:Real} <: LazySet{N}\n\nType that represents a (closed) half-space of the form ax  b.\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe set y  0 in the plane:\n\njulia> HalfSpace([0, -1.], 0.)\nHalfSpace{Float64}([0.0, -1.0], 0.0)\n\n\n\n\n\n"
+    "text": "HalfSpace{N<:Real} <: AbstractPolyhedron{N}\n\nType that represents a (closed) half-space of the form ax  b.\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe set y  0 in the plane:\n\njulia> HalfSpace([0, -1.], 0.)\nHalfSpace{Float64}([0.0, -1.0], 0.0)\n\n\n\n\n\n"
 },
 
 {
@@ -1881,14 +1913,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.tosimplehrep-Union{Tuple{AbstractArray{HalfSpace{N},1}}, Tuple{N}} where N<:Real",
-    "page": "Common Set Representations",
-    "title": "LazySets.tosimplehrep",
-    "category": "method",
-    "text": "tosimplehrep(constraints::AbstractVector{LinearConstraint{N}}) where {N<:Real}\n\nReturn the simple H-representation Ax  b of a list of constraints.\n\nInput\n\nconstraints – a list of constraints\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b are the offsets.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#LazySets.linear_map-Union{Tuple{N}, Tuple{AbstractArray{N,2},HalfSpace{N}}} where N",
     "page": "Common Set Representations",
     "title": "LazySets.linear_map",
@@ -1897,11 +1921,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.tosimplehrep-Union{Tuple{AbstractArray{HalfSpace{N},1}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.tosimplehrep",
+    "category": "method",
+    "text": "tosimplehrep(constraints::AbstractVector{LinearConstraint{N}})\n    where {N<:Real}\n\nReturn the simple H-representation Ax  b from a list of linear constraints.\n\nInput\n\nconstraints – a list of linear constraints\n\nOutput\n\nThe tuple (A, b) where A is the matrix of normal directions and b is the vector of offsets.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.remove_redundant_constraints-Union{Tuple{AbstractArray{HalfSpace{N},1}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_constraints",
+    "category": "method",
+    "text": "remove_redundant_constraints(\n    constraints::AbstractVector{LinearConstraint{N}};\n    backend=GLPKSolverLP())::Union{AbstractVector{LinearConstraint{N}},\n                                   EmptySet{N}} where {N<:Real}\n\nRemove the redundant constraints of a given list of linear constraints.\n\nInput\n\nconstraints – list of constraints\nbackend     – (optional, default: GLPKSolverLP) numeric LP solver backend\n\nOutput\n\nThe list of constraints with the redundant ones removed, or an empty set if the constraints are infeasible.\n\nAlgorithm\n\nSee remove_redundant_constraints!(::AbstractVector{LinearConstraint{<:Real}}) for details.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.remove_redundant_constraints!-Union{Tuple{AbstractArray{HalfSpace{N},1}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.remove_redundant_constraints!",
+    "category": "method",
+    "text": " remove_redundant_constraints!(\n     constraints::AbstractVector{LinearConstraint{N}};\n     [backend]=GLPKSolverLP())::Bool where {N<:Real}\n\nRemove the redundant constraints of a given list of linear constraints; the list is updated in-place.\n\nInput\n\nconstraints – list of constraints\nbackend     – (optional, default: GLPKSolverLP) numeric LP solver backend\n\nOutput\n\ntrue if the function was successful and the list of constraints constraints is modified by removing the redundant constraints, and false only if the constraints are infeasible.\n\nNotes\n\nNote that the result may be true even if the constraints are infeasible. For example, x  0  x  1 will return true without removing any constraint. To check if the constraints are infeasible, use isempty(HPolyhedron(constraints).\n\nAlgorithm\n\nIf there are m constraints in n dimensions, this function checks one by one if each of the m constraints is implied by the remaining ones.\n\nTo check if the k-th constraint is redundant, an LP is formulated using the constraints that have not yet being removed. If, at an intermediate step, it is detected that a subgroup of the constraints is infeasible, this function returns false. If the calculation finished successfully, this function returns true.\n\nFor details, see Fukuda\'s Polyhedra FAQ.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Half-Space-1",
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::HalfSpace{N}) where {N}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::HalfSpace{N}) where {N}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}\nremove_redundant_constraints(::AbstractVector{LinearConstraint{N}}) where {N<:Real}\nremove_redundant_constraints!(::AbstractVector{LinearConstraint{N}}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1909,7 +1957,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Hyperplane",
     "category": "type",
-    "text": "Hyperplane{N<:Real} <: LazySet{N}\n\nType that represents a hyperplane of the form ax = b.\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe plane y = 0:\n\njulia> Hyperplane([0, 1.], 0.)\nHyperplane{Float64}([0.0, 1.0], 0.0)\n\n\n\n\n\n"
+    "text": "Hyperplane{N<:Real} <: AbstractPolyhedron{N}\n\nType that represents a hyperplane of the form ax = b.\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe plane y = 0:\n\njulia> Hyperplane([0, 1.], 0.)\nHyperplane{Float64}([0.0, 1.0], 0.0)\n\n\n\n\n\n"
 },
 
 {
@@ -2221,7 +2269,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Line",
     "category": "type",
-    "text": "Line{N<:Real, VN<:AbstractVector{N}} <: LazySet{N}\n\nType that represents a line in 2D of the form ax = b (i.e., a special case of a Hyperplane).\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLine{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n\n\n"
+    "text": "Line{N<:Real, VN<:AbstractVector{N}} <: AbstractPolyhedron{N}\n\nType that represents a line in 2D of the form ax = b (i.e., a special case of a Hyperplane).\n\nFields\n\na – normal direction\nb – constraint\n\nExamples\n\nThe line y = -x + 1:\n\njulia> Line([1., 1.], 1.)\nLine{Float64,Array{Float64,1}}([1.0, 1.0], 1.0)\n\n\n\n\n\n"
 },
 
 {
@@ -2629,7 +2677,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.HPolyhedron",
     "category": "type",
-    "text": "HPolyhedron{N<:Real} <: LazySet{N}\n\nType that represents a convex polyhedron in H-representation.\n\nFields\n\nconstraints – vector of linear constraints\n\n\n\n\n\n"
+    "text": "HPolyhedron{N<:Real} <: AbstractPolyhedron{N}\n\nType that represents a convex polyhedron in H-representation.\n\nFields\n\nconstraints – vector of linear constraints\n\n\n\n\n\n"
 },
 
 {
@@ -2654,14 +2702,6 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.σ",
     "category": "method",
     "text": "σ(d::AbstractVector{N}, P::HPoly{N}) where {N<:Real}\n\nReturn the support vector of a polyhedron (in H-representation) in a given direction.\n\nInput\n\nd – direction\nP – polyhedron in H-representation\n\nOutput\n\nThe support vector in the given direction.\n\nAlgorithm\n\nThis implementation uses GLPKSolverLP as linear programming backend.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/representations.html#Base.:∈-Union{Tuple{N}, Tuple{AbstractArray{N,1},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
-    "page": "Common Set Representations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(x::AbstractVector{N}, P::HPoly{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a polyhedron in constraint representation.\n\nInput\n\nx – vector with the coordinates of the point\nP – polyhedron in constraint representation\n\nOutput\n\ntrue iff x  P.\n\nAlgorithm\n\nThis implementation checks if the point lies on the outside of each hyperplane. This is equivalent to checking if the point lies in each half-space.\n\n\n\n\n\n"
 },
 
 {
@@ -2729,19 +2769,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.remove_redundant_constraints",
+    "location": "lib/representations.html#LazySets.remove_redundant_constraints-Union{Tuple{PT}, Tuple{PT}, Tuple{N}} where PT<:Union{HPolyhedron{N}, HPolytope{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.remove_redundant_constraints",
-    "category": "function",
-    "text": "remove_redundant_constraints(P::PT;\n                             backend=GLPKSolverLP())::Union{PT, EmptySet{N}} where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nA polyhedron equivalent to P but with no redundant constraints, or an empty set if P is detected to be empty, which may happen if the constraints are infeasible.\n\nAlgorithm\n\nSee remove_redundant_constraints!(::Vector{LinearConstraint{N}}) where {N<:Real} for details.\n\n\n\n\n\nremove_redundant_constraints(constraints::AbstractVector{LinearConstraint{N}};\n                             backend=GLPKSolverLP())::Union{AbstractVector{LinearConstraint{N}}, EmptySet{N}} where {N}\n\nRemove the redundant constraints of a given list of linear constraints.\n\nInput\n\nconstraints – list of constraints\nbackend     – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nThe list of constraints with the redundant ones removed, or an empty set if the given constraints are infeasible.\n\nAlgorithm\n\nSee remove_redundant_constraints!(::AbstractVector{LinearConstraint{N}}) where {N<:Real} for details.\n\n\n\n\n\n"
+    "category": "method",
+    "text": "remove_redundant_constraints(P::PT;\n                             backend=GLPKSolverLP()\n                            )::Union{PT, EmptySet{N}} where {N<:Real,\n                                                             PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\nA polyhedron equivalent to P but with no redundant constraints, or an empty set if P is detected to be empty, which may happen if the constraints are infeasible.\n\nAlgorithm\n\nSee remove_redundant_constraints!(::Vector{LinearConstraint{<:Real}}) for details.\n\n\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.remove_redundant_constraints!",
+    "location": "lib/representations.html#LazySets.remove_redundant_constraints!-Union{Tuple{Union{HPolyhedron{N}, HPolytope{N}}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.remove_redundant_constraints!",
-    "category": "function",
-    "text": "remove_redundant_constraints!(P::PT;\n                              backend=GLPKSolverLP())::Bool where {N, PT<:HPoly{N}}\n\nRemove the redundant constraints in a polyhedron in H-representation; the polyhedron is updated in-place.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\ntrue if the method was successful and the polyhedron P is modified by removing its redundant constraints, and false if P is detected to be empty, which may happen if the constraints are infeasible.\n\nAlgorithm\n\nSee remove_redundant_constraints!(::Vector{LinearConstraint{N}}) where {N<:Real} for details.\n\n\n\n\n\n remove_redundant_constraints!(constraints::Vector{LinearConstraint{N}};\n                               backend=GLPKSolverLP())::Bool where {N}\n\nRemove the redundant constraints of a given list of linear constraints; the list is updated in-place.\n\nInput\n\nconstraints – list of constraints\nbackend     – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\ntrue if the method was successful and the list of constraints constraints is modified by removing the redundant constraints, and false if the constraints are infeasible.\n\nAlgorithm\n\nIf there are m constraints in n dimensions, this function checks one by one if each of the m constraints is implied by the remaining ones.\n\nTo check if the k-th constraint is redundant, an LP is formulated using the constraints that have not yet being removed. If, at an intermediate step, it is detected that a subgruop of the constraints is infeasible, this function returns false; if the calculation finished successfully it returns true.\n\nNote that the constraints being infeasible does not imply that false is returned. For example, x <= 0 && x >= 1 will return true without removing any constraint. To check if the constraints are infeasible use isempty(HPolyhedron(constraints).\n\nFor details, see Fukuda\'s Polyhedra FAQ.\n\n\n\n\n\n"
+    "category": "method",
+    "text": "remove_redundant_constraints!(P::HPoly{N};\n                              backend=GLPKSolverLP())::Bool where {N<:Real}\n\nRemove the redundant constraints in a polyhedron in H-representation; the polyhedron is updated in-place.\n\nInput\n\nP       – polyhedron\nbackend – (optional, default: GLPKSolverLP) the numeric LP solver backend\n\nOutput\n\ntrue if the method was successful and the polyhedron P is modified by removing its redundant constraints, and false if P is detected to be empty, which may happen if the constraints are infeasible.\n\nAlgorithm\n\nSee remove_redundant_constraints!(::Vector{LinearConstraint{<:Real}}) for details.\n\n\n\n\n\n"
 },
 
 {
@@ -2749,7 +2789,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nlinear_map(M::AbstractMatrix{N}, P::PT) where {N<:Real, PT<:HPoly{N}}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints\nremove_redundant_constraints!Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::PT) where {N<:Real, PT<:HPoly{N}}\ntovrep(::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints(::PT) where {N<:Real, PT<:HPoly{N}}\nremove_redundant_constraints!(::HPoly{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolyhedron:∈\nconstrained_dimensions"
 },
 
 {
@@ -2817,19 +2857,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.constrained_dimensions-Union{Tuple{HPolyhedron{N}}, Tuple{N}} where N<:Real",
-    "page": "Common Set Representations",
-    "title": "LazySets.constrained_dimensions",
-    "category": "method",
-    "text": "constrained_dimensions(P::HPolyhedron{N})::Vector{Int} where {N<:Real}\n\nReturn the indices in which a polyhedron in constraint representation is constrained.\n\nInput\n\nP – polyhedron in constraint representation\n\nOutput\n\nA vector of ascending indices i such that the polyhedron is constrained in dimension i.\n\nExamples\n\nA 2D polyhedron with constraint x1  0 is constrained in dimension 1 only.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#Polyhedra-1",
     "page": "Common Set Representations",
     "title": "Polyhedra",
     "category": "section",
-    "text": "The following methods are specific for HPolyhedron.rand(::Type{HPolyhedron})\nisbounded(::HPolyhedron)\nvertices_list(::HPolyhedron{N}) where {N<:Real}\nsingleton_list(::HPolyhedron{N}) where {N<:Real}\nconstrained_dimensions(::HPolyhedron{N}) where {N<:Real}"
+    "text": "The following methods are specific for HPolyhedron.rand(::Type{HPolyhedron})\nisbounded(::HPolyhedron)\nvertices_list(::HPolyhedron{N}) where {N<:Real}\nsingleton_list(::HPolyhedron{N}) where {N<:Real}"
 },
 
 {
