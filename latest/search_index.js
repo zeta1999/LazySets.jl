@@ -1921,6 +1921,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{N}, Tuple{AbstractArray{N,2},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(A::AbstractMatrix{N}, b::AbstractVector{N}\n                )::Vector{LinearConstraint{N}} where {N<:Real}\n\nConvert a matrix-vector representation to a linear-constraint representation.\n\nInput\n\nA – matrix\nb – vector\n\nOutput\n\nA list of linear constraints.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.constrained_dimensions-Union{Tuple{HalfSpace{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.constrained_dimensions",
@@ -1981,7 +1989,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::HalfSpace{N}) where {N}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}\nremove_redundant_constraints(::AbstractVector{LinearConstraint{N}}) where {N<:Real}\nremove_redundant_constraints!(::AbstractVector{LinearConstraint{N}}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstraints_list(::AbstractMatrix{N}, ::AbstractVector{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::HalfSpace{N}) where {N}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}\nremove_redundant_constraints(::AbstractVector{LinearConstraint{N}}) where {N<:Real}\nremove_redundant_constraints!(::AbstractVector{LinearConstraint{N}}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
