@@ -965,7 +965,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractPolyhedron",
     "category": "type",
-    "text": "AbstractPolyhedron{N<:Real} <: LazySet{N}\n\nAbstract type for polyhedral sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of half-spaces.\n\nNotes\n\nEvery concrete AbstractPolyhedron must define the following functions:\n\nconstraints_list(::AbstractPolyhedron{N})::Vector{LinearConstraint{N}} –   return a list of all facet constraints\n\njulia> subtypes(AbstractPolyhedron)\n5-element Array{Any,1}:\n AbstractPolytope\n HPolyhedron\n HalfSpace\n Hyperplane\n Line\n\n\n\n\n\n"
+    "text": "AbstractPolyhedron{N<:Real} <: LazySet{N}\n\nAbstract type for polyhedral sets, i.e., sets with finitely many flat facets, or equivalently, sets defined as an intersection of a finite number of half-spaces.\n\nNotes\n\nEvery concrete AbstractPolyhedron must define the following functions:\n\nconstraints_list(::AbstractPolyhedron{N})::Vector{LinearConstraint{N}} –   return a list of all facet constraints\n\njulia> subtypes(AbstractPolyhedron)\n6-element Array{Any,1}:\n AbstractPolytope\n HPolyhedron\n HalfSpace\n Hyperplane\n Line\n Universe\n\n\n\n\n\n"
 },
 
 {
@@ -977,11 +977,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/interfaces.html#LazySets.constrained_dimensions-Union{Tuple{AbstractPolyhedron{N}}, Tuple{N}} where N<:Real",
+    "location": "lib/interfaces.html#LazySets.constrained_dimensions-Tuple{AbstractPolyhedron}",
     "page": "Set Interfaces",
     "title": "LazySets.constrained_dimensions",
     "category": "method",
-    "text": "constrained_dimensions(P::AbstractPolyhedron{N})::Vector{Int}\n    where {N<:Real}\n\nReturn the indices in which a polyhedron is constrained.\n\nInput\n\nP – polyhedron\n\nOutput\n\nA vector of ascending indices i such that the polyhedron is constrained in dimension i.\n\nExamples\n\nA 2D polyhedron with constraint x1  0 is constrained in dimension 1 only.\n\n\n\n\n\n"
+    "text": "constrained_dimensions(P::AbstractPolyhedron)::Vector{Int} where {N<:Real}\n\nReturn the indices in which a polyhedron is constrained.\n\nInput\n\nP – polyhedron\n\nOutput\n\nA vector of ascending indices i such that the polyhedron is constrained in dimension i.\n\nExamples\n\nA 2D polyhedron with constraint x1  0 is constrained in dimension 1 only.\n\n\n\n\n\n"
 },
 
 {
@@ -989,7 +989,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Polyhedron",
     "category": "section",
-    "text": "A polyhedron has finitely many facets (H-representation) and is not necessarily bounded.AbstractPolyhedronThis interface defines the following functions:∈(::AbstractVector{N}, ::AbstractPolyhedron{N}) where {N<:Real}\nconstrained_dimensions(::AbstractPolyhedron{N}) where {N<:Real}"
+    "text": "A polyhedron has finitely many facets (H-representation) and is not necessarily bounded.AbstractPolyhedronThis interface defines the following functions:∈(::AbstractVector{N}, ::AbstractPolyhedron{N}) where {N<:Real}\nconstrained_dimensions(::AbstractPolyhedron)"
 },
 
 {
@@ -997,7 +997,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.AbstractPolytope",
     "category": "type",
-    "text": "AbstractPolytope{N<:Real} <: AbstractPolyhedron{N}\n\nAbstract type for polytopic sets, i.e., bounded sets with finitely many flat facets, or equivalently, bounded sets defined as an intersection of a finite number of half-spaces, or equivalently, bounded sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nconstraints_list(::AbstractPolytope{N})::Vector{LinearConstraint{N}} –   return a list of all facet constraints\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n4-element Array{Any,1}:\n AbstractCentrallySymmetricPolytope\n AbstractPolygon\n HPolytope\n VPolytope\n\n\n\n\n\n"
+    "text": "AbstractPolytope{N<:Real} <: AbstractPolyhedron{N}\n\nAbstract type for polytopic sets, i.e., bounded sets with finitely many flat facets, or equivalently, bounded sets defined as an intersection of a finite number of half-spaces, or equivalently, bounded sets with finitely many vertices.\n\nNotes\n\nEvery concrete AbstractPolytope must define the following functions:\n\nvertices_list(::AbstractPolytope{N})::Vector{Vector{N}} – return a list of   all vertices\n\njulia> subtypes(AbstractPolytope)\n4-element Array{Any,1}:\n AbstractCentrallySymmetricPolytope\n AbstractPolygon\n HPolytope\n VPolytope\n\n\n\n\n\n"
 },
 
 {
@@ -1749,7 +1749,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.σ",
     "category": "method",
-    "text": "σ(d::AbstractVector{N}, ∅::EmptySet{N}) where {N<:Real}\n\nReturn the support vector of an empty set.\n\nInput\n\n∅ – an empty set\n\nOutput\n\nAn error.\n\n\n\n\n\n"
+    "text": "σ(d::AbstractVector{N}, ∅::EmptySet{N}) where {N<:Real}\n\nReturn the support vector of an empty set.\n\nInput\n\nd – direction\n∅ – an empty set\n\nOutput\n\nAn error.\n\n\n\n\n\n"
 },
 
 {
@@ -2821,7 +2821,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::PT) where {N<:Real, PT<:HPoly{N}}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints(::PT) where {N<:Real, PT<:HPoly{N}}\nremove_redundant_constraints!(::HPoly{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolyhedron:∈\nconstrained_dimensions"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::PT) where {N<:Real, PT<:HPoly{N}}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints(::PT) where {N<:Real, PT<:HPoly{N}}\nremove_redundant_constraints!(::HPoly{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolyhedron:∈\n[constrained_dimensions](@ref constrained_dimensions(::AbstractPolyhedron)"
 },
 
 {
@@ -3038,6 +3038,126 @@ var documenterSearchIndex = {"docs": [
     "title": "Singleton",
     "category": "section",
     "text": "Singleton\nrand(::Type{Singleton})\nelement(::Singleton{N}) where {N<:Real}\nelement(::Singleton{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
+},
+
+{
+    "location": "lib/representations.html#LazySets.Universe",
+    "page": "Common Set Representations",
+    "title": "LazySets.Universe",
+    "category": "type",
+    "text": "Universe{N<:Real} <: AbstractPolyhedron{N}\n\nType that represents the universal set, i.e., the set of all elements.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.dim-Tuple{Universe}",
+    "page": "Common Set Representations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(U::Universe)\n\nReturn the dimension of a universe.\n\nInput\n\nU – universe\n\nOutput\n\nThe dimension of a universe.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Universe{N}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, U::Universe{N}) where {N<:Real}\n\nReturn the support function of a universe.\n\nInput\n\nd – direction\nU – universe\n\nOutput\n\nThe support function in the given direction.\n\nAlgorithm\n\nIf the direction is all zero, the result is zero. Otherwise, the result is Inf.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Universe{N}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{N}, U::Universe{N}) where {N<:Real}\n\nReturn the support vector of a universe.\n\nInput\n\nd – direction\nU – universe\n\nOutput\n\nA vector with infinity values, except in dimensions where the direction is zero.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.:∈-Union{Tuple{N}, Tuple{AbstractArray{N,1},Universe{N}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "Base.:∈",
+    "category": "method",
+    "text": "∈(x::AbstractVector{N}, U::Universe{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in a universe.\n\nInput\n\nx – point/vector\nU – universe\n\nOutput\n\nThe output is always true.\n\nExamples\n\njulia> ∈([1.0, 0.0], Universe(2))\ntrue\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Universe}}",
+    "page": "Common Set Representations",
+    "title": "Base.rand",
+    "category": "method",
+    "text": "rand(::Type{Universe}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Universe{N}\n\nCreate a universe (note that there is nothing to randomize).\n\nInput\n\nUniverse – type for dispatch\nN        – (optional, default: Float64) numeric type\ndim      – (optional, default: 2) dimension\nrng      – (optional, default: GLOBAL_RNG) random number generator\nseed     – (optional, default: nothing) seed for reseeding\n\nOutput\n\nThe (only) universe of the given numeric type and dimension.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.an_element-Union{Tuple{Universe{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(U::Universe{N}) where {N<:Real}\n\nReturn some element of a universe.\n\nInput\n\nU – universe\n\nOutput\n\nThe origin.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Base.isempty-Tuple{Universe}",
+    "page": "Common Set Representations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(U::Universe)::Bool\n\nReturn if a universe is empty or not.\n\nInput\n\nU – universe\n\nOutput\n\nfalse.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.isbounded-Tuple{Universe}",
+    "page": "Common Set Representations",
+    "title": "LazySets.isbounded",
+    "category": "method",
+    "text": "isbounded(U::Universe)::Bool\n\nDetermine whether a universe is bounded.\n\nInput\n\nS – universe\n\nOutput\n\nfalse as the universe is unbounded.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LinearAlgebra.norm",
+    "page": "Common Set Representations",
+    "title": "LinearAlgebra.norm",
+    "category": "function",
+    "text": "norm(U::Universe, [p]::Real=Inf)\n\nReturn the norm of a universe. It is the norm of the enclosing ball (of the given p-norm) of minimal volume that is centered in the origin.\n\nInput\n\nU – universe\np – (optional, default: Inf) norm\n\nOutput\n\nAn error.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.radius",
+    "page": "Common Set Representations",
+    "title": "LazySets.radius",
+    "category": "function",
+    "text": "radius(U::Universe, [p]::Real=Inf)\n\nReturn the radius of a universe. It is the radius of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nU – universe\np – (optional, default: Inf) norm\n\nOutput\n\nAn error.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.diameter",
+    "page": "Common Set Representations",
+    "title": "LazySets.diameter",
+    "category": "function",
+    "text": "diameter(U::Universe, [p]::Real=Inf)\n\nReturn the diameter of a universe. It is the maximum distance between any two elements of the set, or, equivalently, the diameter of the enclosing ball (of the given p-norm) of minimal volume with the same center.\n\nInput\n\nU – universe\np – (optional, default: Inf) norm\n\nOutput\n\nAn error.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.constraints_list-Union{Tuple{Universe{N}}, Tuple{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(U::Universe{N})::Vector{LinearConstraint{N}}\n    where {N<:Real}\n\nReturn the list of constraints defining a universe.\n\nInput\n\nU – universe\n\nOutput\n\nThe empty list of constraints, as the universe is unconstrained.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.constrained_dimensions-Tuple{Universe}",
+    "page": "Common Set Representations",
+    "title": "LazySets.constrained_dimensions",
+    "category": "method",
+    "text": "constrained_dimensions(U::Universe)::Vector{Int}\n\nReturn the indices in which a universe is constrained.\n\nInput\n\nU – universe\n\nOutput\n\nThe empty vector, as the universe is unconstrained in every dimension.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#Universe-1",
+    "page": "Common Set Representations",
+    "title": "Universe",
+    "category": "section",
+    "text": "Universe\ndim(::Universe)\nρ(::AbstractVector{N}, ::Universe{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Universe{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Universe{N}) where {N<:Real}\nrand(::Type{Universe})\nan_element(::Universe{N}) where {N<:Real}\nisempty(::Universe)\nisbounded(::Universe)\nnorm(::Universe, ::Real=Inf)\nradius(::Universe, ::Real=Inf)\ndiameter(::Universe, ::Real=Inf)\nconstraints_list(::Universe{N}) where {N<:Real}\nconstrained_dimensions(::Universe)"
 },
 
 {
