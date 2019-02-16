@@ -5257,43 +5257,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},HalfSpace{N}}} where N<:Real",
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{AbstractPolyhedron{N},AbstractPolyhedron{N}}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
     "category": "method",
-    "text": "intersection(P::HPoly{N},\n             hs::HalfSpace{N};\n             backend=default_polyhedra_backend(P, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of a polytope in H-representation and a half-space.\n\nInput\n\nP         – polytope\nhs        – half-space\nbackend   – (optional, default: nothing) the LP solver or the the                polyhedral computations backend; its value is set internally,                see see below in the Notes for details\nuse_polyhedra_interface – (optional, default: false) if true, use the                Polyhedra interface for the removal of constraints\n\nOutput\n\nThe same polytope in H-representation with just one more constraint.\n\n\n\n\n\n"
+    "text": "intersection(P1::AbstractPolyhedron{N},\n             P2::AbstractPolyhedron{N};\n             backend=nothing,\n             use_polyhedra_interface=false) where {N<:Real}\n\nCompute the intersection of two polyhedra.\n\nInput\n\nP1        – polyhedron\nP2        – polyhedron\nbackend   – (optional, default: nothing) the LP solver or the backend for                polyhedral computations; its value is set internally, see the                Notes below for details\nuse_polyhedra_interface – (optional, default: false) if true, use the                Polyhedra interface for the removal of constraints\n\nOutput\n\nAn HPolyhedron resulting from the intersection of P1 and P2, with the redundant constraints removed, or an empty set if the intersection is empty. If one of the arguments is a polytope, the result is an HPolytope instead.\n\nNotes\n\nThe default value of the backend is set internally and depends on whether the Polyhedra backend is used or not. The default backends are GLPKSolverLP() and default_polyhedra_backend(P1, N), respectively.\n\nNote that if use_polyhedra_interface is set to true, there is no guarantee that the removal of constraints keep the set empty (see #1038 and Polyhedra#146), so it is better to check for emptiness of intersection before using this function in that case.\n\nAlgorithm\n\nThis implementation unifies the constraints of the two sets obtained from the constraints_list method.\n\n\n\n\n\n"
 },
 
 {
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{VPolygon{N}, VPolytope{N}},Union{VPolygon{N}, VPolytope{N}}}} where N<:Real",
     "page": "Binary Functions on Sets",
     "title": "LazySets.intersection",
     "category": "method",
-    "text": "intersection(P1::HPoly{N},\n             P2::HPoly{N};\n             backend=nothing,\n             use_polyhedra_interface=false) where {N<:Real}\n\nCompute the intersection of two polyhedra in H-representation.\n\nInput\n\nP1        – polyhedron\nP2        – polyhedron\nbackend   – (optional, default: nothing) the LP solver or the the                polyhedral computations backend; its value is set internally,                see see below in the Notes for details\nuse_polyhedra_interface – (optional, default: false) if true, use the                Polyhedra interface for the removal of constraints\n\nOutput\n\nA polyhedron resulting from the intersection of P1 and P2, with the redundant constraints removed, or an empty set if the intersection is empty.\n\nNotes\n\nThe default value of the backend is set internally and depends on whether the Polyhedra backend is used or not. The default backends are GLPKSolverLP() and default_polyhedra_backend(P1, N) respectively.\n\nNote that if use_polyhedra_interface is set to true, there is no guarantee that the removal of constraints keep the set empty (see #1038 and Polyhedra#146), so it is better to check for emptiness of intersection before using this function in that case.\n\nThe method implemented in this function can be used for any pair of sets that can handle the constraints_list option.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},VPolytope{N}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(P1::HPoly{N},\n             P2::VPolytope{N};\n             backend=default_polyhedra_backend(P1, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of two polytopes in either H-representation or V-representation.\n\nInput\n\nP1        – polytope\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the output of intersect\n\nOutput\n\nThe polytope obtained by the intersection of P1 and P2.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},AbstractPolytope{N}}} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(P1::HPoly{N},\n             P2::AbstractPolytope{N};\n             backend=default_polyhedra_backend(P1, N),\n             prunefunc=removehredundancy!) where {N<:Real}\n\nCompute the intersection of a polyhedron and a polytope.\n\nInput\n\nP1        – polyhedron\nP2        – polytope\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                polyhedral computations backend, see                Polyhedra\'s documentation                for further information\nprunefunc – (optional, default: removehredundancy!) function to                post-process the output of intersect\n\nOutput\n\nThe polytope in H-representation obtained by the intersection of P1 and P2.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{S2}, Tuple{S1}, Tuple{N}, Tuple{S1,S2}} where S2<:AbstractPolytope{N} where S1<:AbstractPolytope{N} where N<:Real",
-    "page": "Binary Functions on Sets",
-    "title": "LazySets.intersection",
-    "category": "method",
-    "text": "intersection(P1::S1, P2::S2) where {S1<:AbstractPolytope{N},\n                                    S2<:AbstractPolytope{N}} where {N<:Real}\n\nCompute the intersection of two polytopic sets.\n\nInput\n\nP1 – polytope\nP2 – another polytope\n\nOutput\n\nThe polytope obtained by the intersection of P1 and P2. Usually the V-representation is used.\n\nNotes\n\nThis fallback implementation requires Polyhedra to evaluate the concrete intersection. Inputs that are not of type HPolytope or VPolytope are converted to an HPolytope through the constraints_list function.\n\n\n\n\n\n"
+    "text": "intersection(P1::Union{VPolytope{N}, VPolygon{N}},\n             P2::Union{VPolytope{N}, VPolygon{N}};\n             [backend]=default_polyhedra_backend(P1, N),\n             [prunefunc]=removevredundancy!) where {N<:Real}\n\nCompute the intersection of two polytopes in vertex representation.\n\nInput\n\nP1        – polytope in vertex representation\nP2        – polytope in vertex representation\nbackend   – (optional, default: default_polyhedra_backend(P1, N)) the                backend for polyhedral computations\nprunefunc – (optional, default: removevredundancy!) function to prune                the vertices of the result\n\nOutput\n\nA VPolygon if both arguments are VPolygons, and a VPolytope otherwise.\n\n\n\n\n\n"
 },
 
 {
@@ -5317,7 +5293,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Binary Functions on Sets",
     "title": "Intersection of two sets",
     "category": "section",
-    "text": "intersection(::AbstractSingleton{N}, ::LazySet{N}) where {N<:Real}\nintersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nintersection(::Interval{N}, ::Interval{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}, ::Bool=true) where {N<:Real}\nintersection(::HPoly{N}, ::HalfSpace{N}) where {N<:Real}\nintersection(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nintersection(::HPoly{N}, ::VPolytope{N}) where {N<:Real}\nintersection(::HPoly{N}, ::AbstractPolytope{N}) where {N<:Real}\nintersection(::S1, ::S2) where {N<:Real, S1<:AbstractPolytope{N}, S2<:AbstractPolytope{N}}\nintersection(::UnionSet{N}, ::LazySet{N}) where {N<:Real}\nintersection(::UnionSetArray{N}, ::LazySet{N}) where {N<:Real}"
+    "text": "intersection(::AbstractSingleton{N}, ::LazySet{N}) where {N<:Real}\nintersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nintersection(::Interval{N}, ::Interval{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}, ::Bool=true) where {N<:Real}\nintersection(::AbstractPolyhedron{N}, ::AbstractPolyhedron{N}) where {N<:Real}\nintersection(::Union{VPolytope{N}, VPolygon{N}}, ::Union{VPolytope{N}, VPolygon{N}}) where {N<:Real}\nintersection(::UnionSet{N}, ::LazySet{N}) where {N<:Real}\nintersection(::UnionSetArray{N}, ::LazySet{N}) where {N<:Real}"
 },
 
 {
