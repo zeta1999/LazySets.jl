@@ -993,11 +993,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.linear_map-Union{Tuple{N}, Tuple{AbstractArray{N,2},AbstractPolyhedron{N}}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix{N},\n           P::AbstractPolyhedron{N};\n           check_invertibility::Bool=true,\n           cond_tol::Number=DEFAULT_COND_TOL,\n           use_inv::Bool=!issparse(M)\n           ) where {N<:Real}\n\nConcrete linear map of a polyhedron in constraint representation.\n\nInput\n\nM – matrix\nP – abstract polyhedron\ncheck_invertibility – (optional, deault: true) check if the linear map is                          invertible, in which case this function uses the matrix                          inverse; if the invertibility check fails, or if                          this flag is set to false, use the vertex representation                          to compute the linear map (see below for details)\ncond_tol – (optional) tolerance of matrix condition (used to check whether               the matrix is invertible)\nuse_inv  – (optional, default: false if M is sparse and true               otherwise) whether to compute the full left division through               inv(M), or to use the left division for each vector; see below \n\nOutput\n\nThe type of the result is \"as close as possible\" to the the type of P. To fix the type of the output to something different than the default value, consider post-processing the result of this function with a call to a suitable convert method.\n\nIn particular, the output depends on the type of P and the algorithm that was used:\n\nIf the vertex-based approach was used:\nIf P is a VPolygon then the output is a VPolygon.\nIf P is a VPolytope then the output is a VPolytope.\nOtherwise, the output is a VPolygon if the dimension of P is two and a VPolytope in other cases.\nIf the invertibility criterion was used:\nThe types of HalfSpace, Hyperplane, Line and AbstractHPolygon are preserved.\nIf P is an AbstractPolytope, then the output is an HPolygon if the dimension of P is two and an HPolytope in other cases.\nOtherwise, the output is an HPolyhedron.\n\nAlgorithm\n\nThis function implements two algorithms for the linear map:\n\nIf the matrix M is invertible (which we check with a sufficient condition), then y = M x implies x = textinv(M) y and we transform the constraint system A x  b to A textinv(M) y  b.\nOtherwise, we transform the polyhedron to vertex representation and apply the map to each vertex, returning a polyhedron in vertex representation. \n\nNote that the vertex representation (second approach) is only available if the polyhedron is bounded. Hence we check boundedness first.\n\nTo switch off the check for invertibility, set the option check_invertibility=false. If M is not invertible and the polyhedron is unbounded, this function returns an exception.\n\nThe option use_inv lets the user control - in case M is invertible - if the full matrix inverse is computed, or only the left division on the normal vectors. Note that this helps as a workaround when M is a sparse matrix, since the inv function is not available for sparse matrices. In this case, either use the option use_inv=false or convert the type of M as in linear_map(Matrix(M), P).\n\nInternally, this function operates at the level of the AbstractPolyhedron interface, but the actual algorithm uses dispatch on the concrete type of P, depending on the algorithm that is used:\n\n_linear_map_vrep(M, P) if the vertex approach is used\n_linear_map_hrep(M, P, use_inv) if the invertibility criterion is used\n\nNew subtypes of the interface should write their own _linear_map_vrep (resp. _linear_map_hrep) for special handling of the linear map; otherwise the fallback implementation for AbstractPolyhedron is used (see below).\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Polyhedron-1",
     "page": "Set Interfaces",
     "title": "Polyhedron",
     "category": "section",
-    "text": "A polyhedron has finitely many facets (H-representation) and is not necessarily bounded.AbstractPolyhedronThis interface defines the following functions:∈(::AbstractVector{N}, ::AbstractPolyhedron{N}) where {N<:Real}\nconstrained_dimensions(::AbstractPolyhedron)"
+    "text": "A polyhedron has finitely many facets (H-representation) and is not necessarily bounded.AbstractPolyhedronThis interface defines the following functions:∈(::AbstractVector{N}, ::AbstractPolyhedron{N}) where {N<:Real}\nconstrained_dimensions(::AbstractPolyhedron)\nlinear_map(::AbstractMatrix{N}, ::AbstractPolyhedron{N}) where {N<:Real}"
 },
 
 {
@@ -1022,14 +1030,6 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.singleton_list",
     "category": "method",
     "text": "singleton_list(P::AbstractPolytope{N})::Vector{Singleton{N}} where {N<:Real}\n\nReturn the vertices of a polytopic set as a list of singletons.\n\nInput\n\nP – polytopic set\n\nOutput\n\nList containing a singleton for each vertex.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/interfaces.html#LazySets.linear_map-Union{Tuple{N}, Tuple{AbstractArray{N,2},AbstractPolytope{N}}} where N<:Real",
-    "page": "Set Interfaces",
-    "title": "LazySets.linear_map",
-    "category": "method",
-    "text": "linear_map(M::AbstractMatrix{N}, P::AbstractPolytope{N};\n           output_type::Type{<:LazySet}=VPolytope{N}) where {N<:Real}\n\nConcrete linear map of an abstract polytype.\n\nInput\n\nM           – matrix\nP           – abstract polytype\noutput_type – (optional, default: VPolytope) type of the result\n\nOutput\n\nA set of type output_type.\n\nAlgorithm\n\nThe linear map M is applied to each vertex of the given set P, obtaining a polytope in V-representation. Since some set representations (e.g. axis-aligned hyperrectangles) are not closed under linear maps, the default output is a VPolytope. If an output_type is given, the corresponding convert method is invoked.\n\n\n\n\n\n"
 },
 
 {
@@ -1061,7 +1061,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Polytope",
     "category": "section",
-    "text": "A polytope is a bounded set with finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Centrally symmetric polytope.AbstractPolytopeThis interface defines the following functions:isbounded(::AbstractPolytope)\nsingleton_list(::AbstractPolytope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::AbstractPolytope{N}) where {N<:Real}\nisempty(::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:AbstractPolytope}"
+    "text": "A polytope is a bounded set with finitely many vertices (V-representation) resp. facets (H-representation). Note that there is a special interface combination Centrally symmetric polytope.AbstractPolytopeThis interface defines the following functions:isbounded(::AbstractPolytope)\nsingleton_list(::AbstractPolytope{N}) where {N<:Real}\nisempty(::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::AbstractPolytope)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:AbstractPolytope}"
 },
 
 {
@@ -1085,7 +1085,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.linear_map",
     "category": "method",
-    "text": "linear_map(M::AbstractMatrix{N}, P::AbstractPolygon{N};\n           output_type::Type{<:LazySet}=typeof(P)) where {N<:Real}\n\nConcrete linear map of an abstract polygon.\n\nInput\n\nM           – matrix\nP           – abstract polygon\noutput_type – (optional, default: type of P) type of the result\n\nOutput\n\nA set of type output_type.\n\nAlgorithm\n\nThe linear map M is applied to each vertex of the given set P, obtaining a polygon in V-representation. Since polygons are closed under linear map, by default MP is converted to the concrete type of P. If an output_type is given, the corresponding convert method is invoked.\n\n\n\n\n\n"
+    "text": "linear_map(M::AbstractMatrix{N},\n           P::AbstractPolyhedron{N};\n           check_invertibility::Bool=true,\n           cond_tol::Number=DEFAULT_COND_TOL,\n           use_inv::Bool=!issparse(M)\n           ) where {N<:Real}\n\nConcrete linear map of a polyhedron in constraint representation.\n\nInput\n\nM – matrix\nP – abstract polyhedron\ncheck_invertibility – (optional, deault: true) check if the linear map is                          invertible, in which case this function uses the matrix                          inverse; if the invertibility check fails, or if                          this flag is set to false, use the vertex representation                          to compute the linear map (see below for details)\ncond_tol – (optional) tolerance of matrix condition (used to check whether               the matrix is invertible)\nuse_inv  – (optional, default: false if M is sparse and true               otherwise) whether to compute the full left division through               inv(M), or to use the left division for each vector; see below \n\nOutput\n\nThe type of the result is \"as close as possible\" to the the type of P. To fix the type of the output to something different than the default value, consider post-processing the result of this function with a call to a suitable convert method.\n\nIn particular, the output depends on the type of P and the algorithm that was used:\n\nIf the vertex-based approach was used:\nIf P is a VPolygon then the output is a VPolygon.\nIf P is a VPolytope then the output is a VPolytope.\nOtherwise, the output is a VPolygon if the dimension of P is two and a VPolytope in other cases.\nIf the invertibility criterion was used:\nThe types of HalfSpace, Hyperplane, Line and AbstractHPolygon are preserved.\nIf P is an AbstractPolytope, then the output is an HPolygon if the dimension of P is two and an HPolytope in other cases.\nOtherwise, the output is an HPolyhedron.\n\nAlgorithm\n\nThis function implements two algorithms for the linear map:\n\nIf the matrix M is invertible (which we check with a sufficient condition), then y = M x implies x = textinv(M) y and we transform the constraint system A x  b to A textinv(M) y  b.\nOtherwise, we transform the polyhedron to vertex representation and apply the map to each vertex, returning a polyhedron in vertex representation. \n\nNote that the vertex representation (second approach) is only available if the polyhedron is bounded. Hence we check boundedness first.\n\nTo switch off the check for invertibility, set the option check_invertibility=false. If M is not invertible and the polyhedron is unbounded, this function returns an exception.\n\nThe option use_inv lets the user control - in case M is invertible - if the full matrix inverse is computed, or only the left division on the normal vectors. Note that this helps as a workaround when M is a sparse matrix, since the inv function is not available for sparse matrices. In this case, either use the option use_inv=false or convert the type of M as in linear_map(Matrix(M), P).\n\nInternally, this function operates at the level of the AbstractPolyhedron interface, but the actual algorithm uses dispatch on the concrete type of P, depending on the algorithm that is used:\n\n_linear_map_vrep(M, P) if the vertex approach is used\n_linear_map_hrep(M, P, use_inv) if the invertibility criterion is used\n\nNew subtypes of the interface should write their own _linear_map_vrep (resp. _linear_map_hrep) for special handling of the linear map; otherwise the fallback implementation for AbstractPolyhedron is used (see below).\n\n\n\n\n\n"
 },
 
 {
@@ -1565,7 +1565,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ncenter(::BallInf{N}) where {N<:Real}\nradius(::BallInf, ::Real=Inf)\nradius_hyperrectangle(::BallInf{N}) where {N<:Real}\nradius_hyperrectangle(::BallInf{N}, ::Int) where {N<:Real}\nrand(::Type{BallInf})Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
+    "text": "BallInf\ncenter(::BallInf{N}) where {N<:Real}\nradius(::BallInf, ::Real=Inf)\nradius_hyperrectangle(::BallInf{N}) where {N<:Real}\nradius_hyperrectangle(::BallInf{N}, ::Int) where {N<:Real}\nrand(::Type{BallInf})Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1629,7 +1629,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\nσ(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\nvertices_list(::Ball1{N}) where {N<:Real}\ncenter(::Ball1{N}) where {N<:Real}\nrand(::Type{Ball1})\nconstraints_list(::Ball1{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Ball1\nσ(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\nvertices_list(::Ball1{N}) where {N<:Real}\ncenter(::Ball1{N}) where {N<:Real}\nrand(::Type{Ball1})\nconstraints_list(::Ball1{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -1961,14 +1961,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.linear_map-Union{Tuple{N}, Tuple{AbstractArray{N,2},HalfSpace{N}}} where N",
-    "page": "Common Set Representations",
-    "title": "LazySets.linear_map",
-    "category": "method",
-    "text": "linear_map(M::AbstractMatrix{N}, hs::HalfSpace{N}) where {N}\n\nReturn the concrete linear map of a half-space.\n\nInput\n\nM  – matrix\nhs – half-space\n\nOutput\n\nThe half-space obtained by applying the given linear map to the half-space.\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#LazySets.tosimplehrep-Union{Tuple{AbstractArray{HalfSpace{N},1}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.tosimplehrep",
@@ -1997,7 +1989,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstraints_list(::AbstractMatrix{N}, ::AbstractVector{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::HalfSpace{N}) where {N}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}\nremove_redundant_constraints(::AbstractVector{LinearConstraint{N}}) where {N<:Real}\nremove_redundant_constraints!(::AbstractVector{LinearConstraint{N}}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstraints_list(::AbstractMatrix{N}, ::AbstractVector{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}\nremove_redundant_constraints(::AbstractVector{LinearConstraint{N}}) where {N<:Real}\nremove_redundant_constraints!(::AbstractVector{LinearConstraint{N}}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -2141,7 +2133,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "Hyperrectangle\nrand(::Type{Hyperrectangle})\ncenter(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+    "text": "Hyperrectangle\nrand(::Type{Hyperrectangle})\ncenter(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -2309,7 +2301,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nmin(::Interval{N}) where {N<:Real}\nmax(::Interval{N}) where {N<:Real}\nlow(::Interval{N}) where {N<:Real}\nhigh(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nmin(::Interval{N}) where {N<:Real}\nmax(::Interval{N}) where {N<:Real}\nlow(::Interval{N}) where {N<:Real}\nhigh(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
 },
 
 {
@@ -2565,7 +2557,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\nσ(::AbstractVector{N}, ::HPolygonOpt{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\nisbounded\naddconstraint!\nisredundant\nremove_redundant_constraints!\nconstraints_list"
+    "text": "HPolygonOpt\nσ(::AbstractVector{N}, ::HPolygonOpt{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_listInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\nisbounded\naddconstraint!\nisredundant\nremove_redundant_constraints!\nconstraints_list"
 },
 
 {
@@ -2801,14 +2793,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.linear_map-Union{Tuple{PT}, Tuple{N}, Tuple{AbstractArray{N,2},PT}} where PT<:Union{HPolyhedron{N}, HPolytope{N}} where N<:Real",
-    "page": "Common Set Representations",
-    "title": "LazySets.linear_map",
-    "category": "method",
-    "text": "linear_map(M::AbstractMatrix{N}, P::PT;\n          [cond_tol=DEFAULT_COND_TOL]::Number,\n          [use_inv]::Bool=!issparse(M)) where {N<:Real, PT<:HPoly{N}}\n\nConcrete linear map of a polyhedron in constraint representation.\n\nInput\n\nM        – matrix\nP        – polyhedron in constraint representation\ncond_tol – (optional) tolerance of matrix condition (used to check whether               the matrix is invertible)\nuse_inv  – (optional, default: false if M is sparse and true               otherwise) whether to compute the full left division through               inv(M), or to use the left division for each vector; see below \n\nOutput\n\nA polyhedron of the same type as the input (PT).\n\nAlgorithm\n\nIf the matrix M is invertible (which we check with a sufficient condition), then y = M x implies x = textinv(M) y and we transform the constraint system A x  b to A textinv(M) y  b.\n\nThe option use_inv is a workaround to allow using the invertibility condition when M is a sparse matrix, since the inv function is not available for sparse matrices. In that case, either assure that use_inv=false, or use linear_map(Matrix(M), P).\n\n\n\n\n\n"
-},
-
-{
     "location": "lib/representations.html#Polyhedra.polyhedron-Union{Tuple{Union{HPolyhedron{N}, HPolytope{N}}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "Polyhedra.polyhedron",
@@ -2837,7 +2821,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::PT) where {N<:Real, PT<:HPoly{N}}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints(::PT) where {N<:Real, PT<:HPoly{N}}\nremove_redundant_constraints!(::HPoly{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolyhedron:∈\n[constrained_dimensions](@ref constrained_dimensions(::AbstractPolyhedron)"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints(::PT) where {N<:Real, PT<:HPoly{N}}\nremove_redundant_constraints!(::HPoly{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolyhedron:∈\n[constrained_dimensions](@ref constrained_dimensions(::AbstractPolyhedron)\nlinear_map"
 },
 
 {
@@ -3009,11 +2993,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.linear_map-Union{Tuple{N}, Tuple{AbstractArray{N,2},VPolytope{N}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.linear_map",
+    "category": "method",
+    "text": "linear_map(M::AbstractMatrix{N}, P::VPolytope{N}) where {N<:Real}\n\nConcrete linear map of a polytope in vertex representation.\n\nInput\n\nM – matrix\nP – polytope in vertex representation\n\nOutput\n\nA polytope in vertex representation.\n\nAlgorithm\n\nThe linear map M is applied to each vertex of the given set P, obtaining a polytope in V-representation. The output type is again a VPolytope.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Vertex-representation-2",
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\nvertices_list(::VPolytope{N}) where {N<:Real}\nremove_redundant_vertices(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_map"
+    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\nvertices_list(::VPolytope{N}) where {N<:Real}\nremove_redundant_vertices(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_map"
 },
 
 {
@@ -4645,7 +4637,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Symmetric Interval Hull",
     "category": "section",
-    "text": "SymmetricIntervalHull\ndim(::SymmetricIntervalHull)\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}\ncenter(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_list\nlinear_mapInherited from AbstractCentrallySymmetricPolytope:isempty\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+    "text": "SymmetricIntervalHull\ndim(::SymmetricIntervalHull)\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}\ncenter(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractPolyhedron:linear_mapInherited from AbstractCentrallySymmetricPolytope:isempty\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -5789,7 +5781,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.isinvertible",
     "category": "function",
-    "text": "isinvertible(M::AbstractMatrix; [cond_tol]::Number=DEFAULT_COND_TOL)\n\nA sufficient check of a matrix being invertible (or nonsingular).\n\nInput\n\nM        – matrix\ncond_tol – (optional, default: DEFAULT_COND_TOL) tolerance of matrix               condition\n\nOutput\n\nIf the result is true, M is invertible. If the result is false, this function could not conclude.\n\nAlgorithm\n\nWe check whether the matrix condition number cond(M) is below some prescribed tolerance.\n\n\n\n\n\n"
+    "text": "isinvertible(M::Matrix; [cond_tol]::Number=DEFAULT_COND_TOL)\n\nA sufficient check of a matrix being invertible (or nonsingular).\n\nInput\n\nM        – matrix\ncond_tol – (optional, default: DEFAULT_COND_TOL) tolerance of matrix               condition\n\nOutput\n\nIf the result is true, M is invertible. If the result is false, this function could not conclude.\n\nAlgorithm\n\nWe check whether the matrix condition number cond(M) is below some prescribed tolerance.\n\n\n\n\n\n"
 },
 
 {
