@@ -5305,11 +5305,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#LazySets.intersection-Union{Tuple{N}, Tuple{AbstractPolyhedron{N},ResetMap{N,S} where S<:LazySet{N}}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "LazySets.intersection",
+    "category": "method",
+    "text": "intersection(P::AbstractPolyhedron{N}, rm::ResetMap{N}) where {N<:Real}\n\nReturn the intersection of a polyhedron and a polyhedral reset map.\n\nInput\n\nP  – polyhedron\nrm – polyhedral reset map\n\nOutput\n\nA polyhedron.\n\nNotes\n\nWe assume that rm is polyhedral, i.e., has a constraints_list method defined.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#Intersection-of-two-sets-1",
     "page": "Binary Functions on Sets",
     "title": "Intersection of two sets",
     "category": "section",
-    "text": "intersection(::AbstractSingleton{N}, ::LazySet{N}) where {N<:Real}\nintersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nintersection(::Interval{N}, ::Interval{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}, ::Bool=true) where {N<:Real}\nintersection(::AbstractPolyhedron{N}, ::AbstractPolyhedron{N}) where {N<:Real}\nintersection(::Union{VPolytope{N}, VPolygon{N}}, ::Union{VPolytope{N}, VPolygon{N}}) where {N<:Real}\nintersection(::UnionSet{N}, ::LazySet{N}) where {N<:Real}\nintersection(::UnionSetArray{N}, ::LazySet{N}) where {N<:Real}\nintersection(::Universe{N}, ::LazySet{N}) where {N<:Real}"
+    "text": "intersection(::AbstractSingleton{N}, ::LazySet{N}) where {N<:Real}\nintersection(::Line{N}, ::Line{N}) where {N<:Real}\nintersection(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nintersection(::Interval{N}, ::Interval{N}) where {N<:Real}\nintersection(::AbstractHPolygon{N}, ::AbstractHPolygon{N}, ::Bool=true) where {N<:Real}\nintersection(::AbstractPolyhedron{N}, ::AbstractPolyhedron{N}) where {N<:Real}\nintersection(::Union{VPolytope{N}, VPolygon{N}}, ::Union{VPolytope{N}, VPolygon{N}}) where {N<:Real}\nintersection(::UnionSet{N}, ::LazySet{N}) where {N<:Real}\nintersection(::UnionSetArray{N}, ::LazySet{N}) where {N<:Real}\nintersection(::Universe{N}, ::LazySet{N}) where {N<:Real}\nintersection(::AbstractPolyhedron{N}, ::ResetMap{N}) where {N<:Real}"
 },
 
 {
