@@ -4973,7 +4973,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
-    "text": "convert(::Type{HPolytope}, P::AbstractPolytope)\n\nConvert a polytopic set to a polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe given polytope represented as a polytope in constraint representation.\n\nAlgorithm\n\nP is first converted to a polytope in V-representation. Then, the conversion method to a polytope in H-representation is invoked. This conversion may require the Polyhedra library.\n\n\n\n\n\n"
+    "text": "convert(::Type{HPolytope}, P::AbstractPolytope)\n\nConvert a polytopic set to a polytope in H-representation.\n\nInput\n\ntype – target type\nP    – source polytope\n\nOutput\n\nThe given polytope represented as a polytope in constraint representation.\n\nAlgorithm\n\nFirst the list of constraints of P is computed, then the corresponding HPolytope is created.\n\n\n\n\n\n"
 },
 
 {
