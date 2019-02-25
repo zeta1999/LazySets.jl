@@ -4909,7 +4909,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
-    "text": "convert(::Type{Hyperrectangle}, x::Interval)\n\nConverts a unidimensional interval into a hyperrectangular set.\n\nInput\n\nAbstractHyperrectangle\nx – interval\n\nOutput\n\nA hyperrectangle.\n\nExamples\n\njulia> convert(Hyperrectangle, Interval(0.0, 1.0))\nHyperrectangle{Float64}([0.5], [0.5])\n\n\n\n\n\n"
+    "text": "convert(::Type{Hyperrectangle}, x::Interval)\n\nConverts a unidimensional interval into a hyperrectangle.\n\nInput\n\nHyperrectangle – hyperrectangle type, used for dispatch\nx              – interval\n\nOutput\n\nA hyperrectangle.\n\nExamples\n\njulia> convert(Hyperrectangle, Interval(0.0, 1.0))\nHyperrectangle{Float64}([0.5], [0.5])\n\n\n\n\n\n"
 },
 
 {
@@ -4917,7 +4917,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
-    "text": "convert(::Type{Interval}, H::AbstractHyperrectangle)\n\nConverts a hyperrectangular set to a unidimensional interval.\n\nInput\n\nH        – hyperrectangular set \nInterval – interval type, used for dispatch\n\nOutput\n\nAn interval.\n\nExamples\n\njulia> convert(Interval, Hyperrectangle{Float64}([0.5], [0.5]))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\n\n\n\n\n"
+    "text": "convert(::Type{Interval}, H::AbstractHyperrectangle)\n\nConverts a hyperrectangular set to a unidimensional interval.\n\nInput\n\nInterval – interval type, used for dispatch\nH        – hyperrectangular set\n\nOutput\n\nAn interval.\n\nExamples\n\njulia> convert(Interval, Hyperrectangle{Float64}([0.5], [0.5]))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\n\n\n\n\n"
 },
 
 {
@@ -4925,7 +4925,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
-    "text": "convert(::Type{Interval}, S::LazySet{N}) where {N<:Real}\n\nConverts a convex set to a unidimensional interval.\n\nInput\n\nS        – set \nInterval – interval type, used for dispatch\n\nOutput\n\nAn interval.\n\n\n\n\n\n"
+    "text": "convert(::Type{Interval}, S::LazySet{N}) where {N<:Real}\n\nConverts a convex set to a unidimensional interval.\n\nInput\n\nInterval – interval type, used for dispatch\nS        – convex set\n\nOutput\n\nAn interval.\n\n\n\n\n\n"
 },
 
 {
