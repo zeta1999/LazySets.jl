@@ -5805,7 +5805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.isinvertible",
     "category": "function",
-    "text": "isinvertible(M::Matrix; [cond_tol]::Number=DEFAULT_COND_TOL)\n\nA sufficient check of a matrix being invertible (or nonsingular).\n\nInput\n\nM        – matrix\ncond_tol – (optional, default: DEFAULT_COND_TOL) tolerance of matrix               condition\n\nOutput\n\nIf the result is true, M is invertible. If the result is false, this function could not conclude.\n\nAlgorithm\n\nWe check whether the matrix condition number cond(M) is below some prescribed tolerance.\n\n\n\n\n\n"
+    "text": "isinvertible(M::Matrix; [cond_tol]::Number=DEFAULT_COND_TOL)\n\nA sufficient check of a matrix being invertible (or nonsingular).\n\nInput\n\nM        – matrix\ncond_tol – (optional, default: DEFAULT_COND_TOL) tolerance of matrix               condition\n\nOutput\n\nIf the result is true, M is invertible. If the result is false, the matrix is non-square or this function could not conclude.\n\nAlgorithm\n\nWe check whether the matrix is square and whether the matrix condition number cond(M) is below some prescribed tolerance.\n\n\n\n\n\n"
 },
 
 {
@@ -5814,6 +5814,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.ispermutation",
     "category": "function",
     "text": "ispermutation(u::AbstractVector{T}, v::AbstractVector{T})::Bool where T\n\nCheck that two vectors contain the same elements up to reordering.\n\nInput\n\nu – first vector\nv – second vector\n\nOutput\n\ntrue iff the vectors are identical up to reordering.\n\nExamples\n\njulia> LazySets.ispermutation([1, 2, 2], [2, 2, 1])\ntrue\n\njulia> LazySets.ispermutation([1, 2, 2], [1, 1, 2])\nfalse\n\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#LazySets.issquare",
+    "page": "Utility Functions",
+    "title": "LazySets.issquare",
+    "category": "function",
+    "text": "issquare(M::AbstractMatrix)::Bool\n\nCheck whether a matrix is square.\n\nInput\n\nM – matrix\n\nOutput\n\ntrue iff the matrix is square.\n\n\n\n\n\n"
 },
 
 {
@@ -5957,7 +5965,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "an_element_helper\nbinary_search_constraints\ncross_product(::AbstractMatrix{N}) where {N<:Real}\ndot_zero\nget_radius!\nisinvertible\nispermutation\nis_right_turn\nis_tighter_same_dir_2D\nnonzero_indices\nsamedir\nsign_cadlag\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed\nsubstitute\nsubstitute!\nσ_helper\n@neutral\n@absorbing\n@neutral_absorbing\n@declare_array_version\n@array_neutral\n@array_absorbing"
+    "text": "an_element_helper\nbinary_search_constraints\ncross_product(::AbstractMatrix{N}) where {N<:Real}\ndot_zero\nget_radius!\nisinvertible\nispermutation\nissquare\nis_right_turn\nis_tighter_same_dir_2D\nnonzero_indices\nsamedir\nsign_cadlag\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed\nsubstitute\nsubstitute!\nσ_helper\n@neutral\n@absorbing\n@neutral_absorbing\n@declare_array_version\n@array_neutral\n@array_absorbing"
 },
 
 {
