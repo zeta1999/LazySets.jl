@@ -717,7 +717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n16-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolyhedron\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n Intersection\n IntersectionArray\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n ResetMap\n\n\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n17-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolyhedron\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n Intersection\n IntersectionArray\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n ResetMap\n Translation\n\n\n\n\n\n"
 },
 
 {
@@ -4630,6 +4630,94 @@ var documenterSearchIndex = {"docs": [
     "title": "Symmetric Interval Hull",
     "category": "section",
     "text": "SymmetricIntervalHull\ndim(::SymmetricIntervalHull)\nσ(::AbstractVector{N}, ::SymmetricIntervalHull{N}) where {N<:Real}\ncenter(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}) where {N<:Real}\nradius_hyperrectangle(::SymmetricIntervalHull{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractPolyhedron:linear_mapInherited from AbstractCentrallySymmetricPolytope:isempty\nan_elementInherited from AbstractHyperrectangle:∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+},
+
+{
+    "location": "lib/operations.html#LazySets.Translation",
+    "page": "Common Set Operations",
+    "title": "LazySets.Translation",
+    "category": "type",
+    "text": "Translation{N<:Real, VN<:AbstractVector{N}, S<:LazySet{N}} <: LazySet{N}\n\nType that represents a lazy translation.\n\nThe translation of set X along vector v is the map: \n\nx  x + vqquad x  X\n\nA translation is a special case of an affine map A x + b x  X where the linear map A is the identity matrix and the translation vector b = v.\n\nFields\n\nX – convex set\nv – vector that defines the translation\n\nExample\n\njulia> X = BallInf([2.0, 2.0, 2.0], 1.0);\n\njulia> v = [1.0, 0.0, 0.0]; # translation along dimension 1\n\njulia> tr = Translation(X, v);\n\njulia> typeof(tr)\nTranslation{Float64,Array{Float64,1},BallInf{Float64}}\n\njulia> tr.X\nBallInf{Float64}([2.0, 2.0, 2.0], 1.0)\n\njulia> tr.v\n3-element Array{Float64,1}:\n 1.0\n 0.0\n 0.0\n\nThe sum operator + is overloaded to create translations:\n\njulia> X + v == Translation(X, v)\ntrue\n\nAnd so does the Minkowski sum operator, ⊕:\n\njulia> X ⊕ v == Translation(X, v)\ntrue\n\nThe translation of a translation is performed immediately:\n\njulia> tr = (X+v)+v\nTranslation{Float64,Array{Float64,1},BallInf{Float64}}(BallInf{Float64}([2.0, 2.0, 2.0], 1.0), [2.0, 0.0, 0.0])\n\njulia> tr.v\n3-element Array{Float64,1}:\n 2.0\n 0.0\n 0.0\n\nThe dimension of a translation is obtained with the dim function:\n\njulia> dim(tr)\n3\n\nFor the support vector (resp. support function) along vector d, use σ and ρ respectively:\n\njulia> σ([1.0, 0.0, 0.0], tr)\n3-element Array{Float64,1}:\n 5.0\n 3.0\n 3.0\n\njulia> ρ([1.0, 0.0, 0.0], tr)\n5.0\n\nSee the docstring of each of these functions for details.\n\nThe an_element function is useful to obtain an element of a translation:\n\njulia> e = an_element(tr)\n3-element Array{Float64,1}:\n 4.0\n 2.0\n 2.0\n\nThe lazy linear map of a translation is again a translation, since the following simplification rule applies: M * (Xv) = (M*X)  (M*v):\n\njulia> Q = Matrix(2.0I, 3, 3) * tr;\n\njulia> Q isa Translation && Q.v == 2 * tr.v\ntrue\n\nUse the isempty method to query if the translation is empty; it falls back to the isempty method of the wrapped set:\n\njulia> isempty(tr)\nfalse\n\nThe list of constraints of the translation of a polyhedron (in general, a set whose constraints_list is available) can be computed from a lazy translation:\n\njulia> constraints_list(tr)\n6-element Array{HalfSpace{Float64},1}:\n HalfSpace{Float64}([1.0, 0.0, 0.0], 5.0)\n HalfSpace{Float64}([0.0, 1.0, 0.0], 3.0)\n HalfSpace{Float64}([0.0, 0.0, 1.0], 3.0)\n HalfSpace{Float64}([-1.0, -0.0, -0.0], -3.0)\n HalfSpace{Float64}([-0.0, -1.0, -0.0], -1.0)\n HalfSpace{Float64}([-0.0, -0.0, -1.0], -1.0)\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.:+-Tuple{LazySet,AbstractArray{T,1} where T}",
+    "page": "Common Set Operations",
+    "title": "Base.:+",
+    "category": "method",
+    "text": "+(X::LazySet, v::AbstractVector)\n\nConvenience constructor for a translation.\n\nInput\n\nX – convex set\nv – vector\n\nOutput\n\nThe symbolic translation of X along vector v.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.:⊕-Tuple{LazySet,AbstractArray{T,1} where T}",
+    "page": "Common Set Operations",
+    "title": "LazySets.:⊕",
+    "category": "method",
+    "text": "⊕(X::LazySet, v::AbstractVector)\n\nUnicode alias constructor ⊕ (oplus) for the lazy translation operator.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.dim-Tuple{Translation}",
+    "page": "Common Set Operations",
+    "title": "LazySets.dim",
+    "category": "method",
+    "text": "dim(tr::Translation)::Int\n\nReturn the dimension of a translation.\n\nInput\n\ntr – translation\n\nOutput\n\nThe dimension of a translation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Translation{N,VN,S} where S<:LazySet{N} where VN<:AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, tr::Translation{N}) where {N<:Real}\n\nReturn the support function of a translation.\n\nInput\n\nd  – direction\ntr – translation\n\nOutput\n\nThe support function in the given direction.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Translation{N,VN,S} where S<:LazySet{N} where VN<:AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.σ",
+    "category": "method",
+    "text": "σ(d::AbstractVector{N}, tr::Translation{N}) where {N<:Real}\n\nReturn the support vector of a translation.\n\nInput\n\nd  – direction\ntr – translation\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.an_element-Tuple{Translation}",
+    "page": "Common Set Operations",
+    "title": "LazySets.an_element",
+    "category": "method",
+    "text": "an_element(tr::Translation)\n\nReturn some element of a translation.\n\nInput\n\ntr – translation\n\nOutput\n\nAn element in the translation.\n\nNotes\n\nThis function first asks for an_element function of the wrapped set, then translates this element according to the given translation vector. \n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Base.isempty-Tuple{Translation}",
+    "page": "Common Set Operations",
+    "title": "Base.isempty",
+    "category": "method",
+    "text": "isempty(tr::Translation)::Bool\n\nReturn if a translation is empty or not.\n\nInput\n\ntr – translation\n\nOutput\n\ntrue iff the wrapped set is empty.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.constraints_list-Union{Tuple{N}, Tuple{Translation{N,VN,S} where S<:LazySet{N} where VN<:AbstractArray{N,1},Val{true}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(tr::Translation{N}, ::Val{true}) where {N<:Real}\n\nReturn the list of constraints of the translation of a set.\n\nInput\n\ntr – lazy translation of a polyhedron\n\nOutput\n\nThe list of constraints of the translation.\n\nNotes\n\nWe assume that the set wrapped by the lazy translation X offers a method constraints_list(⋅).\n\nAlgorithm\n\nLet the translation be defined by the set of points y such that y = x + v for all x ∈ X. Then, each defining halfspace a⋅x ≤ b is transformed to a⋅y ≤ b + a⋅v.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#LazySets.LinearMap-Union{Tuple{N}, Tuple{AbstractArray{N,2},Translation{N,VN,S} where S<:LazySet{N} where VN<:AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.LinearMap",
+    "category": "method",
+    "text": "LinearMap(M::AbstractMatrix{N}, tr::Translation{N}) where {N<:Real}\n\nReturn the lazy linear map of a translation.\n\nInput\n\nM  – matrix\ntr – translation\n\nOutput\n\nThe translation defined by the linear map.\n\nNotes\n\nThis method defines the simplification rule: M * (Xv) = (M*X)  (M*v), returning a new translation.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/operations.html#Translation-1",
+    "page": "Common Set Operations",
+    "title": "Translation",
+    "category": "section",
+    "text": "Translation\n+(X::LazySet, v::AbstractVector)\n⊕(X::LazySet, v::AbstractVector)\ndim(::Translation)\nρ(::AbstractVector{N}, ::Translation{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Translation{N}) where {N<:Real}\nan_element(::Translation)\nisempty(::Translation)\nconstraints_list(::Translation{N}, ::Val{true}) where {N<:Real}\nLinearMap(::AbstractMatrix{N}, ::Translation{N}) where {N<:Real}"
 },
 
 {
