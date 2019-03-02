@@ -5641,6 +5641,22 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/approximations.html#LazySets.Approximations.uniform_partition",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.uniform_partition",
+    "category": "function",
+    "text": " uniform_partition(n::Int, block_size::Int)\n\nCompute a uniform block partition of the given size.\n\nInput\n\nn          – number of dimensions of the partition\nblock_size – size of each block\n\nOutput\n\nA vector of ranges, Vector{UnitRange{Int}}, such that the size of each block is the same, if possible.\n\nExamples\n\nIf the number of dimensions n is 2, we have two options: either two blocks of size 1 or one block of size 2:\n\njulia> LazySets.Approximations.uniform_partition(2, 1)\n2-element Array{UnitRange{Int64},1}:\n 1:1\n 2:2\n\njulia> LazySets.Approximations.uniform_partition(2, 2)\n1-element Array{UnitRange{Int64},1}:\n 1:2\n\nIf the block size argument is not compatible with (i.e. does not divide) n, the output is filled with one block of the size needed to reach n:\n\njulia> LazySets.Approximations.uniform_partition(3, 1)\n3-element Array{UnitRange{Int64},1}:\n 1:1\n 2:2\n 3:3\n\njulia> LazySets.Approximations.uniform_partition(3, 2)\n2-element Array{UnitRange{Int64},1}:\n 1:2\n 3:3\n\njulia> LazySets.Approximations.uniform_partition(10, 6)\n2-element Array{UnitRange{Int64},1}:\n 1:6\n 7:10\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/approximations.html#Convenience-functions-1",
+    "page": "Approximations",
+    "title": "Convenience functions",
+    "category": "section",
+    "text": "uniform_partition"
+},
+
+{
     "location": "lib/approximations.html#LazySets.Approximations.overapproximate",
     "page": "Approximations",
     "title": "LazySets.Approximations.overapproximate",
