@@ -717,7 +717,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.LazySet",
     "category": "type",
-    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\njulia> subtypes(LazySet)\n17-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolyhedron\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n Intersection\n IntersectionArray\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n ResetMap\n Translation\n\n\n\n\n\n"
+    "text": "LazySet{N}\n\nAbstract type for convex sets, i.e., sets characterized by a (possibly infinite) intersection of halfspaces, or equivalently, sets S such that for any two elements x y  S and 0  λ  1 it holds that λx + (1-λ)y  S.\n\nNotes\n\nLazySet types should be parameterized with a type N, typically N<:Real, for using different numeric types.\n\nEvery concrete LazySet must define the following functions:\n\nσ(d::AbstractVector{N}, S::LazySet{N}) where {N<:Real} – the support vector   of S in a given direction d; note that the numeric type N of d and   S must be identical; for some set types N may be more restrictive than   Real\ndim(S::LazySet)::Int – the ambient dimension of S\n\nThe subtypes of LazySet (including abstract interfaces):\n\njulia> using LazySets: subtypes\n\njulia> subtypes(LazySet, false)\n17-element Array{Any,1}:\n AbstractCentrallySymmetric\n AbstractPolyhedron\n CacheMinkowskiSum\n CartesianProduct\n CartesianProductArray\n ConvexHull\n ConvexHullArray\n EmptySet\n ExponentialMap\n ExponentialProjectionMap\n Intersection\n IntersectionArray\n LinearMap\n MinkowskiSum\n MinkowskiSumArray\n ResetMap\n Translation\n\nIf we only consider concrete subtypes, then:\n\njldoctest julia> LazySets.subtypes(LazySet, true) 37-element Array{Type,1}:  Ball1  Ball2  BallInf  Ballp  CacheMinkowskiSum  CartesianProduct  CartesianProductArray  ConvexHull  ConvexHullArray  Ellipsoid  EmptySet  ExponentialMap  ExponentialProjectionMap  HPolygon  HPolygonOpt  HPolyhedron  HPolytope  HalfSpace  Hyperplane  Hyperrectangle  Intersection  IntersectionArray  Interval  Line  LineSegment  LinearMap  MinkowskiSum  MinkowskiSumArray  ResetMap  Singleton  SymmetricIntervalHull  Translation  Universe  VPolygon  VPolytope  ZeroSet  Zonotope\n\n\n\n\n\n"
 },
 
 {
@@ -2781,7 +2781,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.isempty",
     "category": "method",
-    "text": "isempty(P::HPoly{N}, witness::Bool=false;            [usepolyhedrainterface]::Bool=false, [solver]=GLPKSolverLP(),            [backend]=nothing           )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nDetermine whether a polyhedron is empty.\n\nInput\n\nP       – polyhedron\nwitness – (optional, default: false) compute a witness if activated\nuse_polyhedra_interface – (optional, default: false) if true, we use              the Polyhedra interface for the emptiness test\nsolver  – (optional, default: GLPKSolverLP()) LP-solver backend\nbackend – (optional, default: default_polyhedra_backend(P, N)) backend              for polyhedral computations in Polyhedra\n\nOutput\n\nIf witness option is deactivated: true iff P = \nIf witness option is activated:\n(true, []) iff P = \n(false, v) iff P   and v  P\n\nNotes\n\nWitness production is not supported if use_polyhedra_interface is true.\n\nAlgorithm\n\nThe algorithm sets up a feasibility LP for the constraints of P. If use_polyhedra_interface is true, we call Polyhedra.isempty. Otherwise, we set up the LP internally.\n\n\n\n\n\n"
+    "text": "isempty(P::HPoly{N}, witness::Bool=false;            [usepolyhedrainterface]::Bool=false, [solver]=GLPKSolverLP(),            [backend]=nothing           )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nDetermine whether a polyhedron is empty.\n\nInput\n\nP       – polyhedron\nwitness – (optional, default: false) compute a witness if activated\nuse_polyhedra_interface – (optional, default: false) if true, we use              the Polyhedra interface for the emptiness test\nsolver  – (optional, default: GLPKSolverLP()) LP-solver backend\nbackend – (optional, default: nothing) backend for polyhedral              computations in Polyhedra; its value is set internally (see the              Notes below for details)\n\nOutput\n\nIf witness option is deactivated: true iff P = \nIf witness option is activated:\n(true, []) iff P = \n(false, v) iff P   and v  P\n\nNotes\n\nThe default value of the backend is set internally and depends on whether the use_polyhedra_interface option is set or not. If the option is set, we use default_polyhedra_backend(P, N).\n\nWitness production is not supported if use_polyhedra_interface is true.\n\nAlgorithm\n\nThe algorithm sets up a feasibility LP for the constraints of P. If use_polyhedra_interface is true, we call Polyhedra.isempty. Otherwise, we set up the LP internally.\n\n\n\n\n\n"
 },
 
 {
@@ -5957,7 +5957,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.samedir",
     "category": "function",
-    "text": "samedir(u::AbstractVector{N},\n        v::AbstractVector{N})::Tuple{Bool, Real} where {N<:Real}\n\nCheck whether two vectors point in the same direction.\n\nInput\n\nu – first vector\nv – second vector\n\nOutput\n\n(true, k) iff the vectors are identical up to a positive scaling factor k, and (false, 0) otherwise.\n\nExamples\n\njulia> LazySets.samedir([1, 2, 3], [2, 4, 6])\n(true, 0.5)\n\njulia> LazySets.samedir([1, 2, 3], [3, 2, 1])\n(false, 0)\n\njulia> LazySets.samedir([1, 2, 3], [-1, -2, -3])\n(false, 0)\n\n\n\n\n\n\n"
+    "text": "samedir(u::AbstractVector{N},\n        v::AbstractVector{N})::Tuple{Bool, Real} where {N<:Real}\n\nCheck whether two vectors point in the same direction.\n\nInput\n\nu – first vector\nv – second vector\n\nOutput\n\n(true, k) iff the vectors are identical up to a positive scaling factor k, and (false, 0) otherwise.\n\nExamples\n\njulia> using LazySets: samedir\n\njulia> samedir([1, 2, 3], [2, 4, 6])\n(true, 0.5)\n\njulia> samedir([1, 2, 3], [3, 2, 1])\n(false, 0)\n\njulia> samedir([1, 2, 3], [-1, -2, -3])\n(false, 0)\n\n\n\n\n\n\n"
 },
 
 {
@@ -5965,7 +5965,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "LazySets.sign_cadlag",
     "category": "function",
-    "text": "sign_cadlag(x::N)::N where {N<:Real}\n\nThis function works like the sign function but is 1 for input 0.\n\nInput\n\nx – real scalar\n\nOutput\n\n1 if x  0, -1 otherwise.\n\nNotes\n\nThis is the sign function right-continuous at zero (see càdlàg function). It can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> import LazySets.sign_cadlag\n\njulia> sign_cadlag.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n\n\n"
+    "text": "sign_cadlag(x::N)::N where {N<:Real}\n\nThis function works like the sign function but is 1 for input 0.\n\nInput\n\nx – real scalar\n\nOutput\n\n1 if x  0, -1 otherwise.\n\nNotes\n\nThis is the sign function right-continuous at zero (see càdlàg function). It can be used with vector-valued arguments via the dot operator.\n\nExamples\n\njulia> LazySets.sign_cadlag.([-0.6, 1.3, 0.0])\n3-element Array{Float64,1}:\n -1.0\n  1.0\n  1.0\n\n\n\n\n\n"
 },
 
 {
@@ -6102,6 +6102,22 @@ var documenterSearchIndex = {"docs": [
     "title": "Types",
     "category": "section",
     "text": "CachedPair\nApproximations.UnitVector\nStrictlyIncreasingIndices"
+},
+
+{
+    "location": "lib/utils.html#InteractiveUtils.subtypes-Tuple{Any,Bool}",
+    "page": "Utility Functions",
+    "title": "InteractiveUtils.subtypes",
+    "category": "method",
+    "text": "subtypes(interface, concrete::Bool)\n\nReturn the concrete subtypes of a given interface.\n\nInput\n\ninterface – an abstract type, usually a set interface\nconcrete  – if true, seek further the inner abstract subtypes of the given                interface, otherwise return only the direct subtypes of interface\n\nOutput\n\nA list with the subtypes of the abstract type interface, sorted alphabetically.\n\nExamples\n\nConsider the AbstractPolytope interface. If we include the abstract subtypes of this interface,\n\njulia> using LazySets: subtypes\n\njulia> subtypes(AbstractPolytope, false)\n4-element Array{Any,1}:\n AbstractCentrallySymmetricPolytope\n AbstractPolygon\n HPolytope\n VPolytope\n\nWe can use this function to obtain the concrete subtypes of AbstractCentrallySymmetricPolytope and AbstractPolygon (further until all concrete types are obtained), using the concrete flag:\n\njulia> subtypes(AbstractPolytope, true)\n14-element Array{Type,1}:\n Ball1\n BallInf\n HPolygon\n HPolygonOpt\n HPolytope\n Hyperrectangle\n Interval\n LineSegment\n Singleton\n SymmetricIntervalHull\n VPolygon\n VPolytope\n ZeroSet\n Zonotope\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/utils.html#Inspection-of-set-interfaces-1",
+    "page": "Utility Functions",
+    "title": "Inspection of set interfaces",
+    "category": "section",
+    "text": "LazySets.subtypes(::Any, ::Bool)"
 },
 
 {
