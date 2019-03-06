@@ -4745,11 +4745,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/operations.html#LazySets.dim-Tuple{Union}",
+    "location": "lib/operations.html#LazySets.dim-Tuple{UnionSet}",
     "page": "Common Set Operations",
     "title": "LazySets.dim",
     "category": "method",
-    "text": "dim(cup::Union)::Int\n\nReturn the dimension of the set union of two convex sets.\n\nInput\n\ncup – union of two convex sets\n\nOutput\n\nThe ambient dimension of the union of two convex sets.\n\n\n\n\n\n"
+    "text": "dim(cup::UnionSet)::Int\n\nReturn the dimension of the set union of two convex sets.\n\nInput\n\ncup – union of two convex sets\n\nOutput\n\nThe ambient dimension of the union of two convex sets.\n\n\n\n\n\n"
 },
 
 {
@@ -4805,7 +4805,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "Binary Set Union",
     "category": "section",
-    "text": "UnionSet\n∪(::LazySet, ::LazySet)\ndim(::Union)\nσ(::AbstractVector{N}, ::UnionSet{N}; algorithm=\"support_vector\") where {N<:Real}\nρ(::AbstractVector{N}, ::UnionSet{N}) where {N<:Real}\nan_element(::UnionSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::UnionSet{N}) where {N<:Real}\nisempty(::UnionSet)\nisbounded(::UnionSet)"
+    "text": "UnionSet\n∪(::LazySet, ::LazySet)\ndim(::UnionSet)\nσ(::AbstractVector{N}, ::UnionSet{N}; algorithm=\"support_vector\") where {N<:Real}\nρ(::AbstractVector{N}, ::UnionSet{N}) where {N<:Real}\nan_element(::UnionSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::UnionSet{N}) where {N<:Real}\nisempty(::UnionSet)\nisbounded(::UnionSet)"
 },
 
 {
