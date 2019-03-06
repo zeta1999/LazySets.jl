@@ -405,7 +405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Operations on Sets",
     "title": "Unary operations",
     "category": "section",
-    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty isbounded linear_map norm radius diameter\nInterfaces           \nLazySet  x  x   x    x\nAPolytope  i  i  x x x   i\nACentrallySymmetric x i  x  x x    i\nACentrallySymmetricPolytope i i  i  x i i   i\nAPolygon x i  i  i i i   i\nAHyperrectangle i i x i x i i i x x i\nAHPolygon i i  x x i i i   i\nASingleton i i x i x i i x i i i\n           \nBasic set types           \nBall1 i i x i x i i i   i\nBall2 i i x i x i i    i\nBallInf i i i i i i i i i x i\nBallp i i x i x i i    i\nEllipsoid i i x i x i i    i\nEmptySet x i x x x x x  x x x\nHalfSpace x x x x x x x    i\nHPolygon/HPolygonOpt i i x i i i i i   i\nHPolyhedron x x x i x x x x   i\nHPolytope x x x i x x i x   i\nHyperplane x x x x x x x    i\nHyperrectangle i i i i i i i i i i i\nInterval x i x x x i i i i i i\nLine x i x x x x x    i\nLineSegment x i x x x i i i   i\nSingleton i i i i i i i i i i i\nUniverse x x x x x x x  x x x\nVPolygon i i x x x i i x   i\nVPolytope x i x i x i i x   i\nZeroSet x i x i x i i x i i i\nZonotope i i x i x i i x   i\n           \nLazy set operation types           \nCartesianProduct x x x i x x x    i\nCartesianProductArray x x x i x x x    i\nConvexHull x x x i  x x    i\nConvexHullArray x x x i  x x    i\nExponentialMap x x x i x x x    i\nExponentialProjectionMap x i x i  x x    i\nIntersection x x  i x x x    i\nIntersectionArray x i  i x  x    i\nLinearMap x x x x x x x    i\nMinkowskiSum x x x i  x x    i\nMinkowskiSumArray x x x i  x x    i\nCacheMinkowskiSum x i x i  x x    i\nResetMap x x x x  x     i\nSymmetricIntervalHull x i x i i i i i i i i\nUnionSet x x x x x x x    \nUnionSetArray x x x x x x x    "
+    "text": "The following table lists all operations that take one convex set as argument in the columns. In the rows we list all set types, both the interfaces (where we abbreviate the Abstract prefix), the basic set types, and the lazy set operations, each sorted alphabetically. The table entries have the following meaning.\"x\" indicates that the operation is implemented for the respective set type.\n\"i\" indicates that the operation is inherited from a supertype.type ↓ \\ operation → dim ρ σ an_element ∈ isempty isbounded linear_map translate norm radius diameter\nInterfaces            \nLazySet  x  x   x     x\nAPolytope  i  i  x x x    i\nACentrallySymmetric x i  x  x x     i\nACentrallySymmetricPolytope i i  i  x i i    i\nAPolygon x i  i  i i i    i\nAHyperrectangle i i x i x i i i  x x i\nAHPolygon i i  x x i i i    i\nASingleton i i x i x i i x  i i i\n            \nBasic set types            \nBall1 i i x i x i i i x   i\nBall2 i i x i x i i  x   i\nBallInf i i i i i i i i x i x i\nBallp i i x i x i i  x   i\nEllipsoid i i x i x i i  x   i\nEmptySet x i x x x x x  x x x x\nHalfSpace x x x x x x x  x   i\nHPolygon/HPolygonOpt i i x i i i i i x   i\nHPolyhedron x x x i x x x x x   i\nHPolytope x x x i x x i x x   i\nHyperplane x x x x x x x  x   i\nHyperrectangle i i i i i i i i x i i i\nInterval x i x x x i i i x i i i\nLine x i x x x x x  x   i\nLineSegment x i x x x i i i x   i\nSingleton i i i i i i i i x i i i\nUniverse x x x x x x x  x x x x\nVPolygon i i x x x i i x x   i\nVPolytope x i x i x i i x x   i\nZeroSet x i x i x i i x x i i i\nZonotope i i x i x i i x x   i\n            \nLazy set operation types            \nCartesianProduct x x x i x x x     i\nCartesianProductArray x x x i x x x     i\nConvexHull x x x i  x x     i\nConvexHullArray x x x i  x x     i\nExponentialMap x x x i x x x     i\nExponentialProjectionMap x i x i  x x     i\nIntersection x x  i x x x     i\nIntersectionArray x i  i x  x     i\nLinearMap x x x x x x x     i\nMinkowskiSum x x x i  x x     i\nMinkowskiSumArray x x x i  x x     i\nCacheMinkowskiSum x i x i  x x     i\nResetMap x x x x  x      i\nSymmetricIntervalHull x i x i i i i i  i i i\nUnionSet x x x x x x x     \nUnionSetArray x x x x x x x     "
 },
 
 {
@@ -1505,11 +1505,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Ball2{N},AbstractArray{N,1}}} where N<:AbstractFloat",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(B::Ball2{N}, v::AbstractVector{N}) where {N<:AbstractFloat}\n\nTranslate (i.e., shift) a ball in the 2-norm by a given vector.\n\nInput\n\nB – ball in the 2-norm\nv – translation vector\n\nOutput\n\nA translated ball in the 2-norm.\n\nAlgorithm\n\nWe add the vector to the center of the ball.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Euclidean-norm-ball-1",
     "page": "Common Set Representations",
     "title": "Euclidean norm ball",
     "category": "section",
-    "text": "Ball2\nσ(::AbstractVector{N}, ::Ball2{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ball2{N}) where {N<:AbstractFloat}\ncenter(::Ball2{N}) where {N<:AbstractFloat}\nrand(::Type{Ball2})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
+    "text": "Ball2\nσ(::AbstractVector{N}, ::Ball2{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ball2{N}) where {N<:AbstractFloat}\ncenter(::Ball2{N}) where {N<:AbstractFloat}\nrand(::Type{Ball2})\ntranslate(::Ball2{N}, ::AbstractVector{N}) where {N<:AbstractFloat}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
 },
 
 {
@@ -1561,11 +1569,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{BallInf{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(B::BallInf{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) a ball in the infinity norm by a given vector.\n\nInput\n\nB – ball in the infinity norm\nv – translation vector\n\nOutput\n\nA translated ball in the infinity norm.\n\nAlgorithm\n\nWe add the vector to the center of the ball.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Infinity-norm-ball-1",
     "page": "Common Set Representations",
     "title": "Infinity norm ball",
     "category": "section",
-    "text": "BallInf\ncenter(::BallInf{N}) where {N<:Real}\nradius(::BallInf, ::Real=Inf)\nradius_hyperrectangle(::BallInf{N}) where {N<:Real}\nradius_hyperrectangle(::BallInf{N}, ::Int) where {N<:Real}\nrand(::Type{BallInf})Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
+    "text": "BallInf\ncenter(::BallInf{N}) where {N<:Real}\nradius(::BallInf, ::Real=Inf)\nradius_hyperrectangle(::BallInf{N}) where {N<:Real}\nradius_hyperrectangle(::BallInf{N}, ::Int) where {N<:Real}\nrand(::Type{BallInf})\ntranslate(::BallInf{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -1625,11 +1641,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Ball1{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(B::Ball1{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) a ball in the 1-norm by a given vector.\n\nInput\n\nB – ball in the 1-norm\nv – translation vector\n\nOutput\n\nA translated ball in the 1-norm.\n\nAlgorithm\n\nWe add the vector to the center of the ball.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Manhattan-norm-ball-1",
     "page": "Common Set Representations",
     "title": "Manhattan norm ball",
     "category": "section",
-    "text": "Ball1\nσ(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\nvertices_list(::Ball1{N}) where {N<:Real}\ncenter(::Ball1{N}) where {N<:Real}\nrand(::Type{Ball1})\nconstraints_list(::Ball1{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Ball1\nσ(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Ball1{N}) where {N<:Real}\nvertices_list(::Ball1{N}) where {N<:Real}\ncenter(::Ball1{N}) where {N<:Real}\nrand(::Type{Ball1})\nconstraints_list(::Ball1{N}) where {N<:Real}\ntranslate(::Ball1{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
@@ -1673,11 +1697,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Ballp{N},AbstractArray{N,1}}} where N<:AbstractFloat",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(B::Ballp{N}, v::AbstractVector{N}) where {N<:AbstractFloat}\n\nTranslate (i.e., shift) a ball in the p-norm by a given vector.\n\nInput\n\nB – ball in the p-norm\nv – translation vector\n\nOutput\n\nA translated ball in the p- norm.\n\nAlgorithm\n\nWe add the vector to the center of the ball.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#p-norm-ball-1",
     "page": "Common Set Representations",
     "title": "p-norm ball",
     "category": "section",
-    "text": "Ballp\nσ(::AbstractVector{N}, ::Ballp{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ballp{N}) where {N<:AbstractFloat}\ncenter(::Ballp{N}) where {N<:AbstractFloat}\nrand(::Type{Ballp})Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
+    "text": "Ballp\nσ(::AbstractVector{N}, ::Ballp{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ballp{N}) where {N<:AbstractFloat}\ncenter(::Ballp{N}) where {N<:AbstractFloat}\nrand(::Type{Ballp})\ntranslate(::Ballp{N}, ::AbstractVector{N}) where {N<:AbstractFloat}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
 },
 
 {
@@ -1721,11 +1753,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Ellipsoid{N},AbstractArray{N,1}}} where N<:AbstractFloat",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(E::Ellipsoid{N}, v::AbstractVector{N}; share::Bool=false\n         ) where {N<:AbstractFloat}\n\nTranslate (i.e., shift) an ellipsoid by a given vector.\n\nInput\n\nE     – ellipsoid\nv     – translation vector\nshare – (optional, default: false) flag for sharing unmodified parts of            the original set representation\n\nOutput\n\nA translated ellipsoid.\n\nNotes\n\nThe shape matrix is shared with the original ellipsoid if share == true.\n\nAlgorithm\n\nWe add the vector to the center of the ellipsoid.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Ellipsoid-1",
     "page": "Common Set Representations",
     "title": "Ellipsoid",
     "category": "section",
-    "text": "Ellipsoid\nσ(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\nrand(::Type{Ellipsoid})\ncenter(::Ellipsoid{N}) where {N<:AbstractFloat}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
+    "text": "Ellipsoid\nσ(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\nrand(::Type{Ellipsoid})\ncenter(::Ellipsoid{N}) where {N<:AbstractFloat}\ntranslate(::Ellipsoid{N}, ::AbstractVector{N}) where {N<:AbstractFloat}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
 },
 
 {
@@ -1833,11 +1873,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{EmptySet{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(∅::EmptySet{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) an empty set by a given vector.\n\nInput\n\n∅ – empty set\nv – translation vector\n\nOutput\n\nThe empty set.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Empty-set-1",
     "page": "Common Set Representations",
     "title": "Empty set",
     "category": "section",
-    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisbounded(::EmptySet)\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real=Inf)\nradius(::EmptySet, ::Real=Inf)\ndiameter(::EmptySet, ::Real=Inf)\nlinear_map(::AbstractMatrix{N}, ::EmptySet{N}) where {N}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisbounded(::EmptySet)\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real=Inf)\nradius(::EmptySet, ::Real=Inf)\ndiameter(::EmptySet, ::Real=Inf)\nlinear_map(::AbstractMatrix{N}, ::EmptySet{N}) where {N}\ntranslate(::EmptySet{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -1945,6 +1993,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{HalfSpace{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(hs::HalfSpace{N}, v::AbstractVector{N}; share::Bool=false\n         ) where {N<:Real}\n\nTranslate (i.e., shift) a half-space by a given vector.\n\nInput\n\nhs    – half-space\nv     – translation vector\nshare – (optional, default: false) flag for sharing unmodified parts of            the original set representation\n\nOutput\n\nA translated half-space.\n\nNotes\n\nThe normal vectors of the halfspace (vector a in a⋅x ≤ b) is shared with the original halfspace if share == true.\n\nAlgorithm\n\nA half-space ax  b is transformed to the half-space ax  b + av. In other words, we add the dot product av to b.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.halfspace_left-Union{Tuple{N}, Tuple{AbstractArray{N,1},AbstractArray{N,1}}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.halfspace_left",
@@ -1989,7 +2045,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Half-Space",
     "category": "section",
-    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstraints_list(::AbstractMatrix{N}, ::AbstractVector{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}\nremove_redundant_constraints(::AbstractVector{LinearConstraint{N}}) where {N<:Real}\nremove_redundant_constraints!(::AbstractVector{LinearConstraint{N}}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "HalfSpace\nLinearConstraint\ndim(::HalfSpace)\nρ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::HalfSpace{N}) where {N<:Real}\nan_element(::HalfSpace{N}) where {N<:Real}\nrand(::Type{HalfSpace})\nisbounded(::HalfSpace)\nisempty(::HalfSpace)\nconstraints_list(::HalfSpace{N}) where {N<:Real}\nconstraints_list(::AbstractMatrix{N}, ::AbstractVector{N}) where {N<:Real}\nconstrained_dimensions(::HalfSpace{N}) where {N<:Real}\ntranslate(::HalfSpace{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_left(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\nhalfspace_right(::AbstractVector{N}, ::AbstractVector{N}) where {N<:Real}\ntosimplehrep(::AbstractVector{HalfSpace{N}}) where {N<:Real}\nremove_redundant_constraints(::AbstractVector{LinearConstraint{N}}) where {N<:Real}\nremove_redundant_constraints!(::AbstractVector{LinearConstraint{N}}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -2081,11 +2137,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Hyperplane{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(hp::Hyperplane{N}, v::AbstractVector{N}; share::Bool=false\n         ) where {N<:Real}\n\nTranslate (i.e., shift) a hyperplane by a given vector.\n\nInput\n\nhp    – hyperplane\nv     – translation vector\nshare – (optional, default: false) flag for sharing unmodified parts of            the original set representation\n\nOutput\n\nA translated hyperplane.\n\nNotes\n\nThe normal vectors of the hyperplane (vector a in a⋅x = b) is shared with the original hyperplane if share == true.\n\nAlgorithm\n\nA hyperplane ax = b is transformed to the hyperplane ax = b + av. In other words, we add the dot product av to b.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Hyperplane-1",
     "page": "Common Set Representations",
     "title": "Hyperplane",
     "category": "section",
-    "text": "Hyperplane\ndim(::Hyperplane)\nρ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisbounded(::Hyperplane)\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}\nconstraints_list(::Hyperplane{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Hyperplane\ndim(::Hyperplane)\nρ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Hyperplane{N}) where {N<:Real}\nan_element(::Hyperplane{N}) where {N<:Real}\nrand(::Type{Hyperplane})\nisbounded(::Hyperplane)\nisempty(::Hyperplane)\nconstrained_dimensions(::Hyperplane{N}) where {N<:Real}\nconstraints_list(::Hyperplane{N}) where {N<:Real}\ntranslate(::Hyperplane{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -2129,11 +2193,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Hyperrectangle{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(H::Hyperrectangle{N}, v::AbstractVector{N}; share::Bool=false\n         ) where {N<:Real}\n\nTranslate (i.e., shift) a hyperrectangle by a given vector.\n\nInput\n\nH     – hyperrectangle\nv     – translation vector\nshare – (optional, default: false) flag for sharing unmodified parts of            the original set representation\n\nOutput\n\nA translated hyperrectangle.\n\nNotes\n\nThe radius vector is shared with the original hyperrectangle if share == true.\n\nAlgorithm\n\nWe add the vector to the center of the hyperrectangle.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Hyperrectangle-1",
     "page": "Common Set Representations",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "Hyperrectangle\nrand(::Type{Hyperrectangle})\ncenter(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
+    "text": "Hyperrectangle\nrand(::Type{Hyperrectangle})\ncenter(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}) where {N<:Real}\nradius_hyperrectangle(::Hyperrectangle{N}, ::Int) where {N<:Real}\ntranslate(::Hyperrectangle{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_elementInherited from AbstractHyperrectangle:σ\n∈\nnorm\nradius\nvertices_list\nhigh\nlow"
 },
 
 {
@@ -2190,6 +2262,14 @@ var documenterSearchIndex = {"docs": [
     "title": "LazySets.vertices_list",
     "category": "method",
     "text": "vertices_list(x::Interval{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of this interval.\n\nInput\n\nx – interval\n\nOutput\n\nThe list of vertices of the interval represented as two one-dimensional vectors.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Interval{N,IN} where IN<:AbstractInterval{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(x::Interval{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) an interval by a given vector.\n\nInput\n\nx – interval\nv – translation vector\n\nOutput\n\nA translated interval.\n\nAlgorithm\n\nWe add the vector to the left and right of the interval.\n\n\n\n\n\n"
 },
 
 {
@@ -2301,7 +2381,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Interval",
     "category": "section",
-    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nmin(::Interval{N}) where {N<:Real}\nmax(::Interval{N}) where {N<:Real}\nlow(::Interval{N}) where {N<:Real}\nhigh(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
+    "text": "Interval\ndim(::Interval)\nσ(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Interval{N}) where {N<:Real}\n∈(::N, ::Interval{N}) where {N<:Real}\nan_element(::Interval{N}) where {N<:Real}\nvertices_list(::Interval{N}) where {N<:Real}\ntranslate(::Interval{N}, ::AbstractVector{N}) where {N<:Real}\ncenter(::Interval{N}) where {N<:Real}\nmin(::Interval{N}) where {N<:Real}\nmax(::Interval{N}) where {N<:Real}\nlow(::Interval{N}) where {N<:Real}\nhigh(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}) where {N<:Real}\nradius_hyperrectangle(::Interval{N}, ::Int) where {N<:Real}\n+(::Interval{N}, ::Interval{N}) where {N<:Real}\n-(::Interval{N}, ::Interval{N}) where {N<:Real}\n*(::Interval{N}, ::Interval{N}) where {N<:Real}\nrand(::Type{Interval})\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Interval)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:Interval}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius"
 },
 
 {
@@ -2385,11 +2465,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Line{N,VN} where VN<:AbstractArray{N,1},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(L::Line{N}, v::AbstractVector{N}; share::Bool=false\n         ) where {N<:Real}\n\nTranslate (i.e., shift) a line by a given vector.\n\nInput\n\nL     – line\nv     – translation vector\nshare – (optional, default: false) flag for sharing unmodified parts of            the original set representation\n\nOutput\n\nA translated line.\n\nNotes\n\nThe normal vector of the line (vector a in a⋅x = b) is shared with the original line if share == true.\n\nAlgorithm\n\nA line ax = b is transformed to the line ax = b + av. In other words, we add the dot product av to b.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Line-1",
     "page": "Common Set Representations",
     "title": "Line",
     "category": "section",
-    "text": "Line\ndim(::Line)\nσ(::AbstractVector{N}, ::Line{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Line{N}) where {N<:Real}\nan_element(::Line{N}) where {N<:Real}\nrand(::Type{Line})\nisbounded(::Line)\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}\nconstraints_list(::Line{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "Line\ndim(::Line)\nσ(::AbstractVector{N}, ::Line{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Line{N}) where {N<:Real}\nan_element(::Line{N}) where {N<:Real}\nrand(::Type{Line})\nisbounded(::Line)\nisempty(::Line)\nconstrained_dimensions(::Line{N}) where {N<:Real}\nconstraints_list(::Line{N}) where {N<:Real}\ntranslate(::Line{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
@@ -2481,6 +2569,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{LineSegment{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(L::LineSegment{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) a line segment by a given vector.\n\nInput\n\nL – line segment\nv – translation vector\n\nOutput\n\nA translated line segment.\n\nAlgorithm\n\nWe add the vector to both defining points of the line segment.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#RecipesBase.apply_recipe-Tuple{Dict{Symbol,Any},LineSegment}",
     "page": "Common Set Representations",
     "title": "RecipesBase.apply_recipe",
@@ -2501,7 +2597,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Line segment",
     "category": "section",
-    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{N}, ::LineSegment{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LineSegment{N}) where {N<:Real}\ncenter(::LineSegment{N}) where {N<:Real}\nan_element(::LineSegment{N}) where {N<:Real}\nrand(::Type{LineSegment})\nhalfspace_left(::LineSegment)\nhalfspace_right(::LineSegment)\nvertices_list(::LineSegment{N}) where {N<:Real}\nconstraints_list(::LineSegment{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LineSegment)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LineSegment}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isboundedInherited from AbstractCentrallySymmetricPolytope:isempty"
+    "text": "LineSegment\ndim(::LineSegment)\nσ(::AbstractVector{N}, ::LineSegment{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LineSegment{N}) where {N<:Real}\ncenter(::LineSegment{N}) where {N<:Real}\nan_element(::LineSegment{N}) where {N<:Real}\nrand(::Type{LineSegment})\nhalfspace_left(::LineSegment)\nhalfspace_right(::LineSegment)\nvertices_list(::LineSegment{N}) where {N<:Real}\nconstraints_list(::LineSegment{N}) where {N<:Real}\ntranslate(::LineSegment{N}, ::AbstractVector{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::LineSegment)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:LineSegment}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isboundedInherited from AbstractCentrallySymmetricPolytope:isempty"
 },
 
 {
@@ -2529,11 +2625,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{HPolygon{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(v::AbstractVector{N}, P::HPolygon{N}; share::Bool=false\n         ) where {N<:Real}\n\nTranslate (i.e., shift) a polygon in constraint representation by a given vector.\n\nInput\n\nP     – polygon in constraint representation\nv     – translation vector\nshare – (optional, default: false) flag for sharing unmodified parts of            the original set representation\n\nOutput\n\nA translated polygon in constraint representation.\n\nNotes\n\nThe normal vectors of the constraints (vector a in a⋅x ≤ b) are shared with the original constraints if share == true.\n\nAlgorithm\n\nWe translate every constraint.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Constraint-representation-1",
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "HPolygon\nσ(::AbstractVector{N}, ::HPolygon{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\nisbounded\naddconstraint!\nisredundant\nremove_redundant_constraints!\nconstraints_list"
+    "text": "HPolygon\nσ(::AbstractVector{N}, ::HPolygon{N}) where {N<:Real}\ntranslate(::HPolygon{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\nisbounded\naddconstraint!\nisredundant\nremove_redundant_constraints!\nconstraints_list"
 },
 
 {
@@ -2553,11 +2657,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{HPolygonOpt{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(P::HPolygonOpt{N}, v::AbstractVector{N}; share::Bool=false\n         ) where {N<:Real}\n\nTranslate (i.e., shift) an optimized polygon in constraint representation by a given vector.\n\nInput\n\nP     – optimized polygon in constraint representation\nv     – translation vector\nshare – (optional, default: false) flag for sharing unmodified parts of            the original set representation\n\nOutput\n\nA translated optimized polygon in constraint representation.\n\nNotes\n\nThe normal vectors of the constraints (vector a in a⋅x ≤ b) are shared with the original constraints if share == true.\n\nAlgorithm\n\nWe translate every constraint.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Optimized-constraint-representation-1",
     "page": "Common Set Representations",
     "title": "Optimized constraint representation",
     "category": "section",
-    "text": "HPolygonOpt\nσ(::AbstractVector{N}, ::HPolygonOpt{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_listInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\nisbounded\naddconstraint!\nisredundant\nremove_redundant_constraints!\nconstraints_list"
+    "text": "HPolygonOpt\nσ(::AbstractVector{N}, ::HPolygonOpt{N}) where {N<:Real}\ntranslate(::HPolygonOpt{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isempty\nsingleton_listInherited from AbstractPolygon:dimInherited from AbstractHPolygon:an_element\n∈\nvertices_list\ntohrep\ntovrep\nisbounded\naddconstraint!\nisredundant\nremove_redundant_constraints!\nconstraints_list"
 },
 
 {
@@ -2633,6 +2745,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{VPolygon{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(P::VPolygon{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) a polygon in vertex representation by a given vector.\n\nInput\n\nP – polygon in vertex representation\nv – translation vector\n\nOutput\n\nA translated polygon in vertex representation.\n\nAlgorithm\n\nWe add the vector to each vertex of the polygon.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.remove_redundant_vertices-Union{Tuple{VPolygon{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.remove_redundant_vertices",
@@ -2653,7 +2773,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolygon\nσ(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon{N}) where {N<:Real}\ntohrep(::VPolygon{N}, ::Type{HPOLYGON}=HPolygon) where {N<:Real, HPOLYGON<:AbstractHPolygon}\ntovrep(::VPolygon{N}) where {N<:Real}\nconstraints_list(::VPolygon{N}) where {N<:Real}\nremove_redundant_vertices(::VPolygon{N}; ::String=\"monotone_chain\") where {N<:Real}\nremove_redundant_vertices!(::VPolygon{N}; ::String=\"monotone_chain\") where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
+    "text": "VPolygon\nσ(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolygon{N}) where {N<:Real}\nan_element(::VPolygon{N}) where {N<:Real}\nrand(::Type{VPolygon})\nvertices_list(::VPolygon{N}) where {N<:Real}\ntohrep(::VPolygon{N}, ::Type{HPOLYGON}=HPolygon) where {N<:Real, HPOLYGON<:AbstractHPolygon}\ntovrep(::VPolygon{N}) where {N<:Real}\nconstraints_list(::VPolygon{N}) where {N<:Real}\ntranslate(::VPolygon{N}, ::AbstractVector{N}) where {N<:Real}\nremove_redundant_vertices(::VPolygon{N}; ::String=\"monotone_chain\") where {N<:Real}\nremove_redundant_vertices!(::VPolygon{N}; ::String=\"monotone_chain\") where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_mapInherited from AbstractPolygon:dim"
 },
 
 {
@@ -2785,6 +2905,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{PT}, Tuple{N}, Tuple{PT,AbstractArray{N,1}}} where PT<:Union{HPolyhedron{N}, HPolytope{N}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(P::PT, v::AbstractVector{N}; share::Bool=false\n         ) where {N<:Real, PT<:HPoly{N}}\n\nTranslate (i.e., shift) a polyhedron in constraint representation by a given vector.\n\nInput\n\nP     – polyhedron in constraint representation\nv     – translation vector\nshare – (optional, default: false) flag for sharing unmodified parts of            the original set representation\n\nOutput\n\nA translated polyhedron in constraint representation.\n\nNotes\n\nThe normal vectors of the constraints (vector a in a⋅x ≤ b) are shared with the original constraints if share == true.\n\nAlgorithm\n\nWe translate every constraint.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.cartesian_product-Union{Tuple{N}, Tuple{Union{HPolyhedron{N}, HPolytope{N}},Union{HPolyhedron{N}, HPolytope{N}}}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.cartesian_product",
@@ -2821,7 +2949,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Constraint representation",
     "category": "section",
-    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints(::PT) where {N<:Real, PT<:HPoly{N}}\nremove_redundant_constraints!(::HPoly{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolyhedron:∈\n[constrained_dimensions](@ref constrained_dimensions(::AbstractPolyhedron)\nlinear_map"
+    "text": "Convex polytopes are bounded polyhedra. The types HPolytope and HPolyhedron are used to represent polytopes and general polyhedra respectively, the difference being that for HPolytope there is a running assumption about the boundedness of the set.HPolytope\nHPolyhedronThe following methods are shared between HPolytope and HPolyhedron.dim(::HPoly{N}) where {N<:Real}\nρ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::HPoly{N}) where {N<:Real}\naddconstraint!(::HPoly{N}, ::LinearConstraint{N}) where {N<:Real}\nconstraints_list(::HPoly{N}) where {N<:Real}\ntohrep(::HPoly{N}) where {N<:Real}\ntovrep(::HPoly{N}) where {N<:Real}\nisempty(::HPoly{N}, ::Bool=false) where {N<:Real}\ntranslate(::PT, ::AbstractVector{N}) where {N<:Real, PT<:HPoly{N}}\ncartesian_product(::HPoly{N}, ::HPoly{N}) where {N<:Real}\npolyhedron(::HPoly{N}) where {N<:Real}\nremove_redundant_constraints(::PT) where {N<:Real, PT<:HPoly{N}}\nremove_redundant_constraints!(::HPoly{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolyhedron:∈\n[constrained_dimensions](@ref constrained_dimensions(::AbstractPolyhedron)\nlinear_map"
 },
 
 {
@@ -2849,9 +2977,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Polytopes-in-constraint-representation-1",
+    "location": "lib/representations.html#Polytopes-1",
     "page": "Common Set Representations",
-    "title": "Polytopes in constraint representation",
+    "title": "Polytopes",
     "category": "section",
     "text": "The following methods are specific for HPolytope.rand(::Type{HPolytope})\nvertices_list(::HPolytope{N}) where {N<:Real}\nisbounded(::HPolytope, ::Bool=true)Inherited from AbstractPolytope:singleton_list"
 },
@@ -2937,6 +3065,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{VPolytope{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(P::VPolytope{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) a polytope in vertex representation by a given vector.\n\nInput\n\nP – polytope in vertex representation\nv – translation vector\n\nOutput\n\nA translated polytope in vertex representation.\n\nAlgorithm\n\nWe add the vector to each vertex of the polytope.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.vertices_list-Union{Tuple{VPolytope{N}}, Tuple{N}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.vertices_list",
@@ -3005,7 +3141,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Vertex representation",
     "category": "section",
-    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\nvertices_list(::VPolytope{N}) where {N<:Real}\nremove_redundant_vertices(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_map"
+    "text": "VPolytope\ndim(::VPolytope)\nσ(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::VPolytope{N}) where {N<:Real}\nrand(::Type{VPolytope})\ntranslate(::VPolytope{N}, ::AbstractVector{N}) where {N<:Real}\nvertices_list(::VPolytope{N}) where {N<:Real}\nremove_redundant_vertices(::VPolytope{N}) where {N<:Real}\nconstraints_list(::VPolytope{N}) where {N<:Real}\ntohrep(::VPolytope{N}) where {N<:Real}\ntovrep(::VPolytope)\ncartesian_product(::VPolytope{N}, ::VPolytope{N}) where N\npolyhedron(::VPolytope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::VPolytope{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nisempty\nsingleton_list\nlinear_map"
 },
 
 {
@@ -3041,11 +3177,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Singleton{N,VN} where VN<:AbstractArray{N,1},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(S::Singleton{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) a singleton by a given vector.\n\nInput\n\nS – singleton\nv – translation vector\n\nOutput\n\nA translated singleton.\n\nAlgorithm\n\nWe add the vector to the point in the singleton.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Singleton-1",
     "page": "Common Set Representations",
     "title": "Singleton",
     "category": "section",
-    "text": "Singleton\nrand(::Type{Singleton})\nelement(::Singleton{N}) where {N<:Real}\nelement(::Singleton{N}, ::Int) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
+    "text": "Singleton\nrand(::Type{Singleton})\nelement(::Singleton{N}) where {N<:Real}\nelement(::Singleton{N}, ::Int) where {N<:Real}\ntranslate(::Singleton{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:σ\n∈\nan_element\ncenter\nvertices_list\nradius_hyperrectangle\nradius_hyperrectangle\nlinear_map"
 },
 
 {
@@ -3161,11 +3305,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Universe{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(U::Universe{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) a universe by a given vector.\n\nInput\n\nU – universe\nv – translation vector\n\nOutput\n\nThe universe.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Universe-1",
     "page": "Common Set Representations",
     "title": "Universe",
     "category": "section",
-    "text": "Universe\ndim(::Universe)\nρ(::AbstractVector{N}, ::Universe{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Universe{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Universe{N}) where {N<:Real}\nrand(::Type{Universe})\nan_element(::Universe{N}) where {N<:Real}\nisempty(::Universe)\nisbounded(::Universe)\nnorm(::Universe, ::Real=Inf)\nradius(::Universe, ::Real=Inf)\ndiameter(::Universe, ::Real=Inf)\nconstraints_list(::Universe{N}) where {N<:Real}\nconstrained_dimensions(::Universe)"
+    "text": "Universe\ndim(::Universe)\nρ(::AbstractVector{N}, ::Universe{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Universe{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Universe{N}) where {N<:Real}\nrand(::Type{Universe})\nan_element(::Universe{N}) where {N<:Real}\nisempty(::Universe)\nisbounded(::Universe)\nnorm(::Universe, ::Real=Inf)\nradius(::Universe, ::Real=Inf)\ndiameter(::Universe, ::Real=Inf)\nconstraints_list(::Universe{N}) where {N<:Real}\nconstrained_dimensions(::Universe)\ntranslate(::Universe{N}, ::AbstractVector{N}) where {N<:Real}"
 },
 
 {
@@ -3233,11 +3385,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{ZeroSet{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(Z::ZeroSet{N}, v::AbstractVector{N}) where {N<:Real}\n\nTranslate (i.e., shift) a zero set by a given vector.\n\nInput\n\nZ – zero set\nv – translation vector\n\nOutput\n\nA singleton containing the vector v.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Zero-set-1",
     "page": "Common Set Representations",
     "title": "Zero set",
     "category": "section",
-    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nrand(::Type{ZeroSet})\nelement(::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet{N}, ::Int) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
+    "text": "ZeroSet\ndim(::ZeroSet)\nσ(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::ZeroSet{N}) where {N<:Real}\nrand(::Type{ZeroSet})\nelement(::ZeroSet{N}) where {N<:Real}\nelement(::ZeroSet{N}, ::Int) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ntranslate(::ZeroSet{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:diameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:isemptyInherited from AbstractHyperrectangle:norm\nradius\nhigh\nlowInherited from AbstractSingleton:radius_hyperrectangle\nradius_hyperrectangle\nvertices_list\ncenter\nan_element"
 },
 
 {
@@ -3329,6 +3489,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.translate-Union{Tuple{N}, Tuple{Zonotope{N},AbstractArray{N,1}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.translate",
+    "category": "method",
+    "text": "translate(Z::Zonotope{N}, v::AbstractVector{N}; share::Bool=false\n         ) where {N<:Real}\n\nTranslate (i.e., shift) a zonotope by a given vector.\n\nInput\n\nZ     – zonotope\nv     – translation vector\nshare – (optional, default: false) flag for sharing unmodified parts of            the original set representation\n\nOutput\n\nA translated zonotope.\n\nNotes\n\nThe generator matrix is shared with the original zonotope if share == true.\n\nAlgorithm\n\nWe add the vector to the center of the zonotope.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.scale-Tuple{Real,Zonotope}",
     "page": "Common Set Representations",
     "title": "LazySets.scale",
@@ -3365,7 +3533,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:AbstractFloat}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)\nsplit(::Zonotope, ::Int)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:AbstractFloat}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\ntranslate(::Zonotope{N}, ::AbstractVector{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)\nsplit(::Zonotope, ::Int)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
