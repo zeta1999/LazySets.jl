@@ -5353,11 +5353,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{IntervalArithmetic.IntervalBox},AbstractHyperrectangle}",
+    "page": "Conversions between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{IntervalArithmetic.IntervalBox}, H::AbstractHyperrectangle)\n\nConverts a hyperrectangular set to an IntervalBox from IntervalArithmetic.\n\nInput\n\nIntervalBox – type used for dispatch\nH           – hyperrectangular set\n\nOutput\n\nAn IntervalBox.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{Hyperrectangle},IntervalArithmetic.IntervalBox}",
+    "page": "Conversions between set representations",
+    "title": "Base.convert",
+    "category": "method",
+    "text": "convert(::Type{Hyperrectangle}, IB::IntervalArithmetic.IntervalBox)\n\nConverts an IntervalBox from IntervalArithmetic to a hyperrectangular set.\n\nInput\n\nHyperrectangle – type used for dispatch\nIB             – interval box\n\nOutput\n\nA Hyperrectangle.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/conversion.html#Conversion-between-set-representations-1",
     "page": "Conversions between set representations",
     "title": "Conversion between set representations",
     "category": "section",
-    "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert(::Type{HPOLYGON1}, ::HPOLYGON2) where {HPOLYGON1<:AbstractHPolygon, HPOLYGON2<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::VPolygon) where {HPOLYGON<:AbstractHPolygon}\nconvert(::Type{Hyperrectangle}, ::Interval)\nconvert(::Type{Interval}, ::AbstractHyperrectangle)\nconvert(::Type{Interval}, ::LazySet{N}) where {N<:Real}\nconvert(::Type{Hyperrectangle}, cpa::CartesianProductArray{N, HN}) where {N<:Real, HN<:AbstractHyperrectangle{N}}\nconvert(::Type{Hyperrectangle}, cpa::CartesianProductArray{N, Interval{N}}) where {N<:Real}\nconvert(::Type{HPOLYGON}, ::AbstractHyperrectangle) where {HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::HPolytope{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::AbstractSingleton{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::LineSegment{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPolyhedron}, ::AbstractPolytope)\nconvert(::Type{HPolytope}, ::AbstractHPolygon)\nconvert(::Type{HPolytope}, ::AbstractHyperrectangle)\nconvert(::Type{HPolytope}, ::AbstractPolytope)\nconvert(::Type{HPolytope}, ::VPolytope)\nconvert(::Type{VPolygon}, ::AbstractHPolygon)\nconvert(::Type{VPolygon}, ::AbstractPolytope)\nconvert(::Type{VPolytope}, ::AbstractPolytope)\nconvert(::Type{VPolytope}, ::HPolytope)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle)"
+    "text": "This section of the manual lists the conversion functions between set representations.Pages = [\"conversion.md\"]\nDepth = 3CurrentModule = LazySets\nDocTestSetup = quote\n    using LazySets\nendconvert(::Type{HPOLYGON1}, ::HPOLYGON2) where {HPOLYGON1<:AbstractHPolygon, HPOLYGON2<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::VPolygon) where {HPOLYGON<:AbstractHPolygon}\nconvert(::Type{Hyperrectangle}, ::Interval)\nconvert(::Type{Interval}, ::AbstractHyperrectangle)\nconvert(::Type{Interval}, ::LazySet{N}) where {N<:Real}\nconvert(::Type{Hyperrectangle}, cpa::CartesianProductArray{N, HN}) where {N<:Real, HN<:AbstractHyperrectangle{N}}\nconvert(::Type{Hyperrectangle}, cpa::CartesianProductArray{N, Interval{N}}) where {N<:Real}\nconvert(::Type{HPOLYGON}, ::AbstractHyperrectangle) where {HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::HPolytope{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::AbstractSingleton{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPOLYGON}, ::LineSegment{N}) where {N<:Real, HPOLYGON<:AbstractHPolygon}\nconvert(::Type{HPolyhedron}, ::AbstractPolytope)\nconvert(::Type{HPolytope}, ::AbstractHPolygon)\nconvert(::Type{HPolytope}, ::AbstractHyperrectangle)\nconvert(::Type{HPolytope}, ::AbstractPolytope)\nconvert(::Type{HPolytope}, ::VPolytope)\nconvert(::Type{VPolygon}, ::AbstractHPolygon)\nconvert(::Type{VPolygon}, ::AbstractPolytope)\nconvert(::Type{VPolytope}, ::AbstractPolytope)\nconvert(::Type{VPolytope}, ::HPolytope)\nconvert(::Type{Zonotope}, ::AbstractHyperrectangle)\nconvert(::Type{IntervalArithmetic.IntervalBox}, ::AbstractHyperrectangle)\nconvert(::Type{Hyperrectangle}, ::IntervalArithmetic.IntervalBox)"
 },
 
 {
