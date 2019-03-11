@@ -1905,7 +1905,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.HalfSpace}",
+    "location": "lib/representations.html#LazySets.dim-Tuple{HalfSpace}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
@@ -1945,7 +1945,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.rand-Tuple{Type{LazySets.HalfSpace}}",
+    "location": "lib/representations.html#Base.rand-Tuple{Type{HalfSpace}}",
     "page": "Common Set Representations",
     "title": "Base.rand",
     "category": "method",
@@ -1953,7 +1953,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.isbounded-Tuple{LazySets.HalfSpace}",
+    "location": "lib/representations.html#LazySets.isbounded-Tuple{HalfSpace}",
     "page": "Common Set Representations",
     "title": "LazySets.isbounded",
     "category": "method",
@@ -1961,7 +1961,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.isempty-Tuple{LazySets.HalfSpace}",
+    "location": "lib/representations.html#Base.isempty-Tuple{HalfSpace}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
     "category": "method",
@@ -2005,7 +2005,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.halfspace_left",
     "category": "method",
-    "text": "halfspace_left(p::AbstractVector{N},\n               q::AbstractVector{N})::HalfSpace{N} where {N<:Real}\n\nReturn a half-space describing the \'left\' of a two-dimensional line segment through two points.\n\nInput\n\np – first point\nq – second point\n\nOutput\n\nThe half-space whose boundary goes through the two points p and q and which describes the left-hand side of the directed line segment pq.\n\nAlgorithm\n\nThe implementation is simple: the half-space ax  b is calculated as a = [dy, -dx], where d = (dx dy) denotes the line segment pq, that is, vecd = vecp - vecq, and b = dot(p, a).\n\nExamples\n\nThe left half-space of the \"east\" and \"west\" directions in two-dimensions are the upper and lower half-spaces:\n\njulia> import LazySets.halfspace_left\n\njulia> halfspace_left([0.0, 0.0], [1.0, 0.0])\nHalfSpace{Float64}([0.0, -1.0], 0.0)\n\njulia> halfspace_left([0.0, 0.0], [-1.0, 0.0])\nHalfSpace{Float64}([0.0, 1.0], 0.0)\n\nWe create a box from the sequence of line segments that describe its edges:\n\njulia> H1 = halfspace_left([-1.0, -1.0], [1.0, -1.0]);\n\njulia> H2 = halfspace_left([1.0, -1.0], [1.0, 1.0]);\n\njulia> H3 = halfspace_left([1.0, 1.0], [-1.0, 1.0]);\n\njulia> H4 = halfspace_left([-1.0, 1.0], [-1.0, -1.0]);\n\njulia> H = HPolygon([H1, H2, H3, H4]);\n\njulia> B = BallInf([0.0, 0.0], 1.0);\n\njulia> B ⊆ H && H ⊆ B\ntrue\n\n\n\n\n\n"
+    "text": "halfspace_left(p::AbstractVector{N},\n               q::AbstractVector{N})::HalfSpace{N} where {N<:Real}\n\nReturn a half-space describing the \'left\' of a two-dimensional line segment through two points.\n\nInput\n\np – first point\nq – second point\n\nOutput\n\nThe half-space whose boundary goes through the two points p and q and which describes the left-hand side of the directed line segment pq.\n\nAlgorithm\n\nThe implementation is simple: the half-space ax  b is calculated as a = [dy, -dx], where d = (dx dy) denotes the line segment pq, that is, vecd = vecp - vecq, and b = dot(p, a).\n\nExamples\n\nThe left half-space of the \"east\" and \"west\" directions in two-dimensions are the upper and lower half-spaces:\n\njulia> using LazySets: halfspace_left\n\njulia> halfspace_left([0.0, 0.0], [1.0, 0.0])\nHalfSpace{Float64}([0.0, -1.0], 0.0)\n\njulia> halfspace_left([0.0, 0.0], [-1.0, 0.0])\nHalfSpace{Float64}([0.0, 1.0], 0.0)\n\nWe create a box from the sequence of line segments that describe its edges:\n\njulia> H1 = halfspace_left([-1.0, -1.0], [1.0, -1.0]);\n\njulia> H2 = halfspace_left([1.0, -1.0], [1.0, 1.0]);\n\njulia> H3 = halfspace_left([1.0, 1.0], [-1.0, 1.0]);\n\njulia> H4 = halfspace_left([-1.0, 1.0], [-1.0, -1.0]);\n\njulia> H = HPolygon([H1, H2, H3, H4]);\n\njulia> B = BallInf([0.0, 0.0], 1.0);\n\njulia> B ⊆ H && H ⊆ B\ntrue\n\n\n\n\n\n"
 },
 
 {
@@ -2213,11 +2213,11 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Interval",
     "category": "type",
-    "text": "Interval{N<:Real, IN<:AbstractInterval{N}} <: AbstractHyperrectangle{N}\n\nType representing an interval on the real line. Mathematically, it is of the form\n\na b =  a  x  b   mathbbR\n\nFields\n\ndat – data container for the given interval\n\nNotes\n\nThis type relies on the IntervalArithmetic.jl library for representation of intervals and arithmetic operations.\n\nExamples\n\nUnidimensional intervals are symbolic representations of a real closed interval.\n\nWe can create intervals in different ways, the simpler way is to pass a pair of numbers:\n\njulia> x = Interval(0.0, 1.0)\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nor a 2-vector:\n\njulia> x = Interval([0.0, 1.0])\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nNote that if the package IntervalArithmetic is loaded in the current scope, you have to prepend the LazySets to the interval type, since there is a name conflict otherwise.\n\njulia> using IntervalArithmetic\nWARNING: using IntervalArithmetic.Interval in module Main conflicts with an existing identifier.\n\njulia> x = Interval(IntervalArithmetic.Interval(0.0, 1.0))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\njulia> dim(x)\n1\n\njulia> center(x)\n1-element Array{Float64,1}:\n 0.5\n\nThis type is such that the usual pairwise arithmetic operators +, -, * trigger the corresponding interval arithmetic backend method, and return a new Interval object. For the symbolic Minkowksi sum, use MinkowskiSum or ⊕.\n\nInterval of other numeric types can be created as well, eg. a rational interval:\n\njulia> Interval(0//1, 2//1)\nInterval{Rational{Int64},AbstractInterval{Rational{Int64}}}([0//1, 2//1])\n\n\n\n\n\n"
+    "text": "Interval{N<:Real, IN<:AbstractInterval{N}} <: AbstractHyperrectangle{N}\n\nType representing an interval on the real line. Mathematically, it is of the form\n\na b =  a  x  b   mathbbR\n\nFields\n\ndat – data container for the given interval\n\nNotes\n\nThis type relies on the IntervalArithmetic.jl library for representation of intervals and arithmetic operations.\n\nExamples\n\nUnidimensional intervals are symbolic representations of a real closed interval.\n\nWe can create intervals in different ways, the simpler way is to pass a pair of numbers:\n\njulia> x = Interval(0.0, 1.0)\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nor a 2-vector:\n\njulia> x = Interval([0.0, 1.0])\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\nNote that if the package IntervalArithmetic is loaded in the current scope, you have to prepend LazySets. to the Interval type since there is a name conflict otherwise.\n\njulia> using IntervalArithmetic\nWARNING: using IntervalArithmetic.Interval in module Main conflicts with an existing identifier.\n\njulia> x = Interval(IntervalArithmetic.Interval(0.0, 1.0))\nInterval{Float64,IntervalArithmetic.Interval{Float64}}([0, 1])\n\njulia> dim(x)\n1\n\njulia> center(x)\n1-element Array{Float64,1}:\n 0.5\n\nThis type is such that the usual pairwise arithmetic operators +, -, * trigger the corresponding interval arithmetic backend method, and return a new Interval object. For the symbolic Minkowksi sum, use MinkowskiSum or ⊕.\n\nInterval of other numeric types can be created as well, eg. a rational interval:\n\njulia> Interval(0//1, 2//1)\nInterval{Rational{Int64},AbstractInterval{Rational{Int64}}}([0//1, 2//1])\n\n\n\n\n\n"
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Interval}",
+    "location": "lib/representations.html#LazySets.dim-Tuple{Interval}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2353,7 +2353,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.rand-Tuple{Type{LazySets.Interval}}",
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Interval}}",
     "page": "Common Set Representations",
     "title": "Base.rand",
     "category": "method",
@@ -2361,7 +2361,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#RecipesBase.apply_recipe-Tuple{Dict{Symbol,Any},LazySets.Interval}",
+    "location": "lib/representations.html#RecipesBase.apply_recipe-Tuple{Dict{Symbol,Any},Interval}",
     "page": "Common Set Representations",
     "title": "RecipesBase.apply_recipe",
     "category": "method",
@@ -2369,7 +2369,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#RecipesBase.apply_recipe-Union{Tuple{S}, Tuple{Dict{Symbol,Any},Array{S,1}}} where S<:LazySets.Interval",
+    "location": "lib/representations.html#RecipesBase.apply_recipe-Union{Tuple{S}, Tuple{Dict{Symbol,Any},Array{S,1}}} where S<:Interval",
     "page": "Common Set Representations",
     "title": "RecipesBase.apply_recipe",
     "category": "method",
@@ -2393,7 +2393,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.dim-Tuple{LazySets.Line}",
+    "location": "lib/representations.html#LazySets.dim-Tuple{Line}",
     "page": "Common Set Representations",
     "title": "LazySets.dim",
     "category": "method",
@@ -2425,7 +2425,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.rand-Tuple{Type{LazySets.Line}}",
+    "location": "lib/representations.html#Base.rand-Tuple{Type{Line}}",
     "page": "Common Set Representations",
     "title": "Base.rand",
     "category": "method",
@@ -2433,7 +2433,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#LazySets.isbounded-Tuple{LazySets.Line}",
+    "location": "lib/representations.html#LazySets.isbounded-Tuple{Line}",
     "page": "Common Set Representations",
     "title": "LazySets.isbounded",
     "category": "method",
@@ -2441,7 +2441,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/representations.html#Base.isempty-Tuple{LazySets.Line}",
+    "location": "lib/representations.html#Base.isempty-Tuple{Line}",
     "page": "Common Set Representations",
     "title": "Base.isempty",
     "category": "method",
@@ -2781,7 +2781,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.jump2pi",
     "category": "function",
-    "text": "jump2pi(x::N)::N where {N<:AbstractFloat}\n\nReturn x + 2π if x is negative, otherwise return x.\n\nInput\n\nx – real scalar\n\nOutput\n\nx + 2π if x is negative, x otherwise.\n\nExamples\n\njulia> import LazySets.jump2pi\n\njulia> jump2pi(0.0)\n0.0\n\njulia> jump2pi(-0.5)\n5.783185307179586\n\njulia> jump2pi(0.5)\n0.5\n\n\n\n\n\n"
+    "text": "jump2pi(x::N)::N where {N<:AbstractFloat}\n\nReturn x + 2π if x is negative, otherwise return x.\n\nInput\n\nx – real scalar\n\nOutput\n\nx + 2π if x is negative, x otherwise.\n\nExamples\n\njulia> using LazySets: jump2pi\n\njulia> jump2pi(0.0)\n0.0\n\njulia> jump2pi(-0.5)\n5.783185307179586\n\njulia> jump2pi(0.5)\n0.5\n\n\n\n\n\n"
 },
 
 {
@@ -4053,7 +4053,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets._line_search",
     "category": "function",
-    "text": "_line_search(ℓ, X, H; [kwargs...])\n\nGiven a compact and convex set X and a halfspace H = x a^T x  b  or a hyperplane H = x a^T x = b , calculate:\n\nmin_ λ  D_h  ρ(ℓ - λa X) + λb\n\nwhere D_h =  λ  λ  0  if H is a half-space or D_h =  λ  λ  mathbbR  if H is a hyperplane.\n\nInput\n\nℓ           – direction\nX           – set\nH           – halfspace or hyperplane\n\nOutput\n\nThe tuple (fmin, λmin), where fmin is the minimum value of the function f(λ) = ρ(ℓ - λa) + λb over the feasible set λ  0, and λmin is the minimizer.\n\nNotes\n\nThis function requires the Optim package, and relies on the univariate optimization interface Optim.optimize(...).\n\nAdditional arguments to the optimize backend can be passed as keyword arguments. The default method is Optim.Brent().\n\nExamples\n\njulia> X = Ball1(zeros(2), 1.0);\n\njulia> H = HalfSpace([-1.0, 0.0], -1.0); # x >= 0 \n\njulia> using Optim\n\njulia> import LazySets._line_search\n\njulia> _line_search([1.0, 0.0], X, H) # uses Brent\'s method by default\n(1.0, 999999.9849478417)\n\nWe can specify the upper bound in Brent\'s method:\n\njulia> _line_search([1.0, 0.0], X, H, upper=1e3)\n(1.0, 999.9999849478418)\n\nInstead of using Brent, we use the Golden Section method:\n\njulia> _line_search([1.0, 0.0], X, H, upper=1e3, method=GoldenSection())\n(1.0, 381.9660112501051)\n\n\n\n\n\n"
+    "text": "_line_search(ℓ, X, H; [kwargs...])\n\nGiven a compact and convex set X and a halfspace H = x a^T x  b  or a hyperplane H = x a^T x = b , calculate:\n\nmin_ λ  D_h  ρ(ℓ - λa X) + λb\n\nwhere D_h =  λ  λ  0  if H is a half-space or D_h =  λ  λ  mathbbR  if H is a hyperplane.\n\nInput\n\nℓ           – direction\nX           – set\nH           – halfspace or hyperplane\n\nOutput\n\nThe tuple (fmin, λmin), where fmin is the minimum value of the function f(λ) = ρ(ℓ - λa) + λb over the feasible set λ  0, and λmin is the minimizer.\n\nNotes\n\nThis function requires the Optim package, and relies on the univariate optimization interface Optim.optimize(...).\n\nAdditional arguments to the optimize backend can be passed as keyword arguments. The default method is Optim.Brent().\n\nExamples\n\njulia> X = Ball1(zeros(2), 1.0);\n\njulia> H = HalfSpace([-1.0, 0.0], -1.0); # x >= 0 \n\njulia> using Optim\n\njulia> using LazySets: _line_search\n\njulia> _line_search([1.0, 0.0], X, H) # uses Brent\'s method by default\n(1.0, 999999.9849478417)\n\nWe can specify the upper bound in Brent\'s method:\n\njulia> _line_search([1.0, 0.0], X, H, upper=1e3)\n(1.0, 999.9999849478418)\n\nInstead of using Brent, we use the Golden Section method:\n\njulia> _line_search([1.0, 0.0], X, H, upper=1e3, method=GoldenSection())\n(1.0, 381.9660112501051)\n\n\n\n\n\n"
 },
 
 {
@@ -5201,7 +5201,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/conversion.html#Base.convert-Tuple{Type{Hyperrectangle},LazySets.Interval}",
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{Hyperrectangle},Interval}",
     "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
@@ -5209,7 +5209,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/conversion.html#Base.convert-Tuple{Type{LazySets.Interval},AbstractHyperrectangle}",
+    "location": "lib/conversion.html#Base.convert-Tuple{Type{Interval},AbstractHyperrectangle}",
     "page": "Conversions between set representations",
     "title": "Base.convert",
     "category": "method",
@@ -5769,7 +5769,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "lib/binary_functions.html#Base.:⊆-Tuple{LazySets.Interval,LazySets.Interval}",
+    "location": "lib/binary_functions.html#Base.:⊆-Tuple{Interval,Interval}",
     "page": "Binary Functions on Sets",
     "title": "Base.:⊆",
     "category": "method",
