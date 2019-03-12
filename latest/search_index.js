@@ -5873,11 +5873,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/binary_functions.html#Base.:⊆-Union{Tuple{N}, Tuple{CartesianProductArray{N,S} where S<:LazySet{N},CartesianProductArray{N,S} where S<:LazySet{N}}, Tuple{CartesianProductArray{N,S} where S<:LazySet{N},CartesianProductArray{N,S} where S<:LazySet{N},Bool}} where N<:Real",
+    "page": "Binary Functions on Sets",
+    "title": "Base.:⊆",
+    "category": "method",
+    "text": "⊆(X::CartesianProductArray{N}, Y::CartesianProductArray{N},\n  witness::Bool=false; check_block_equality::Bool=true\n )::Union{Bool, Tuple{Bool, Vector{N}}} where {N<:Real}\n\nCheck whether a Cartesian product of finitely many convex sets is contained in another Cartesian product of finitely many convex sets, and otherwise optionally compute a witness.\n\nInput\n\nX       – Cartesian product of finitely many convex sets\nY       – Cartesian product of finitely many convex sets\nwitness – (optional, default: false) compute a witness if activated\ncheck_block_equality – (optional, default: true) flag for checking that              the block structure of the two sets is identical\n\nOutput\n\nIf witness option is deactivated: true iff X  Y\nIf witness option is activated:\n(true, []) iff X  Y\n(false, v) iff X notsubseteq Y and v  X setminus Y\n\nNotes\n\nThis algorithm requires that the two Cartesian products share the same block structure. Depending on the value of check_block_equality, we check this property.\n\nAlgorithm\n\nWe check for inclusion for each block of the Cartesian products.\n\nFor witness production, we obtain a witness in one of the blocks. We then construct a high-dimensional witness by obtaining any point in the other blocks (using an_element) and concatenating these points.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/binary_functions.html#Subset-check-1",
     "page": "Binary Functions on Sets",
     "title": "Subset check",
     "category": "section",
-    "text": "⊆(::LazySet{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::AbstractHyperrectangle, ::Bool=false) where {N<:Real}\n⊆(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::AbstractPolyhedron{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\n⊆(::Union{Ball2{N}, Ballp{N}}, ::AbstractSingleton{N}, ::Bool=false) where {N<:AbstractFloat}\n⊆(::LineSegment{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::Interval, ::Interval)\n⊆(::EmptySet{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::EmptySet{N}, ::Bool=false) where {N<:Real}\n⊆(::UnionSet{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::UnionSetArray{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::Universe{N}, ::Bool=false) where {N<:Real}\n⊆(::Universe{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::Complement{N}, ::Bool=false) where {N<:Real}"
+    "text": "⊆(::LazySet{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractPolytope{N}, ::AbstractHyperrectangle, ::Bool=false) where {N<:Real}\n⊆(::AbstractHyperrectangle{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::AbstractPolyhedron{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::AbstractSingleton{N}, ::AbstractSingleton{N}, ::Bool=false) where {N<:Real}\n⊆(::Ball2{N}, ::Ball2{N}, ::Bool=false) where {N<:AbstractFloat}\n⊆(::Union{Ball2{N}, Ballp{N}}, ::AbstractSingleton{N}, ::Bool=false) where {N<:AbstractFloat}\n⊆(::LineSegment{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LineSegment{N}, ::AbstractHyperrectangle{N}, ::Bool=false) where {N<:Real}\n⊆(::Interval, ::Interval)\n⊆(::EmptySet{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::EmptySet{N}, ::Bool=false) where {N<:Real}\n⊆(::UnionSet{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::UnionSetArray{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::Universe{N}, ::Bool=false) where {N<:Real}\n⊆(::Universe{N}, ::LazySet{N}, ::Bool=false) where {N<:Real}\n⊆(::LazySet{N}, ::Complement{N}, ::Bool=false) where {N<:Real}\n⊆(::CartesianProductArray{N}, ::CartesianProductArray{N}, ::Bool=false) where {N<:Real}"
 },
 
 {
@@ -6281,6 +6289,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.same_block_structure",
+    "page": "Utility Functions",
+    "title": "LazySets.same_block_structure",
+    "category": "function",
+    "text": "same_block_structure(x::AbstractVector{S1}, y::AbstractVector{S2}\n                    )::Bool where {S1<:LazySet, S2<:LazySet}\n\nCheck whether two vectors of sets have the same block structure, i.e., the i-th entry in the vectors have the same dimension.\n\nInput\n\nx – first vector\ny – second vector\n\nOutput\n\ntrue iff the vectors have the same block structure.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#LazySets.substitute",
     "page": "Utility Functions",
     "title": "LazySets.substitute",
@@ -6357,7 +6373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "an_element_helper\nbinary_search_constraints\ncross_product(::AbstractMatrix{N}) where {N<:Real}\ndot_zero\nget_radius!\nisinvertible\nispermutation\nissquare\nis_right_turn\nis_tighter_same_dir_2D\nnonzero_indices\nsamedir\nsign_cadlag\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed\nsubstitute\nsubstitute!\nσ_helper\n@neutral\n@absorbing\n@neutral_absorbing\n@declare_array_version\n@array_neutral\n@array_absorbing"
+    "text": "an_element_helper\nbinary_search_constraints\ncross_product(::AbstractMatrix{N}) where {N<:Real}\ndot_zero\nget_radius!\nisinvertible\nispermutation\nissquare\nis_right_turn\nis_tighter_same_dir_2D\nnonzero_indices\nsamedir\nsign_cadlag\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed\nsame_block_structure\nsubstitute\nsubstitute!\nσ_helper\n@neutral\n@absorbing\n@neutral_absorbing\n@declare_array_version\n@array_neutral\n@array_absorbing"
 },
 
 {
