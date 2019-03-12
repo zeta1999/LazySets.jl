@@ -1313,6 +1313,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.high-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},Int64}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.high",
+    "category": "method",
+    "text": "high(H::AbstractHyperrectangle{N}, i::Int)::N where {N<:Real}\n\nReturn the higher coordinate of a hyperrectangular set in a given dimension.\n\nInput\n\nH – hyperrectangular set\ni – dimension of interest\n\nOutput\n\nThe higher coordinate of the hyperrectangular set in the given dimension.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#LazySets.low-Union{Tuple{AbstractHyperrectangle{N}}, Tuple{N}} where N<:Real",
     "page": "Set Interfaces",
     "title": "LazySets.low",
@@ -1321,11 +1329,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.low-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},Int64}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.low",
+    "category": "method",
+    "text": "low(H::AbstractHyperrectangle{N}, i::Int)::N where {N<:Real}\n\nReturn the lower coordinate of a hyperrectangular set in a given dimension.\n\nInput\n\nH – hyperrectangular set\ni – dimension of interest\n\nOutput\n\nThe lower coordinate of the hyperrectangular set in the given dimension.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Hyperrectangle-1",
     "page": "Set Interfaces",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "A hyperrectangle is a special centrally symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real=Inf)\nradius(::AbstractHyperrectangle, ::Real=Inf)\nσ(::AbstractVector{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nvertices_list(::AbstractHyperrectangle{N}) where {N<:Real}\nconstraints_list(::AbstractHyperrectangle{N}) where {N<:Real}\nhigh(::AbstractHyperrectangle{N}) where {N<:Real}\nlow(::AbstractHyperrectangle{N}) where {N<:Real}"
+    "text": "A hyperrectangle is a special centrally symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real=Inf)\nradius(::AbstractHyperrectangle, ::Real=Inf)\nσ(::AbstractVector{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nvertices_list(::AbstractHyperrectangle{N}) where {N<:Real}\nconstraints_list(::AbstractHyperrectangle{N}) where {N<:Real}\nhigh(::AbstractHyperrectangle{N}) where {N<:Real}\nhigh(::AbstractHyperrectangle{N}, ::Int) where {N<:Real}\nlow(::AbstractHyperrectangle{N}) where {N<:Real}\nlow(::AbstractHyperrectangle{N}, ::Int) where {N<:Real}"
 },
 
 {
@@ -1389,7 +1405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "LazySets.radius_hyperrectangle",
     "category": "method",
-    "text": "radius_hyperrectangle(S::AbstractSingleton{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of a set with a single value in a given dimension.\n\nInput\n\nS – set with a single value\n\nOutput\n\nZero.\n\n\n\n\n\n"
+    "text": "radius_hyperrectangle(S::AbstractSingleton{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of a set with a single value in a given dimension.\n\nInput\n\nS – set with a single value\ni – dimension of interest\n\nOutput\n\nZero.\n\n\n\n\n\n"
 },
 
 {
@@ -1401,11 +1417,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#LazySets.high-Union{Tuple{N}, Tuple{AbstractSingleton{N},Int64}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.high",
+    "category": "method",
+    "text": "high(S::AbstractSingleton{N}, i::Int)::N where {N<:Real}\n\nReturn the higher coordinate of a set with a single value in the given dimension.\n\nInput\n\nS – set with a single value\ni – dimension of interest\n\nOutput\n\nThe higher coordinate of the set with a single value in the given dimension.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#LazySets.low-Union{Tuple{AbstractSingleton{N}}, Tuple{N}} where N<:Real",
     "page": "Set Interfaces",
     "title": "LazySets.low",
     "category": "method",
     "text": "low(S::AbstractSingleton{N})::Vector{N} where {N<:Real}\n\nReturn the lower coordinates of a set with a single value.\n\nInput\n\nS – set with a single value\n\nOutput\n\nA vector with the lower coordinates of the set with a single value.\n\n\n\n\n\n"
+},
+
+{
+    "location": "lib/interfaces.html#LazySets.low-Union{Tuple{N}, Tuple{AbstractSingleton{N},Int64}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "LazySets.low",
+    "category": "method",
+    "text": "low(S::AbstractSingleton{N}, i::Int)::N where {N<:Real}\n\nReturn the lower coordinate of a set with a single value in the given dimension.\n\nInput\n\nS – set with a single value\ni – dimension of interest\n\nOutput\n\nThe lower coordinate of the set with a single value in the given dimension.\n\n\n\n\n\n"
 },
 
 {
@@ -1437,7 +1469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Set Interfaces",
     "title": "Singleton",
     "category": "section",
-    "text": "A singleton is a special hyperrectangle consisting of only one point.AbstractSingletonThis interface defines the following functions:σ(::AbstractVector{N}, ::AbstractSingleton{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::AbstractSingleton{N}) where {N<:Real}\nan_element(::AbstractSingleton{N}) where {N<:Real}\ncenter(::AbstractSingleton{N}) where {N<:Real}\nvertices_list(::AbstractSingleton{N}) where {N<:Real}\nradius_hyperrectangle(::AbstractSingleton{N}) where {N<:Real}\nradius_hyperrectangle(::AbstractSingleton{N}, ::Int) where {N<:Real}\nhigh(::AbstractSingleton{N}) where {N<:Real}\nlow(::AbstractSingleton{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::AbstractSingleton{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::AbstractSingleton)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:AbstractSingleton}"
+    "text": "A singleton is a special hyperrectangle consisting of only one point.AbstractSingletonThis interface defines the following functions:σ(::AbstractVector{N}, ::AbstractSingleton{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::AbstractSingleton{N}) where {N<:Real}\nan_element(::AbstractSingleton{N}) where {N<:Real}\ncenter(::AbstractSingleton{N}) where {N<:Real}\nvertices_list(::AbstractSingleton{N}) where {N<:Real}\nradius_hyperrectangle(::AbstractSingleton{N}) where {N<:Real}\nradius_hyperrectangle(::AbstractSingleton{N}, ::Int) where {N<:Real}\nhigh(::AbstractSingleton{N}) where {N<:Real}\nhigh(::AbstractSingleton{N}, ::Int) where {N<:Real}\nlow(::AbstractSingleton{N}) where {N<:Real}\nlow(::AbstractSingleton{N}, ::Int) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::AbstractSingleton{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::AbstractSingleton)\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::Vector{S}) where {S<:AbstractSingleton}"
 },
 
 {
@@ -1557,7 +1589,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius_hyperrectangle",
     "category": "method",
-    "text": "radius_hyperrectangle(B::BallInf{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of a infinity norm ball in a given dimension.\n\nInput\n\nB – infinity norm ball\n\nOutput\n\nThe box radius of the ball in the infinity norm in the given dimension.\n\n\n\n\n\n"
+    "text": "radius_hyperrectangle(B::BallInf{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of a infinity norm ball in a given dimension.\n\nInput\n\nB – infinity norm ball\ni – dimension of interest\n\nOutput\n\nThe box radius of the ball in the infinity norm in the given dimension.\n\n\n\n\n\n"
 },
 
 {
@@ -2189,7 +2221,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.radius_hyperrectangle",
     "category": "method",
-    "text": "radius_hyperrectangle(H::Hyperrectangle{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of a hyperrectangle in a given dimension.\n\nInput\n\nH – hyperrectangle\n\nOutput\n\nThe radius in the given dimension.\n\n\n\n\n\n"
+    "text": "radius_hyperrectangle(H::Hyperrectangle{N}, i::Int)::N where {N<:Real}\n\nReturn the box radius of a hyperrectangle in a given dimension.\n\nInput\n\nH – hyperrectangle\ni – dimension of interest\n\nOutput\n\nThe radius in the given dimension.\n\n\n\n\n\n"
 },
 
 {
@@ -4737,11 +4769,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/operations.html#LazySets.constraints_list-Union{Tuple{ResetMap{N,S}}, Tuple{S}, Tuple{N}} where S<:AbstractHyperrectangle where N<:Real",
+    "page": "Common Set Operations",
+    "title": "LazySets.constraints_list",
+    "category": "method",
+    "text": "constraints_list(rm::ResetMap{N, S}) where\n    {N<:Real, S<:AbstractHyperrectangle}\n\nReturn the list of constraints of a hyperrectangular reset map.\n\nInput\n\nrm – reset map of a hyperrectangular set\n\nOutput\n\nThe list of constraints of the reset map.\n\nAlgorithm\n\nWe iterate through all dimensions. If there is a reset, we construct the corresponding (flat) constraints. Otherwise, we construct the corresponding constraints of the underlying set.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/operations.html#Reset-Map-1",
     "page": "Common Set Operations",
     "title": "Reset Map",
     "category": "section",
-    "text": "ResetMap\ndim(::ResetMap)\nρ(::AbstractVector{N}, ::ResetMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::ResetMap{N}) where {N<:Real}\nan_element(::ResetMap)\nisempty(::ResetMap)\nget_A(::ResetMap{N}) where {N<:Real}\nget_b(::ResetMap{N}) where {N<:Real}\nconstraints_list(::ResetMap{N}) where {N<:Real}Inherited from LazySet:isbounded\nnorm\nradius\ndiameter"
+    "text": "ResetMap\ndim(::ResetMap)\nρ(::AbstractVector{N}, ::ResetMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::ResetMap{N}) where {N<:Real}\nan_element(::ResetMap)\nisempty(::ResetMap)\nget_A(::ResetMap{N}) where {N<:Real}\nget_b(::ResetMap{N}) where {N<:Real}\nconstraints_list(::ResetMap{N}) where {N<:Real}\nconstraints_list(::ResetMap{N, S}) where {N<:Real, S<:AbstractHyperrectangle}Inherited from LazySet:isbounded\nnorm\nradius\ndiameter"
 },
 
 {
@@ -4789,7 +4829,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Operations",
     "title": "LazySets.radius_hyperrectangle",
     "category": "method",
-    "text": "radius_hyperrectangle(sih::SymmetricIntervalHull{N},\n                      i::Int)::N where {N<:Real}\n\nReturn the box radius of a symmetric interval hull of a convex set in a given dimension.\n\nInput\n\nsih – symmetric interval hull of a convex set\n\nOutput\n\nThe radius in the given dimension. If it was computed before, this is just a look-up, otherwise it requires two support vector computations.\n\n\n\n\n\n"
+    "text": "radius_hyperrectangle(sih::SymmetricIntervalHull{N},\n                      i::Int)::N where {N<:Real}\n\nReturn the box radius of a symmetric interval hull of a convex set in a given dimension.\n\nInput\n\nsih – symmetric interval hull of a convex set\ni   – dimension of interest\n\nOutput\n\nThe radius in the given dimension. If it was computed before, this is just a look-up, otherwise it requires two support vector computations.\n\n\n\n\n\n"
 },
 
 {
