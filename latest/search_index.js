@@ -3485,7 +3485,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.constraints_list",
     "category": "method",
-    "text": "constraints_list(P::Zonotope{N}\n                )::Vector{LinearConstraint{N}} where {N<:AbstractFloat}\n\nReturn the list of constraints defining a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe list of constraints of the zonotope.\n\nNotes\n\nThe algorithm assumes that no generator is redundant. The result has 2 binompn-1 (with p being the number of generators and n being the ambient dimension) constraints, which is optimal under this assumption.\n\nAlgorithm\n\nWe follow the algorithm presented in Althoff, Stursberg, Buss: Computing Reachable Sets of Hybrid Systems Using a Combination of Zonotopes and Polytopes. 2009.\n\nThe one-dimensional case is not covered by that algorithm; we manually handle this case, assuming that there is only one generator.\n\n\n\n\n\n"
+    "text": "constraints_list(Z::Zonotope{N}\n                )::Vector{LinearConstraint{N}} where {N<:AbstractFloat}\n\nReturn the list of constraints defining a zonotope.\n\nInput\n\nZ – zonotope\n\nOutput\n\nThe list of constraints of the zonotope.\n\nNotes\n\nThe algorithm assumes that no generator is redundant. The result has 2 binompn-1 (with p being the number of generators and n being the ambient dimension) constraints, which is optimal under this assumption.\n\nAlgorithm\n\nWe follow the algorithm presented in Althoff, Stursberg, Buss: Computing Reachable Sets of Hybrid Systems Using a Combination of Zonotopes and Polytopes. 2009.\n\nThe one-dimensional case is not covered by that algorithm; we manually handle this case, assuming that there is only one generator.\n\n\n\n\n\n"
 },
 
 {

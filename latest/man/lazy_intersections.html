@@ -866,8 +866,8 @@ plot(pbox, poct, layout=(1, 2))</code></pre><?xml version="1.0" encoding="utf-8"
 </div><p>Using support function evaluations over a set of fixed directions is in general more efficient than iterative refinement, but the drawback is that one does not have control on the overapproximation error. Moreover, iterative refinement is currently only available in two dimensions, but overapproximation with template directions can be used in any dimension.</p><p>Let&#39;s time it!</p><div><pre><code class="language-julia">using BenchmarkTools
 
 @btime overapproximate($E₁ ∩ $E₂, BoxDirections(2))
-@btime overapproximate($E₁ ∩ $E₂, OctDirections(2));</code></pre><pre><code class="language-none">  10.158 μs (133 allocations: 4.94 KiB)
-  20.494 μs (246 allocations: 9.88 KiB)</code></pre></div><p>We can work with higher dimensional ellipsoids as well:</p><div><pre><code class="language-julia">using LinearAlgebra
+@btime overapproximate($E₁ ∩ $E₂, OctDirections(2));</code></pre><pre><code class="language-none">  10.021 μs (133 allocations: 4.94 KiB)
+  20.164 μs (246 allocations: 9.88 KiB)</code></pre></div><p>We can work with higher dimensional ellipsoids as well:</p><div><pre><code class="language-julia">using LinearAlgebra
 
 # a random ellipsoid in n-dimensions
 function rand_ellipsoid(n)
@@ -886,20 +886,20 @@ end;</code></pre></div><div><pre><code class="language-julia">for n in [2, 5, 50
 end;</code></pre><pre><code class="language-none">
 n = 2
 
-  10.121 μs (133 allocations: 4.94 KiB)
-  20.400 μs (246 allocations: 9.88 KiB)
+  10.000 μs (133 allocations: 4.94 KiB)
+  20.205 μs (246 allocations: 9.88 KiB)
 
 n = 5
 
-  26.306 μs (325 allocations: 13.98 KiB)
-  133.355 μs (1412 allocations: 70.52 KiB)
+  25.811 μs (325 allocations: 13.98 KiB)
+  132.728 μs (1412 allocations: 70.52 KiB)
 
 n = 50
 
-  843.269 μs (3205 allocations: 382.27 KiB)
-  29.549 ms (135518 allocations: 22.61 MiB)
+  842.885 μs (3205 allocations: 382.27 KiB)
+  29.250 ms (135518 allocations: 22.61 MiB)
 
 n = 100
 
-  4.296 ms (6405 allocations: 1.15 MiB)
-  214.498 ms (541020 allocations: 144.23 MiB)</code></pre></div><footer><hr/><a class="previous" href="parallel_approximations.html"><span class="direction">Previous</span><span class="title">Parallel Approximations</span></a><a class="next" href="../lib/interfaces.html"><span class="direction">Next</span><span class="title">Set Interfaces</span></a></footer></article></body></html>
+  4.291 ms (6405 allocations: 1.15 MiB)
+  211.064 ms (541020 allocations: 144.23 MiB)</code></pre></div><footer><hr/><a class="previous" href="parallel_approximations.html"><span class="direction">Previous</span><span class="title">Parallel Approximations</span></a><a class="next" href="../lib/interfaces.html"><span class="direction">Next</span><span class="title">Set Interfaces</span></a></footer></article></body></html>
