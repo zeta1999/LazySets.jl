@@ -3437,7 +3437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.Zonotope",
     "category": "type",
-    "text": "Zonotope{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nType that represents a zonotope.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – matrix; each column is a generator of the zonotope\n\nNotes\n\nMathematically, a zonotope is defined as the set\n\nZ = left c + _i=1^p ξ_i g_i ξ_i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line segments. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nZonotope(center::AbstractVector{N},           generators::AbstractMatrix{N}) where {N<:Real}\nZonotope(center::AbstractVector{N},           generators_list::AbstractVector{VN}          ) where {N<:Real, VN<:AbstractVector{N}}\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> Z = Zonotope([1.0, 0.0], [0.1 0.0; 0.0 0.1])\nZonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(Z)\n2\n\nCompute its vertices:\n\njulia> vertices_list(Z)\n4-element Array{Array{Float64,1},1}:\n [1.1, 0.1]\n [0.9, 0.1]\n [1.1, -0.1]\n [0.9, -0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], Z)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\nAlternative constructor: A zonotope in two dimensions with three generators:\n\njulia> Z = Zonotope(ones(2), [[1., 0.], [0., 1.], [1., 1.]])\nZonotope{Float64}([1.0, 1.0], [1.0 0.0 1.0; 0.0 1.0 1.0])\njulia> Z.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n\n\n"
+    "text": "Zonotope{N<:Real} <: AbstractCentrallySymmetricPolytope{N}\n\nType that represents a zonotope.\n\nFields\n\ncenter     – center of the zonotope\ngenerators – matrix; each column is a generator of the zonotope\n\nNotes\n\nMathematically, a zonotope is defined as the set\n\nZ = left c + _i=1^p ξ_i g_i ξ_i in -1 1  i = 1 p right\n\nwhere c in mathbbR^n is its center and g_i_i=1^p, g_i in mathbbR^n, is the set of generators. This characterization defines a zonotope as the finite Minkowski sum of line segments. Zonotopes can be equivalently described as the image of a unit infinity-norm ball in mathbbR^n by an affine transformation.\n\nZonotope(center::AbstractVector{N},           generators::AbstractMatrix{N}) where {N<:Real}\nZonotope(center::AbstractVector{N},           generators_list::AbstractVector{VN}          ) where {N<:Real, VN<:AbstractVector{N}}\n\nThe optional argument remove_zero_generators controls whether we remove zero columns from the generators matrix. This option is active by default.\n\nExamples\n\nA two-dimensional zonotope with given center and set of generators:\n\njulia> Z = Zonotope([1.0, 0.0], [0.1 0.0; 0.0 0.1])\nZonotope{Float64}([1.0, 0.0], [0.1 0.0; 0.0 0.1])\njulia> dim(Z)\n2\n\nCompute its vertices:\n\njulia> vertices_list(Z)\n4-element Array{Array{Float64,1},1}:\n [1.1, 0.1]\n [0.9, 0.1]\n [1.1, -0.1]\n [0.9, -0.1]\n\nEvaluate the support vector in a given direction:\n\njulia> σ([1., 1.], Z)\n2-element Array{Float64,1}:\n 1.1\n 0.1\n\nAlternative constructor: A zonotope in two dimensions with three generators:\n\njulia> Z = Zonotope(ones(2), [[1., 0.], [0., 1.], [1., 1.]])\nZonotope{Float64}([1.0, 1.0], [1.0 0.0 1.0; 0.0 1.0 1.0])\njulia> Z.generators\n2×3 Array{Float64,2}:\n 1.0  0.0  1.0\n 0.0  1.0  1.0\n\n\n\n\n\n"
 },
 
 {
@@ -3549,7 +3549,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.reduce_order",
     "category": "method",
-    "text": "reduce_order(Z::Zonotope, r)::Zonotope\n\nReduce the order of a zonotope by overapproximating with a zonotope with less generators.\n\nInput\n\nZ – zonotope\nr – desired order\n\nOutput\n\nA new zonotope with less generators, if possible.\n\nAlgorithm\n\nThis function implements the algorithm described in A. Girard\'s Reachability of Uncertain Linear Systems Using Zonotopes, HSCC. Vol. 5. 2005.\n\n\n\n\n\n"
+    "text": "reduce_order(Z::Zonotope, r)::Zonotope\n\nReduce the order of a zonotope by overapproximating with a zonotope with less generators.\n\nInput\n\nZ – zonotope\nr – desired order\n\nOutput\n\nA new zonotope with less generators, if possible.\n\nAlgorithm\n\nThis function implements the algorithm described in A. Girard\'s Reachability of Uncertain Linear Systems Using Zonotopes, HSCC. Vol. 5. 2005.\n\nIf the desired order is smaller than one, the zonotope is not reduced.\n\n\n\n\n\n"
 },
 
 {
@@ -6241,6 +6241,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.delete_zero_columns",
+    "page": "Utility Functions",
+    "title": "LazySets.delete_zero_columns",
+    "category": "function",
+    "text": "delete_zero_columns(A::AbstractMatrix)\n\nRemove all columns that only contain zeros from a given matrix.\n\nInput\n\nA    – matrix\ncopy – (optional, default: false) flag to copy the matrix\n\nOutput\n\nA matrix.\n\nIf the input matrix A does not contain any zero column, we return A unless the option copy is set. If the input matrix contains zero columns, we always return a copy if the option copy is set and otherwise a SubArray via @view.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#LazySets.dot_zero",
     "page": "Utility Functions",
     "title": "LazySets.dot_zero",
@@ -6429,7 +6437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "an_element_helper\nbinary_search_constraints\ncross_product(::AbstractMatrix{N}) where {N<:Real}\ndot_zero\nget_radius!\nisinvertible\nispermutation\nissquare\nis_right_turn\nis_tighter_same_dir_2D\nnonzero_indices\nsamedir\nsign_cadlag\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed\nsame_block_structure\nsubstitute\nsubstitute!\nσ_helper\n@neutral\n@absorbing\n@neutral_absorbing\n@declare_array_version\n@array_neutral\n@array_absorbing"
+    "text": "an_element_helper\nbinary_search_constraints\ncross_product(::AbstractMatrix{N}) where {N<:Real}\ndelete_zero_columns\ndot_zero\nget_radius!\nisinvertible\nispermutation\nissquare\nis_right_turn\nis_tighter_same_dir_2D\nnonzero_indices\nsamedir\nsign_cadlag\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed\nsame_block_structure\nsubstitute\nsubstitute!\nσ_helper\n@neutral\n@absorbing\n@neutral_absorbing\n@declare_array_version\n@array_neutral\n@array_absorbing"
 },
 
 {
