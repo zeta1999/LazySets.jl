@@ -1913,11 +1913,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#RecipesBase.apply_recipe",
+    "page": "Common Set Representations",
+    "title": "RecipesBase.apply_recipe",
+    "category": "function",
+    "text": "plot_emptyset(∅::EmptySet, [ε::Float64=0.0]; ...)\n\nPlot an empty set.\n\nInput\n\n∅ – empty set\nε – (optional, default: 0.0) approximation error bound\n\nExamples\n\njulia> using Plots, LazySets;\n\njulia> plot(∅);\n\njulia> plot(∅, 1e-2);\n\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#Empty-set-1",
     "page": "Common Set Representations",
     "title": "Empty set",
     "category": "section",
-    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisbounded(::EmptySet)\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real=Inf)\nradius(::EmptySet, ::Real=Inf)\ndiameter(::EmptySet, ::Real=Inf)\nlinear_map(::AbstractMatrix{N}, ::EmptySet{N}) where {N}\ntranslate(::EmptySet{N}, ::AbstractVector{N}) where {N<:Real}Inherited from LazySet:norm\nradius\ndiameter"
+    "text": "EmptySet\n∅\ndim(::EmptySet)\nσ(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::EmptySet{N}) where {N<:Real}\nan_element(::EmptySet)\nrand(::Type{EmptySet})\nisbounded(::EmptySet)\nisempty(::EmptySet)\nnorm(::EmptySet, ::Real=Inf)\nradius(::EmptySet, ::Real=Inf)\ndiameter(::EmptySet, ::Real=Inf)\nlinear_map(::AbstractMatrix{N}, ::EmptySet{N}) where {N}\ntranslate(::EmptySet{N}, ::AbstractVector{N}) where {N<:Real}\nRecipesBase.apply_recipe(::Dict{Symbol,Any}, ::EmptySet, ::Float64=0.0)Inherited from LazySet:norm\nradius\ndiameter"
 },
 
 {
