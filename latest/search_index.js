@@ -6193,11 +6193,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/approximations.html#LazySets.Approximations.SphericalDirections",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.SphericalDirections",
+    "category": "type",
+    "text": "SphericalDirections{N<:AbstractFloat} <: AbstractDirections{N}\n\nSpherical directions representation.\n\nFields\n\nNθ    – length of the partition of the azimuthal angle\nNφ    – length of the partition of the polar angle\nstack – list of computed directions\n\nNotes\n\nThe SphericalDirections constructor provides a sample of the unit sphere in mathbbR^3, which is parameterized by the azimuthal and polar angles θ  Dθ = 0 π and φ  Dφ = 0 2π respectively, see the wikipedia entry Spherical coordinate system. The domains Dθ and Dφ are discretized in Nθ and Nφ respectively. Then the Cartesian componentes of each direction are obtained with\n\nsin(θᵢ)*cos(φᵢ) sin(θᵢ)*sin(φᵢ) cos(θᵢ)\n\nThe north and south poles are treated separately so that those points are not considered more than once.\n\nExamples\n\nA SphericalDirections can be built in different ways. If you pass only one integer, it is used to discretize both θ and φ:\n\njulia> using LazySets.Approximations: SphericalDirections\n\njulia> sd = SphericalDirections(3)\nSphericalDirections{Float64}(3, 3, Array{Float64,1}[[0.0, 0.0, 1.0], [0.0, 0.0, -1.0], [1.0, 0.0, 6.12323e-17], [-1.0, 1.22465e-16, 6.12323e-17]])\n\njulia> sd.Nθ, sd.Nφ \n(3, 3)\n\nPass two integers to control the discretization in θ and in φ separately:\n\njulia> sd_4_5 = SphericalDirections(4, 5);\n\njulia> length(sd_4_5)\n10\n\njulia> sd_4_8 = SphericalDirections(4, 8);\n\njulia> length(sd_4_8)\n16\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/approximations.html#Template-directions-1",
     "page": "Approximations",
     "title": "Template directions",
     "category": "section",
-    "text": "AbstractDirections\nBoxDirections\nOctDirections\nBoxDiagDirectionsSee also overapproximate(X::LazySet, dir::AbstractDirections)::HPolytope."
+    "text": "AbstractDirections\nBoxDirections\nOctDirections\nBoxDiagDirections\nSphericalDirectionsSee also overapproximate(X::LazySet, dir::AbstractDirections)::HPolytope."
 },
 
 {
