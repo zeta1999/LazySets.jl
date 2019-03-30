@@ -1337,11 +1337,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/interfaces.html#Base.split-Union{Tuple{N}, Tuple{AbstractHyperrectangle{N},AbstractArray{Int64,1}}} where N<:Real",
+    "page": "Set Interfaces",
+    "title": "Base.split",
+    "category": "method",
+    "text": "split(H::AbstractHyperrectangle{N}, num_blocks::AbstractVector{Int}\n     ) where {N<:Real}\n\nPartition a hyperrectangular set into uniform sub-hyperrectangles.\n\nInput\n\nH          – hyperrectangular set\nnum_blocks – number of blocks in the partition for each dimension\n\nOutput\n\nA list of Hyperrectangles.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/interfaces.html#Hyperrectangle-1",
     "page": "Set Interfaces",
     "title": "Hyperrectangle",
     "category": "section",
-    "text": "A hyperrectangle is a special centrally symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real=Inf)\nradius(::AbstractHyperrectangle, ::Real=Inf)\nσ(::AbstractVector{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nvertices_list(::AbstractHyperrectangle{N}) where {N<:Real}\nconstraints_list(::AbstractHyperrectangle{N}) where {N<:Real}\nhigh(::AbstractHyperrectangle{N}) where {N<:Real}\nhigh(::AbstractHyperrectangle{N}, ::Int) where {N<:Real}\nlow(::AbstractHyperrectangle{N}) where {N<:Real}\nlow(::AbstractHyperrectangle{N}, ::Int) where {N<:Real}"
+    "text": "A hyperrectangle is a special centrally symmetric polytope with axis-aligned facets.AbstractHyperrectangleThis interface defines the following functions:norm(::AbstractHyperrectangle, ::Real=Inf)\nradius(::AbstractHyperrectangle, ::Real=Inf)\nσ(::AbstractVector{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::AbstractHyperrectangle{N}) where {N<:Real}\nvertices_list(::AbstractHyperrectangle{N}) where {N<:Real}\nconstraints_list(::AbstractHyperrectangle{N}) where {N<:Real}\nhigh(::AbstractHyperrectangle{N}) where {N<:Real}\nhigh(::AbstractHyperrectangle{N}, ::Int) where {N<:Real}\nlow(::AbstractHyperrectangle{N}) where {N<:Real}\nlow(::AbstractHyperrectangle{N}, ::Int) where {N<:Real}\nsplit(::AbstractHyperrectangle{N}, ::AbstractVector{Int}) where {N<:Real}"
 },
 
 {
