@@ -1761,6 +1761,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Ellipsoid{N}}} where N<:AbstractFloat",
+    "page": "Common Set Representations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, E::Ellipsoid{N}) where {N<:AbstractFloat}\n\nReturn the support function of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nE – ellipsoid\n\nOutput\n\nThe support function of the ellipsoid in the given direction.\n\nAlgorithm\n\nThe support value is cᵀ d + Qᵀ d₂ where c is the center and Q is the shape matrix of E.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Ellipsoid{N}}} where N<:AbstractFloat",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
@@ -1781,7 +1789,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Base.rand",
     "category": "method",
-    "text": "rand(::Type{Ellipsoid}; [N]::Type{<:Real}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ellipsoid{N}\n\nCreate a random ellipsoid.\n\nInput\n\nEllipsoid – type for dispatch\nN         – (optional, default: Float64) numeric type\ndim       – (optional, default: 2) dimension\nrng       – (optional, default: GLOBAL_RNG) random number generator\nseed      – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ellipsoid.\n\nAlgorithm\n\nThe center is a normally distributed vector with entries of mean 0 and standard deviation 1.\n\nThe idea for the shape matrix comes from here. The matrix is symmetric positive definite, but also diagonally dominant.\n\nQ =  rac12(S + S^T) + nI\n\nwhere n = dim (defaults to 2), and S is a n times n random matrix whose coefficients are uniformly distributed in the interval -1 1.\n\n\n\n\n\n"
+    "text": "rand(::Type{Ellipsoid}; [N]::Type{<:AbstractFloat}=Float64, [dim]::Int=2,\n     [rng]::AbstractRNG=GLOBAL_RNG, [seed]::Union{Int, Nothing}=nothing\n    )::Ellipsoid{N}\n\nCreate a random ellipsoid.\n\nInput\n\nEllipsoid – type for dispatch\nN         – (optional, default: Float64) numeric type\ndim       – (optional, default: 2) dimension\nrng       – (optional, default: GLOBAL_RNG) random number generator\nseed      – (optional, default: nothing) seed for reseeding\n\nOutput\n\nA random ellipsoid.\n\nAlgorithm\n\nThe center is a normally distributed vector with entries of mean 0 and standard deviation 1.\n\nThe idea for the shape matrix comes from here. The matrix is symmetric positive definite, but also diagonally dominant.\n\nQ =  rac12(S + S^T) + nI\n\nwhere n = dim (defaults to 2), and S is a n times n random matrix whose coefficients are uniformly distributed in the interval -1 1.\n\n\n\n\n\n"
 },
 
 {
@@ -1805,7 +1813,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Ellipsoid",
     "category": "section",
-    "text": "Ellipsoid\nσ(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\nrand(::Type{Ellipsoid})\ncenter(::Ellipsoid{N}) where {N<:AbstractFloat}\ntranslate(::Ellipsoid{N}, ::AbstractVector{N}) where {N<:AbstractFloat}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
+    "text": "Ellipsoid\nρ(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\nσ(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\n∈(::AbstractVector{N}, ::Ellipsoid{N}) where {N<:AbstractFloat}\nrand(::Type{Ellipsoid})\ncenter(::Ellipsoid{N}) where {N<:AbstractFloat}\ntranslate(::Ellipsoid{N}, ::AbstractVector{N}) where {N<:AbstractFloat}Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractCentrallySymmetric:dim\nisbounded\nisempty\nan_element"
 },
 
 {
@@ -3457,6 +3465,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/representations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Zonotope{N}}} where N<:Real",
+    "page": "Common Set Representations",
+    "title": "LazySets.ρ",
+    "category": "method",
+    "text": "ρ(d::AbstractVector{N}, Z::Zonotope{N}) where {N<:Real}\n\nReturn the support function of a zonotope in a given direction.\n\nInput\n\nd – direction\nZ – zonotope\n\nOutput\n\nThe support function of the zonotope in the given direction.\n\nAlgorithm\n\nThe support value is cᵀ d + Gᵀ d₁ where c is the center and G is the generator matrix of Z.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/representations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},Zonotope{N}}} where N<:Real",
     "page": "Common Set Representations",
     "title": "LazySets.σ",
@@ -3581,7 +3597,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "Zonotope",
     "category": "section",
-    "text": "Zonotope\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:AbstractFloat}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\ntranslate(::Zonotope{N}, ::AbstractVector{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)\nsplit(::Zonotope, ::Int)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
+    "text": "Zonotope\nρ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::Zonotope{N}) where {N<:Real}\nrand(::Type{Zonotope})\nvertices_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:Real}\nconstraints_list(::Zonotope{N}) where {N<:AbstractFloat}\ncenter(::Zonotope{N}) where {N<:Real}\norder(::Zonotope)\nminkowski_sum(::Zonotope{N}, ::Zonotope{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::Zonotope{N}) where {N<:Real}\ntranslate(::Zonotope{N}, ::AbstractVector{N}) where {N<:Real}\nscale(::Real, ::Zonotope)\nngens(::Zonotope)\nreduce_order(::Zonotope, r)\nsplit(::Zonotope, ::Int)Inherited from LazySet:norm\nradius\ndiameterInherited from AbstractPolytope:isbounded\nsingleton_listInherited from AbstractCentrallySymmetricPolytope:dim\nisempty\nan_element"
 },
 
 {
