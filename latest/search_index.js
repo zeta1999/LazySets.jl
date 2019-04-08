@@ -6225,6 +6225,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/approximations.html#LazySets.Approximations.PolarDirections",
+    "page": "Approximations",
+    "title": "LazySets.Approximations.PolarDirections",
+    "category": "type",
+    "text": "PolarDirections{N<:AbstractFloat} <: AbstractDirections{N}\n\nPolar directions representation.\n\nFields\n\nNφ    – length of the partition of the polar angle\n\nNotes\n\nThe PolarDirections constructor provides a sample of the unit sphere in mathbbR^2, which is parameterized by the polar angles φ  Dφ = 0 2π respectively; see the wikipedia entry Polar coordinate system. The domain Dφ is discretized in Nφ pieces. Then the Cartesian components of each direction are obtained with\n\ncos(φᵢ) sin(φᵢ)\n\nExamples\n\nThe integer passed as an argument is used to discretize φ:\n\njulia> using LazySets.Approximations: PolarDirections\n\njulia> pd = PolarDirections(2)\nPolarDirections{Float64}(2, Array{Float64,1}[[1.0, 0.0], [-1.0, 1.22465e-16]])\n\njulia> pd.Nφ\n2\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/approximations.html#LazySets.Approximations.SphericalDirections",
     "page": "Approximations",
     "title": "LazySets.Approximations.SphericalDirections",
@@ -6237,7 +6245,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Approximations",
     "title": "Template directions",
     "category": "section",
-    "text": "AbstractDirections\nBoxDirections\nOctDirections\nBoxDiagDirections\nSphericalDirectionsSee also overapproximate(X::LazySet, dir::AbstractDirections)::HPolytope."
+    "text": "AbstractDirections\nBoxDirections\nOctDirections\nBoxDiagDirections\nPolarDirections\nSphericalDirectionsSee also overapproximate(X::LazySet, dir::AbstractDirections)::HPolytope."
 },
 
 {
