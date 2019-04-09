@@ -1765,7 +1765,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Common Set Representations",
     "title": "LazySets.ρ",
     "category": "method",
-    "text": "ρ(d::AbstractVector{N}, E::Ellipsoid{N}) where {N<:AbstractFloat}\n\nReturn the support function of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nE – ellipsoid\n\nOutput\n\nThe support function of the ellipsoid in the given direction.\n\nAlgorithm\n\nThe support value is cᵀ d + Qᵀ d₂ where c is the center and Q is the shape matrix of E.\n\n\n\n\n\n"
+    "text": "ρ(d::AbstractVector{N}, E::Ellipsoid{N}) where {N<:AbstractFloat}\n\nReturn the support function of an ellipsoid in a given direction.\n\nInput\n\nd – direction\nE – ellipsoid\n\nOutput\n\nThe support function of the ellipsoid in the given direction.\n\nAlgorithm\n\nThe support value is cᵀ d + Bᵀ d₂ where c is the center and Q = B Bᵀ is the shape matrix of E.\n\n\n\n\n\n"
 },
 
 {
@@ -6321,6 +6321,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "lib/utils.html#LazySets.inner",
+    "page": "Utility Functions",
+    "title": "LazySets.inner",
+    "category": "function",
+    "text": "inner(x::AbstractVector{N}, A::AbstractMatrix{N}, y::AbstractVector{N}\n     ) where {N}\n\nCompute the inner product xᵀ A y.\n\nInput\n\nx – vector on the left\nA – matrix\ny – vector on the right\n\nOutput\n\nThe (scalar) result of the multiplication.\n\n\n\n\n\n"
+},
+
+{
     "location": "lib/utils.html#LazySets.isinvertible",
     "page": "Utility Functions",
     "title": "LazySets.isinvertible",
@@ -6493,7 +6501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Utility Functions",
     "title": "Functions and Macros",
     "category": "section",
-    "text": "an_element_helper\nbinary_search_constraints\ncross_product(::AbstractMatrix{N}) where {N<:Real}\ndelete_zero_columns\ndot_zero\nget_radius!\nisinvertible\nispermutation\nissquare\nis_right_turn\nis_tighter_same_dir_2D\nnonzero_indices\nsamedir\nsign_cadlag\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed\nsame_block_structure\nsubstitute\nsubstitute!\nσ_helper\n@neutral\n@absorbing\n@neutral_absorbing\n@declare_array_version\n@array_neutral\n@array_absorbing"
+    "text": "an_element_helper\nbinary_search_constraints\ncross_product(::AbstractMatrix{N}) where {N<:Real}\ndelete_zero_columns\ndot_zero\nget_radius!\ninner\nisinvertible\nispermutation\nissquare\nis_right_turn\nis_tighter_same_dir_2D\nnonzero_indices\nsamedir\nsign_cadlag\n_random_zero_sum_vector\nremove_duplicates_sorted!\nreseed\nsame_block_structure\nsubstitute\nsubstitute!\nσ_helper\n@neutral\n@absorbing\n@neutral_absorbing\n@declare_array_version\n@array_neutral\n@array_absorbing"
 },
 
 {
