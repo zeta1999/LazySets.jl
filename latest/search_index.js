@@ -29,7 +29,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Example",
     "category": "section",
-    "text": "Let mathcalX_0 subset mathbbR^1000 be the Euclidean ball of center (1 ldots 1) and radius 01 in dimension n=1000. Given a real matrix A in mathbbR^1000 times 1000, suppose that we are interested in the equationmathcalY = CH(e^A δ mathcalX_0  δ BmathcalU mathcalX_0)where CH is the convex hull operator,  denotes Minkowski sum, mathcalU is a ball in the infinity norm centered at zero and radius 12, and B is a linear map of the appropriate dimensions. This equation typically arises in the study of discrete approximation models for reachability of continuous systems, see for example SpaceEx: Scalable verification of hybrid systems.For concreteness, we take A to be a random matrix with probability 1 of any entry being nonzero. Suppose that the input set mathcalU is two-dimensional, and that the linear map B is random. Finally, let δ = 0.1. Using LazySets, we can define this problem as follows:julia> A = sprandn(1000, 1000, 0.01);\n\njulia> δ = 0.1;\n\njulia> X0 = Ball2(ones(1000), 0.1);\n\njulia> B = randn(1000, 2);\n\njulia> U = BallInf(zeros(2), 1.2);\nThe @time macro shows that building mathcalY with LazySets is instantaneous.julia> Y = CH(SparseMatrixExp(A * δ) * X0 + δ * B * U, X0);By asking for the concrete type of Y, we see that it has a convex hull type, parameterized by the types of its arguments, corresponding to the mathematical formulation:julia> typeof(Y)\nConvexHull{Float64,MinkowskiSum{Float64,ExponentialMap{Float64,Ball2{Float64}},LinearMap{Float64,BallInf{Float64},Float64,Array{Float64,2}}},Ball2{Float64}}Now suppose that we are interested in observing the projection of mathcalY onto the variables number 1 and 500. First we define the 21000 projection matrix and apply it to mathcalY as a linear map (i.e., from the left). Second, we use the overapproximate method:julia> proj_mat = [[1. zeros(1, 999)]; [zeros(1, 499) 1. zeros(1, 500)]];\n\njulia> res = Approximations.overapproximate(proj_mat * Y);We have calculated a box overapproximation of the exact projection onto the (x_1 x_500) plane. Notice that it takes about 0.064 seconds for the whole operation, allocating less than 10MB of RAM. Let us note that if the set operations were done explicitly, this would be much (!) slower. For instance, already the explicit computation of the matrix exponential would have cost 10x more, and allocated around 300MB. For even higher n, an evaluation will probably run out of RAM. But this is doable with LazySets because the action of the matrix exponential on the set is only evaluated along the directions of interest. Similar comments apply to the Minkowski sum above.We can visualize the result using plot, as shown below (left-most plot).(Image: assets/example_ch.png)In the second and third plots, we have used a refined method that allows to specify a prescribed accuracy for the projection (in terms of the Hausdorff distance). For the theoretical background, see this reference. It can be passed as a second argument to overapproximate.Error tol. time (s) memory (MB)\n∞ (no refinement) 0.022 5.27\n1e-1 0.051 7.91\n1e-3 0.17 30.3This table shows the runtime and memory consumption for different error tolerances, and the results are shown in three plots of above, from left to right. When passing to a smaller tolerance, the corners connecting edges are more \"rounded\", at the expense of computational resources, since more support vectors have to be evaluated."
+    "text": "Let mathcalX_0 subset mathbbR^1000 be the Euclidean ball of center (1 ldots 1) and radius 01 in dimension n=1000. Given a real matrix A in mathbbR^1000 times 1000, suppose that we are interested in the equationmathcalY = CH(e^A δ mathcalX_0  δ BmathcalU mathcalX_0)where CH is the convex hull operator,  denotes Minkowski sum, mathcalU is a ball in the infinity norm centered at zero and radius 12, and B is a linear map of the appropriate dimensions. This equation typically arises in the study of discrete approximation models for reachability of continuous systems, see for example SpaceEx: Scalable verification of hybrid systems.For concreteness, we take A to be a random matrix with probability 1 of any entry being nonzero. Suppose that the input set mathcalU is two-dimensional, and that the linear map B is random. Finally, let δ = 0.1. Using LazySets, we can define this problem as follows:julia> A = sprandn(1000, 1000, 0.01);\n\njulia> δ = 0.1;\n\njulia> X0 = Ball2(ones(1000), 0.1);\n\njulia> B = randn(1000, 2);\n\njulia> U = BallInf(zeros(2), 1.2);\nThe @time macro shows that building mathcalY with LazySets is instantaneous.julia> using Expokit\n\njulia> Y = CH(SparseMatrixExp(A * δ) * X0 + δ * B * U, X0);By asking for the concrete type of Y, we see that it has a convex hull type, parameterized by the types of its arguments, corresponding to the mathematical formulation:julia> typeof(Y)\nConvexHull{Float64,MinkowskiSum{Float64,ExponentialMap{Float64,Ball2{Float64}},LinearMap{Float64,BallInf{Float64},Float64,Array{Float64,2}}},Ball2{Float64}}Now suppose that we are interested in observing the projection of mathcalY onto the variables number 1 and 500. First we define the 21000 projection matrix and apply it to mathcalY as a linear map (i.e., from the left). Second, we use the overapproximate method:julia> proj_mat = [[1. zeros(1, 999)]; [zeros(1, 499) 1. zeros(1, 500)]];\n\njulia> res = Approximations.overapproximate(proj_mat * Y);We have calculated a box overapproximation of the exact projection onto the (x_1 x_500) plane. Notice that it takes about 0.064 seconds for the whole operation, allocating less than 10MB of RAM. Let us note that if the set operations were done explicitly, this would be much (!) slower. For instance, already the explicit computation of the matrix exponential would have cost 10x more, and allocated around 300MB. For even higher n, an evaluation will probably run out of RAM. But this is doable with LazySets because the action of the matrix exponential on the set is only evaluated along the directions of interest. Similar comments apply to the Minkowski sum above.We can visualize the result using plot, as shown below (left-most plot).(Image: assets/example_ch.png)In the second and third plots, we have used a refined method that allows to specify a prescribed accuracy for the projection (in terms of the Hausdorff distance). For the theoretical background, see this reference. It can be passed as a second argument to overapproximate.Error tol. time (s) memory (MB)\n∞ (no refinement) 0.022 5.27\n1e-1 0.051 7.91\n1e-3 0.17 30.3This table shows the runtime and memory consumption for different error tolerances, and the results are shown in three plots of above, from left to right. When passing to a smaller tolerance, the corners connecting edges are more \"rounded\", at the expense of computational resources, since more support vectors have to be evaluated."
 },
 
 {
@@ -85,7 +85,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Getting Started",
     "title": "Installation",
     "category": "section",
-    "text": "To install LazySets, use the following command inside Julia\'s REPL:Pkg.clone(\"https://github.com/JuliaReach/LazySets.jl\")The dependencies of LazySets, such as Expokit.jl – which provides lazy matrix exponentiation routines – are automatically installed through Julia\'s package manager. The full list of dependencies is specified in the REQUIRE file."
+    "text": "To install LazySets, use the following command inside Julia\'s REPL:Pkg.add(\"LazySets\")or replace add by clone if you want to develop the code. The full list of dependencies (which are automatically installed) is specified in the REQUIRE file."
+},
+
+{
+    "location": "man/getting_started.html#Building-the-package-1",
+    "page": "Getting Started",
+    "title": "Building the package",
+    "category": "section",
+    "text": "Use the following command from Julia\'s REPL:julia> using LazySetsThis should precompile the package and make it available afterward."
+},
+
+{
+    "location": "man/getting_started.html#Optional-dependencies-1",
+    "page": "Getting Started",
+    "title": "Optional dependencies",
+    "category": "section",
+    "text": "Some optional dependencies, such as Expokit.jl (a package that provides lazy matrix exponentiation routines), are not installed by default. When loading the corresponding packages in addition, new functionality in LazySets is added automatically (a feature that is possible through the Requires package)."
 },
 
 {
@@ -693,7 +709,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Parallel Approximations",
     "title": "Parallel interval hulls",
     "category": "section",
-    "text": "As an illustration of the symmetric interval hull approximation of a nested lazy set computed in parallel, consider the following calculation. It arises in the discretization of set-based ODEs, and is defined below for an artificial example of a tridiagonal matrix of order n, where n is a positive integer.using LazySets\nusing SparseArrays, LinearAlgebra\n\n# define an nxn tridiagonal matrix\nA(n) = sparse(diagm(0 => fill(0.05, n), -1 => fill(-1, n-1), 1 => fill(-1, n-1)))\n\n# step size and initial set\nδ = 0.1\nX0(n) = Ball2(ones(n), 0.1)\n\n# input coefficients matrix (nx2 matrix with coefficients from -1 to 1)\nb(n) = vcat(range(-1, stop=1, length=n))\nB(n) = [b(n) b(n)] \nU = BallInf(zeros(2), 1.2)\n\n# lazy matrix exponential\neAδ(n) = SparseMatrixExp(A(n) * δ)\n\n# set that we want to overapproximate with an interval hull\nY(n) = ConvexHull(eAδ(n) * X0(n) ⊕ (δ * B(n) * U), X0(n))The set Y(n) is parametric in the system\'s dimension n, to facilitate benchmarking. We will explore the computational cost as the dimension n increases, and compare the sequential algorithm with the parallel algorithm.Given the lazy set Y(n), we want to calculate the symmetric interval hull, which corresponds to finding the smallest n-dimensional hyperrectangle that contains the set Y(n) and is symmetric with respect to the origin. Notice that this operation is inherently parallel, since one can evaluate the support function of Y independently in each dimension from 1 to n.The sequential algorithm returns the following execution times. We use the @btime macro from the BenchmarkTools package to have a more accurate timing than @time; the $n argument is used for interpolation of the arguments (if you are not behchmarking, pass n to symmetric_interval_hull, as usual).using BenchmarkTools\n\nfor n in [50, 100, 500, 1000]\n    @btime res = Approximations.symmetric_interval_hull(Y($n));\nend\n\n  59.103 ms (11554 allocations: 25.89 MiB)\n  129.453 ms (23118 allocations: 54.16 MiB)\n  1.943 s (115530 allocations: 381.26 MiB)\n  10.017 s (232506 allocations: 1.01 GiB)For the parallel benchmark, we start Julia with 4 processes with the command $ julia -p 4 and call LazySets.Parallel.symmetric_interval_hull(Y(n)). import LazySets.Parallel\n\nfor n in [50, 100, 500, 1000]\n    @btime LazySets.Parallel.symmetric_interval_hull($Y($n));\nend\n\n  6.846 ms (2550 allocations: 160.59 KiB)\n  13.544 ms (3528 allocations: 271.94 KiB)\n  387.556 ms (11155 allocations: 2.51 MiB)\n  2.638 s (22156 allocations: 8.77 MiB)In the following table we summarize the speedup.n Sequential (s) Parallel p=4 (s) Speedup\n50 0.059 0.007 8.42\n100 0.129 0.013 9.92\n500 1.94 0.387 4.96\n1000 10.0 2.64 3.79The results in this section were obtained with a standard MacBook Pro laptop with the following specifications:julia> versioninfo()\nJulia Version 1.0.2\nCommit d789231e99 (2018-11-08 20:11 UTC)\nPlatform Info:\n  OS: macOS (x86_64-apple-darwin14.5.0)\n  CPU: Intel(R) Core(TM) i7-4770HQ CPU @ 2.20GHz\n  WORD_SIZE: 64\n  LIBM: libopenlibm\n  LLVM: libLLVM-6.0.0 (ORCJIT, haswell)"
+    "text": "As an illustration of the symmetric interval hull approximation of a nested lazy set computed in parallel, consider the following calculation. It arises in the discretization of set-based ODEs, and is defined below for an artificial example of a tridiagonal matrix of order n, where n is a positive integer.using LazySets, Expokit\nusing SparseArrays, LinearAlgebra\n\n# define an nxn tridiagonal matrix\nA(n) = sparse(diagm(0 => fill(0.05, n), -1 => fill(-1, n-1), 1 => fill(-1, n-1)))\n\n# step size and initial set\nδ = 0.1\nX0(n) = Ball2(ones(n), 0.1)\n\n# input coefficients matrix (nx2 matrix with coefficients from -1 to 1)\nb(n) = vcat(range(-1, stop=1, length=n))\nB(n) = [b(n) b(n)] \nU = BallInf(zeros(2), 1.2)\n\n# lazy matrix exponential\neAδ(n) = SparseMatrixExp(A(n) * δ)\n\n# set that we want to overapproximate with an interval hull\nY(n) = ConvexHull(eAδ(n) * X0(n) ⊕ (δ * B(n) * U), X0(n))The set Y(n) is parametric in the system\'s dimension n, to facilitate benchmarking. We will explore the computational cost as the dimension n increases, and compare the sequential algorithm with the parallel algorithm.Given the lazy set Y(n), we want to calculate the symmetric interval hull, which corresponds to finding the smallest n-dimensional hyperrectangle that contains the set Y(n) and is symmetric with respect to the origin. Notice that this operation is inherently parallel, since one can evaluate the support function of Y independently in each dimension from 1 to n.The sequential algorithm returns the following execution times. We use the @btime macro from the BenchmarkTools package to have a more accurate timing than @time; the $n argument is used for interpolation of the arguments (if you are not behchmarking, pass n to symmetric_interval_hull, as usual).using BenchmarkTools\n\nfor n in [50, 100, 500, 1000]\n    @btime res = Approximations.symmetric_interval_hull(Y($n));\nend\n\n  59.103 ms (11554 allocations: 25.89 MiB)\n  129.453 ms (23118 allocations: 54.16 MiB)\n  1.943 s (115530 allocations: 381.26 MiB)\n  10.017 s (232506 allocations: 1.01 GiB)For the parallel benchmark, we start Julia with 4 processes with the command $ julia -p 4 and call LazySets.Parallel.symmetric_interval_hull(Y(n)). import LazySets.Parallel\n\nfor n in [50, 100, 500, 1000]\n    @btime LazySets.Parallel.symmetric_interval_hull($Y($n));\nend\n\n  6.846 ms (2550 allocations: 160.59 KiB)\n  13.544 ms (3528 allocations: 271.94 KiB)\n  387.556 ms (11155 allocations: 2.51 MiB)\n  2.638 s (22156 allocations: 8.77 MiB)In the following table we summarize the speedup.n Sequential (s) Parallel p=4 (s) Speedup\n50 0.059 0.007 8.42\n100 0.129 0.013 9.92\n500 1.94 0.387 4.96\n1000 10.0 2.64 3.79The results in this section were obtained with a standard MacBook Pro laptop with the following specifications:julia> versioninfo()\nJulia Version 1.0.2\nCommit d789231e99 (2018-11-08 20:11 UTC)\nPlatform Info:\n  OS: macOS (x86_64-apple-darwin14.5.0)\n  CPU: Intel(R) Core(TM) i7-4770HQ CPU @ 2.20GHz\n  WORD_SIZE: 64\n  LIBM: libopenlibm\n  LLVM: libLLVM-6.0.0 (ORCJIT, haswell)"
 },
 
 {
@@ -4590,134 +4606,6 @@ var documenterSearchIndex = {"docs": [
     "title": "Linear Map",
     "category": "section",
     "text": "LinearMap\n*(::AbstractMatrix{N}, ::LazySet{N}) where {N<:Real}\n*(::N, ::LazySet{N}) where {N<:Real}\n*(::N, ::LM) where {N<:Real, LM<:LinearMap{N}}\n*(::AbstractMatrix{N}, ::ZeroSet{N}) where {N<:Real}\ndim(::LinearMap)\nρ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nσ(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\n∈(::AbstractVector{N}, ::LinearMap{N}) where {N<:Real}\nan_element(::LinearMap{N}) where {N<:Real}\nisbounded(::LinearMap)\nisempty(::LinearMap)\nvertices_list(::LinearMap{N}) where {N<:Real}\nconstraints_list(::LinearMap{N}) where {N<:Real}\nlinear_map(::AbstractMatrix{N}, ::LinearMap{N}) where {N}\nintersection(::LinearMap{N}, ::LazySet{N}) where {N}Inherited from LazySet:norm\nradius\ndiameter"
-},
-
-{
-    "location": "lib/operations.html#LazySets.ExponentialMap",
-    "page": "Common Set Operations",
-    "title": "LazySets.ExponentialMap",
-    "category": "type",
-    "text": "ExponentialMap{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the action of an exponential map on a convex set.\n\nFields\n\nspmexp – sparse matrix exponential\nX      – convex set\n\nExamples\n\nThe ExponentialMap type is overloaded to the usual times * operator when the linear map is a lazy matrix exponential. For instance,\n\njulia> A = sprandn(100, 100, 0.1);\n\njulia> E = SparseMatrixExp(A);\n\njulia> B = BallInf(zeros(100), 1.);\n\njulia> M = E * B; # represents the image set: exp(A) * B\n\njulia> M isa ExponentialMap\ntrue\n\njulia> dim(M)\n100\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{ExponentialMap}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(em::ExponentialMap)::Int\n\nReturn the dimension of an exponential map.\n\nInput\n\nem – an ExponentialMap\n\nOutput\n\nThe ambient dimension of the exponential map.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.ρ-Union{Tuple{N}, Tuple{AbstractArray{N,1},ExponentialMap{N,S} where S<:LazySet{N}}} where N<:Real",
-    "page": "Common Set Operations",
-    "title": "LazySets.ρ",
-    "category": "method",
-    "text": "ρ(d::AbstractVector{N}, em::ExponentialMap{N}) where {N<:Real}\n\nReturn the support function of the exponential map.\n\nInput\n\nd  – direction\nem – exponential map\n\nOutput\n\nThe support function in the given direction.\n\nNotes\n\nIf E = exp(M)S, where M is a matrix and S is a convex set, it follows that ρ(d E) = ρ(exp(M)^T d S) for any direction d.\n\nWe allow sparse direction vectors, but will convert them to dense vectors to be able to use expmv.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},ExponentialMap{N,S} where S<:LazySet{N}}} where N<:Real",
-    "page": "Common Set Operations",
-    "title": "LazySets.σ",
-    "category": "method",
-    "text": "σ(d::AbstractVector{N}, em::ExponentialMap{N}) where {N<:Real}\n\nReturn the support vector of the exponential map.\n\nInput\n\nd  – direction\nem – exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf E = exp(M)S, where M is a matrix and S is a convex set, it follows that σ(d E) = exp(M)σ(exp(M)^T d S) for any direction d.\n\nWe allow sparse direction vectors, but will convert them to dense vectors to be able to use expmv.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Base.:∈-Union{Tuple{N}, Tuple{AbstractArray{N,1},ExponentialMap{N,S} where S<:LazySet{N}}} where N<:Real",
-    "page": "Common Set Operations",
-    "title": "Base.:∈",
-    "category": "method",
-    "text": "∈(x::AbstractVector{N}, em::ExponentialMap{N})::Bool where {N<:Real}\n\nCheck whether a given point is contained in an exponential map of a convex set.\n\nInput\n\nx  – point/vector\nem – exponential map of a convex set\n\nOutput\n\ntrue iff x  em.\n\nAlgorithm\n\nThis implementation exploits that x  exp(M)S iff exp(-M)x  S. This follows from exp(-M)exp(M) = I for any M.\n\nExamples\n\njulia> using Compat.SparseArrays: SparseMatrixCSC;\n\njulia> em = ExponentialMap(SparseMatrixExp(SparseMatrixCSC([2.0 0.0; 0.0 1.0])),\n                           BallInf([1., 1.], 1.));\n\njulia> ∈([-1.0, 1.0], em)\nfalse\njulia> ∈([1.0, 1.0], em)\ntrue\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.isbounded-Tuple{ExponentialMap}",
-    "page": "Common Set Operations",
-    "title": "LazySets.isbounded",
-    "category": "method",
-    "text": "isbounded(em::ExponentialMap)::Bool\n\nDetermine whether an exponential map is bounded.\n\nInput\n\nem – exponential map\n\nOutput\n\ntrue iff the exponential map is bounded.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Base.isempty-Tuple{ExponentialMap}",
-    "page": "Common Set Operations",
-    "title": "Base.isempty",
-    "category": "method",
-    "text": "isempty(em::ExponentialMap)::Bool\n\nReturn if an exponential map is empty or not.\n\nInput\n\nem – exponential map\n\nOutput\n\ntrue iff the wrapped set is empty.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.vertices_list-Union{Tuple{ExponentialMap{N,S} where S<:LazySet{N}}, Tuple{N}} where N<:Real",
-    "page": "Common Set Operations",
-    "title": "LazySets.vertices_list",
-    "category": "method",
-    "text": "vertices_list(em::ExponentialMap{N})::Vector{Vector{N}} where {N<:Real}\n\nReturn the list of vertices of a (polytopic) exponential map.\n\nInput\n\nem – exponential map\n\nOutput\n\nA list of vertices.\n\nAlgorithm\n\nWe assume that the underlying set X is polytopic. Then the result is just the exponential map applied to the vertices of X.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.ExponentialProjectionMap",
-    "page": "Common Set Operations",
-    "title": "LazySets.ExponentialProjectionMap",
-    "category": "type",
-    "text": "ExponentialProjectionMap{N<:Real, S<:LazySet{N}} <: LazySet{N}\n\nType that represents the application of a projection of a sparse matrix exponential to a convex set.\n\nFields\n\nspmexp – projection of a sparse matrix exponential\nX      – convex set\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.dim-Tuple{ExponentialProjectionMap}",
-    "page": "Common Set Operations",
-    "title": "LazySets.dim",
-    "category": "method",
-    "text": "dim(eprojmap::ExponentialProjectionMap)::Int\n\nReturn the dimension of a projection of an exponential map.\n\nInput\n\neprojmap – projection of an exponential map\n\nOutput\n\nThe ambient dimension of the projection of an exponential map.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.σ-Union{Tuple{N}, Tuple{AbstractArray{N,1},ExponentialProjectionMap{N,S} where S<:LazySet{N}}} where N<:Real",
-    "page": "Common Set Operations",
-    "title": "LazySets.σ",
-    "category": "method",
-    "text": "σ(d::AbstractVector{N},\n  eprojmap::ExponentialProjectionMap{N}) where {N<:Real}\n\nReturn the support vector of a projection of an exponential map.\n\nInput\n\nd        – direction\neprojmap – projection of an exponential map\n\nOutput\n\nThe support vector in the given direction. If the direction has norm zero, the result depends on the wrapped set.\n\nNotes\n\nIf S = (LMR)X, where L and R are matrices, M is a matrix exponential, and X is a set, it follows that σ(d S) = LMRσ(R^TM^TL^Td X) for any direction d.\n\nWe allow sparse direction vectors, but will convert them to dense vectors to be able to use expmv.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.isbounded-Tuple{ExponentialProjectionMap}",
-    "page": "Common Set Operations",
-    "title": "LazySets.isbounded",
-    "category": "method",
-    "text": "isbounded(eprojmap::ExponentialProjectionMap)::Bool\n\nDetermine whether an exponential projection map is bounded.\n\nInput\n\neprojmap – exponential projection map\n\nOutput\n\ntrue iff the exponential projection map is bounded.\n\nAlgorithm\n\nWe first check if the left or right projection matrix is zero or the wrapped set is bounded. Otherwise, we check boundedness via isbounded_unit_dimensions.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Base.isempty-Tuple{ExponentialProjectionMap}",
-    "page": "Common Set Operations",
-    "title": "Base.isempty",
-    "category": "method",
-    "text": "isempty(eprojmap::ExponentialProjectionMap)::Bool\n\nReturn if an exponential projection map is empty or not.\n\nInput\n\neprojmap – exponential projection map\n\nOutput\n\ntrue iff the wrapped set is empty.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.SparseMatrixExp",
-    "page": "Common Set Operations",
-    "title": "LazySets.SparseMatrixExp",
-    "category": "type",
-    "text": "SparseMatrixExp{N}\n\nType that represents the matrix exponential, exp(M), of a sparse matrix.\n\nFields\n\nM – sparse matrix\n\nExamples\n\nTake for exammple a random sparse matrix:\n\njulia> A = sprandn(100, 100, 0.1);\n\njulia> E = SparseMatrixExp(A);\n\njulia> size(E)\n(100, 100)\n\nNow, E is a lazy representation of exp(A). To compute with E, use get_row and get_column (or get_rows and get_columns; they return row and column vectors (or matrices). For example:\n\njulia> get_row(E, 10); # compute E[10, :]\n\njulia> get_column(E, 10); # compute E[:, 10]\n\njulia> get_rows(E, [10]); # same as get_row(E, 10) but a 1x100 matrix is returned\n\njulia> get_columns(E, [10]); # same as get_column(E, 10) but a 100x1 matrix is returned\n\nNotes\n\nThis type is provided for use with very large and very sparse matrices. The evaluation of the exponential matrix action over vectors relies on the Expokit package.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#Base.:*-Union{Tuple{N}, Tuple{SparseMatrixExp{N},LazySet{N}}} where N<:Real",
-    "page": "Common Set Operations",
-    "title": "Base.:*",
-    "category": "method",
-    "text": "    *(spmexp::SparseMatrixExp{N},\n      X::LazySet{N})::ExponentialMap{N} where {N<:Real}\n\nReturn the exponential map of a convex set from a sparse matrix exponential.\n\nInput\n\nspmexp – sparse matrix exponential\nX      – convex set\n\nOutput\n\nThe exponential map of the convex set.\n\n\n\n\n\n"
-},
-
-{
-    "location": "lib/operations.html#LazySets.get_row-Tuple{SparseMatrixExp,Int64}",
-    "page": "Common Set Operations",
-    "title": "LazySets.get_row",
-    "category": "method",
-    "text": "get_row(spmexp::SparseMatrixExp{N}, i::Int) where {N}\n\nReturn a single row of a sparse matrix exponential.\n\nInput\n\nspmexp – sparse matrix exponential\ni      – row index\n\nOutput\n\nA row vector corresponding to the ith row of the matrix exponential.\n\nNotes\n\nThis function uses Julia\'s transpose function to create the result. The result is of type Transpose; in Julia versions older than v0.7, the result was of type RowVector.\n\n\n\n\n\n"
 },
 
 {
