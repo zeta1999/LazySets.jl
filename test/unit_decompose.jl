@@ -81,7 +81,7 @@ for N in [Float64, Float32]
         0.990993 -1.97754 0.754192 -0.807085;
         -2.43723 0.782825 -3.99255 3.93324])
     Ω0 = CH(X, A * X)
-    dec = decompose(Ω0, [1:2, 3:4], HPolygon)
+    dec = decompose(Ω0, [1:2, 3:4], HPolygon, 1e-3)
     dec1 = dec.array[1]
 
     @test dec1.constraints[1].b ≈ N(2.84042586)

@@ -5,41 +5,55 @@ Overapproximating a set of type `S` with type `S` is a no-op.
 
 ### Input
 
-- `X` -- set
-- `Type{S}` -- set type
+- `X`       -- set
+- `Type{S}` -- set type, used for dispatch
 
 ### Output
 
 The input set.
 """
-function overapproximate(X::S, ::Type{S}) where {S<:LazySet}
-    return X
-end
+overapproximate(X::S, ::Type{S}) where {S<:LazySet} = X
 
 """
     overapproximate(S::LazySet{N},
                     ::Type{<:HPolygon},
-                    [ε]::Real=Inf)::HPolygon where {N<:Real}
+                    [ε]=1e-3)::HPolygon where {N<:AbstractFloat}
 
-Return an approximation of a given 2D convex set.
-If no error tolerance is given, or is `Inf`, the result is a box-shaped polygon.
-Otherwise the result is an ε-close approximation as a polygon.
+Return an approximation of a given 2D convex set using iterative refinement.
 
 ### Input
 
-- `S`           -- convex set, assumed to be two-dimensional
-- `HPolygon`    -- type for dispatch
-- `ε`           -- (optional, default: `Inf`) error bound
+- `S`        -- convex set, assumed to be two-dimensional
+- `HPolygon` -- type for dispatch
+- `ε`        -- (optional, default: `1e-3`) error bound
 
 ### Output
 
 A polygon in constraint representation.
+
+### Notes
+
+This function implements an iterative refinement method of the convex set `S`,
+in terms of Hausdorff distance. The result is an `ε`-close approximation of `S`
+as a polygon in constraint representation. 
+
+If the error bound `ε` is `Inf`, the result is a box-shaped polygon. This option
+is convenient for very fast overapprximation; note that it has the same behavior
+as an overapproximation with a hyperrectangular set,
+`overapproximate(S, Hyperrectangle)`.
+
+### Algorithm
+
+For details on the method, see `LazySets.Approximations.approximate`.
 """
 function overapproximate(S::LazySet{N},
                          ::Type{<:HPolygon},
-                         ε::Real=Inf
-                        )::HPolygon where {N<:Real}
-    @assert dim(S) == 2
+                         ε=N(1e-3)
+                        )::HPolygon where {N<:AbstractFloat}
+
+    @assert dim(S) == 2 "iterative refinement is only implemented for two-dimensional " *
+                        "sets, but the given set is $(dim(S))-dimensional"
+
     if ε == Inf
         constraints = Vector{LinearConstraint{N}}(undef, 4)
         constraints[1] = LinearConstraint(DIR_EAST(N), ρ(DIR_EAST(N), S))
@@ -52,14 +66,31 @@ function overapproximate(S::LazySet{N},
     end
 end
 
+function overapproximate(S::LazySet{N},
+                         ::Type{<:HPolygon},
+                         ε=Inf
+                        )::HPolygon where {N<:Rational}
+
+    @assert dim(S) == 2 "iterative refinement is only implemented for two-dimensional " *
+                        "sets, but the given set is $(dim(S))-dimensional"
+
+    @assert ε == Inf "iterative refinement for numeric type $N is implemented "
+                     "for box-overapproximation"
+
+    constraints = Vector{LinearConstraint{N}}(undef, 4)
+    constraints[1] = LinearConstraint(DIR_EAST(N), ρ(DIR_EAST(N), S))
+    constraints[2] = LinearConstraint(DIR_NORTH(N), ρ(DIR_NORTH(N), S))
+    constraints[3] = LinearConstraint(DIR_WEST(N), ρ(DIR_WEST(N), S))
+    constraints[4] = LinearConstraint(DIR_SOUTH(N), ρ(DIR_SOUTH(N), S))
+    return HPolygon(constraints, sort_constraints=false)
+end
+
 """
     overapproximate(S::LazySet, ε::Real)::HPolygon
 
 Alias for `overapproximate(S, HPolygon, ε)`.
 """
-function overapproximate(S::LazySet,
-                         ε::Real;
-                        )::HPolygon
+function overapproximate(S::LazySet, ε::Real)::HPolygon
     return overapproximate(S, HPolygon, ε)
 end
 
