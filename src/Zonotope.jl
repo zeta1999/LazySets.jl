@@ -693,7 +693,7 @@ Reduce the order of a given Zonotope to 1
 
 ### Input
 
-- `Z`     -- zonotope
+- `Z` -- zonotope
 
 ### Output
 
