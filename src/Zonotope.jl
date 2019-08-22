@@ -9,7 +9,8 @@ export Zonotope,
        ngens,
        reduce_order,
        constraints_list,
-       generators
+       generators,
+       overapproximate
 
 """
     Zonotope{N<:Real} <: AbstractZonotope{N}
@@ -683,4 +684,37 @@ function translate(Z::Zonotope{N}, v::AbstractVector{N}; share::Bool=false
     c = center(Z) + v
     generators = share ? Z.generators : copy(Z.generators)
     return Zonotope(c, generators)
+end
+
+"""
+    overapproximate(Z::Zonotope)
+
+Reduce the order of a given Zonotope to 1
+
+### Input
+
+- `Z`     -- zonotope
+
+### Output
+
+A overapproximation of the given zonotope using a Parallelotope.
+
+### Algorithm
+
+The algorithm is based on propositions discussed in Section 5 of [this paper](https://mediatum.ub.tum.de/doc/1287515/893367.pdf)
+"""
+function overapproximate(Z::Zonotope)
+    p, n = ngens(Z), dim(Z)
+    if p == n
+        return Z
+    elseif p > n
+        V = 1:n # could use difference selection criteria
+    else
+        error("the zonotope order is $(order(Z)) but it should be at least 1")
+    end
+
+    G = genmat(Z)
+    Γ = view(G, :, V)
+    □Γ⁻¹Z = box_approximation(linear_map(inv(Γ), Z))
+    return linear_map(Γ, □Γ⁻¹Z) # todo: use known fact that the matrix is invertible
 end

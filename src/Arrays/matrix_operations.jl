@@ -76,6 +76,10 @@ function isinvertible(M::Diagonal; cond_tol=nothing)
     return !any(iszero, diag(M))
 end
 
+function isinvertible(M::SubArray; cond_tol::Number=DEFAULT_COND_TOL)
+    return issquare(M) && cond(M) < cond_tol
+end
+
 """
     cross_product(M::AbstractMatrix{N}) where {N<:Real}
 
