@@ -697,7 +697,7 @@ Reduce the order of a given Zonotope to 1
 
 ### Output
 
-A overapproximation of the given zonotope using a Parallelotope.
+An overapproximation of the given zonotope using a parallelotope.
 
 ### Algorithm
 
