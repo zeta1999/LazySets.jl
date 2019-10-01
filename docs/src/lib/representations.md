@@ -209,6 +209,21 @@ Inherited from [`LazySet`](@ref):
 * [`radius`](@ref radius(::LazySet, ::Real))
 * [`diameter`](@ref diameter(::LazySet, ::Real))
 
+## HParallelotope
+
+```@docs
+HParallelotope
+directions(::HParallelotope{N}) where {N<:Real}
+offset(::HParallelotope{N}) where {N<:Real}
+dim(::HParallelotope{N}) where {N<:Real}
+base_vertex(::HParallelotope{N}) where {N<:Real}
+extremal_vertices(::HParallelotope{N}) where {N<:Real}
+center(::HParallelotope{N}) where {N<:Real}
+genmat(::HParallelotope{N}) where {N<:Real}
+generators(::HParallelotope{N}) where {N<:Real}
+constraints_list(::HParallelotope{N}) where {N<:Real}
+```
+
 ## Hyperplane
 
 ```@docs
