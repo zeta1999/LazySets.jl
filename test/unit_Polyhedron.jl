@@ -41,7 +41,7 @@ for N in [Float64, Rational{Int}, Float32]
     @test σ(N[1], p_univ) == N[Inf]
 
     # boundedness
-    @test !isbounded(p_univ)
+    @test !isbounded(p_univ) && !isboundedtype(p_univ)
 
     # universality
     @test !isuniversal(p)
@@ -121,7 +121,7 @@ for N in [Float64]
     @test σ(d, p) == N[0, 0]
 
     # boundedness
-    @test isbounded(p)
+    @test isbounded(p) && !isboundedtype(p)
 
     if test_suite_polyhedra
         p_unbounded = HPolyhedron([LinearConstraint(N[-1, 0], N(0))])
